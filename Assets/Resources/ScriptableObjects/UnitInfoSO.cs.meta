@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: bbdb02a2cd891364391bdbef2bde7280
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - OnHitSFX: {instanceID: 0}
+  - OnDefeatSFX: {instanceID: 0}
+  - DashSFX: {instanceID: 0}
+  - DefeatSprite: {fileID: 21300000, guid: 83bcf7a8d2f11ec498a4f3b0b26a8e09, type: 3}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

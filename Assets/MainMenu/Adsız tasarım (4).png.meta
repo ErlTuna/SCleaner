@@ -1,0 +1,347 @@
+fileFormatVersion: 2
+guid: cf9e8b8614b9b66498fdbd072b7ee19f
+TextureImporter:
+  internalIDToNameTable: []
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 3
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: "Ads\u0131z tasar\u0131m (4)_1"
+      rect:
+        serializedVersion: 2
+        x: 1602
+        y: 136
+        width: 80
+        height: 18
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 29b72fda74f219247899ecc883f90d8b
+      internalID: -1491046962
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: "Ads\u0131z tasar\u0131m (4)_0"
+      rect:
+        serializedVersion: 2
+        x: 808
+        y: 543
+        width: 276
+        height: 62
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 382b7dd86a361314cb0de751c858844b
+      internalID: 1109882353
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: "Ads\u0131z tasar\u0131m (4)_67"
+      rect:
+        serializedVersion: 2
+        x: 809
+        y: 420
+        width: 276
+        height: 65
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: bd63b996ff7649644b730a295a2b7111
+      internalID: 1578947041
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: "Ads\u0131z tasar\u0131m (4)_68"
+      rect:
+        serializedVersion: 2
+        x: 809
+        y: 301
+        width: 274
+        height: 58
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 197d7300b0133ea488858f453c978985
+      internalID: -1120297059
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: "Ads\u0131z tasar\u0131m (4)_69"
+      rect:
+        serializedVersion: 2
+        x: 501
+        y: 639
+        width: 892
+        height: 281
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: cc1bbed19aa490345976d0bad2a26634
+      internalID: -1595873735
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: "Ads\u0131z tasar\u0131m (4)_70"
+      rect:
+        serializedVersion: 2
+        x: 330
+        y: 296
+        width: 68
+        height: 69
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f06099dfb6940cf4ca3956d15889ede1
+      internalID: -1817981999
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: "Ads\u0131z tasar\u0131m (4)_71"
+      rect:
+        serializedVersion: 2
+        x: 326
+        y: 882
+        width: 77
+        height: 69
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6e793f08bf80dff4c88c4f3fddb173ea
+      internalID: -890915356
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    physicsShape: []
+    bones: []
+    spriteID: 5e97eb03825dee720800000000000000
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    nameFileIdTable:
+      "Ads\u0131z tasar\u0131m (4)_0": 1109882353
+      "Ads\u0131z tasar\u0131m (4)_1": -1491046962
+      "Ads\u0131z tasar\u0131m (4)_10": -1769746998
+      "Ads\u0131z tasar\u0131m (4)_11": -1559458995
+      "Ads\u0131z tasar\u0131m (4)_12": 791496736
+      "Ads\u0131z tasar\u0131m (4)_13": -1903946318
+      "Ads\u0131z tasar\u0131m (4)_14": -1717655325
+      "Ads\u0131z tasar\u0131m (4)_15": -946323120
+      "Ads\u0131z tasar\u0131m (4)_16": 229277159
+      "Ads\u0131z tasar\u0131m (4)_17": 1350027073
+      "Ads\u0131z tasar\u0131m (4)_18": -1381287488
+      "Ads\u0131z tasar\u0131m (4)_19": 1138647636
+      "Ads\u0131z tasar\u0131m (4)_2": 886403480
+      "Ads\u0131z tasar\u0131m (4)_20": 286042572
+      "Ads\u0131z tasar\u0131m (4)_21": 1645332223
+      "Ads\u0131z tasar\u0131m (4)_22": 1948164195
+      "Ads\u0131z tasar\u0131m (4)_23": -305969716
+      "Ads\u0131z tasar\u0131m (4)_24": -1296772745
+      "Ads\u0131z tasar\u0131m (4)_25": -1978022917
+      "Ads\u0131z tasar\u0131m (4)_26": 153896337
+      "Ads\u0131z tasar\u0131m (4)_27": -795187066
+      "Ads\u0131z tasar\u0131m (4)_28": 206046541
+      "Ads\u0131z tasar\u0131m (4)_29": 433086562
+      "Ads\u0131z tasar\u0131m (4)_3": -1043342785
+      "Ads\u0131z tasar\u0131m (4)_30": 539344666
+      "Ads\u0131z tasar\u0131m (4)_31": -1522332153
+      "Ads\u0131z tasar\u0131m (4)_32": -757073292
+      "Ads\u0131z tasar\u0131m (4)_33": 558656204
+      "Ads\u0131z tasar\u0131m (4)_34": -1950351012
+      "Ads\u0131z tasar\u0131m (4)_35": 239072738
+      "Ads\u0131z tasar\u0131m (4)_36": -2076755196
+      "Ads\u0131z tasar\u0131m (4)_37": 173355604
+      "Ads\u0131z tasar\u0131m (4)_38": -2078809722
+      "Ads\u0131z tasar\u0131m (4)_39": -1056557845
+      "Ads\u0131z tasar\u0131m (4)_4": -827431221
+      "Ads\u0131z tasar\u0131m (4)_40": -482347492
+      "Ads\u0131z tasar\u0131m (4)_41": 1591692342
+      "Ads\u0131z tasar\u0131m (4)_42": 915736992
+      "Ads\u0131z tasar\u0131m (4)_43": -1784714780
+      "Ads\u0131z tasar\u0131m (4)_44": -2064873054
+      "Ads\u0131z tasar\u0131m (4)_45": 176699472
+      "Ads\u0131z tasar\u0131m (4)_46": 475620939
+      "Ads\u0131z tasar\u0131m (4)_47": -755959122
+      "Ads\u0131z tasar\u0131m (4)_48": 243328965
+      "Ads\u0131z tasar\u0131m (4)_49": -911379595
+      "Ads\u0131z tasar\u0131m (4)_5": -1264493696
+      "Ads\u0131z tasar\u0131m (4)_50": -654940513
+      "Ads\u0131z tasar\u0131m (4)_51": -1283147723
+      "Ads\u0131z tasar\u0131m (4)_52": 872261588
+      "Ads\u0131z tasar\u0131m (4)_53": -1201044123
+      "Ads\u0131z tasar\u0131m (4)_54": -1520968624
+      "Ads\u0131z tasar\u0131m (4)_55": -1197499046
+      "Ads\u0131z tasar\u0131m (4)_56": 396944051
+      "Ads\u0131z tasar\u0131m (4)_57": 2103864146
+      "Ads\u0131z tasar\u0131m (4)_58": 399069503
+      "Ads\u0131z tasar\u0131m (4)_59": 521981368
+      "Ads\u0131z tasar\u0131m (4)_6": -2009828165
+      "Ads\u0131z tasar\u0131m (4)_60": -510518558
+      "Ads\u0131z tasar\u0131m (4)_61": -1669308831
+      "Ads\u0131z tasar\u0131m (4)_62": -1140307767
+      "Ads\u0131z tasar\u0131m (4)_63": 1231671413
+      "Ads\u0131z tasar\u0131m (4)_64": 1200493396
+      "Ads\u0131z tasar\u0131m (4)_65": -1540835168
+      "Ads\u0131z tasar\u0131m (4)_66": 1849240952
+      "Ads\u0131z tasar\u0131m (4)_67": 1578947041
+      "Ads\u0131z tasar\u0131m (4)_68": -1120297059
+      "Ads\u0131z tasar\u0131m (4)_69": -1595873735
+      "Ads\u0131z tasar\u0131m (4)_7": -1019003837
+      "Ads\u0131z tasar\u0131m (4)_70": -1817981999
+      "Ads\u0131z tasar\u0131m (4)_71": -890915356
+      "Ads\u0131z tasar\u0131m (4)_72": -2109581495
+      "Ads\u0131z tasar\u0131m (4)_8": 916788284
+      "Ads\u0131z tasar\u0131m (4)_9": -782945591
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

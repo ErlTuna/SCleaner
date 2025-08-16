@@ -1,0 +1,59 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!78 &1
+TagManager:
+  serializedVersion: 2
+  tags:
+  - Enemy
+  - Bullet
+  - FiringPoint
+  - Ground
+  - Spawn Area
+  - GrenadeSpawnPoint
+  - PlayerHitbox
+  - Pickup
+  - EnemyHitbox
+  - Equipment
+  layers:
+  - Default
+  - TransparentFX
+  - Ignore Raycast
+  - PlayerHitbox
+  - Water
+  - UI
+  - Enemy
+  - Player
+  - Bullet
+  - Borders
+  - EnemyHitbox
+  - Detection
+  - Environment
+  - Equipment
+  - Floor
+  - Props
+  - OutsideOfGameArea
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  m_SortingLayers:
+  - name: Back
+    uniqueID: 2655808573
+    locked: 0
+  - name: Default
+    uniqueID: 0
+    locked: 0
+  - name: Top
+    uniqueID: 178966987
+    locked: 0
