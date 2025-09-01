@@ -46,11 +46,12 @@ GameObject:
   - component: {fileID: 1583821304977420460}
   - component: {fileID: 3793509965958359214}
   - component: {fileID: 1007409015436641985}
-  - component: {fileID: 3990164265010495032}
   - component: {fileID: 3118084724917502932}
   - component: {fileID: 8074674739964897299}
-  - component: {fileID: 9157960678793547469}
   - component: {fileID: 67036150965266176}
+  - component: {fileID: 6640803686068332035}
+  - component: {fileID: 7564687369081222863}
+  - component: {fileID: 3761730729592186768}
   m_Layer: 7
   m_Name: Player
   m_TagString: Player
@@ -329,7 +330,7 @@ MonoBehaviour:
     m_ActionName: Gameplay/Equipment[/Keyboard/g]
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1059965001712806915}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: WeaponManager, Assembly-CSharp
         m_MethodName: TriggerReload
         m_Mode: 0
@@ -345,7 +346,7 @@ MonoBehaviour:
     m_ActionName: Gameplay/Reload[/Keyboard/r]
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 9157960678793547469}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: PlayerInventory, Assembly-CSharp
         m_MethodName: WeaponSwap
         m_Mode: 0
@@ -359,6 +360,70 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: 5fd72f26-8912-4ce2-a9cf-184d2716c7fb
     m_ActionName: Gameplay/Switch Weapons[/Keyboard/1,/Keyboard/2,/Keyboard/3,/Keyboard/4]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: b6c6f9e0-9eb5-4c27-a66b-9a1f6d2d265e
+    m_ActionName: Gameplay/OpenMenu[/Keyboard/escape]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: b0a6c054-832d-4380-bab6-f3da72460d86
+    m_ActionName: UI/Navigate[/Keyboard/w,/Keyboard/upArrow,/Keyboard/s,/Keyboard/downArrow,/Keyboard/a,/Keyboard/leftArrow,/Keyboard/d,/Keyboard/rightArrow]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 81b328c8-e36c-467d-9975-001811fd5903
+    m_ActionName: UI/Submit[/Keyboard/enter]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 206dcefd-0c8f-492a-8879-6e4eeca950cb
+    m_ActionName: UI/Cancel[/Keyboard/escape]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: eda2f735-0c25-4639-ab3f-ad16d2f6e250
+    m_ActionName: UI/Point[/Mouse/position]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 260a1f58-f441-41c0-9603-680c58d41ed0
+    m_ActionName: UI/Click[/Mouse/leftButton]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: f7bf0dbb-3fb9-4397-b0af-68c1d1624390
+    m_ActionName: UI/ScrollWheel[/Mouse/scroll]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: f32a7b44-f844-46f2-88d4-06203162d561
+    m_ActionName: UI/MiddleClick[/Mouse/middleButton]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: b4602aca-1668-4255-8414-f1a2fe8a171c
+    m_ActionName: UI/RightClick[/Mouse/rightButton]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 4b11ca6a-703c-40e4-81f5-5e43833c9dbe
+    m_ActionName: UI/TrackedDevicePosition
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 8cfbf3f7-bd69-4c29-abd8-a36d1bac4117
+    m_ActionName: UI/TrackedDeviceOrientation
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 164bd0cf-547e-42f7-a19a-ff8c73e3e1f0
+    m_ActionName: Gameplay/First Weapon[/Keyboard/1]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 7796a405-2885-409e-b709-2d22d8a60b56
+    m_ActionName: Gameplay/Second Weapon[/Keyboard/2]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: c1f791a8-0d07-441d-adf1-fc655529cd5a
+    m_ActionName: Gameplay/Third Weapon[/Keyboard/3]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 95d63e3e-8949-4aad-a63e-f4a6cf9df6ea
+    m_ActionName: Gameplay/Fourth Weapon[/Keyboard/4]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: d9118ae2-24cd-4bc6-96f9-0b496f56d566
+    m_ActionName: UI/CloseMenu[/Keyboard/escape]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Gameplay
@@ -376,8 +441,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d32c3a3e678640f49947d74ef7fdd622, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerInput: {fileID: 1583821304977420460}
-  playerActionAsset: {fileID: -944628639613478452, guid: b62b0962a961450488afe10bdc73eaae, type: 3}
   playerActionMap:
     m_Name: Player
     m_Id: f69657a1-6e4f-42a7-9904-c6ef4c9c79da
@@ -386,10 +449,8 @@ MonoBehaviour:
     m_Bindings: []
   playerHealth: {fileID: 2614403972491431392}
   playerMovement: {fileID: 1007409015436641985}
-  playerDash: {fileID: 3990164265010495032}
   playerAim: {fileID: 655333980170022825}
-  playerInfo: {fileID: 11400000, guid: fbb06e8b26488824c802ddd995ca359d, type: 2}
-  weaponManager: {fileID: 1059965001712806915}
+  playerInfo: {fileID: 11400000, guid: 77f621b67473a6641ae1df33db72517f, type: 2}
 --- !u!114 &1007409015436641985
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -402,20 +463,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 206b6b8f717912e49bf4c3f8008bbb64, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  inputActions: {fileID: -944628639613478452, guid: b62b0962a961450488afe10bdc73eaae, type: 3}
-  playerInfo: {fileID: 11400000, guid: fbb06e8b26488824c802ddd995ca359d, type: 2}
---- !u!114 &3990164265010495032
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 990524889146674647}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a6c2e720cdd70bd4eba3513b85a728ee, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  playerState: {fileID: 11400000, guid: 5db4fa054e5e3f14a932a12772b2474f, type: 2}
+  movementData: {fileID: 11400000, guid: b7f9197c95e657c45834b86d2368c75e, type: 2}
 --- !u!114 &3118084724917502932
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -442,27 +491,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _spriteRenderer: {fileID: 0}
---- !u!114 &9157960678793547469
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 990524889146674647}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2c3cca9864a128440880a9095a4b950a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  weaponPrefabs:
-  - {fileID: 5890597930396712892, guid: 21325d3651ab45840a92259344bebdf7, type: 3}
-  - {fileID: 5890597930396712892, guid: c42c4557d7609034082844842861a85e, type: 3}
-  - {fileID: 5890597930396712892, guid: 83da8bb97a71d7c4dac4b6019e54d2c7, type: 3}
-  - {fileID: 5890597930396712892, guid: bd86b8db7cd3b944da4f24071741d34d, type: 3}
-  weaponGOs: []
-  _weaponParent: {fileID: 369740753222307388}
-  _weaponPosition: {fileID: 4675471930827448633}
-  currentlyUsedSlot: 0
 --- !u!114 &67036150965266176
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -475,6 +503,58 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 11e4bb250f0f1574e824ec0e3d855568, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &6640803686068332035
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 990524889146674647}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e3e571f765bb2cb4fb7094044d495238, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  abilities:
+  - {fileID: 11400000, guid: c77da009862edb841bbc0f74e1a091bd, type: 2}
+  - {fileID: 11400000, guid: 80d06cd2b41616849ab545d3e107161d, type: 2}
+  currentAbility: {fileID: 11400000, guid: c77da009862edb841bbc0f74e1a091bd, type: 2}
+  userInfo: {fileID: 11400000, guid: 77f621b67473a6641ae1df33db72517f, type: 2}
+  currentAbilityIndex: 0
+--- !u!114 &7564687369081222863
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 990524889146674647}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 544d898f84706db4ba4e05eed6c282b5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerEnergyData: {fileID: 11400000, guid: c36532a46b878ab4085f5400b57e4ffe, type: 2}
+--- !u!114 &3761730729592186768
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 990524889146674647}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 15570fccdaa0d76439a21f8b20d5837c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  inventoryData: {fileID: 11400000, guid: d75f52ebf7aa6fd4c91d125464fdfa72, type: 2}
+  _weaponParent: {fileID: 369740753222307388}
+  _weaponPosition: {fileID: 4675471930827448633}
+  weaponGOs: []
+  weaponScripts: []
+  currentWeapon: {fileID: 0}
+  currentWeaponScript: {fileID: 0}
+  weaponCount: 0
+  currentlyUsedSlot: 0
 --- !u!1 &2113836864039851442
 GameObject:
   m_ObjectHideFlags: 0
@@ -556,7 +636,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 96d9de28a29f3e741a11e2f900883e67, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  spriteRenderer: {fileID: 0}
+  playerHealth: {fileID: 11400000, guid: bece28a020fcad84ea28a64f68a1fb6f, type: 2}
+  playerState: {fileID: 11400000, guid: 5db4fa054e5e3f14a932a12772b2474f, type: 2}
+  spriteRenderer: {fileID: 583302782020924355}
 --- !u!114 &5344310077512343878
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -579,9 +661,9 @@ GameObject:
   m_Component:
   - component: {fileID: 369740753222307388}
   - component: {fileID: 655333980170022825}
-  - component: {fileID: 1059965001712806915}
   - component: {fileID: 8300566310151160716}
   - component: {fileID: 1095376695646202524}
+  - component: {fileID: 4004060463098888693}
   m_Layer: 7
   m_Name: Weapon Parent
   m_TagString: Untagged
@@ -618,24 +700,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 51261ccdc83380c40b01e9555971b52c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &1059965001712806915
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5574510567315748738}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a98e18a4965c6254cae03d6e3c4bc800, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  playerAttackSprite: {fileID: 21300000, guid: cd936fd5a33225044b7d4cb8a97a4f4c, type: 3}
-  defaultSprite: {fileID: 21300000, guid: eb582e75f9b0ee040a2c0cffdfd28787, type: 3}
-  _spriteRenderer: {fileID: 583302782020924355}
-  _currentWeaponGO: {fileID: 0}
-  _weaponPosition: {fileID: 4675471930827448633}
-  weaponSwitchAudio: {fileID: 8300000, guid: d2b24e19405954a4c99252993fb90386, type: 3}
 --- !u!114 &8300566310151160716
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -662,6 +726,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 81ff3c7914f795543bc7213cc9ed9bef, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &4004060463098888693
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5574510567315748738}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eaa239986d7e6404fb5fc46050a3003b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _currentWeaponGO: {fileID: 0}
+  _weaponPosition: {fileID: 4675471930827448633}
+  weaponSwitchAudio: {fileID: 8300000, guid: d2b24e19405954a4c99252993fb90386, type: 3}
+  currentWeaponScript: {fileID: 0}
 --- !u!1 &5790504939223317001
 GameObject:
   m_ObjectHideFlags: 0

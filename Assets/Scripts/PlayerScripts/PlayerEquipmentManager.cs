@@ -1,3 +1,4 @@
+using System;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Animations;
@@ -10,18 +11,21 @@ public class PlayerEquipmentManager : MonoBehaviour
     Transform _parentTransform;
     public bool isThereActiveEquipment = false;
     public int _equipmentCount = 5;
-    IEquipment _equipment;
-    
-    void OnEnable(){
-        if(_equipment != null)
-            _equipment.OnAbilityEnd += ResetEquipmentStatus;
+    IEquipment _currentEquipmentScript;
 
-        _equipment.DisableScript();
+    void OnEnable()
+    {
+        if (_currentEquipmentScript != null)
+            _currentEquipmentScript.OnAbilityEnd += ResetEquipmentStatus;
+
+        //_currentEquipmentScript.DisableScript();
         _equipmentPrefab.SetActive(false);
+        
+        
     }
 
     void OnDisable(){
-        _equipment.OnAbilityEnd -= ResetEquipmentStatus;
+        _currentEquipmentScript.OnAbilityEnd -= ResetEquipmentStatus;
     }
 
     void Awake(){
@@ -33,7 +37,7 @@ public class PlayerEquipmentManager : MonoBehaviour
         if(!_grenadeSpawnPoint)
             _grenadeSpawnPoint = GameObject.FindGameObjectWithTag("GrenadeSpawnPoint").transform;
 
-        _equipment = _equipmentPrefab.GetComponent<IEquipment>();
+        _currentEquipmentScript = _equipmentPrefab.GetComponent<IEquipment>();
 
     }
     void Start()
@@ -41,26 +45,32 @@ public class PlayerEquipmentManager : MonoBehaviour
         _parentTransform = transform;
         _equipmentPrefab.transform.parent = _parentTransform;
         _equipmentPrefab.transform.position = _grenadeSpawnPoint.position;
-        
     }
 
     void Update()
     {
-        if (PlayerInputManager.instance.EquipmentInput && _equipmentCount != 0 && !isThereActiveEquipment){
+        if (PlayerInputManager.instance.EquipmentInput && _currentEquipmentScript.EquipmentInfo.count != 0 && !isThereActiveEquipment)
+        {
+            ChangeEquipment();
             DeployEquipment();
         }
     }
-    
-    public void DeployEquipment()
+
+    void ChangeEquipment()
     {
-
+        Debug.Log("called");
+        IEquipment.InvokeEquipmentChangeEvent(_currentEquipmentScript.EquipmentInfo);
+    }
+    
+    void DeployEquipment()
+    {
         _equipmentPrefab.SetActive(true);
-        _equipment.SetupEquipmentParameters(transform.localRotation, transform.right, _parentTransform, _grenadeSpawnPoint);
+        _currentEquipmentScript.SetupEquipmentParameters(transform.localRotation, transform.right, _parentTransform, _grenadeSpawnPoint);
         _equipmentPrefab.transform.parent = null;
-        StartCoroutine(_equipment.TriggerAbilityAfterTime());
+        StartCoroutine(_currentEquipmentScript.TriggerAbilityAfterTime());
         isThereActiveEquipment = true;
-        --_equipmentCount;
-
+        --_currentEquipmentScript.EquipmentInfo.count;
+        IEquipment.InvokeEquipmentUseEvent(_currentEquipmentScript.EquipmentInfo);
     }
 
     void ResetEquipmentStatus(){

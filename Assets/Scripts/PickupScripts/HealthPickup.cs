@@ -2,11 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class HealthPickup : MonoBehaviour, IPickup
+// FIX NEEDED!
+// Must inherit IPickup inteface later
+
+public class HealthPickup : MonoBehaviour
 {
-    public PickupSO pickupSO;
+    /*public PickupSO pickupSO;
     public AudioSource audioSource;
-    UnitInfoSO _playerHealth;
+    UnitInfo _playerHealth;
 
     void Start(){
         if(audioSource == null)
@@ -15,9 +18,11 @@ public class HealthPickup : MonoBehaviour, IPickup
 
    void OnTriggerEnter2D(Collider2D other){
         if (other.CompareTag("PlayerHitbox")){
-            _playerHealth = other.GetComponent<IHealth>().UnitInfo;
+            // FIX THIS!!!
+            //_playerHealth = other.GetComponent<IHealth>().UnitInfo;
 
-            if(_playerHealth == null || _playerHealth.health == _playerHealth.maxHealth){
+            if (_playerHealth == null || _playerHealth.health == _playerHealth.maxHealth)
+            {
                 PlayPickUpFailSound();
                 return;
             } 
@@ -51,7 +56,7 @@ public class HealthPickup : MonoBehaviour, IPickup
         audioSource.clip = pickupSO.PickUpAudio;
             audioSource.PlayOneShot(pickupSO.FailToPickUpAudio);
         }
-   }
+   }*/
 
-    
+
 }

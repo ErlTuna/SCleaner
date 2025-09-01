@@ -1,0 +1,33 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b38090283f6caa545bcd9002e44524bb, type: 3}
+  m_Name: DashAbility
+  m_EditorClassIdentifier: 
+  icon: {fileID: 21300000, guid: b656f54df181b3b42ba04e683cc970a6, type: 3}
+  SFXClip: {fileID: 0}
+  effects:
+  - rid: 1745427943304462336
+  - rid: 1745427943304462337
+  state: 0
+  energyCost: 1
+  abilityName: DashAbility
+  strength: 15
+  duration: 0.2
+  references:
+    version: 2
+    RefIds:
+    - rid: 1745427943304462336
+      type: {class: DisplacementEffect, ns: , asm: Assembly-CSharp}
+      data: 
+    - rid: 1745427943304462337
+      type: {class: InvulnEffect, ns: , asm: Assembly-CSharp}
+      data: 

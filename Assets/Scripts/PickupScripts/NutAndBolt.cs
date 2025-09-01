@@ -2,12 +2,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class NutAndBolt : MonoBehaviour, IPickup
+
+// IPickup interface has to be implemented
+// FIX NEEDED!
+public class NutAndBolt : MonoBehaviour
 {
 
-    public PickupSO pickupSO;
+    /*public PickupSO pickupSO;
     public AudioSource audioSource;
-    UnitInfoSO playerInfo;
+    UnitInfo playerInfo;
     void Start(){
         if(audioSource == null)
         audioSource = GetComponent<AudioSource>();
@@ -44,5 +47,6 @@ public class NutAndBolt : MonoBehaviour, IPickup
             audioSource.PlayOneShot(pickupSO.PickUpAudio);
         }
     }
+    */
 
 }

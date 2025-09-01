@@ -1,9 +1,7 @@
 
 
-using System;
-
 public interface IHealth
 {
-    public UnitInfoSO UnitInfo{get;set;}
+    //public PlayerHealthSO UnitInfo{get;set;}
 
 }

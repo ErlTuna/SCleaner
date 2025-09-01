@@ -1,19 +1,14 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
-public class PlayerMovement : MonoBehaviour, ISetup, IDisable
+public class PlayerMovement : MonoBehaviour, IDisable
 {
-
-
     Rigidbody2D _rb2D;
     Vector2 _moveDirection;
-    UnitInfoSO _playerInfo;
     public delegate void OnDashInput(Vector2 moveDirection);
-    public static OnDashInput onDash;
-    public InputActionAsset inputActions;
+    public static OnDashInput OnDash;
     InputAction _movementInputAction;
-    public UnitInfoSO playerInfo;
-
-
+    public UnitStateSO playerState;
+    public MovementSO movementData;
 
     void OnEnable()
     {
@@ -28,30 +23,26 @@ public class PlayerMovement : MonoBehaviour, ISetup, IDisable
 
     void Start()
     {
-        playerInfo.movementSpeed = playerInfo.maxMovementSpeed;
+        movementData.movementSpeed = movementData.maxMovementSpeed;
         _rb2D = GetComponent<Rigidbody2D>();
     }
 
-    public void Init(UnitInfoSO info)
+    public void Init(MovementSO movementData)
     {
-        playerInfo = info;
+        //playerInfo = info;
     }
 
     void Update()
     {
         _moveDirection = PlayerInputManager.instance.MovementInput;
 
-        if (PlayerInputManager.instance.DashInput)
-        {
-            onDash?.Invoke(_moveDirection);
-        }
     }
 
     void FixedUpdate()
     {
-        if (playerInfo.isDashing) return;
+        if (playerState.canMove == false) return;
 
-        _rb2D.velocity = _moveDirection * playerInfo.movementSpeed;
+        _rb2D.velocity = _moveDirection * movementData.movementSpeed;
     }
 
     public void DisableScript()
@@ -63,23 +54,3 @@ public class PlayerMovement : MonoBehaviour, ISetup, IDisable
     }
 }
 
-/*
-public void OnMovement(InputAction.CallbackContext ctx){
-        if (ctx.performed)
-        _moveDirection = ctx.ReadValue<Vector2>();
-        if (ctx.canceled)
-        _moveDirection = Vector2.zero;
-    }
-
-    /*public void OnDash(InputAction.CallbackContext ctx)
-    {
-        if (ctx.performed && _moveDirection.magnitude > 0)
-        {
-            onDash?.Invoke(_moveDirection);
-        }
-    }
-
-    /*public void ReceiveInputAction(InputAction action){
-        _movementInputAction = action;
-    }
-*/

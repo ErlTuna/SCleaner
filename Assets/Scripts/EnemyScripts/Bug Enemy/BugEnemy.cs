@@ -9,7 +9,7 @@ public class BugEnemy : MonoBehaviour, IEnemy
     [SerializeField] Rigidbody2D _rb2D;
     public EnemySO EnemyInfo{get;set;}
     public BoxCollider2D SpawnArea {get;set;}
-    public UnitInfoSO _playerInfo;
+    public PlayerCoreSO _playerInfo;
     StateMachine _stateMachine;
     GameObject _player;
     
@@ -25,14 +25,6 @@ public class BugEnemy : MonoBehaviour, IEnemy
 
     void Start()
     {
-        
-
-        //Initialize fields
-        //string description1 = "roam to stop predicate";
-        //string description2 = "stop to roam predicate";
-        
-
-
         //Initialize components
         _stateMachine = new StateMachine();
         _rb2D = GetComponent<Rigidbody2D>();
@@ -62,7 +54,7 @@ public class BugEnemy : MonoBehaviour, IEnemy
 
         //ANY TRANSITIONS
         Any(immobileState, new FuncPredicate( () => EnemyInfo.isImmobilized));
-        Any(roamState, new FuncPredicate(() => !_playerInfo.isAlive && !EnemyInfo.isImmobilized));
+        Any(roamState, new FuncPredicate(() => !_playerInfo.stateData.isAlive && !EnemyInfo.isImmobilized));
 
         #endregion TRANSITIONS
         //Set initial state

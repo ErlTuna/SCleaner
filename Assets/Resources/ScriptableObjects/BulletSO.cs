@@ -6,6 +6,7 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "BulletInfoSO", menuName = "ScriptableObjects/Bullet Info")]
 public class BulletSO : ScriptableObject
 {
+    public GameObject bulletPrefab;
     public BulletType bulletType;
     public float projectileSpeed = 5f;
     public float size = 1f;

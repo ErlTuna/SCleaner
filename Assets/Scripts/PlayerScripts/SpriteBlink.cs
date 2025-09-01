@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Analytics;
 
 public class SpriteBlink : MonoBehaviour
 {
@@ -18,7 +20,13 @@ public class SpriteBlink : MonoBehaviour
     
     IEnumerator Blink(){
         int currentBlinkCount = 0;
-        while (currentBlinkCount < blinkCount){
+        if (_spriteRenderer == null)
+        {
+            Debug.Log("Sprite Renderer is missing!");
+            yield break;
+        }
+        while (currentBlinkCount < blinkCount)
+        {
             _spriteRenderer.enabled = false;
             yield return new WaitForSeconds(0.25f);
             _spriteRenderer.enabled = true;

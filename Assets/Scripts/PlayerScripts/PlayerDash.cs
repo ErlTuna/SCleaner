@@ -1,46 +1,47 @@
 using System.Collections;
 using UnityEngine;
-using UnityEngine.InputSystem;
 
-public class PlayerDash : MonoBehaviour, ISetup
+
+// Deprecated
+public class PlayerDash : MonoBehaviour
 {
-    
-    public delegate IEnumerator OnDashTriggered(UnitInfoSO playerInfo, float dashDuration);
+    /*
+    public delegate IEnumerator OnDashTriggered(UnitInfo playerInfo, float dashDuration);
     public static OnDashTriggered onDashTriggered;
-    Rigidbody2D _rb2D;
-    UnitInfoSO _playerInfo;
+    [SerializeField] Rigidbody2D _rb2D;
+    [SerializeField] AbilityData _abilityData;
+    UnitInfo _playerInfo;
     AudioClip _dashSFX;
-    float _dashSpeed = 15f; 
-    float _dashDuration = .2f;
     float _dashTime = 0f;  
     int _dashCount = 3; 
     float _timeSinceLastDash;
     int _remainingDashes;
+    
 
     void OnEnable(){
-        PlayerMovement.onDash += PerformDash;
+        //PlayerMovement.OnDash += PerformDash;
     }
 
     void OnDisable(){
-        PlayerMovement.onDash -= PerformDash;
+        //PlayerMovement.OnDash -= PerformDash;
     }
 
     private void Awake()
     {
         _rb2D = GetComponent<Rigidbody2D>();
-        _remainingDashes = _dashCount;
+        //_remainingDashes = _dashCount;
     }
 
-    public void Init(UnitInfoSO info){
+    public void Init(UnitInfo info){
         _playerInfo = info;
-        _dashSFX = _playerInfo.DashSFX;
+        //_dashSFX = _playerInfo.DashSFX;
     }
 
     private void Update()
     {
-        ResetDashes();
+        //ResetDashes();
 
-        if (_playerInfo.isDashing)
+        /*if (_playerInfo.isDashing)
         {
             _dashTime -= Time.deltaTime;
             if (_dashTime <= 0)  // Set dash flag to false when dashTime ends
@@ -59,14 +60,14 @@ public class PlayerDash : MonoBehaviour, ISetup
         if (_remainingDashes > 0)
         {
             _playerInfo.isDashing = true;
-            _dashTime = _dashDuration;
+            //_dashTime = _abilityData.dashDuration;
 
             PlayPlayerSounds.PlayAudio(_dashSFX, .25f);
-            StartCoroutine(onDashTriggered?.Invoke(_playerInfo, _dashDuration));
+            //StartCoroutine(onDashTriggered?.Invoke(_playerInfo, _abilityData.dashDuration));
             _timeSinceLastDash = Time.time;
 
             Vector2 dashDirection = moveDirection.normalized;
-            _rb2D.velocity = dashDirection * _dashSpeed;
+            //_rb2D.velocity = dashDirection * _abilityData.dashSpeed;
             
 
             _remainingDashes--;
@@ -84,6 +85,7 @@ public class PlayerDash : MonoBehaviour, ISetup
             PlayPlayerSounds.PlayAudio(_playerInfo.DashRecoverSFX);
         }
         
-    }
+    }*/
+
 
 }

@@ -5,7 +5,7 @@ public class PlayerControls : MonoBehaviour
 {
     private Rigidbody2D _rb2D;
     private Vector2 _moveDirection;
-    public UnitInfoSO player;
+    public MovementSO movementData;
 
     void OnEnable(){
         PlayerHealth.onPlayerDeath += DisableScript;
@@ -22,7 +22,7 @@ public class PlayerControls : MonoBehaviour
     }
 
     void FixedUpdate(){
-        _rb2D.velocity = _moveDirection * player.movementSpeed;
+        _rb2D.velocity = _moveDirection * movementData.movementSpeed;
     }
 
     public void DisableScript(){

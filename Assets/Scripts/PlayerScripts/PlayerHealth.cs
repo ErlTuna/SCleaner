@@ -1,14 +1,13 @@
+using System;
 using System.Collections;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.InputSystem;
 
-public class PlayerHealth : MonoBehaviour, IDamageable, IHealth, ISetup
+
+public class PlayerHealth : MonoBehaviour, IDamageable, IHealth
 {
-    public UnitInfoSO UnitInfo{get;set;}    
-    public delegate IEnumerator OnPlayerDamaged(UnitInfoSO info);
-    public static OnPlayerDamaged onPlayerDamaged;
-    
+    public HealthSO playerHealth;
+    public UnitStateSO playerState;    
+    public static event Action<int> OnPlayerHit;    
     public delegate IEnumerator OnPlayerHitInvulnEventHandler();
     public static OnPlayerHitInvulnEventHandler onPlayerHitInvuln;
     public delegate void OnPlayerDeath();
@@ -25,8 +24,8 @@ public class PlayerHealth : MonoBehaviour, IDamageable, IHealth, ISetup
     }
 
 
-    public void Init(UnitInfoSO info){
-        UnitInfo = info;
+    public void Init(HealthSO healthData){
+        //UnitInfo = info;
     }
 
     public void TakeDamage(IEnemy attacker){
@@ -39,19 +38,22 @@ public class PlayerHealth : MonoBehaviour, IDamageable, IHealth, ISetup
 
     public void TakeDamage(int amount){
 
-        if (UnitInfo.isInvuln) return;
-        if (!UnitInfo.isAlive) return;
+        if (playerState.isInvuln) return;
+        if (!playerState.isAlive) return;
 
-        UnitInfo.health -= amount;
-        if (UnitInfo.health <= 0){
-            UnitInfo.isAlive = false;
-            PlayPlayerSounds.PlayAudio(UnitInfo.OnDefeatSFX);
-            spriteRenderer.sprite = UnitInfo.DefeatSprite;
+        playerHealth.health -= 10;
+        OnPlayerHit?.Invoke(playerHealth.health);
+
+        if (playerHealth.health <= 0)
+        {
+            playerState.isAlive = false;
+            //PlayPlayerSounds.PlayAudio(PlayerSoundsSO.OnDefeatSFX);
+            //spriteRenderer.sprite = UnitInfo.DefeatSprite;
             onPlayerDeath?.Invoke();
             return;
         }
-        PlayPlayerSounds.PlayAudio(UnitInfo.OnHitSFX);
-        StartCoroutine(onPlayerDamaged?.Invoke(UnitInfo));
-        StartCoroutine(onPlayerHitInvuln?.Invoke());
+        //PlayPlayerSounds.PlayAudio(UnitInfo.OnHitSFX);
+        //StartCoroutine(onPlayerDamaged?.Invoke(UnitInfo));
+        //StartCoroutine(onPlayerHitInvuln?.Invoke());
     }
 }

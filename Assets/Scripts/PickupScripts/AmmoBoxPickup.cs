@@ -6,7 +6,7 @@ public class AmmoBoxPickUp : MonoBehaviour, IPickup
 {
     public PickupSO pickupSO;
     private AudioSource audioSource;
-    WeaponSO _weaponInfo;
+    WeaponData weaponData;
 
     void Start(){
         if(audioSource == null)
@@ -15,9 +15,9 @@ public class AmmoBoxPickUp : MonoBehaviour, IPickup
 
    void OnTriggerEnter2D(Collider2D other){
         if (other.CompareTag("Player")){
-            _weaponInfo = other.GetComponentInChildren<WeaponManager>().currentWeaponScript.WeaponInfo;
+            weaponData = other.GetComponentInChildren<PlayerWeaponManager>().currentWeaponScript.data;
 
-            if(_weaponInfo == null || _weaponInfo.currentReserveAmmo == _weaponInfo.maxReserveAmmo){
+            if(weaponData == null || weaponData.currentReserveAmmo == weaponData.maxReserveAmmo){
                 PlayPickUpFailSound();
                 return;
             }
@@ -29,11 +29,11 @@ public class AmmoBoxPickUp : MonoBehaviour, IPickup
 
    public void PickupEffect(){
 
-        if(_weaponInfo.currentReserveAmmo + pickupSO.value > _weaponInfo.maxReserveAmmo)
-            _weaponInfo.currentReserveAmmo = _weaponInfo.maxReserveAmmo;
+        if(weaponData.currentReserveAmmo + pickupSO.value > weaponData.maxReserveAmmo)
+            weaponData.currentReserveAmmo = weaponData.maxReserveAmmo;
 
         else 
-            _weaponInfo.currentReserveAmmo += pickupSO.value;
+            weaponData.currentReserveAmmo += pickupSO.value;
 
         PlayPickupSuccess();
         GetComponent<SpriteRenderer>().enabled = false;

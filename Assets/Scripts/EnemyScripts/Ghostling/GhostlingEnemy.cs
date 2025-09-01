@@ -10,7 +10,7 @@ public class GhostlingEnemy : MonoBehaviour, IEnemy
     [SerializeField] Rigidbody2D _rb2D;
     public EnemySO EnemyInfo{get;set;}
     public BoxCollider2D SpawnArea {get;set;}
-    public UnitInfoSO _playerInfo;
+    public PlayerCoreSO _playerInfo;
     StateMachine _stateMachine;
     GameObject _player;
     
@@ -59,7 +59,7 @@ public class GhostlingEnemy : MonoBehaviour, IEnemy
 
         //At(roamState, chaseState, new FuncPredicate( () => infoSO.hasDetectedPlayer));
 
-        Any(roamState, new FuncPredicate(() => !_playerInfo.isAlive, "player is dead!"));
+        Any(roamState, new FuncPredicate(() => !_playerInfo.stateData.isAlive, "player is dead!"));
 
 
         //Set initial state

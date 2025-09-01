@@ -9,24 +9,24 @@ public class PlayerInvulnTimer : MonoBehaviour
     bool hurtInvuln = false;
 
     void OnEnable(){
-        PlayerHealth.onPlayerDamaged += TickInvulnTimerForHurt;
-        PlayerDash.onDashTriggered += TickInvulnTimerForDash;
+        //PlayerHealth.onPlayerDamaged += TickInvulnTimerForHurt;
+        //PlayerDash.onDashTriggered += TickInvulnTimerForDash;
     }   
 
     void OnDisable(){
-        PlayerHealth.onPlayerDamaged -= TickInvulnTimerForHurt;
-        PlayerDash.onDashTriggered -= TickInvulnTimerForDash;
+        //PlayerHealth.onPlayerDamaged -= TickInvulnTimerForHurt;
+        //PlayerDash.onDashTriggered -= TickInvulnTimerForDash;
     }
 
-    IEnumerator TickInvulnTimerForHurt(UnitInfoSO playerInfo){
-        playerInfo.isInvuln = true;
-        _spriteRenderer.sprite = playerInfo.HurtSprite;
+    IEnumerator TickInvulnTimerForHurt(UnitInfo playerInfo){
+        //playerInfo.isInvuln = true;
+        //_spriteRenderer.sprite = playerInfo.HurtSprite;
         yield return new WaitForSeconds(_invulnTimer);
-        _spriteRenderer.sprite = playerInfo.DefaultSprite;
-        playerInfo.isInvuln = false;
+        //_spriteRenderer.sprite = playerInfo.DefaultSprite;
+        //playerInfo.isInvuln = false;
     }
 
-    IEnumerator TickInvulnTimerForDash(UnitInfoSO playerInfo, float dashDuration){
+    IEnumerator TickInvulnTimerForDash(UnitInfo playerInfo, float dashDuration){
         if (hurtInvuln) yield break;
         playerInfo.isInvuln = true;
         yield return new WaitForSeconds(dashDuration);
