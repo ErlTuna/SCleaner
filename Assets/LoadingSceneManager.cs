@@ -5,7 +5,6 @@ using UnityEngine.SceneManagement;
 public class LoadingSceneManager : MonoBehaviour
 {
     [SerializeField] Animator _animator;
-    // Start is called before the first frame update
     void Start()
     {
         if (_animator != null)
@@ -15,13 +14,44 @@ public class LoadingSceneManager : MonoBehaviour
 
 
 
-    // Update is called once per frame
     IEnumerator LoadLevel()
     {
+        AsyncOperation UILoad = SceneManager.LoadSceneAsync("GameplayUI", LoadSceneMode.Additive);
+        UILoad.allowSceneActivation = false;
 
-        yield return new WaitForSecondsRealtime(5f);
-        SceneManager.LoadSceneAsync("GameplayUI", LoadSceneMode.Additive);
-        SceneManager.LoadSceneAsync("Test", LoadSceneMode.Additive);
+        while (UILoad.progress < 0.9f)
+        {
+            yield return null;
+        }
+
+        UILoad.allowSceneActivation = true;
+
+        while (!UILoad.isDone)
+        {
+            yield return null;
+        }
+
+        AsyncOperation GameLoad = SceneManager.LoadSceneAsync("Test", LoadSceneMode.Additive);
+        GameLoad.allowSceneActivation = false;
+
+        while (GameLoad.progress < 0.9f)
+        {
+            yield return null;
+        }        
+
+        GameLoad.allowSceneActivation = true;
+
+        while (!GameLoad.isDone)
+        {
+            yield return null;
+        }
+
+        yield return new WaitForSecondsRealtime(2.5f);
+
+        // Unload the loading screen scene
+        AsyncOperation LoadingScreenUnload = SceneManager.UnloadSceneAsync("Loading_Screen");
+        LoadingScreenUnload.allowSceneActivation = false;
+    
     }
     
     

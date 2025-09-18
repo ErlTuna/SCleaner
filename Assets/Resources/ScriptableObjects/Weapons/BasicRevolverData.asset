@@ -12,17 +12,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8af658472ac40bb42b3a626dc24f4a0c, type: 3}
   m_Name: BasicRevolverData
   m_EditorClassIdentifier: 
-  state: 0
-  type: 0
-  prefab: {fileID: 5890597930396712892, guid: ff5ae5010cc129d459f653de22aa6aed, type: 3}
-  bulletData: {fileID: 11400000, guid: a82aa05a3bcd30a4bb278b029a78a0d9, type: 2}
-  weaponName: Basic Revolver
-  damage: 20
-  currentAmmo: 5
-  roundCapacity: 6
-  maxReserveAmmo: 30
-  currentReserveAmmo: 21
-  pelletCount: 1
+  State: 0
+  Type: 1
+  Prefab: {fileID: 6657017082548522162, guid: c77308c80b6609f4eb203a2ff835a4b3, type: 3}
+  BulletData: {fileID: 11400000, guid: a82aa05a3bcd30a4bb278b029a78a0d9, type: 2}
+  Name: Revolver
+  Damage: 10
+  CurrentAmmo: 6
+  RoundCapacity: 6
+  MaxReserveAmmo: 36
+  StartingReserveAmmo: 36
+  BulletPerShot: 1
   gunSound: {fileID: 8300000, guid: f4181816d86635544b77fb16a9cf2bda, type: 3}
   sprite: {fileID: 21300000, guid: 0275ee1f17558584aa0d818221b668e7, type: 3}
   offset: {x: 0, y: 0, z: 0}

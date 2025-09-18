@@ -294,7 +294,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d8bf2a2c09af82d4da0cb9a48f8e949e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  data: {fileID: 11400000, guid: f5833629891c27544b95b1f096034f4d, type: 2}
+  weaponConfig: {fileID: 11400000, guid: f5833629891c27544b95b1f096034f4d, type: 2}
   firingPoint: {fileID: 7718260043891111844}
   _animator: {fileID: 1954626896692324193}
   _runtimeAnimatorController: {fileID: 0}

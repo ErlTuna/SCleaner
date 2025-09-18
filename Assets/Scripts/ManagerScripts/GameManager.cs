@@ -12,13 +12,13 @@ public class GameManager : MonoBehaviour
     void OnEnable(){
         
         //IWeapon.OnWeaponFireEvent += BulletStat;
-        PlayerHealth.onPlayerDeath += EndGame;
+        //PlayerHealth.onPlayerDeath += EndGame;
         BugHealth.OnDeathEvent += KillStat;
     }
 
     void OnDisable(){
         //IWeapon.OnWeaponFireEvent += BulletStat;
-        PlayerHealth.onPlayerDeath += EndGame;
+        //PlayerHealth.onPlayerDeath += EndGame;
         BugHealth.OnDeathEvent -= KillStat;
     }
 

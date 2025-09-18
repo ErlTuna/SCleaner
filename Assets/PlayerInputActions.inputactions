@@ -33,6 +33,15 @@
                     "initialStateCheck": false
                 },
                 {
+                    "name": "Secondary Attack",
+                    "type": "Button",
+                    "id": "ccd49256-5c78-4fe5-81ea-b6af9c19fefe",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
                     "name": "Dash",
                     "type": "Button",
                     "id": "715679a7-3480-4422-8ff7-6537c907ec3d",
@@ -108,6 +117,15 @@
                     "name": "Fourth Weapon",
                     "type": "Button",
                     "id": "95d63e3e-8949-4aad-a63e-f4a6cf9df6ea",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Switch Ability",
+                    "type": "Button",
+                    "id": "020b3b2f-d38a-4a37-8e77-402dada6e68d",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
@@ -321,6 +339,28 @@
                     "processors": "",
                     "groups": "",
                     "action": "Fourth Weapon",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "318314ad-cb04-4789-bf21-660cae58a390",
+                    "path": "<Keyboard>/f",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Switch Ability",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "ac14457b-f0a3-4fa9-883d-63e9eb12438d",
+                    "path": "<Mouse>/rightButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Secondary Attack",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

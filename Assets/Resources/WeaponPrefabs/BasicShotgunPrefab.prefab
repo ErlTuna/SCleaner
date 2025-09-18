@@ -434,7 +434,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b900212735a84364b811b9ee69832353, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  data: {fileID: 11400000, guid: 8a5bb5bc2f2a38a4db6856940f765c5e, type: 2}
+  weaponRuntimeData:
+    State: 0
+    Config: {fileID: 0}
+    CurrentAmmo: 0
+    ReserveAmmo: 0
+    Damage: 0
+    PelletCount: 0
+  weaponConfig: {fileID: 11400000, guid: 8a5bb5bc2f2a38a4db6856940f765c5e, type: 2}
   firingPoint: {fileID: 0}
   _animator: {fileID: -5657172089233996258}
   _runtimeAnimatorController: {fileID: 0}

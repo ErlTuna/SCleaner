@@ -1,14 +1,11 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
 
 public static class WeaponEvents
 {
-    public static event Action<WeaponData> OnWeaponFiredEvent;
-    public static event Action<WeaponData> OnWeaponReloadEvent;
-    public static event Action<WeaponData> OnWeaponSwitchEvent;
-    public static void RaiseWeaponFired(WeaponData weaponData) => OnWeaponFiredEvent?.Invoke(weaponData);
-    public static void RaiseWeaponReload(WeaponData weaponData) => OnWeaponReloadEvent?.Invoke(weaponData);
-    public static void RaiseWeaponSwitched(WeaponData weaponData) => OnWeaponSwitchEvent?.Invoke(weaponData);
+    public static event Action<WeaponRuntimeData> OnWeaponFiredEvent;
+    public static event Action<WeaponRuntimeData> OnWeaponReloadEvent;
+    public static event Action<WeaponConfigSO> OnWeaponSwitchEvent;
+    public static void RaiseWeaponFired(WeaponRuntimeData weaponData) => OnWeaponFiredEvent?.Invoke(weaponData);
+    public static void RaiseWeaponReload(WeaponRuntimeData weaponData) => OnWeaponReloadEvent?.Invoke(weaponData);
+    public static void RaiseWeaponSwitched(WeaponConfigSO weaponData) => OnWeaponSwitchEvent?.Invoke(weaponData);
 }

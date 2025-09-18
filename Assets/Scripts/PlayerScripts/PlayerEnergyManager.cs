@@ -3,20 +3,21 @@ using UnityEngine;
 
 public class PlayerEnergyManager : MonoBehaviour
 {
-    public EnergySO playerEnergyData;
+    Unit _owner;
+    PlayerEnergyData _playerEnergyData;
     Coroutine rechargeCoroutine;
     bool isRecharging = false;
 
     void OnEnable()
     {
-        AbilityHandler.OnAbilityFinished += TriggerRecharge;
-        AbilityHandler.OnAbilityUsed += OnEnergyUse;
+        PlayerAbilityHandler.OnAbilityFinished += TriggerRecharge;
+        PlayerAbilityHandler.OnAbilityUsed += OnEnergyUse;
     }
 
     void OnDisable()
     {
-        AbilityHandler.OnAbilityFinished -= TriggerRecharge;
-        AbilityHandler.OnAbilityUsed -= OnEnergyUse;
+        PlayerAbilityHandler.OnAbilityFinished -= TriggerRecharge;
+        PlayerAbilityHandler.OnAbilityUsed -= OnEnergyUse;
     }
 
     public void TriggerRecharge()
@@ -28,22 +29,23 @@ public class PlayerEnergyManager : MonoBehaviour
 
     public IEnumerator RechargeOvertime()
     {
-        while (playerEnergyData.currentEnergy < playerEnergyData.maxEnergy)
+        while (_playerEnergyData.CurrentEnergy < _playerEnergyData.MaxEnergy)
         {
             isRecharging = true;
-            playerEnergyData.currentEnergy += playerEnergyData.rechargeRate;
+            _playerEnergyData.CurrentEnergy += _playerEnergyData.RechargeRate;
 
-            if (playerEnergyData.currentEnergy > playerEnergyData.maxEnergy)
+            if (_playerEnergyData.CurrentEnergy > _playerEnergyData.MaxEnergy)
             {
-                playerEnergyData.currentEnergy = playerEnergyData.maxEnergy;
-                UIEvents.RaiseEnergyChanged(playerEnergyData.currentEnergy, playerEnergyData.maxEnergy);
+                _playerEnergyData.CurrentEnergy = _playerEnergyData.MaxEnergy;
+                UIEvents.RaiseEnergyChanged(_playerEnergyData.CurrentEnergy, _playerEnergyData.MaxEnergy);
                 isRecharging = false;
                 yield break;
             }
 
-            UIEvents.RaiseEnergyChanged(playerEnergyData.currentEnergy, playerEnergyData.maxEnergy);
+            UIEvents.RaiseEnergyChanged(_playerEnergyData.CurrentEnergy, _playerEnergyData.MaxEnergy);
             yield return new WaitForSeconds(.1f);
         }
+
         isRecharging = false;
         rechargeCoroutine = null;
 }
@@ -51,26 +53,32 @@ public class PlayerEnergyManager : MonoBehaviour
     /*public IEnumerator InstantRechargeCoroutine(AbilityData abilityData)
     {
         yield return new WaitForSeconds(rechargeInterval);
-        currentEnergy = maxEnergy;
+        CurrentEnergy = MaxEnergy;
         rechargeCoroutine = null;
     }*/
 
     public bool CanRecharge()
     {
-        return playerEnergyData.currentEnergy != playerEnergyData.maxEnergy && !isRecharging;
+        return _playerEnergyData.CurrentEnergy != _playerEnergyData.MaxEnergy && !isRecharging;
     }
 
     public void OnEnergyUse(AbilityData abilityData)
     {
-        float energyAfterUse = playerEnergyData.currentEnergy - abilityData.energyCost;
+        float energyAfterUse = _playerEnergyData.CurrentEnergy - abilityData.energyCost;
         if (Mathf.Approximately(energyAfterUse, 0))
         {
-            playerEnergyData.currentEnergy = 0;
-            UIEvents.RaiseEnergyChanged(playerEnergyData.currentEnergy, playerEnergyData.maxEnergy);
+            _playerEnergyData.CurrentEnergy = 0;
+            UIEvents.RaiseEnergyChanged(_playerEnergyData.CurrentEnergy, _playerEnergyData.MaxEnergy);
             return;
         }
 
-        playerEnergyData.currentEnergy -= abilityData.energyCost;
-        UIEvents.RaiseEnergyChanged(playerEnergyData.currentEnergy, playerEnergyData.maxEnergy);
+        _playerEnergyData.CurrentEnergy -= abilityData.energyCost;
+        UIEvents.RaiseEnergyChanged(_playerEnergyData.CurrentEnergy, _playerEnergyData.MaxEnergy);
+    }
+
+    public void InitializeWithData(Unit owner, PlayerEnergyData energyData)
+    {
+        _owner = owner;
+        _playerEnergyData = energyData;
     }
 }

@@ -10,12 +10,12 @@ public class SpriteBlink : MonoBehaviour
     readonly int blinkCount = 4;
 
     void OnEnable(){
-        PlayerHealth.onPlayerHitInvuln += Blink;
+        //PlayerHealth.onPlayerHitInvuln += Blink;
         
     }
 
     void OnDisable(){
-        PlayerHealth.onPlayerHitInvuln -= Blink;
+        //PlayerHealth.onPlayerHitInvuln -= Blink;
     }
     
     IEnumerator Blink(){

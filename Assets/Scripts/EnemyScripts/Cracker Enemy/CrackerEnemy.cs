@@ -9,7 +9,7 @@ public class CrackerEnemy : MonoBehaviour, IEnemy
     [SerializeField] Rigidbody2D _rb2D;
     public EnemySO EnemyInfo{get;set;}
     public BoxCollider2D SpawnArea {get;set;}
-    public PlayerCoreSO _playerInfo;
+    public UnitConfigsWrapperSO _playerInfo;
     StateMachine _stateMachine;
     GameObject _player;
     
@@ -27,7 +27,7 @@ public class CrackerEnemy : MonoBehaviour, IEnemy
         //Initialize components
         _stateMachine = new StateMachine();
         _rb2D = GetComponent<Rigidbody2D>();
-        _playerInfo = _player.GetComponent<PlayerMain>().playerInfo;
+        //_playerInfo = _player.GetComponent<PlayerMain>().playerInfo;
         agent.updateRotation = false;
         agent.updateUpAxis = false;
 
@@ -77,7 +77,7 @@ public class CrackerEnemy : MonoBehaviour, IEnemy
 
         //ANY to STATES
         Any(immobileState, new FuncPredicate( () => EnemyInfo.isImmobilized));
-        Any(roamState, new FuncPredicate(() => !_playerInfo.stateData.isAlive, "player is dead!"));
+        //Any(roamState, new FuncPredicate(() => !_playerInfo.stateData.isAlive, "player is dead!"));
 
         #endregion TRANSITIONS
 

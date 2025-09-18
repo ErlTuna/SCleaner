@@ -12,32 +12,43 @@ public class UI_ActiveWeaponDisplay : MonoBehaviour
 
     void OnEnable()
     {
-        PlayerInventoryManager.OnWeaponSwitchUIUpdate += UpdateWeaponDisplay;
-        PlayerInventoryManager.OnWeaponSwitchUIUpdate += UpdateAmmoDisplay;
+        PlayerInventoryEvents.OnWeaponSwitchUIUpdate += UpdateWeaponDisplayUI;
         WeaponEvents.OnWeaponFiredEvent += UpdateAmmoDisplay;
         WeaponEvents.OnWeaponReloadEvent += UpdateAmmoDisplay;
+
     }
 
     void OnDisable()
     {
-        PlayerInventoryManager.OnWeaponSwitchUIUpdate -= UpdateWeaponDisplay;
-        PlayerInventoryManager.OnWeaponSwitchUIUpdate -= UpdateAmmoDisplay;
+        PlayerInventoryEvents.OnWeaponSwitchUIUpdate -= UpdateWeaponDisplayUI;
         WeaponEvents.OnWeaponFiredEvent -= UpdateAmmoDisplay;
         WeaponEvents.OnWeaponReloadEvent -= UpdateAmmoDisplay;
+
     }
 
-    void UpdateWeaponDisplay(WeaponData weaponData)
+    void UpdateWeaponDisplayUI(Sprite weaponSprite, WeaponRuntimeData runtimeData)
     {
-        _imageComponent.sprite = weaponData.sprite;
+
+        if (weaponSprite == null)
+        {
+        Debug.LogWarning("Weapon sprite is null — likely due to weapon not being fully initialized.");
+        return;
+        }
+
+
+        _imageComponent.sprite = weaponSprite;
+        UpdateAmmoDisplay(runtimeData);
     }
 
-    void UpdateAmmoDisplay(WeaponData weaponData)
+    void UpdateAmmoDisplay(WeaponRuntimeData weaponData)
     {
-        string currentAmmo = weaponData.currentAmmo.ToString();
-        string currentReserve = weaponData.currentReserveAmmo.ToString();
+        Debug.Log(weaponData.CurrentAmmo);
+        string currentAmmo = weaponData.CurrentAmmo.ToString();
+        string currentReserve = weaponData.ReserveAmmo.ToString();
         string text = currentAmmo + "/" + currentReserve;
         _ammoText.SetText(text);
     }
+
 
 
 

@@ -12,17 +12,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8af658472ac40bb42b3a626dc24f4a0c, type: 3}
   m_Name: BasicSMGData
   m_EditorClassIdentifier: 
-  state: 0
-  type: 1
-  prefab: {fileID: 5890597930396712892, guid: e8db5ff67e8422f4180f347020f5401e, type: 3}
-  bulletData: {fileID: 11400000, guid: a3d432f8e7373a146a7bc5cdb97754b7, type: 2}
-  weaponName: Basic SMG
-  damage: 3
-  currentAmmo: 29
-  roundCapacity: 30
-  maxReserveAmmo: 120
-  currentReserveAmmo: 90
-  pelletCount: 1
+  State: 0
+  Type: 0
+  Prefab: {fileID: 5890597930396712892, guid: c9811e33e02839c489d5101f0c846dcd, type: 3}
+  BulletData: {fileID: 11400000, guid: a3d432f8e7373a146a7bc5cdb97754b7, type: 2}
+  Name: Basic SMG
+  Damage: 3
+  CurrentAmmo: 30
+  RoundCapacity: 30
+  MaxReserveAmmo: 120
+  StartingReserveAmmo: 120
+  BulletPerShot: 1
   gunSound: {fileID: 8300000, guid: 1628a2d7b2d1a1143b779d74783db947, type: 3}
   sprite: {fileID: 21300000, guid: ee9870b1675272d42a735fce29d0358a, type: 3}
   offset: {x: 0, y: 0, z: 0}

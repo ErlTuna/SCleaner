@@ -22,6 +22,7 @@ public class UI_Crosshair : MonoBehaviour
 
     void Update()
     {
+        if (PlayerInputManager.instance == null) return;
         rectTransform.position = PlayerInputManager.instance.PointerInput;
     }
 

@@ -1,10 +1,10 @@
 using System;
 using UnityEngine;
 
-public class BugHealth : MonoBehaviour, IDamageable, IHealth
+public class BugHealth : MonoBehaviour, IDamageable
 {
     public static event Action OnDeathEvent;
-    public HealthSO HealthData{get;set;}
+    //public HealthSO HealthData{get;set;}
     [SerializeField] DamageFlash _damageFlash;
     [SerializeField] GameObject parent;
     public DropRandomItem itemDropper;

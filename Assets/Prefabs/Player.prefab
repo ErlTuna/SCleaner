@@ -52,6 +52,7 @@ GameObject:
   - component: {fileID: 6640803686068332035}
   - component: {fileID: 7564687369081222863}
   - component: {fileID: 3761730729592186768}
+  - component: {fileID: 766600507654131362}
   m_Layer: 7
   m_Name: Player
   m_TagString: Player
@@ -424,6 +425,10 @@ MonoBehaviour:
       m_Calls: []
     m_ActionId: d9118ae2-24cd-4bc6-96f9-0b496f56d566
     m_ActionName: UI/CloseMenu[/Keyboard/escape]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 020b3b2f-d38a-4a37-8e77-402dada6e68d
+    m_ActionName: Gameplay/Switch Ability[/Keyboard/f]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Gameplay
@@ -441,16 +446,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d32c3a3e678640f49947d74ef7fdd622, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerActionMap:
+  unitConfigWrapper: {fileID: 11400000, guid: 77f621b67473a6641ae1df33db72517f, type: 2}
+  _playerActionMap:
     m_Name: Player
-    m_Id: f69657a1-6e4f-42a7-9904-c6ef4c9c79da
+    m_Id: 7aeb3b80-dfda-4f0e-9b5e-e134dc0627b1
     m_Asset: {fileID: 0}
     m_Actions: []
     m_Bindings: []
-  playerHealth: {fileID: 2614403972491431392}
-  playerMovement: {fileID: 1007409015436641985}
-  playerAim: {fileID: 655333980170022825}
-  playerInfo: {fileID: 11400000, guid: 77f621b67473a6641ae1df33db72517f, type: 2}
+  _playerHealthManager: {fileID: 2614403972491431392}
+  _playerMovementManager: {fileID: 1007409015436641985}
+  _playerInventoryManager: {fileID: 0}
+  _playerEnergyManager: {fileID: 7564687369081222863}
+  _playerAbilityHandler: {fileID: 6640803686068332035}
+  _playerAimManager: {fileID: 655333980170022825}
 --- !u!114 &1007409015436641985
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -463,8 +471,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 206b6b8f717912e49bf4c3f8008bbb64, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerState: {fileID: 11400000, guid: 5db4fa054e5e3f14a932a12772b2474f, type: 2}
-  movementData: {fileID: 11400000, guid: b7f9197c95e657c45834b86d2368c75e, type: 2}
 --- !u!114 &3118084724917502932
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -519,7 +525,6 @@ MonoBehaviour:
   - {fileID: 11400000, guid: c77da009862edb841bbc0f74e1a091bd, type: 2}
   - {fileID: 11400000, guid: 80d06cd2b41616849ab545d3e107161d, type: 2}
   currentAbility: {fileID: 11400000, guid: c77da009862edb841bbc0f74e1a091bd, type: 2}
-  userInfo: {fileID: 11400000, guid: 77f621b67473a6641ae1df33db72517f, type: 2}
   currentAbilityIndex: 0
 --- !u!114 &7564687369081222863
 MonoBehaviour:
@@ -533,7 +538,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 544d898f84706db4ba4e05eed6c282b5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerEnergyData: {fileID: 11400000, guid: c36532a46b878ab4085f5400b57e4ffe, type: 2}
 --- !u!114 &3761730729592186768
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -546,11 +550,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 15570fccdaa0d76439a21f8b20d5837c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  inventoryData: {fileID: 11400000, guid: d75f52ebf7aa6fd4c91d125464fdfa72, type: 2}
+--- !u!114 &766600507654131362
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 990524889146674647}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3dd60289d248d5044953fcd94f8f904c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
   _weaponParent: {fileID: 369740753222307388}
   _weaponPosition: {fileID: 4675471930827448633}
-  weaponGOs: []
-  weaponScripts: []
   currentWeapon: {fileID: 0}
   currentWeaponScript: {fileID: 0}
   weaponCount: 0
@@ -636,9 +649,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 96d9de28a29f3e741a11e2f900883e67, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerHealth: {fileID: 11400000, guid: bece28a020fcad84ea28a64f68a1fb6f, type: 2}
-  playerState: {fileID: 11400000, guid: 5db4fa054e5e3f14a932a12772b2474f, type: 2}
-  spriteRenderer: {fileID: 583302782020924355}
 --- !u!114 &5344310077512343878
 MonoBehaviour:
   m_ObjectHideFlags: 0

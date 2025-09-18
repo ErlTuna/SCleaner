@@ -12,17 +12,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8af658472ac40bb42b3a626dc24f4a0c, type: 3}
   m_Name: BasicShotgunData
   m_EditorClassIdentifier: 
-  state: 0
-  type: 1
-  prefab: {fileID: 5890597930396712892, guid: 0c330f1e0059b844fba44180a51a7522, type: 3}
-  bulletData: {fileID: 11400000, guid: ff4c160dc961a4e48a857227680f539b, type: 2}
-  weaponName: Shotgun
-  damage: 8
-  currentAmmo: 6
-  roundCapacity: 6
-  maxReserveAmmo: 36
-  currentReserveAmmo: 23
-  pelletCount: 3
+  State: 0
+  Type: 1
+  Prefab: {fileID: 5890597930396712892, guid: 434f64dd444297848b8568e504356983, type: 3}
+  BulletData: {fileID: 11400000, guid: ff4c160dc961a4e48a857227680f539b, type: 2}
+  Name: Shotgun
+  Damage: 8
+  CurrentAmmo: 6
+  RoundCapacity: 6
+  MaxReserveAmmo: 36
+  StartingReserveAmmo: 36
+  BulletPerShot: 3
   gunSound: {fileID: 8300000, guid: c10c9b338ddf8074fa5849ce0ee10db3, type: 3}
   sprite: {fileID: 21300000, guid: b968b8789d15f934e8e5e107bb9614cb, type: 3}
   offset: {x: 0, y: 0, z: 0}

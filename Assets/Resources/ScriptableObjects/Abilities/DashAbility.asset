@@ -12,16 +12,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b38090283f6caa545bcd9002e44524bb, type: 3}
   m_Name: DashAbility
   m_EditorClassIdentifier: 
+  abilityName: DashAbility
+  _owner: {fileID: 0}
+  abilityType: 0
+  state: 0
+  energyCost: 1
+  strength: 15
+  duration: 0.2
   icon: {fileID: 21300000, guid: b656f54df181b3b42ba04e683cc970a6, type: 3}
   SFXClip: {fileID: 0}
   effects:
   - rid: 1745427943304462336
   - rid: 1745427943304462337
-  state: 0
-  energyCost: 1
-  abilityName: DashAbility
-  strength: 15
-  duration: 0.2
+  conditions:
+  - rid: 3032813789546545152
+  - rid: 3032813789546545153
   references:
     version: 2
     RefIds:
@@ -31,3 +36,13 @@ MonoBehaviour:
     - rid: 1745427943304462337
       type: {class: InvulnEffect, ns: , asm: Assembly-CSharp}
       data: 
+    - rid: 3032813789546545152
+      type: {class: IsMovementInputPresent, ns: , asm: Assembly-CSharp}
+      data:
+        conditionName: 
+        conditionDescription: 
+    - rid: 3032813789546545153
+      type: {class: IsMoving, ns: , asm: Assembly-CSharp}
+      data:
+        conditionName: 
+        conditionDescription: 

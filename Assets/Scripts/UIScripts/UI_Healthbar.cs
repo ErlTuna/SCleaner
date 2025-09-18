@@ -11,12 +11,12 @@ public class UI_Healthbar : MonoBehaviour
 
     void OnEnable()
     {
-        PlayerHealth.OnPlayerHit += UpdateHealthbar; 
+        //PlayerHealth.OnPlayerHit += UpdateHealthbar; 
     }
 
     void OnDisable()
     {
-        PlayerHealth.OnPlayerHit -= UpdateHealthbar; 
+        //PlayerHealth.OnPlayerHit -= UpdateHealthbar; 
     }
 
     void UpdateHealthbar(int currentHealth)

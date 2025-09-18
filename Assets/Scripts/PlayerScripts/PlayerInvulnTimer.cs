@@ -18,6 +18,7 @@ public class PlayerInvulnTimer : MonoBehaviour
         //PlayerDash.onDashTriggered -= TickInvulnTimerForDash;
     }
 
+    /*
     IEnumerator TickInvulnTimerForHurt(UnitInfo playerInfo){
         //playerInfo.isInvuln = true;
         //_spriteRenderer.sprite = playerInfo.HurtSprite;
@@ -26,12 +27,12 @@ public class PlayerInvulnTimer : MonoBehaviour
         //playerInfo.isInvuln = false;
     }
 
-    IEnumerator TickInvulnTimerForDash(UnitInfo playerInfo, float dashDuration){
+    IEnumerator TickInvulnTimerForDash(UnitStateSO playerStateData, float dashDuration){
         if (hurtInvuln) yield break;
-        playerInfo.isInvuln = true;
+        playerStateData.isInvuln = true;
         yield return new WaitForSeconds(dashDuration);
-        playerInfo.isInvuln = false;
+        playerStateData.isInvuln = false;
     }
-    
+    */
 
 }
