@@ -1,15 +1,21 @@
 using System;
 using System.Collections.Generic;
+using Unity.VisualScripting;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.InputSystem.XR.Haptics;
 public class StateMachine
 {
     StateNode current;
+
+    //Dictionary<IState, StateNode> nodes = new();
     Dictionary<Type, StateNode> nodes = new();
     HashSet<ITransition> anyTransitions = new();
 
     public void Update() {
+
         ITransition transition = GetTransition();
+
         if (transition != null)
         {
             ChangeState(transition.To);
@@ -24,18 +30,25 @@ public class StateMachine
 
     public void SetState(IState state){
         current = nodes[state.GetType()];
+
+        //current = nodes[state];
         current.State?.OnEnter();
     }
 
-    void ChangeState(IState state) {
+    void ChangeState(IState state)
+    {
         if (current.State == state) return;
 
         IState previousState = current.State;
         IState nextState = nodes[state.GetType()].State;
-        
+        //IState nextState = nodes[state].State;
+
         previousState.OnExit();
         nextState?.OnEnter();
+
+
         current = nodes[state.GetType()];
+        //current = nodes[state];
     }
 
     ITransition GetTransition() {
@@ -57,21 +70,27 @@ public class StateMachine
     }
 
     public void AddAnyTransition(IState to, IPredicate condition){
+
         //convert state to StateNode then add Any Transition to it
         anyTransitions.Add(new Transition(GetOrAddNode(to).State, condition));
     }
 
     public void AddTransition(IState from, IState to, IPredicate condition){
+        
         GetOrAddNode(from).AddTransition(to, condition);
         //Debug.Log("Added Transition from: " + from + " to " + to + " with description" + condition.Description);
     }
     StateNode GetOrAddNode(IState state){
-        
-        StateNode node = nodes.GetValueOrDefault(state.GetType());
 
-        if (node == null){
+        StateNode node = nodes.GetValueOrDefault(state.GetType());
+        //StateNode node = nodes.GetValueOrDefault(state);
+
+        if (node == null)
+        {
             node = new StateNode(state);
+
             nodes.Add(state.GetType(), node);
+            //nodes.Add(state, node);
         }
 
         return node;

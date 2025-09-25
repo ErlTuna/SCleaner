@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "Unit SOs", menuName = "ScriptableObjects/Component SOs/Unit State")]
+[CreateAssetMenu(fileName = "State Config", menuName = "ScriptableObjects/Component Configs/Unit State Config")]
 public class UnitStateConfigSO : ScriptableObject
 {
     public bool isAlive = true;

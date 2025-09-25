@@ -116,7 +116,7 @@ AnimationClip:
     m_AdditiveReferencePoseClip: {fileID: 0}
     m_AdditiveReferencePoseTime: 0
     m_StartTime: 0
-    m_StopTime: 1.9166666
+    m_StopTime: 1.9166667
     m_OrientationOffsetY: 0
     m_Level: 0
     m_CycleOffset: 0
@@ -137,14 +137,14 @@ AnimationClip:
   m_HasMotionFloatCurves: 0
   m_Events:
   - time: 0
-    functionName: PlayCurrentWeaponAudio
+    functionName: PlayWeaponSFX
     data: 
     objectReferenceParameter: {fileID: 8300000, guid: 6d2847e170d7e2a489df2d24cf0c38ff, type: 3}
     floatParameter: 0
     intParameter: 0
     messageOptions: 0
   - time: 1.3333334
-    functionName: PlayCurrentWeaponAudio
+    functionName: PlayWeaponSFX
     data: 
     objectReferenceParameter: {fileID: 8300000, guid: cd003c38649e3894bbd97a7fff41e594, type: 3}
     floatParameter: 0

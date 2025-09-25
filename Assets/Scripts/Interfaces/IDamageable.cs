@@ -5,5 +5,5 @@ using UnityEngine;
 public interface IDamageable
 {
     void TakeDamage(int amount);
-    void TakeDamage(IEnemy attacker);
+    void TakeDamage(DamageContext context);
 }

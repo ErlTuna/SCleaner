@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class AmmoTracker
 {
-    BaseWeapon_v2 _owner;
+    BaseWeapon _owner;
     
 
     public int CurrentAmmo
@@ -22,7 +22,7 @@ public class AmmoTracker
 
     public AmmoTracker() { }
 
-    public AmmoTracker(BaseWeapon_v2 owner)
+    public AmmoTracker(BaseWeapon owner)
     {
         _owner = owner;
     }

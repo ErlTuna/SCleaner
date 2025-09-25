@@ -6,13 +6,16 @@ using UnityEngine;
 public class PlayerInventoryManager_v2 : MonoBehaviour
 {
     Unit _owner;
-    PlayerInventoryData _inventoryData;
+    UnitInventoryData _inventoryData;
     [SerializeField] Transform _weaponParent;
     [SerializeField] Transform _weaponPosition;
+    [SerializeField] Transform _equipmentPosition;
     public GameObject currentWeapon;
-    public BaseWeapon_v2 currentWeaponScript;
+    public BaseWeapon currentWeaponScript;
+    public GameObject currentEquipment;
+    public BaseEquipment currentEquipmentScript;
     public int weaponCount;
-    public int currentlyUsedSlot = 0;
+    public int currentlyUsedWeaponSlot = 0;
 
     void Update()
     {
@@ -26,7 +29,7 @@ public class PlayerInventoryManager_v2 : MonoBehaviour
             SwitchWeapons(3);
     }
 
-    public void InitializeWithData(Unit owner, PlayerInventoryData inventoryData)
+    public void InitializeWithData(Unit owner, UnitInventoryData inventoryData)
     {
         _owner = owner;
         _inventoryData = inventoryData;
@@ -34,18 +37,19 @@ public class PlayerInventoryManager_v2 : MonoBehaviour
 
         PrepareWeapons();
         SetDefaultWeapon();
-        
+        PrepareEquipments();
+        SetDefaultEquipment();
     }
 
     void PrepareWeapons()
     {
-        foreach (GameObject weaponPrefab in _inventoryData.weaponPrefabs)
+        foreach (GameObject weaponPrefab in _inventoryData.WeaponPrefabs)
         {
             GameObject weaponGO = Instantiate(weaponPrefab);
             weaponGO.transform.parent = _weaponParent;
             weaponGO.transform.position = _weaponPosition.position;
-            
-            BaseWeapon_v2 weaponScript = weaponGO.GetComponent<BaseWeapon_v2>();
+
+            BaseWeapon weaponScript = weaponGO.GetComponent<BaseWeapon>();
             weaponScript.InitializeWithData();
 
             weaponGO.transform.localPosition += weaponScript.WeaponConfig.offset;
@@ -59,6 +63,28 @@ public class PlayerInventoryManager_v2 : MonoBehaviour
         }
     }
 
+    void PrepareEquipments()
+    {
+        foreach (GameObject equipmentPrefab in _inventoryData.EquipmentPrefabs)
+        {
+            GameObject equipmentGO = Instantiate(equipmentPrefab);
+            equipmentGO.transform.parent = _weaponParent;
+            equipmentGO.transform.position = _equipmentPosition.position;
+
+            BaseEquipment equipmentScript = equipmentGO.GetComponent<BaseEquipment>();
+            equipmentScript.InitializeWithData();
+
+            //equipmentGO.transform.localPosition += equip.WeaponConfig.offset;
+
+            if (equipmentScript != null)
+            {
+                _inventoryData.EquipmentGOs.Add(equipmentGO);
+                _inventoryData.EquipmentScripts.Add(equipmentScript);
+                equipmentGO.SetActive(false);
+            }
+        }
+    }
+
     void SwitchWeapons(int slot)
     {
         int slotToSwitchTo;
@@ -67,32 +93,32 @@ public class PlayerInventoryManager_v2 : MonoBehaviour
         {
             case 0:
                 slotToSwitchTo = 0;
-                if (_inventoryData.WeaponGOs[slotToSwitchTo] != null && slotToSwitchTo != currentlyUsedSlot)
+                if (_inventoryData.WeaponGOs[slotToSwitchTo] != null && slotToSwitchTo != currentlyUsedWeaponSlot)
                 {
-                    WeaponSlotChange(currentlyUsedSlot, slotToSwitchTo);
+                    WeaponSlotChange(currentlyUsedWeaponSlot, slotToSwitchTo);
                 }
 
                 break;
             case 1:
                 slotToSwitchTo = 1;
-                if (_inventoryData.WeaponGOs[slotToSwitchTo] != null && slotToSwitchTo != currentlyUsedSlot)
+                if (_inventoryData.WeaponGOs[slotToSwitchTo] != null && slotToSwitchTo != currentlyUsedWeaponSlot)
                 {
-                    WeaponSlotChange(currentlyUsedSlot, slotToSwitchTo);
+                    WeaponSlotChange(currentlyUsedWeaponSlot, slotToSwitchTo);
                 }
 
                 break;
             case 2:
                 slotToSwitchTo = 2;
-                if (_inventoryData.WeaponGOs[slotToSwitchTo] != null && slotToSwitchTo != currentlyUsedSlot)
+                if (_inventoryData.WeaponGOs[slotToSwitchTo] != null && slotToSwitchTo != currentlyUsedWeaponSlot)
                 {
-                    WeaponSlotChange(currentlyUsedSlot, slotToSwitchTo);
+                    WeaponSlotChange(currentlyUsedWeaponSlot, slotToSwitchTo);
                 }
                 break;
             case 3:
                 slotToSwitchTo = 3;
-                if (_inventoryData.WeaponGOs[slotToSwitchTo] != null && slotToSwitchTo != currentlyUsedSlot)
+                if (_inventoryData.WeaponGOs[slotToSwitchTo] != null && slotToSwitchTo != currentlyUsedWeaponSlot)
                 {
-                    WeaponSlotChange(currentlyUsedSlot, slotToSwitchTo);
+                    WeaponSlotChange(currentlyUsedWeaponSlot, slotToSwitchTo);
                 }
                 break;
             default:
@@ -103,11 +129,11 @@ public class PlayerInventoryManager_v2 : MonoBehaviour
     void WeaponSlotChange(int currentSlot, int slotToSwitchTo)
     {
         GameObject targetWeapon = _inventoryData.WeaponGOs[slotToSwitchTo];
-        BaseWeapon_v2 targetWeaponScript = _inventoryData.WeaponScripts[slotToSwitchTo];
+        BaseWeapon targetWeaponScript = _inventoryData.WeaponScripts[slotToSwitchTo];
 
         currentWeapon = targetWeapon;
         currentWeaponScript = targetWeaponScript;
-        currentlyUsedSlot = slotToSwitchTo;
+        currentlyUsedWeaponSlot = slotToSwitchTo;
 
 
         PlayerInventoryEvents.RaiseWeaponSwitchEvent(currentWeapon, currentWeaponScript);
@@ -115,10 +141,20 @@ public class PlayerInventoryManager_v2 : MonoBehaviour
 
     void SetDefaultWeapon()
     {
-        currentWeapon = _inventoryData.WeaponGOs.ElementAt(currentlyUsedSlot);
-        currentWeaponScript = _inventoryData.WeaponScripts.ElementAt(currentlyUsedSlot);
+        currentWeapon = _inventoryData.WeaponGOs.ElementAt(currentlyUsedWeaponSlot);
+        currentWeaponScript = _inventoryData.WeaponScripts.ElementAt(currentlyUsedWeaponSlot);
         currentWeapon.SetActive(true);
 
         PlayerInventoryEvents.RaiseInventoryReadyEvent(currentWeapon, currentWeaponScript);
+    }
+
+    void SetDefaultEquipment()
+    {
+        currentEquipment = _inventoryData.EquipmentGOs.ElementAt(currentlyUsedWeaponSlot);
+        currentEquipmentScript = _inventoryData.EquipmentScripts.ElementAt(currentlyUsedWeaponSlot);
+        currentEquipment.SetActive(false);
+
+        PlayerInventoryEvents.RaiseEquipmentReadyEvent(currentEquipment, currentEquipmentScript);
+        //PlayerInventoryEvents.RaiseInventoryReadyEvent(currentWeapon, currentWeaponScript);
     }
 }

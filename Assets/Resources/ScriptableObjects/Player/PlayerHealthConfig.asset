@@ -12,5 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1d929175737723e458bf920089f7b29b, type: 3}
   m_Name: PlayerHealthConfig
   m_EditorClassIdentifier: 
-  health: 100
-  maxHealth: 100
+  Health: 100
+  MaxHealth: 100
+  OnHitSFX: {fileID: 8300000, guid: d57572f40b4d87141aabdde4729eb3a0, type: 3}

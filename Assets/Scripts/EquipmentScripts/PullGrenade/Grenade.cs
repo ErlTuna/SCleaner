@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class Grenade : MonoBehaviour, IEquipment
 {
+    /*
     public event Action OnAbilityEnd;
     AudioSource _audioSource;
     Transform _grenadePosition;
@@ -122,4 +123,5 @@ public class Grenade : MonoBehaviour, IEquipment
     {
         enabled = false;
     }
+    */
 }

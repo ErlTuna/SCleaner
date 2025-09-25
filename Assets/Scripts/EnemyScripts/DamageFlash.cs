@@ -11,7 +11,6 @@ public class DamageFlash : MonoBehaviour
     public SpriteRenderer _spriteRenderer;
     Material _mat;
 
-    // Start is called before the first frame update
     void Start()
     {
         _mat = _spriteRenderer.material;

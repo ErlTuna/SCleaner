@@ -12,4 +12,5 @@ public class UnitConfigsWrapperSO : ScriptableObject
     public UnitEnergyConfigSO EnergyConfig;
     public UnitStateConfigSO StateConfig;
     public UnitInventoryConfigSO InventoryConfig;
+    public UnitAttackConfigSO attackConfigSO;
 }

@@ -23,6 +23,7 @@ MonoBehaviour:
   MaxReserveAmmo: 36
   StartingReserveAmmo: 36
   BulletPerShot: 1
+  PushForce: 30
   gunSound: {fileID: 8300000, guid: f4181816d86635544b77fb16a9cf2bda, type: 3}
   sprite: {fileID: 21300000, guid: 0275ee1f17558584aa0d818221b668e7, type: 3}
   offset: {x: 0, y: 0, z: 0}
@@ -31,7 +32,7 @@ MonoBehaviour:
   muzzleTipCheck: {fileID: 0}
   enemyLayer:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 1024
   environmentLayers:
     serializedVersion: 2
     m_Bits: 0

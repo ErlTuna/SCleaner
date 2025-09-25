@@ -7,7 +7,7 @@ using System.Linq;
 // Health data, energy data etc.
 
 [Serializable]
-public abstract class UnitRuntimeDataHolder
+public class UnitRuntimeDataHolder
 {
     public Unit Owner;
     protected readonly Dictionary<Type, IUnitRuntimeData> _datas = new();
@@ -71,11 +71,3 @@ public abstract class UnitRuntimeDataHolder
     public IEnumerable<IUnitRuntimeData> GetAllRuntimeData() => _datas.Values;
 
 }
-
-
-/*public abstract class UnitRuntimeData_v2
-{
-    protected readonly Dictionary<Type, IUnitRuntimeData> _datas = new();
-    public T GetRuntimeData<T>() where T : class, IUnitRuntimeData => _datas.TryGetValue(typeof(T), out var data) ? data as T : null;
-    
-}*/

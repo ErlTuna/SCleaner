@@ -302,13 +302,15 @@ MonoBehaviour:
   WeaponConfig: {fileID: 11400000, guid: 18f4ed44f239e2149a1adcc39ce9e117, type: 2}
   WeaponRuntimeData:
     State: 0
-    Config: {fileID: 0}
+    Config: {fileID: 11400000, guid: 18f4ed44f239e2149a1adcc39ce9e117, type: 2}
     CurrentAmmo: 0
     ReserveAmmo: 0
     Damage: 0
-    PelletCount: 0
   FiringPoints:
   - {fileID: 7718260043891111844}
+  rayCastStartPoint: {fileID: 396923949402456677}
+  rayCastEndPoint: {fileID: 6723664976815396209}
+  muzzleTipCheck: {fileID: 7718260043891111844}
 --- !u!114 &5914297120067873613
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -322,8 +324,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _owner: {fileID: 4725497832730239094}
-  animator: {fileID: 4472284901953710207}
   _paramTable: {fileID: 11400000, guid: 657f602cfe10f2646930644441b74e99, type: 2}
+  animator: {fileID: 4472284901953710207}
 --- !u!114 &6065368860667417271
 MonoBehaviour:
   m_ObjectHideFlags: 0

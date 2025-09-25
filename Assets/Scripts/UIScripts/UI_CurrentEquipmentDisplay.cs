@@ -9,26 +9,27 @@ public class UI_CurrentEquipmentDisplay : MonoBehaviour
 
     void OnEnable()
     {
-        IEquipment.OnEquipmentChanged += UpdateEquipmentDisplay;
-        IEquipment.OnEquipmentUsed += UpdateEquipmentCount;
+        //IEquipment.OnEquipmentChanged += UpdateEquipmentDisplay;
+        //IEquipment.OnEquipmentUsed += UpdateEquipmentCount;
     }
 
     void OnDisable()
     {
-        IEquipment.OnEquipmentChanged -= UpdateEquipmentDisplay;
-        IEquipment.OnEquipmentUsed -= UpdateEquipmentCount;
+        //IEquipment.OnEquipmentChanged -= UpdateEquipmentDisplay;
+        //IEquipment.OnEquipmentUsed -= UpdateEquipmentCount;
     }
 
+    
     void UpdateEquipmentDisplay(EquipmentSO equipmentSO)
     {
         Debug.Log("awesome");
-        if (equipmentSO)
-            _imageComponent.sprite = equipmentSO.sprite;
+        //if (equipmentSO)
+            //_imageComponent.sprite = equipmentSO.Sprite;
     }
 
     void UpdateEquipmentCount(EquipmentSO equipmentSO)
     {
-        _equipmentCountText.SetText(equipmentSO.count.ToString());
+        //_equipmentCountText.SetText(equipmentSO.count.ToString());
     }
-
+    
 }

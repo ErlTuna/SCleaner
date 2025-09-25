@@ -12,8 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d2085b6b8c1b3f24b9a38c26693cfe32, type: 3}
   m_Name: SMGBulletSO
   m_EditorClassIdentifier: 
-  bulletPrefab: {fileID: 6657017082548522162, guid: c77308c80b6609f4eb203a2ff835a4b3, type: 3}
-  bulletType: 0
-  projectileSpeed: 25
-  size: 1
-  lifeTime: 5
+  Prefab: {fileID: 6657017082548522162, guid: c77308c80b6609f4eb203a2ff835a4b3, type: 3}
+  Type: 0
+  Damage: 1
+  ProjectileSpeed: 25
+  Size: 1
+  LifeTime: 5

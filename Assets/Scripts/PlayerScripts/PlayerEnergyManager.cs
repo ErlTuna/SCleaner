@@ -4,7 +4,7 @@ using UnityEngine;
 public class PlayerEnergyManager : MonoBehaviour
 {
     Unit _owner;
-    PlayerEnergyData _playerEnergyData;
+    UnitEnergyData _playerEnergyData;
     Coroutine rechargeCoroutine;
     bool isRecharging = false;
 
@@ -34,10 +34,11 @@ public class PlayerEnergyManager : MonoBehaviour
             isRecharging = true;
             _playerEnergyData.CurrentEnergy += _playerEnergyData.RechargeRate;
 
-            if (_playerEnergyData.CurrentEnergy > _playerEnergyData.MaxEnergy)
+            if (_playerEnergyData.CurrentEnergy >= _playerEnergyData.MaxEnergy)
             {
                 _playerEnergyData.CurrentEnergy = _playerEnergyData.MaxEnergy;
                 UIEvents.RaiseEnergyChanged(_playerEnergyData.CurrentEnergy, _playerEnergyData.MaxEnergy);
+                AudioSource.PlayClipAtPoint(_playerEnergyData.FullEnergySFX, gameObject.transform.position);
                 isRecharging = false;
                 yield break;
             }
@@ -48,14 +49,7 @@ public class PlayerEnergyManager : MonoBehaviour
 
         isRecharging = false;
         rechargeCoroutine = null;
-}
-
-    /*public IEnumerator InstantRechargeCoroutine(AbilityData abilityData)
-    {
-        yield return new WaitForSeconds(rechargeInterval);
-        CurrentEnergy = MaxEnergy;
-        rechargeCoroutine = null;
-    }*/
+    }
 
     public bool CanRecharge()
     {
@@ -64,7 +58,7 @@ public class PlayerEnergyManager : MonoBehaviour
 
     public void OnEnergyUse(AbilityData abilityData)
     {
-        float energyAfterUse = _playerEnergyData.CurrentEnergy - abilityData.energyCost;
+        float energyAfterUse = _playerEnergyData.CurrentEnergy - abilityData.EnergyCost;
         if (Mathf.Approximately(energyAfterUse, 0))
         {
             _playerEnergyData.CurrentEnergy = 0;
@@ -72,11 +66,11 @@ public class PlayerEnergyManager : MonoBehaviour
             return;
         }
 
-        _playerEnergyData.CurrentEnergy -= abilityData.energyCost;
+        _playerEnergyData.CurrentEnergy -= abilityData.EnergyCost;
         UIEvents.RaiseEnergyChanged(_playerEnergyData.CurrentEnergy, _playerEnergyData.MaxEnergy);
     }
 
-    public void InitializeWithData(Unit owner, PlayerEnergyData energyData)
+    public void InitializeWithData(Unit owner, UnitEnergyData energyData)
     {
         _owner = owner;
         _playerEnergyData = energyData;

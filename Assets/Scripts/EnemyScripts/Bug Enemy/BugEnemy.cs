@@ -7,7 +7,7 @@ public class BugEnemy : MonoBehaviour, IEnemy
 {
     [SerializeField] NavMeshAgent agent;
     [SerializeField] Rigidbody2D _rb2D;
-    public EnemySO EnemyInfo{get;set;}
+    public EnemyConfigSO EnemyInfo{get;set;}
     public BoxCollider2D SpawnArea {get;set;}
     public UnitConfigsWrapperSO _playerInfo;
     StateMachine _stateMachine;
@@ -17,14 +17,18 @@ public class BugEnemy : MonoBehaviour, IEnemy
     
     void Awake(){
         _player = GameObject.FindGameObjectWithTag("Player");
-        if (EnemyInfo == null){
-            EnemyInfo = ScriptableObject.CreateInstance<EnemySO>();
+        
+        if (EnemyInfo == null)
+        {
+            EnemyInfo = ScriptableObject.CreateInstance<EnemyConfigSO>();
         }
+
     EnemyInfo.Init();
     }        
 
     void Start()
     {
+        /*
         //Initialize components
         _stateMachine = new StateMachine();
         _rb2D = GetComponent<Rigidbody2D>();
@@ -59,6 +63,7 @@ public class BugEnemy : MonoBehaviour, IEnemy
         #endregion TRANSITIONS
         //Set initial state
         _stateMachine.SetState(roamState);
+        */
     }
 
     void At(IState from, IState to, IPredicate condition) => _stateMachine.AddTransition(from, to, condition);

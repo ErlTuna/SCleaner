@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using SerializeReferenceEditor;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -25,27 +26,37 @@ public class PlayerMain : Unit
 
     void Awake()
     {
-        if (unitConfigWrapper == null)
+        if (UnitConfigWrapper == null)
         {
             Debug.Log("Player info is null, creating");
             //playerConfig = Resources.Load<UnitConfigSO>("Scriptable Objects/PlayerData");
         }
 
-        RuntimeDataHolder = new PlayerRuntimeDataHolder();
-        RuntimeDataHolder?.InitializeWithWrapper(this, unitConfigWrapper);
+        RuntimeDataHolder = new UnitRuntimeDataHolder();
 
-        PlayerHealthData playerHealthData = RuntimeDataHolder.GetRuntimeData<PlayerHealthData>();
-        PlayerMovementData playerMovementData = RuntimeDataHolder.GetRuntimeData<PlayerMovementData>();
-        PlayerInventoryData playerInventoryData = RuntimeDataHolder.GetRuntimeData<PlayerInventoryData>();
-        PlayerEnergyData playerEnergyData = RuntimeDataHolder.GetRuntimeData<PlayerEnergyData>();
+        // Storing uninitialized data
+        RuntimeDataHolder.AddRuntimeData(new UnitHealthData());
+        RuntimeDataHolder.AddRuntimeData(new UnitMovementData());
+        RuntimeDataHolder.AddRuntimeData(new UnitInventoryData());
+        RuntimeDataHolder.AddRuntimeData(new UnitEnergyData());
+        RuntimeDataHolder.AddRuntimeData(new UnitStateData());
 
+        // Initializing stored data
+        RuntimeDataHolder?.InitializeWithWrapper(this, UnitConfigWrapper);
+
+        // Initialized datas to be distributed to managers
+        UnitHealthData playerHealthData = RuntimeDataHolder.GetRuntimeData<UnitHealthData>();
+        UnitMovementData playerMovementData = RuntimeDataHolder.GetRuntimeData<UnitMovementData>();
+        UnitEnergyData playerEnergyData = RuntimeDataHolder.GetRuntimeData<UnitEnergyData>();
+        UnitInventoryData playerInventoryData = RuntimeDataHolder.GetRuntimeData<UnitInventoryData>();
+        UnitStateData playerStateData = RuntimeDataHolder.GetRuntimeData<UnitStateData>();
+
+        // Distribute runtime datas to managers
         _playerHealthManager.InitializeWithData(this, playerHealthData);
         _playerMovementManager.InitializeWithData(this, playerMovementData);
-        _playerInventoryManager.InitializeWithData(this, playerInventoryData);
-        _playerAbilityHandler.InitializeWithData(this, playerEnergyData);
         _playerEnergyManager.InitializeWithData(this, playerEnergyData);
-
-
+        _playerAbilityHandler.InitializeWithData(this, playerEnergyData);
+        _playerInventoryManager.InitializeWithData(this, playerInventoryData);
 
     }
 

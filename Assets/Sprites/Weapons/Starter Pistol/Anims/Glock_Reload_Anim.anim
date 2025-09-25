@@ -145,6 +145,34 @@ AnimationClip:
   m_HasGenericRootTransform: 0
   m_HasMotionFloatCurves: 0
   m_Events:
+  - time: 0
+    functionName: PlayWeaponSFX
+    data: 
+    objectReferenceParameter: {fileID: 8300000, guid: cbbcbb85d23134a45ac469478b67f177, type: 3}
+    floatParameter: 0
+    intParameter: 0
+    messageOptions: 0
+  - time: 0.41666666
+    functionName: PlayWeaponSFX
+    data: 
+    objectReferenceParameter: {fileID: 8300000, guid: 46646b5e1c056d449893c87c5e8821bf, type: 3}
+    floatParameter: 0
+    intParameter: 0
+    messageOptions: 0
+  - time: 1.4166666
+    functionName: PlayWeaponSFX
+    data: 
+    objectReferenceParameter: {fileID: 8300000, guid: 1df3f79f747e29e40b11db6e2672bea6, type: 3}
+    floatParameter: 0
+    intParameter: 0
+    messageOptions: 0
+  - time: 1.9166666
+    functionName: PlayWeaponSFX
+    data: 
+    objectReferenceParameter: {fileID: 8300000, guid: 975a4bf2df3f8c849b709bec09a0d8e9, type: 3}
+    floatParameter: 0
+    intParameter: 0
+    messageOptions: 0
   - time: 2.0833333
     functionName: HandleReloadAnimEnd
     data: 

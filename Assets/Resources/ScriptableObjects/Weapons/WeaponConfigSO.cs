@@ -10,14 +10,15 @@ public class WeaponConfigSO : ScriptableObject
     public WeaponState State;
     public WeaponType Type;
     public GameObject Prefab;
-    public BulletSO BulletData;
+    public BulletConfigSO BulletData;
     public string Name;
     public int Damage;
     public int CurrentAmmo;
     public int RoundCapacity;
     public int MaxReserveAmmo;
     public int StartingReserveAmmo;
-    public int BulletPerShot;
+    public int BulletPerShot = 1;
+    public float PushForce = 1f;
 
     [Header("Audio & VFX Info")]
     public AudioClip gunSound;

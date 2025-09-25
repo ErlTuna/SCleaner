@@ -13,7 +13,7 @@ public class PlayerInputManager : MonoBehaviour
     InputAction _pointerInputAction;
     InputAction _primaryAttackInputAction;
     InputAction _secondaryAttackInputAction;
-    InputAction _dashInputAction;
+    InputAction _abilityInputAction;
     InputAction _equipmentInputAction;
     InputAction _reloadInputAction;
     InputAction _firstWeaponInputAction;
@@ -31,7 +31,7 @@ public class PlayerInputManager : MonoBehaviour
     public bool IsPrimaryAttackPressedThisFrame;
     public bool IsPrimaryAttackReleasedThisFrame;
     public bool SecondaryAttackInput;
-    public bool DashInput;
+    public bool AbilityUseInput;
     public bool FirstWeaponInput;
     public bool SecondWeaponInput;
     public bool ThirdWeaponInput;
@@ -65,7 +65,7 @@ public class PlayerInputManager : MonoBehaviour
         //_primaryAttackInputAction.canceled += OnPrimaryAttackReleased;
 
 
-        _dashInputAction = PlayerInput.actions["Dash"];
+        _abilityInputAction = PlayerInput.actions["Dash"];
         _equipmentInputAction = PlayerInput.actions["Equipment"];
         _reloadInputAction = PlayerInput.actions["Reload"];
         //_switchWeaponInputAction = PlayerInput.actions["Switch Weapons"];
@@ -93,13 +93,13 @@ public class PlayerInputManager : MonoBehaviour
         PointerInput = _pointerInputAction.ReadValue<Vector2>();
         PrimaryAttackInput = _primaryAttackInputAction.IsPressed();
         SecondaryAttackInput = _secondaryAttackInputAction.IsPressed();
-        DashInput = _dashInputAction.WasPressedThisFrame();
+        AbilityUseInput = _abilityInputAction.WasPressedThisFrame();
         FirstWeaponInput = _firstWeaponInputAction.WasPressedThisFrame();
         SecondWeaponInput = _secondWeaponInputAction.WasPressedThisFrame();
         ThirdWeaponInput = _thirdWeaponInputAction.WasPressedThisFrame();
         FourthWeaponInput = _fourthWeaponInputAction.WasPressedThisFrame();
         ReloadInput = _reloadInputAction.WasPressedThisFrame();
-        EquipmentInput = _equipmentInputAction.WasPressedThisFrame();
+        EquipmentInput = _equipmentInputAction.IsPressed();
         MenuOpenInput = _menuOpenAction.WasPressedThisFrame();
         MenuCloseInput = _menuCloseAction.WasPerformedThisFrame();
         AbilitySwitchInput = _abilitySwitchAction.WasPerformedThisFrame();

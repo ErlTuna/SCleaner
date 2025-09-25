@@ -2,15 +2,10 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public interface IInitializableWithGeneric<T>
-{
-    void InitializeWithData(T initializeData);
-}
-
 public class PlayerMovementManager : MonoBehaviour
 {
     Unit _owner;
-    PlayerMovementData _movementData;
+    UnitMovementData _movementData;
     Rigidbody2D _rb2D;
     Vector2 _moveDirection;
 
@@ -32,7 +27,7 @@ public class PlayerMovementManager : MonoBehaviour
         _rb2D = GetComponent<Rigidbody2D>();
     }
 
-    public void InitializeWithData(Unit owner, PlayerMovementData movementData)
+    public void InitializeWithData(Unit owner, UnitMovementData movementData)
     {
         _owner = owner;
         _movementData = movementData;
@@ -46,7 +41,7 @@ public class PlayerMovementManager : MonoBehaviour
 
     void FixedUpdate()
     {
-        if (_owner.RuntimeDataHolder.TryGetRuntimeData<PlayerStateData>(out var stateData))
+        if (_owner.RuntimeDataHolder.TryGetRuntimeData<UnitStateData>(out var stateData))
             if (stateData.CanMove == false)
             {
                 //Debug.Log("Can't move!");

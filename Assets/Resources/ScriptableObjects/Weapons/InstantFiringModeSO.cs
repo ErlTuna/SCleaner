@@ -4,7 +4,7 @@ using UnityEngine;
 public class InstantFiringModeSO : FiringModeSO
 {
 
-    public override void HandleAttackStart(BaseWeapon_v2 weapon)
+    public override void HandleAttackStart(BaseWeapon weapon)
     {
         if (weapon.AmmoManager.HasAmmo() == false) return;
 
@@ -12,7 +12,7 @@ public class InstantFiringModeSO : FiringModeSO
         weapon.WeaponAnimator.StartPrimaryAttackAnim();
     }
 
-    public override void HandleAttackEnd(BaseWeapon_v2 weapon)
+    public override void HandleAttackEnd(BaseWeapon weapon)
     {
         weapon.WeaponAnimator.ResetAnimParams();
 

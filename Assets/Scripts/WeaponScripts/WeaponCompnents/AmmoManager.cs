@@ -11,7 +11,7 @@ using UnityEngine;
 
 public class AmmoManager : MonoBehaviour
 {
-    public BaseWeapon_v2 Owner;
+    public BaseWeapon Owner;
     public ReloadStrategySO ReloadStrategy;
 
     public bool IsFullyLoaded()

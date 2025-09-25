@@ -9,7 +9,7 @@ public class PlayerWeaponManager : MonoBehaviour
     [SerializeField] GameObject _currentWeaponGO;
     public Transform _weaponPosition;
     public AudioClip weaponSwitchAudio;
-    public BaseWeapon_v2 currentWeaponScript;
+    public BaseWeapon currentWeaponScript;
 
     void OnEnable()
     {
@@ -42,14 +42,15 @@ public class PlayerWeaponManager : MonoBehaviour
             currentWeaponScript.HandlePrimaryAttackInputCancel();
     }
 
-    public void ReceiveWeapon(GameObject weapon, BaseWeapon_v2 weaponScript){
+    public void ReceiveWeapon(GameObject weapon, BaseWeapon weaponScript)
+    {
         _currentWeaponGO = weapon;
         currentWeaponScript = weaponScript;
         _currentWeaponGO.SetActive(true);
     }
 
     
-    public void SwitchWeapon(GameObject targetWeapon, BaseWeapon_v2 targetWeaponScript){
+    public void SwitchWeapon(GameObject targetWeapon, BaseWeapon targetWeaponScript){
         
 
         PlayPlayerSounds.PlayAudio(weaponSwitchAudio);

@@ -1,11 +1,9 @@
-using System;
-using SerializeReferenceEditor;
 using UnityEngine;
 
 public abstract class Unit : MonoBehaviour
 {
     public UnitRuntimeDataHolder RuntimeDataHolder;
-    public UnitConfigsWrapperSO unitConfigWrapper;
+    public UnitConfigsWrapperSO UnitConfigWrapper;
 
     public virtual void InitializeDataWithConfigWrapper(UnitConfigsWrapperSO unitConfig)
     {

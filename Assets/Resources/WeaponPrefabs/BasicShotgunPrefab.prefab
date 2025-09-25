@@ -212,7 +212,9 @@ GameObject:
   - component: {fileID: 6166882229596088855}
   - component: {fileID: -5657172089233996258}
   - component: {fileID: 3725376543127102386}
-  - component: {fileID: 3174644983455901463}
+  - component: {fileID: 6468197109179199320}
+  - component: {fileID: 968184645804837554}
+  - component: {fileID: 3212172627140521379}
   m_Layer: 0
   m_Name: BasicShotgunPrefab
   m_TagString: Untagged
@@ -422,7 +424,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 86357c5d5e98e194684b2d80932657d6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &3174644983455901463
+--- !u!114 &6468197109179199320
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -431,36 +433,55 @@ MonoBehaviour:
   m_GameObject: {fileID: 5890597930396712892}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b900212735a84364b811b9ee69832353, type: 3}
+  m_Script: {fileID: 11500000, guid: 86d898097bd141746b635e3f633d8214, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  weaponRuntimeData:
+  PrimaryAttackStrategy: {fileID: 11400000, guid: 0e5de3ccb7ff2a64a9634e3de497298c, type: 2}
+  WeaponAnimator: {fileID: 3212172627140521379}
+  AmmoManager: {fileID: 968184645804837554}
+  WeaponConfig: {fileID: 11400000, guid: 8a5bb5bc2f2a38a4db6856940f765c5e, type: 2}
+  WeaponRuntimeData:
     State: 0
     Config: {fileID: 0}
     CurrentAmmo: 0
     ReserveAmmo: 0
     Damage: 0
-    PelletCount: 0
-  weaponConfig: {fileID: 11400000, guid: 8a5bb5bc2f2a38a4db6856940f765c5e, type: 2}
-  firingPoint: {fileID: 0}
-  _animator: {fileID: -5657172089233996258}
-  _runtimeAnimatorController: {fileID: 0}
-  rayCastStartPoint: {fileID: 8008687872611999004}
-  rayCastEndPoint: {fileID: 8518041347171767024}
-  muzzleTipCheck: {fileID: 2212139409652299717}
-  enemyLayer:
-    serializedVersion: 2
-    m_Bits: 0
-  environmentLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  mixedLayerMask:
-    serializedVersion: 2
-    m_Bits: 0
-  firingPoints:
+  FiringPoints:
   - {fileID: 3710938758110494021}
   - {fileID: 3544013057962356988}
   - {fileID: 8923209658656982352}
+  rayCastStartPoint: {fileID: 5669385491526425842}
+  rayCastEndPoint: {fileID: 2212139409652299717}
+  muzzleTipCheck: {fileID: 3491749269366650507}
+--- !u!114 &968184645804837554
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5890597930396712892}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 94ea39655bf03c74880f9a43878f3cf4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Owner: {fileID: 6468197109179199320}
+  ReloadStrategy: {fileID: 11400000, guid: 2a2f5998f082c7a4b9a1370899af9baf, type: 2}
+--- !u!114 &3212172627140521379
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5890597930396712892}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 68a3f9f85eb27024081467faa477b695, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _owner: {fileID: 6468197109179199320}
+  _paramTable: {fileID: 11400000, guid: f07a149dab15ab6438211d7c3cfada3f, type: 2}
+  animator: {fileID: -5657172089233996258}
 --- !u!1 &8008687872611999004
 GameObject:
   m_ObjectHideFlags: 0

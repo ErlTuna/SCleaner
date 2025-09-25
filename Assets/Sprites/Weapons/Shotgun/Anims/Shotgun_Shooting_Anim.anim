@@ -117,7 +117,7 @@ AnimationClip:
     intParameter: 0
     messageOptions: 0
   - time: 0.083333336
-    functionName: PlayCurrentWeaponAudio
+    functionName: PlayWeaponSFX
     data: 
     objectReferenceParameter: {fileID: 8300000, guid: c10c9b338ddf8074fa5849ce0ee10db3, type: 3}
     floatParameter: 0

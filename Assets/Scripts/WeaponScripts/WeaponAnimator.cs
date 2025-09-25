@@ -6,7 +6,7 @@ using UnityEngine;
 
 public class WeaponAnimator : MonoBehaviour
 {
-    [SerializeField] BaseWeapon_v2 _owner;
+    [SerializeField] BaseWeapon _owner;
     [SerializeField] AnimatorParamTableSO _paramTable;
     public Animator animator;
 
@@ -19,14 +19,14 @@ public class WeaponAnimator : MonoBehaviour
 
     public virtual void HandlePrimaryAttackAnimEnd()
     {
-        Debug.Log("Primary attack end handler called");
+        //Debug.Log("Primary attack end handler called");
         ResetAnimParams();
         _owner.PrimaryAttackStrategy.HandleAttackEnd(_owner);
 
     }
     public void StartReloadAnim()
     {
-        Debug.Log("Reload anim started");
+        //Debug.Log("Reload anim started");
         ResetAnimParams();
         SetBool("isReloading", true);
         SetTrigger("ReloadStarted");
@@ -48,13 +48,13 @@ public class WeaponAnimator : MonoBehaviour
 
         if (param == null)
         {
-            Debug.Log("Given parameter does not exist");
+            //Debug.Log("Given parameter does not exist");
             return;
         }
 
         if (param.Type != AnimatorParamType.Bool)
         {
-            Debug.LogWarning($"Animator parameter '{name}' is not of type Bool.");
+            //Debug.LogWarning($"Animator parameter '{name}' is not of type Bool.");
             return;
         }
 
@@ -67,13 +67,13 @@ public class WeaponAnimator : MonoBehaviour
 
         if (param == null)
         {
-            Debug.Log("Given parameter does not exist");
+            //Debug.Log("Given parameter does not exist");
             return;
         }
 
         if (param.Type != AnimatorParamType.Trigger)
         {
-            Debug.LogWarning($"Animator parameter '{name}' is not of type Trigger.");
+            //Debug.LogWarning($"Animator parameter '{name}' is not of type Trigger.");
             return;
         }
 
@@ -86,13 +86,13 @@ public class WeaponAnimator : MonoBehaviour
 
         if (param == null)
         {
-            Debug.Log("Given parameter does not exist");
+            //Debug.Log("Given parameter does not exist");
             return;
         }
 
         if (param.Type != AnimatorParamType.Trigger)
         {
-            Debug.LogWarning($"Animator parameter '{name}' is not of type Trigger.");
+            //Debug.LogWarning($"Animator parameter '{name}' is not of type Trigger.");
             return;
         }
 
@@ -105,13 +105,13 @@ public class WeaponAnimator : MonoBehaviour
 
         if (param == null)
         {
-            Debug.Log("Given parameter does not exist");
+            //Debug.Log("Given parameter does not exist");
             return;
         }
 
         if (param.Type != AnimatorParamType.Int)
         {
-            Debug.LogWarning($"Animator parameter '{name}' is not of type Int.");
+            //Debug.LogWarning($"Animator parameter '{name}' is not of type Int.");
             return;
         }
 
@@ -124,13 +124,13 @@ public class WeaponAnimator : MonoBehaviour
 
         if (param == null)
         {
-            Debug.Log("Given parameter does not exist");
+            //Debug.Log("Given parameter does not exist");
             return;
         }
 
         if (param.Type != AnimatorParamType.Float)
         {
-            Debug.LogWarning($"Animator parameter '{name}' is not of type Float.");
+            //Debug.LogWarning($"Animator parameter '{name}' is not of type Float.");
             return;
         }
 

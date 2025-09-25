@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BasicRevolver : BaseWeapon_v2
+public class BasicRevolver : BaseWeapon
 {
         void Start()
     {
@@ -67,9 +67,23 @@ public class BasicRevolver : BaseWeapon_v2
 
     public override void SpawnBullet()
     {
-        Debug.Log("Spawning bullet");
-        Bullet instantiatedBullet = Instantiate(WeaponConfig.BulletData.bulletPrefab, FiringPoints[0].transform.position, transform.rotation).GetComponent<Bullet>();
-        instantiatedBullet.SetupBulletParameters(WeaponConfig.BulletData.projectileSpeed, WeaponConfig.BulletData.size, WeaponConfig.Damage, WeaponConfig.BulletData.lifeTime);
+        Collider2D overlappingEnemyHitbox = ObstructionChecker.CheckMuzzleEnemyOverlap(muzzleTipCheck, WeaponConfig.enemyLayer);
+
+        if (overlappingEnemyHitbox)
+        {
+            if (overlappingEnemyHitbox.TryGetComponent<IDamageable>(out var damageable))
+            {
+                DamageContext context = new(gameObject, transform.position, WeaponRuntimeData.Damage, WeaponConfig.PushForce);
+                damageable.TakeDamage(context);
+                AmmoManager.UseAmmo();
+                return;
+            }
+        }
+
+        GameObject instantiatedBullet = Instantiate(WeaponConfig.BulletData.Prefab, FiringPoints[0].transform.position, transform.rotation);
+        instantiatedBullet.SetActive(false);
+        instantiatedBullet.GetComponent<Bullet>().Setup(gameObject, WeaponRuntimeData, WeaponConfig);
+        instantiatedBullet.SetActive(true);
 
         AmmoManager.UseAmmo();
 

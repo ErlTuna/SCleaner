@@ -6,14 +6,14 @@ using UnityEngine;
 public class MagazineReloadStrategy : ReloadStrategySO
 {
 
-    public override void ReloadStart(BaseWeapon_v2 owner)
+    public override void ReloadStart(BaseWeapon owner)
     {
         if (owner.AmmoManager.CanReload() != true || owner.WeaponRuntimeData.State != WeaponState.IDLE) return;
 
         owner.WeaponRuntimeData.State = WeaponState.RELOADING;
         owner.WeaponAnimator.StartReloadAnim();
     }
-    public override void PerformReload(BaseWeapon_v2 owner)
+    public override void PerformReload(BaseWeapon owner)
     {
         int needed = owner.WeaponConfig.RoundCapacity - owner.WeaponRuntimeData.CurrentAmmo;
         int taken = Mathf.Min(needed, owner.WeaponRuntimeData.ReserveAmmo);
@@ -26,7 +26,7 @@ public class MagazineReloadStrategy : ReloadStrategySO
 
     }
 
-    public override void ReloadEnd(BaseWeapon_v2 owner)
+    public override void ReloadEnd(BaseWeapon owner)
     {
         owner.WeaponRuntimeData.State = WeaponState.IDLE;
     }

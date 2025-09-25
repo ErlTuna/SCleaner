@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
+/*
 public class PlayerRuntimeDataHolder : UnitRuntimeDataHolder
 {
     public PlayerRuntimeDataHolder()
@@ -14,7 +15,7 @@ public class PlayerRuntimeDataHolder : UnitRuntimeDataHolder
         AddRuntimeData(new PlayerEnergyData());
     }
 }
-
+*/
 
 
 

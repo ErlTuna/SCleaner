@@ -75,7 +75,9 @@ GameObject:
   - component: {fileID: 6166882229596088855}
   - component: {fileID: 1954626896692324193}
   - component: {fileID: 3725376543127102386}
-  - component: {fileID: -9024990848052383573}
+  - component: {fileID: 4410049164486058850}
+  - component: {fileID: 6790015413256836416}
+  - component: {fileID: 3905944109122377642}
   m_Layer: 0
   m_Name: BasicSMGPrefab
   m_TagString: Untagged
@@ -282,7 +284,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 86357c5d5e98e194684b2d80932657d6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &-9024990848052383573
+--- !u!114 &4410049164486058850
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -291,25 +293,53 @@ MonoBehaviour:
   m_GameObject: {fileID: 5890597930396712892}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d8bf2a2c09af82d4da0cb9a48f8e949e, type: 3}
+  m_Script: {fileID: 11500000, guid: 5167b0e885975ca40b12d0bc56300ec7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  weaponConfig: {fileID: 11400000, guid: f5833629891c27544b95b1f096034f4d, type: 2}
-  firingPoint: {fileID: 7718260043891111844}
-  _animator: {fileID: 1954626896692324193}
-  _runtimeAnimatorController: {fileID: 0}
+  PrimaryAttackStrategy: {fileID: 11400000, guid: 0e5de3ccb7ff2a64a9634e3de497298c, type: 2}
+  WeaponAnimator: {fileID: 3905944109122377642}
+  AmmoManager: {fileID: 6790015413256836416}
+  WeaponConfig: {fileID: 11400000, guid: f5833629891c27544b95b1f096034f4d, type: 2}
+  WeaponRuntimeData:
+    State: 0
+    Config: {fileID: 0}
+    CurrentAmmo: 0
+    ReserveAmmo: 0
+    Damage: 0
+  FiringPoints:
+  - {fileID: 7718260043891111844}
   rayCastStartPoint: {fileID: 631447325084974646}
   rayCastEndPoint: {fileID: 3300757158746238805}
   muzzleTipCheck: {fileID: 7718260043891111844}
-  enemyLayer:
-    serializedVersion: 2
-    m_Bits: 0
-  environmentLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  mixedLayerMask:
-    serializedVersion: 2
-    m_Bits: 0
+--- !u!114 &6790015413256836416
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5890597930396712892}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 94ea39655bf03c74880f9a43878f3cf4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Owner: {fileID: 4410049164486058850}
+  ReloadStrategy: {fileID: 11400000, guid: 0be6bec96fcf27145ae17c030d6f25cb, type: 2}
+--- !u!114 &3905944109122377642
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5890597930396712892}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 68a3f9f85eb27024081467faa477b695, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _owner: {fileID: 4410049164486058850}
+  _paramTable: {fileID: 11400000, guid: f07a149dab15ab6438211d7c3cfada3f, type: 2}
+  animator: {fileID: 1954626896692324193}
 --- !u!1 &7652474678596303613
 GameObject:
   m_ObjectHideFlags: 0

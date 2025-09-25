@@ -6,7 +6,7 @@ using UnityEngine;
 [Serializable]
 public abstract class FiringMode : MonoBehaviour
 {
-    [SerializeField] protected BaseWeapon_v2 owner;
+    [SerializeField] protected BaseWeapon owner;
     public abstract void TryFire();
     public abstract void StopFire();
     public abstract void ResetState();

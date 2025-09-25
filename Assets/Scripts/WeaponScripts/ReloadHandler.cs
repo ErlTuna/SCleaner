@@ -3,11 +3,11 @@ using UnityEngine;
 public class ReloadHandler
 {
     [SerializeField] ReloadStrategySO reloadStrategy;
-    public BaseWeapon_v2 owner;
+    public BaseWeapon owner;
     protected AmmoTracker _ammoTracker;
     public WeaponAnimator _weaponAnimator;
 
-    public ReloadHandler(BaseWeapon_v2 owner, AmmoTracker tracker, WeaponAnimator animator)
+    public ReloadHandler(BaseWeapon owner, AmmoTracker tracker, WeaponAnimator animator)
     {
         this.owner = owner;
         _ammoTracker = tracker;

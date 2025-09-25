@@ -64,8 +64,8 @@ public class OLD_BasicSMG : OLD_BaseWeapon
     public override void PrimaryAttack()
     {
 
-        Bullet instantiatedBullet = Instantiate(weaponConfig.BulletData.bulletPrefab, firingPoint.transform.position, transform.rotation).GetComponent<Bullet>();
-        instantiatedBullet.SetupBulletParameters(weaponConfig.BulletData.projectileSpeed, weaponConfig.BulletData.size, weaponRuntimeData.Damage, weaponConfig.BulletData.lifeTime);
+        Bullet instantiatedBullet = Instantiate(weaponConfig.BulletData.Prefab, firingPoint.transform.position, transform.rotation).GetComponent<Bullet>();
+        //instantiatedBullet.SetupBulletParameters(weaponConfig.BulletData.ProjectileSpeed, weaponConfig.BulletData.Size, weaponRuntimeData.Damage, weaponConfig.BulletData.LifeTime);
 
 
         --weaponRuntimeData.CurrentAmmo;

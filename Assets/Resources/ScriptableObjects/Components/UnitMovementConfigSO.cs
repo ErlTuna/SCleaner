@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "Health X", menuName = "ScriptableObjects/Component SOs/Movement")]
+[CreateAssetMenu(fileName = "Movement Config", menuName = "ScriptableObjects/Component Configs/Movement Config")]
 public class UnitMovementConfigSO : ScriptableObject
 {
     public float movementSpeed;

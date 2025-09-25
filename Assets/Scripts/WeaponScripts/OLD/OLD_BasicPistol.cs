@@ -36,8 +36,8 @@ public class OLD_BasicPistol : OLD_BaseWeapon
 
 
         weaponRuntimeData.State = WeaponState.PRIMARY_ATTACK;
-        Bullet instantiatedBullet = Instantiate(weaponConfig.BulletData.bulletPrefab, firingPoint.transform.position, transform.rotation).GetComponent<Bullet>();
-        instantiatedBullet.SetupBulletParameters(weaponConfig.BulletData.projectileSpeed, weaponConfig.BulletData.size, weaponConfig.Damage, weaponConfig.BulletData.lifeTime);
+        Bullet instantiatedBullet = Instantiate(weaponConfig.BulletData.Prefab, firingPoint.transform.position, transform.rotation).GetComponent<Bullet>();
+        //instantiatedBullet.SetupBulletParameters(weaponConfig.BulletData.ProjectileSpeed, weaponConfig.BulletData.Size, weaponConfig.Damage, weaponConfig.BulletData.LifeTime);
 
 
         --weaponRuntimeData.CurrentAmmo;

@@ -6,6 +6,7 @@ using UnityEngine.InputSystem;
 
 public class PlayerEquipmentManager : MonoBehaviour
 {
+    /*
     GameObject _equipmentPrefab;
     Transform _grenadeSpawnPoint;
     Transform _parentTransform;
@@ -19,18 +20,19 @@ public class PlayerEquipmentManager : MonoBehaviour
             _currentEquipmentScript.OnAbilityEnd += ResetEquipmentStatus;
 
         //_currentEquipmentScript.DisableScript();
-        _equipmentPrefab.SetActive(false);
+        //_equipmentPrefab.SetActive(false);
         
         
     }
 
     void OnDisable(){
-        _currentEquipmentScript.OnAbilityEnd -= ResetEquipmentStatus;
+        //_currentEquipmentScript.OnAbilityEnd -= ResetEquipmentStatus;
     }
 
     void Awake(){
-        if(!_equipmentPrefab)
-          _equipmentPrefab = Instantiate(Resources.Load("WeaponPrefabs/GrenadePrefab") as GameObject);
+        /*
+        if (!_equipmentPrefab)
+            _equipmentPrefab = Instantiate(Resources.Load("WeaponPrefabs/GrenadePrefab") as GameObject);
         else
             _equipmentPrefab = Instantiate(_equipmentPrefab);
         
@@ -38,22 +40,25 @@ public class PlayerEquipmentManager : MonoBehaviour
             _grenadeSpawnPoint = GameObject.FindGameObjectWithTag("GrenadeSpawnPoint").transform;
 
         _currentEquipmentScript = _equipmentPrefab.GetComponent<IEquipment>();
+        
 
     }
     void Start()
     {
-        _parentTransform = transform;
-        _equipmentPrefab.transform.parent = _parentTransform;
-        _equipmentPrefab.transform.position = _grenadeSpawnPoint.position;
+        //_parentTransform = transform;
+        //_equipmentPrefab.transform.parent = _parentTransform;
+        //_equipmentPrefab.transform.position = _grenadeSpawnPoint.position;
     }
 
     void Update()
     {
+        /*
         if (PlayerInputManager.instance.EquipmentInput && _currentEquipmentScript.EquipmentInfo.count != 0 && !isThereActiveEquipment)
         {
             ChangeEquipment();
             DeployEquipment();
         }
+        
     }
 
     void ChangeEquipment()
@@ -73,8 +78,10 @@ public class PlayerEquipmentManager : MonoBehaviour
         IEquipment.InvokeEquipmentUseEvent(_currentEquipmentScript.EquipmentInfo);
     }
 
-    void ResetEquipmentStatus(){
-        isThereActiveEquipment = false;
+    void ResetEquipmentStatus() {
+    isThereActiveEquipment = false;
     }
+    
+    */
 
 }

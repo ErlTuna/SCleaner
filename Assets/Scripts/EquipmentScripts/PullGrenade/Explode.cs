@@ -24,10 +24,13 @@ public class Explode : MonoBehaviour
     
     public void StartExplosion(List<IDamageable> enemies, List<IEnemy> enemyScripts){
         if(_explosionTriggered) return;
+
         _explosionTriggered = true;
         _explosionParticles.Play();
+
         PlayWeaponSounds.ReceiveAudioSource(_audioSource);
         PlayWeaponSounds.PlayGunSound(explosionAudio);
+        
         print("Enemy count : " + enemies.Count);
         for(int i = 0; i < enemies.Count; ++i){
             print("Enemy count : " + enemies.Count + " loop count.");

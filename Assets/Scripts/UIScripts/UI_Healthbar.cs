@@ -8,15 +8,16 @@ public class UI_Healthbar : MonoBehaviour
 {
     [SerializeField] Image imageComponent;
     [SerializeField] Sprite[] _healthbarSprites;
+    [SerializeField] int _healthStateCount = 10;
 
     void OnEnable()
     {
-        //PlayerHealth.OnPlayerHit += UpdateHealthbar; 
+        PlayerHealthManager.OnPlayerHitUIUpdate += UpdateHealthbar; 
     }
 
     void OnDisable()
     {
-        //PlayerHealth.OnPlayerHit -= UpdateHealthbar; 
+        PlayerHealthManager.OnPlayerHitUIUpdate -= UpdateHealthbar; 
     }
 
     void UpdateHealthbar(int currentHealth)
@@ -28,7 +29,7 @@ public class UI_Healthbar : MonoBehaviour
 
     HealthState CalculateHealthState(int value)
     {
-        HealthState healthState = (HealthState)(value / 10);
+        HealthState healthState = (HealthState)(value / _healthStateCount);
         return healthState;
     }
 }

@@ -9,7 +9,7 @@ public class CrackerAttackRecoveryState : BaseState
     Vector2 targetDirection;
     Transform target;
 
-    public CrackerAttackRecoveryState(GameObject enemy, GameObject player, Rigidbody2D rb2D, NavMeshAgent agent, IEnemy enemyScript) : base(enemy, player, rb2D, agent){
+    public CrackerAttackRecoveryState(GameObject enemy, GameObject player, Rigidbody2D rb2D, NavMeshAgent agent, IEnemy enemyScript) : base(enemy, rb2D, agent){
         this.enemyScript = enemyScript;
         target = player.transform;
     }
@@ -48,12 +48,12 @@ public class CrackerAttackRecoveryState : BaseState
     }
     void CalculatePlayerDirection(){
         //calculate direction
-        targetDirection = (target.position - enemy.transform.position).normalized;
+        targetDirection = (target.position - owner.transform.position).normalized;
     }
 
     void RotateTowardsPlayer(){
         float angle = Mathf.Atan2(targetDirection.y, targetDirection.x) * Mathf.Rad2Deg;
-        enemy.transform.eulerAngles = new Vector3(0, 0, angle);
+        owner.transform.eulerAngles = new Vector3(0, 0, angle);
     }
 
     void EnableAgent(){

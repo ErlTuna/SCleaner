@@ -3,9 +3,9 @@ using UnityEngine;
 
 public class AbilityContext
 {
-    public Unit user;
+    public GameObject user;
     public UnitRuntimeDataHolder userRuntimeData;
-    public Unit target;
+    public List<GameObject> targets;
     public UnitRuntimeDataHolder targetRuntimeData;
     public Vector2 direction;
     public Dictionary<string, object> customData = new();

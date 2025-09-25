@@ -5,6 +5,7 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "Health Config", menuName = "ScriptableObjects/Component Configs/Health Config")]
 public class UnitHealthConfigSO : ScriptableObject
 {
-    public int health;
-    public int maxHealth = 20;
+    public int Health;
+    public int MaxHealth;
+    public AudioClip OnHitSFX;
 }

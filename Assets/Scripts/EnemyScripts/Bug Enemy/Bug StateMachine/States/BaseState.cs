@@ -1,18 +1,15 @@
-using System.Collections;
 using UnityEngine;
 using UnityEngine.AI;
-using UnityEngine.Rendering;
 
 public abstract class BaseState : IState
 {
-    protected readonly GameObject enemy;
+    protected readonly GameObject owner;
     protected readonly GameObject player;
     protected readonly Rigidbody2D rb2D;
     protected readonly NavMeshAgent agent; 
 
-    public BaseState(GameObject enemy, GameObject player, Rigidbody2D rb2D, NavMeshAgent agent){
-        this.enemy = enemy;
-        this.player = player;
+    public BaseState(GameObject owner, Rigidbody2D rb2D, NavMeshAgent agent){
+        this.owner = owner;
         this.rb2D = rb2D;
         this.agent = agent;
     }

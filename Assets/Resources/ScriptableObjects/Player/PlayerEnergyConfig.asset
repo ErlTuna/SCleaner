@@ -16,3 +16,4 @@ MonoBehaviour:
   maxEnergy: 3
   rechargeInterval: 0.2
   rechargeRate: 0.1
+  fullEnergySFX: {fileID: 8300000, guid: 53493184bf8c6c446b5de5fb1f456306, type: 3}

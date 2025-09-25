@@ -6,11 +6,11 @@ using UnityEngine;
 public abstract class FiringModeSO : ScriptableObject
 {
     public string Description;
-    public virtual void HandlePreAttack(BaseWeapon_v2 weapon) { }
-    public virtual void HandleAttackCanceled(BaseWeapon_v2 weapon) { }
-    public virtual void HandlePreAttackEnd(BaseWeapon_v2 weapon) { }
-    public abstract void HandleAttackStart(BaseWeapon_v2 weapon);
-    public abstract void HandleAttackEnd(BaseWeapon_v2 weapon);
+    public virtual void HandlePreAttack(BaseWeapon weapon) { }
+    public virtual void HandleAttackCanceled(BaseWeapon weapon) { }
+    public virtual void HandlePreAttackEnd(BaseWeapon weapon) { }
+    public abstract void HandleAttackStart(BaseWeapon weapon);
+    public abstract void HandleAttackEnd(BaseWeapon weapon);
 
 }
 

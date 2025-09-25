@@ -36,8 +36,14 @@ public class BugHealth : MonoBehaviour, IDamageable
         }*/
     }
 
-    public void TakeDamage(IEnemy attacker){
-        
+    public void TakeDamage(DamageContext context)
+    {
+        throw new NotImplementedException();
+    }
+
+    public void TakeDamage(int amount, Vector2 attackPosition, GameObject hitter)
+    {
+        throw new NotImplementedException();
     }
 
 }

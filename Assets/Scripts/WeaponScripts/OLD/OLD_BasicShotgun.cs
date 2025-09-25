@@ -10,7 +10,7 @@ public class OLD_BasicShotgun : OLD_BaseWeapon
     public LayerMask enemyLayer;
     public LayerMask environmentLayers;
     public LayerMask mixedLayerMask;
-    private BulletSO bulletInfo;
+    private BulletConfigSO bulletInfo;
     List<GameObject> bullets = new List<GameObject>();
     [SerializeField] Transform[] firingPoints;
     bool _hasReloadStarted;
@@ -68,23 +68,26 @@ public class OLD_BasicShotgun : OLD_BaseWeapon
     }
     public override void PrimaryAttack()
     {
+
+        /*
         GameObject overlappingEnemy = ObstructionChecker.CheckMuzzleEnemyOverlap(muzzleTipCheck, enemyLayer);
         if (overlappingEnemy != null)
         {
             IDamageable damageable = overlappingEnemy.GetComponent<IDamageable>();
-            damageable?.TakeDamage(weaponRuntimeData.Damage * weaponRuntimeData.PelletCount);
+            //damageable?.TakeDamage(weaponRuntimeData.Damage * weaponRuntimeData.PelletCount);
         }
+        
         else
         {
             for (int i = 0; i < firingPoints.Length; ++i)
             {
-                GameObject bullet = Instantiate(weaponConfig.BulletData.bulletPrefab, firingPoints[i].transform.position, firingPoints[i].transform.rotation);
+                GameObject bullet = Instantiate(weaponConfig.BulletData.Prefab, firingPoints[i].transform.position, firingPoints[i].transform.rotation);
                 Bullet bulletScript = bullet.GetComponent<Bullet>();
-                bulletScript.SetupBulletParameters(bulletInfo.projectileSpeed, bulletInfo.size, weaponRuntimeData.Damage, bulletInfo.lifeTime);
+                //bulletScript.SetupBulletParameters(bulletInfo.ProjectileSpeed, bulletInfo.Size, weaponRuntimeData.Damage, bulletInfo.LifeTime);
                 bullets.Add(bullet);
             }
         }
-
+        */
         weaponRuntimeData.CurrentAmmo--;
         WeaponEvents.RaiseWeaponFired(weaponRuntimeData);
     }

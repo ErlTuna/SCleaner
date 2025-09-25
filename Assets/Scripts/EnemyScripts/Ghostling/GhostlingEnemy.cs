@@ -8,7 +8,7 @@ public class GhostlingEnemy : MonoBehaviour, IEnemy
 {
     [SerializeField] NavMeshAgent agent;
     [SerializeField] Rigidbody2D _rb2D;
-    public EnemySO EnemyInfo{get;set;}
+    public EnemyConfigSO EnemyInfo{get;set;}
     public BoxCollider2D SpawnArea {get;set;}
     public UnitConfigsWrapperSO _playerInfo;
     StateMachine _stateMachine;
@@ -19,14 +19,14 @@ public class GhostlingEnemy : MonoBehaviour, IEnemy
     void Awake(){
         _player = GameObject.FindGameObjectWithTag("Player");
         if (EnemyInfo == null){
-            EnemyInfo = ScriptableObject.CreateInstance<EnemySO>();
+            EnemyInfo = ScriptableObject.CreateInstance<EnemyConfigSO>();
         }
     EnemyInfo.Init();
     }        
 
     void Start()
     {
-        
+        /*
 
         //Initialize fields
         //string description1 = "roam to stop predicate";
@@ -64,6 +64,8 @@ public class GhostlingEnemy : MonoBehaviour, IEnemy
 
         //Set initial state
         _stateMachine.SetState(roamState);
+
+        */
     }
 
     void At(IState from, IState to, IPredicate condition) => _stateMachine.AddTransition(from, to, condition);

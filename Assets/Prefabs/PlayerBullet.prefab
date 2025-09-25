@@ -162,6 +162,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _circleCollider2D: {fileID: -2196210402528101077}
+  _rb2D: {fileID: 919517772093030224}
+  config: {fileID: 0}
+  _owner: {fileID: 0}
   layerMask:
     serializedVersion: 2
     m_Bits: 33280

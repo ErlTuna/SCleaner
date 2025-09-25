@@ -4,7 +4,7 @@ using UnityEngine;
 
 public interface IEnemy
 {
-    public EnemySO EnemyInfo{get;set;}
+    public EnemyConfigSO EnemyInfo{get;set;}
     public BoxCollider2D SpawnArea{get;set;}
     void SetProvoked();
     void PlayerIsDetected();

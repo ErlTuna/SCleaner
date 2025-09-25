@@ -11,7 +11,7 @@ public class PlayerAbilityHandler : MonoBehaviour
     [SerializeField] List<AbilityData> abilities;
     [SerializeField] AbilityData currentAbility;
     [SerializeField] AbilityContext context;
-    PlayerEnergyData _playerEnergyData;
+    UnitEnergyData _playerEnergyData;
     Coroutine useStateCoroutine;
     public int currentAbilityIndex = 0;
 
@@ -26,7 +26,7 @@ public class PlayerAbilityHandler : MonoBehaviour
     {
 
         if (currentAbility.CanBeUsed(context) != true) return;
-        if (_playerEnergyData.CurrentEnergy - currentAbility.energyCost < 0)
+        if (_playerEnergyData.CurrentEnergy - currentAbility.EnergyCost < 0)
         {
             Debug.Log("Not enough energy");
             return;
@@ -34,7 +34,7 @@ public class PlayerAbilityHandler : MonoBehaviour
 
         if (useStateCoroutine == null) useStateCoroutine = StartAbilityUse();
 
-        foreach (AbilityEffect effect in currentAbility.effects)
+        foreach (AbilityEffect effect in currentAbility.Effects)
             effect.Execute(context, currentAbility);
 
     }
@@ -56,16 +56,16 @@ public class PlayerAbilityHandler : MonoBehaviour
 
     void Update()
     {
+        /*
         if (PlayerInputManager.instance.AbilitySwitchInput)
         {
             ChangeAbility();
         }
-
-        if (Keyboard.current.spaceKey.wasPressedThisFrame)
+        */
+        
+        if (PlayerInputManager.instance.AbilityUseInput)
         {
-            context = new AbilityContext
-            { user = _owner, target = _owner, direction = PlayerInputManager.instance.MovementInput, userRuntimeData = _owner.RuntimeDataHolder};
-            Execute(context);
+            UseAbility();
         }
 
 
@@ -85,15 +85,26 @@ public class PlayerAbilityHandler : MonoBehaviour
         UIEvents.RaiseAbilityChanged(currentAbility);
     }
 
-    public void InitializeWithData(Unit owner, PlayerEnergyData energyData)
+    void UseAbility()
+    {
+        List<GameObject> _targets = new();
+        _targets.Add(gameObject);
+
+        context = new AbilityContext
+            {
+                user = gameObject,
+                targets = _targets,
+                direction = PlayerInputManager.instance.MovementInput,
+                userRuntimeData = _owner.RuntimeDataHolder
+            };
+        Execute(context);
+    }
+
+    public void InitializeWithData(Unit owner, UnitEnergyData energyData)
     {
         _owner = owner;
         _playerEnergyData = energyData;
     }
 }
 
-public enum AbilityType
-{
-    INSTANTENOUS,
-    OVERTIME
-}
+

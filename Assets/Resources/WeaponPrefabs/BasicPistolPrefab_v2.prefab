@@ -77,6 +77,7 @@ GameObject:
   - component: {fileID: 6620584969643870644}
   - component: {fileID: 1889791732182129909}
   - component: {fileID: 8229253210197446598}
+  - component: {fileID: 8075754141528242692}
   m_Layer: 0
   m_Name: BasicPistolPrefab_v2
   m_TagString: Untagged
@@ -284,7 +285,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   PrimaryAttackStrategy: {fileID: 11400000, guid: 0e5de3ccb7ff2a64a9634e3de497298c, type: 2}
-  SecondaryAttackStrategy: {fileID: 11400000, guid: 1bad830477bb1194d84fad2175462e37, type: 2}
   WeaponAnimator: {fileID: 8229253210197446598}
   AmmoManager: {fileID: 1889791732182129909}
   WeaponConfig: {fileID: 11400000, guid: e17c034cd1b2f244dbfdf103f490f202, type: 2}
@@ -294,9 +294,11 @@ MonoBehaviour:
     CurrentAmmo: 0
     ReserveAmmo: 0
     Damage: 0
-    PelletCount: 0
   FiringPoints:
   - {fileID: 7718260043891111844}
+  rayCastStartPoint: {fileID: 7718260043891111844}
+  rayCastEndPoint: {fileID: 1397508322659143035}
+  muzzleTipCheck: {fileID: 1397508322659143035}
 --- !u!114 &1889791732182129909
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -326,6 +328,18 @@ MonoBehaviour:
   _owner: {fileID: 6620584969643870644}
   _paramTable: {fileID: 11400000, guid: f07a149dab15ab6438211d7c3cfada3f, type: 2}
   animator: {fileID: 4472284901953710207}
+--- !u!114 &8075754141528242692
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5890597930396712892}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 86357c5d5e98e194684b2d80932657d6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &7652474678596303613
 GameObject:
   m_ObjectHideFlags: 0

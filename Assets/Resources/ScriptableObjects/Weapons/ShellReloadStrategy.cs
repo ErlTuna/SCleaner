@@ -9,7 +9,7 @@ public class ShellReloadStrategy : ReloadStrategySO
     readonly int taken = 1;
     int needed = 0;
 
-    public override void ReloadStart(BaseWeapon_v2 owner)
+    public override void ReloadStart(BaseWeapon owner)
     {
         if (owner.AmmoManager.HasReserveAmmo() != true || owner.WeaponRuntimeData.State == WeaponState.RELOADING) return;
 
@@ -17,7 +17,7 @@ public class ShellReloadStrategy : ReloadStrategySO
         owner.WeaponAnimator.StartReloadAnim();
     }
 
-    public override void PerformReload(BaseWeapon_v2 owner)
+    public override void PerformReload(BaseWeapon owner)
     {
         needed = owner.WeaponConfig.RoundCapacity - owner.WeaponRuntimeData.CurrentAmmo;
         if (needed != 0 && owner.AmmoManager.HasReserveAmmo())
@@ -31,7 +31,7 @@ public class ShellReloadStrategy : ReloadStrategySO
         //WeaponEvents.RaiseWeaponReload(Owner.WeaponRuntimeData);
     }
 
-    public override void HandleReloadContinuation(BaseWeapon_v2 weapon)
+    public override void HandleReloadContinuation(BaseWeapon weapon)
     {
         if (weapon.AmmoManager.CanReload())
         {
@@ -45,7 +45,7 @@ public class ShellReloadStrategy : ReloadStrategySO
         ReloadEnd(weapon);        
     }
 
-    public override void ReloadEnd(BaseWeapon_v2 owner)
+    public override void ReloadEnd(BaseWeapon owner)
     {
         owner.WeaponRuntimeData.State = WeaponState.IDLE;
     }

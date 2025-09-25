@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "Player SOs", menuName = "ScriptableObjects/Component SOs/Player Inventory")]
+[CreateAssetMenu(fileName = "Inventory Config", menuName = "ScriptableObjects/Component Configs/Inventory Config")]
 public class UnitInventoryConfigSO : ScriptableObject
 {
     [Header("Currency")]
@@ -13,6 +13,7 @@ public class UnitInventoryConfigSO : ScriptableObject
     //public List<WeaponConfig> weaponConfigs;
     //public List<WeaponData> weaponConfigs;
     public List<GameObject> weaponPrefabs = new();
+    public List<GameObject> equipmentPrefabs = new();
 
     public int weaponsHeld;
 

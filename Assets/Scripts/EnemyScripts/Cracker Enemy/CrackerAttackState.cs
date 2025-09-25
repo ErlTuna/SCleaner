@@ -8,7 +8,7 @@ public class CrackerAttackState : BaseState
     IEnemy enemyScript;
     Transform target;
     Vector2 targetDirection;
-    public CrackerAttackState(GameObject enemy, GameObject player, Rigidbody2D rb2D, NavMeshAgent agent, IEnemy enemyScript) : base(enemy, player, rb2D, agent){
+    public CrackerAttackState(GameObject enemy, GameObject player, Rigidbody2D rb2D, NavMeshAgent agent, IEnemy enemyScript) : base(enemy, rb2D, agent){
         target = player.transform;
         this.enemyScript = enemyScript;
         
@@ -59,7 +59,7 @@ public class CrackerAttackState : BaseState
 
     void CalculatePlayerDirection(){
         //calculate direction
-        targetDirection = (target.position - enemy.transform.position).normalized;
+        targetDirection = (target.position - owner.transform.position).normalized;
     }
     void DisableAgent(){
         agent.ResetPath();

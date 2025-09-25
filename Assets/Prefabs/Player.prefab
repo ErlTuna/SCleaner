@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5441814769759427475}
   m_Layer: 7
-  m_Name: GrenadePosition
+  m_Name: EquipmentDeployPosition
   m_TagString: GrenadeSpawnPoint
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -429,6 +429,10 @@ MonoBehaviour:
       m_Calls: []
     m_ActionId: 020b3b2f-d38a-4a37-8e77-402dada6e68d
     m_ActionName: Gameplay/Switch Ability[/Keyboard/f]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: ccd49256-5c78-4fe5-81ea-b6af9c19fefe
+    m_ActionName: Gameplay/Secondary Attack[/Mouse/rightButton]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Gameplay
@@ -446,16 +450,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d32c3a3e678640f49947d74ef7fdd622, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  unitConfigWrapper: {fileID: 11400000, guid: 77f621b67473a6641ae1df33db72517f, type: 2}
+  RuntimeDataHolder:
+    Owner: {fileID: 3793509965958359214}
+  UnitConfigWrapper: {fileID: 11400000, guid: 77f621b67473a6641ae1df33db72517f, type: 2}
   _playerActionMap:
     m_Name: Player
-    m_Id: 7aeb3b80-dfda-4f0e-9b5e-e134dc0627b1
+    m_Id: 07997b3c-075a-4f1d-b6a8-b774c57f5d35
     m_Asset: {fileID: 0}
     m_Actions: []
     m_Bindings: []
   _playerHealthManager: {fileID: 2614403972491431392}
   _playerMovementManager: {fileID: 1007409015436641985}
-  _playerInventoryManager: {fileID: 0}
+  _playerInventoryManager: {fileID: 766600507654131362}
   _playerEnergyManager: {fileID: 7564687369081222863}
   _playerAbilityHandler: {fileID: 6640803686068332035}
   _playerAimManager: {fileID: 655333980170022825}
@@ -478,7 +484,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 990524889146674647}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 331267c1181d6c343b65db6eaa395613, type: 3}
   m_Name: 
@@ -491,7 +497,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 990524889146674647}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ae378b8c6de7d5b46a2455ef326120b5, type: 3}
   m_Name: 
@@ -504,7 +510,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 990524889146674647}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 11e4bb250f0f1574e824ec0e3d855568, type: 3}
   m_Name: 
@@ -545,7 +551,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 990524889146674647}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 15570fccdaa0d76439a21f8b20d5837c, type: 3}
   m_Name: 
@@ -557,17 +563,20 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 990524889146674647}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3dd60289d248d5044953fcd94f8f904c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _weaponParent: {fileID: 369740753222307388}
   _weaponPosition: {fileID: 4675471930827448633}
+  _equipmentPosition: {fileID: 5441814769759427475}
   currentWeapon: {fileID: 0}
   currentWeaponScript: {fileID: 0}
+  currentEquipment: {fileID: 0}
+  currentEquipmentScript: {fileID: 0}
   weaponCount: 0
-  currentlyUsedSlot: 0
+  currentlyUsedWeaponSlot: 0
 --- !u!1 &2113836864039851442
 GameObject:
   m_ObjectHideFlags: 0
@@ -674,6 +683,8 @@ GameObject:
   - component: {fileID: 8300566310151160716}
   - component: {fileID: 1095376695646202524}
   - component: {fileID: 4004060463098888693}
+  - component: {fileID: 4668333623302751828}
+  - component: {fileID: 4990024825993343330}
   m_Layer: 7
   m_Name: Weapon Parent
   m_TagString: Untagged
@@ -705,7 +716,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5574510567315748738}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 51261ccdc83380c40b01e9555971b52c, type: 3}
   m_Name: 
@@ -717,7 +728,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5574510567315748738}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 8db86d41eae1cb14ab82b54d6e339ac6, type: 3}
   m_Name: 
@@ -731,7 +742,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5574510567315748738}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 81ff3c7914f795543bc7213cc9ed9bef, type: 3}
   m_Name: 
@@ -743,7 +754,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5574510567315748738}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: eaa239986d7e6404fb5fc46050a3003b, type: 3}
   m_Name: 
@@ -752,6 +763,35 @@ MonoBehaviour:
   _weaponPosition: {fileID: 4675471930827448633}
   weaponSwitchAudio: {fileID: 8300000, guid: d2b24e19405954a4c99252993fb90386, type: 3}
   currentWeaponScript: {fileID: 0}
+--- !u!114 &4668333623302751828
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5574510567315748738}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8db86d41eae1cb14ab82b54d6e339ac6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isThereActiveEquipment: 0
+  _equipmentCount: 5
+--- !u!114 &4990024825993343330
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5574510567315748738}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cc224099e6049584aa8c3179648235fe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _currentEquipmentGO: {fileID: 0}
+  _currentEquipmentScript: {fileID: 0}
+  _equipmentSpawnPoint: {fileID: 5441814769759427475}
 --- !u!1 &5790504939223317001
 GameObject:
   m_ObjectHideFlags: 0

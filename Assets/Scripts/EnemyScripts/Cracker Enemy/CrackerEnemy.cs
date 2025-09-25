@@ -7,7 +7,7 @@ public class CrackerEnemy : MonoBehaviour, IEnemy
 {
     [SerializeField] NavMeshAgent agent;
     [SerializeField] Rigidbody2D _rb2D;
-    public EnemySO EnemyInfo{get;set;}
+    public EnemyConfigSO EnemyInfo{get;set;}
     public BoxCollider2D SpawnArea {get;set;}
     public UnitConfigsWrapperSO _playerInfo;
     StateMachine _stateMachine;
@@ -16,7 +16,7 @@ public class CrackerEnemy : MonoBehaviour, IEnemy
     void Awake(){
         _player = GameObject.FindGameObjectWithTag("Player");
         if (EnemyInfo == null){
-            EnemyInfo = ScriptableObject.CreateInstance<EnemySO>();
+            EnemyInfo = ScriptableObject.CreateInstance<EnemyConfigSO>();
         }
     EnemyInfo.Init();
     }        
@@ -33,9 +33,9 @@ public class CrackerEnemy : MonoBehaviour, IEnemy
 
 
         //Initialize states
-        RoamState roamState = new RoamState(gameObject, _player, _rb2D, agent, SpawnArea);
+        RoamState roamState = new RoamState(gameObject, _rb2D, agent, SpawnArea);
         ChaseState chaseState = new ChaseState(gameObject, _player, _rb2D, agent);
-        ImmobileState immobileState = new ImmobileState(gameObject, _player, _rb2D, agent);
+        ImmobileState immobileState = new ImmobileState(gameObject, _rb2D, agent);
         CrackerAttackState attackState = new CrackerAttackState(gameObject, _player, _rb2D, agent, this);
         CrackerAttackRecoveryState recoveryState = new CrackerAttackRecoveryState(gameObject, _player, _rb2D, agent, this);
         CrackerPreAttack preAttackState = new CrackerPreAttack(gameObject, _player, _rb2D, agent, this);

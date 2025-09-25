@@ -42,7 +42,6 @@ public class UI_ActiveWeaponDisplay : MonoBehaviour
 
     void UpdateAmmoDisplay(WeaponRuntimeData weaponData)
     {
-        Debug.Log(weaponData.CurrentAmmo);
         string currentAmmo = weaponData.CurrentAmmo.ToString();
         string currentReserve = weaponData.ReserveAmmo.ToString();
         string text = currentAmmo + "/" + currentReserve;

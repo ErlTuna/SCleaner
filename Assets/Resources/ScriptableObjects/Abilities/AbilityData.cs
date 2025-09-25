@@ -3,47 +3,49 @@ using System;
 using UnityEngine;
 using SerializeReferenceEditor;
 using System.Collections;
+using System.Linq;
+using UnityEngine.UIElements;
+using Unity.VisualScripting;
 
 [CreateAssetMenu(fileName = "AbilityData", menuName = "ScriptableObjects/Ability/Ability Data")]
 public class AbilityData : ScriptableObject
 {
     [Header("General Information")]
-    public string abilityName;
-    public Unit _owner;
-    public AbilityType abilityType;
-    public AbilityState state;
-    public float energyCost; 
-    public float strength;
-    public float duration;
+    public string AbilityName;
+    public GameObject Owner;
+    public AbilityType AbilityType;
+    public AbilityState State;
+    public float EnergyCost;
+    public float Duration;
 
     [Header("Visual & SFX")]
     public Sprite icon;
     public AudioClip SFXClip;
 
     [Header("Effects and Conditions")]
-    [SerializeReference, SR] public List<AbilityEffect> effects;
-    [SerializeReference, SR] public List<AbilityConditions> conditions;
+    [SerializeReference, SR] public List<AbilityEffect> Effects;
+    [SerializeReference, SR] public List<AbilityConditions> Conditions;
 
 
 
     void OnEnable()
     {
-        if (string.IsNullOrEmpty(abilityName)) abilityName = name;
-        if (effects == null) effects = new List<AbilityEffect>();
+        if (string.IsNullOrEmpty(AbilityName)) AbilityName = name;
+        if (Effects == null) Effects = new List<AbilityEffect>();
 
-        state = AbilityState.INACTIVE;
+        State = AbilityState.INACTIVE;
     }
 
     public bool CanBeUsed(AbilityContext context)
     {
-        if (state != AbilityState.INACTIVE)
+        if (State != AbilityState.INACTIVE)
         {
             Debug.Log("Ability is already active!");
             return false;
         }
-            
 
-        foreach (AbilityConditions condition in conditions)
+
+        foreach (AbilityConditions condition in Conditions)
         {
             ConditionResult result = condition.Evaluate(context);
             if (result.isSucessful != true)
@@ -51,22 +53,28 @@ public class AbilityData : ScriptableObject
                 Debug.Log(result.reason);
                 return false;
             }
-                
+
         }
 
         return true;
     }
-    
+
 
     public IEnumerator AbilityTriggered(Action abilityFinishedCallback)
     {
-        state = AbilityState.ACTIVE;
+        State = AbilityState.ACTIVE;
 
-        yield return new WaitForSeconds(duration);
+        yield return new WaitForSeconds(Duration);
 
-        state = AbilityState.INACTIVE;
+        State = AbilityState.INACTIVE;
         abilityFinishedCallback?.Invoke();
     }
+}
+
+public enum AbilityType
+{
+    INSTANTENOUS,
+    OVERTIME
 }
 
 
@@ -80,8 +88,13 @@ public abstract class AbilityEffect
 [Serializable]
 class DisplacementEffect : AbilityEffect
 {
+    public float Strength = 1f;
+    public float Duration = 1f;
+    public IUnitStateData userStateData;
     public override void Execute(AbilityContext context, AbilityData abilityData)
     {
+        Duration = abilityData.Duration;
+    
         if (context.userRuntimeData == null)
         {
             Debug.Log("User has no runtime data");
@@ -100,10 +113,13 @@ class DisplacementEffect : AbilityEffect
             Debug.Log("User has no rigidbody");
             return;
         }
-                
-        runner.StartCoroutine(DisplacementEffectTimer(context.userRuntimeData, abilityData.duration));
-        userRigidbody.velocity = context.direction.normalized * abilityData.strength;
-                
+
+        if(abilityData.SFXClip)
+            AudioSource.PlayClipAtPoint(abilityData.SFXClip, context.user.transform.position);
+
+        runner.StartCoroutine(DisplacementEffectTimer(context.userRuntimeData, Duration));
+        userRigidbody.velocity = context.direction.normalized * Strength;
+
     }
     
     IEnumerator DisplacementEffectTimer(UnitRuntimeDataHolder unitRuntimeDataHolder, float duration)
@@ -126,7 +142,7 @@ class DisplacementEffect : AbilityEffect
     
     public override void End(AbilityContext context)
     {
-
+        userStateData.CanMove = true;
     }
 
 }
@@ -134,8 +150,10 @@ class DisplacementEffect : AbilityEffect
 [Serializable]
 class InvulnEffect : AbilityEffect
 {
+    public float Duration = 1f;
     public override void Execute(AbilityContext context, AbilityData abilityData)
     {
+        Duration = abilityData.Duration;
 
         if (context.userRuntimeData == null)
         {
@@ -151,10 +169,10 @@ class InvulnEffect : AbilityEffect
 
         if (context.userRuntimeData.TryGetRuntimeData(out IUnitStateData stateData))
         {
-            runner.StartCoroutine(InvulnTimer(stateData, abilityData.duration));
+            runner.StartCoroutine(InvulnTimer(stateData, Duration));
         }
-        
-        
+
+
     }
 
     IEnumerator InvulnTimer(IUnitStateData userState, float duration)
@@ -168,28 +186,17 @@ class InvulnEffect : AbilityEffect
     { }
 }
 
-class ShieldEffect : AbilityEffect
-{
-    public override void Execute(AbilityContext context, AbilityData abilityData)
-    {
-        
-    }
+[Serializable]
 
 
-
-    public override void End(AbilityContext context)
-    {
-        //
-    }
-
-    
-}
 
 public enum AbilityState
 {
     INACTIVE,
     ACTIVE,
 }
+
+
 
 
 
