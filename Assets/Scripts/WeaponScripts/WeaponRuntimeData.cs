@@ -4,8 +4,8 @@ using UnityEngine;
 [Serializable]
 public class WeaponRuntimeData
 {
+    readonly public WeaponConfigSO Config;
     public WeaponState State;
-    public WeaponConfigSO Config;
     public int CurrentAmmo;
     public int ReserveAmmo;
     public int Damage;
@@ -13,10 +13,13 @@ public class WeaponRuntimeData
 
     public WeaponRuntimeData(WeaponConfigSO config)
     {
+        if (config == null) return;
+        
         Config = config;
-        CurrentAmmo = config.RoundCapacity;
-        ReserveAmmo = config.StartingReserveAmmo;
-        State = config.State;
-        Damage = config.Damage;
+
+        CurrentAmmo = Config.RoundCapacity;
+        ReserveAmmo = Config.StartingReserveAmmo;
+        State = WeaponState.IDLE;
+        Damage = Config.Damage;
     }
 }

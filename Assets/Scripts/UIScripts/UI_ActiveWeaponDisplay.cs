@@ -9,6 +9,9 @@ public class UI_ActiveWeaponDisplay : MonoBehaviour
 {
     [SerializeField] Image _imageComponent;
     [SerializeField] TextMeshProUGUI _ammoText;
+    [SerializeField] Sprite _fallbackSprite;
+    readonly Color TransparentWhite = new(1f, 1f, 1f, 0f);
+
 
     void OnEnable()
     {
@@ -31,17 +34,26 @@ public class UI_ActiveWeaponDisplay : MonoBehaviour
 
         if (weaponSprite == null)
         {
-        Debug.LogWarning("Weapon sprite is null — likely due to weapon not being fully initialized.");
-        return;
+            //_imageComponent.sprite = _fallbackSprite;
+            _imageComponent.color = TransparentWhite;
+            UpdateAmmoDisplay(null);
+            return;
         }
 
 
         _imageComponent.sprite = weaponSprite;
+        _imageComponent.color = Color.white;
         UpdateAmmoDisplay(runtimeData);
     }
 
     void UpdateAmmoDisplay(WeaponRuntimeData weaponData)
     {
+        if (weaponData == null)
+        {
+            _ammoText.SetText("");
+            return;
+        }
+
         string currentAmmo = weaponData.CurrentAmmo.ToString();
         string currentReserve = weaponData.ReserveAmmo.ToString();
         string text = currentAmmo + "/" + currentReserve;

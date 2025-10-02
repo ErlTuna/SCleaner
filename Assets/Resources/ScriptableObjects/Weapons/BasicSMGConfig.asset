@@ -12,20 +12,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8af658472ac40bb42b3a626dc24f4a0c, type: 3}
   m_Name: BasicSMGConfig
   m_EditorClassIdentifier: 
-  State: 0
+  WeaponName: Basic SMG
   Type: 0
   Prefab: {fileID: 5890597930396712892, guid: c9811e33e02839c489d5101f0c846dcd, type: 3}
+  PickupPrefab: {fileID: 5890597930396712892, guid: 6f09affdc9aaaf742a02f9e31b14b4fb, type: 3}
   BulletData: {fileID: 11400000, guid: a3d432f8e7373a146a7bc5cdb97754b7, type: 2}
   Name: Basic SMG
   Damage: 3
-  CurrentAmmo: 30
   RoundCapacity: 30
   MaxReserveAmmo: 120
   StartingReserveAmmo: 120
   BulletPerShot: 1
   PushForce: 5
-  gunSound: {fileID: 8300000, guid: 1628a2d7b2d1a1143b779d74783db947, type: 3}
-  sprite: {fileID: 21300000, guid: ee9870b1675272d42a735fce29d0358a, type: 3}
+  Sprite: {fileID: 21300000, guid: ee9870b1675272d42a735fce29d0358a, type: 3}
+  DryFireSFX: {fileID: 8300000, guid: 591753c0fc688dc4a8a4928848b5c518, type: 3}
+  FiringSFX: {fileID: 8300000, guid: 1628a2d7b2d1a1143b779d74783db947, type: 3}
+  WeaponSwitchSFX: {fileID: 8300000, guid: d2b24e19405954a4c99252993fb90386, type: 3}
   offset: {x: 0, y: 0, z: 0}
   rayCastStartPoint: {fileID: 0}
   rayCastEndPoint: {fileID: 0}

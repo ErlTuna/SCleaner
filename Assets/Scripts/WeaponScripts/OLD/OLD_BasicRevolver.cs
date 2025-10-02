@@ -171,6 +171,6 @@ public class OLD_BasicRevolver : OLD_BaseWeapon
         _animator.SetBool("isLMBHeld", false);
         _animator.ResetTrigger("FireTrigger");
         _animator.SetTrigger("WeaponSwitchTrigger");
-        GetComponent<SpriteRenderer>().sprite = weaponConfig.sprite;
+        GetComponent<SpriteRenderer>().sprite = weaponConfig.Sprite;
     }
 }

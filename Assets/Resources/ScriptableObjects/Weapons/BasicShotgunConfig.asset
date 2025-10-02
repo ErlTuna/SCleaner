@@ -12,20 +12,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8af658472ac40bb42b3a626dc24f4a0c, type: 3}
   m_Name: BasicShotgunConfig
   m_EditorClassIdentifier: 
-  State: 0
+  WeaponName: Basic Shotgun
   Type: 1
   Prefab: {fileID: 5890597930396712892, guid: 434f64dd444297848b8568e504356983, type: 3}
+  PickupPrefab: {fileID: 5890597930396712892, guid: 6f09affdc9aaaf742a02f9e31b14b4fb, type: 3}
   BulletData: {fileID: 11400000, guid: ff4c160dc961a4e48a857227680f539b, type: 2}
   Name: Shotgun
   Damage: 8
-  CurrentAmmo: 6
   RoundCapacity: 6
   MaxReserveAmmo: 36
   StartingReserveAmmo: 36
   BulletPerShot: 3
   PushForce: 20
-  gunSound: {fileID: 8300000, guid: c10c9b338ddf8074fa5849ce0ee10db3, type: 3}
-  sprite: {fileID: 21300000, guid: b968b8789d15f934e8e5e107bb9614cb, type: 3}
+  Sprite: {fileID: 21300000, guid: b968b8789d15f934e8e5e107bb9614cb, type: 3}
+  DryFireSFX: {fileID: 8300000, guid: 591753c0fc688dc4a8a4928848b5c518, type: 3}
+  FiringSFX: {fileID: 8300000, guid: c10c9b338ddf8074fa5849ce0ee10db3, type: 3}
+  WeaponSwitchSFX: {fileID: 8300000, guid: d2b24e19405954a4c99252993fb90386, type: 3}
   offset: {x: 0, y: 0, z: 0}
   rayCastStartPoint: {fileID: 0}
   rayCastEndPoint: {fileID: 0}

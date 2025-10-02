@@ -12,9 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2310f9b086b7450488e9c07ed49352bb, type: 3}
   m_Name: VacuumNadeConfig
   m_EditorClassIdentifier: 
-  ability: {fileID: 11400000, guid: 0f3829cca035e514fb55fa12a79256c6, type: 2}
+  ItemName: 
+  Sprite: {fileID: 0}
+  Ability: {fileID: 11400000, guid: 0f3829cca035e514fb55fa12a79256c6, type: 2}
   EquipmentType: 0
   StartingCount: 3
   MaxCount: 3
   MaxLifetime: 5
-  Damage: 20

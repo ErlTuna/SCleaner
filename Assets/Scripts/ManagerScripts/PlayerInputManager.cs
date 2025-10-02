@@ -11,11 +11,14 @@ public class PlayerInputManager : MonoBehaviour
     [SerializeField] InputActionMap _pauseActionMap;
     InputAction _movementInputAction;
     InputAction _pointerInputAction;
+    InputAction _itemPickupInputAction;
+    InputAction _weaponDropInputAction;
     InputAction _primaryAttackInputAction;
     InputAction _secondaryAttackInputAction;
     InputAction _abilityInputAction;
     InputAction _equipmentInputAction;
     InputAction _reloadInputAction;
+    InputAction _weaponSwitchInputAction;
     InputAction _firstWeaponInputAction;
     InputAction _secondWeaponInputAction;
     InputAction _thirdWeaponInputAction;
@@ -25,6 +28,8 @@ public class PlayerInputManager : MonoBehaviour
     InputAction _abilitySwitchAction;
     public Vector2 MovementInput;
     public Vector2 PointerInput;
+    public bool ItemPickupInput;
+    public bool WeaponDropInput;
     public bool AbilitySwitchInput;
     public bool PrimaryAttackInput;
     public bool IsPrimaryAttackHeld;
@@ -32,6 +37,27 @@ public class PlayerInputManager : MonoBehaviour
     public bool IsPrimaryAttackReleasedThisFrame;
     public bool SecondaryAttackInput;
     public bool AbilityUseInput;
+    public int WeaponSwitchInput
+        {
+            get
+            {
+                if (_weaponSwitchInputAction.triggered)
+                {
+                    if (_weaponSwitchInputAction.activeControl is KeyControl keyControl)
+                    {
+                        switch (keyControl.keyCode)
+                        {
+                            case Key.Digit1: return 0;
+                            case Key.Digit2: return 1;
+                            case Key.Digit3: return 2;
+                            case Key.Digit4: return 3;
+                            default: return -1;
+                        }
+                    }
+                }
+                return -1;
+            }
+        }
     public bool FirstWeaponInput;
     public bool SecondWeaponInput;
     public bool ThirdWeaponInput;
@@ -61,19 +87,20 @@ public class PlayerInputManager : MonoBehaviour
         _pointerInputAction = PlayerInput.actions["Pointer"];
         _primaryAttackInputAction = PlayerInput.actions["Shooting"];
         _secondaryAttackInputAction = PlayerInput.actions["Secondary Attack"];
-        //_primaryAttackInputAction.performed += OnPrimaryAttackPressed;
-        //_primaryAttackInputAction.canceled += OnPrimaryAttackReleased;
 
 
-        _abilityInputAction = PlayerInput.actions["Dash"];
+        _itemPickupInputAction = PlayerInput.actions["Pick Up Item"];
+        _weaponDropInputAction = PlayerInput.actions["Drop Weapon"];
+        _abilityInputAction = PlayerInput.actions["Ability"];
         _equipmentInputAction = PlayerInput.actions["Equipment"];
         _reloadInputAction = PlayerInput.actions["Reload"];
-        //_switchWeaponInputAction = PlayerInput.actions["Switch Weapons"];
+
+        _weaponSwitchInputAction = PlayerInput.actions["Weapon Switch"];
         _firstWeaponInputAction = PlayerInput.actions["First Weapon"];
         _secondWeaponInputAction = PlayerInput.actions["Second Weapon"];
         _thirdWeaponInputAction = PlayerInput.actions["Third Weapon"];
         _fourthWeaponInputAction = PlayerInput.actions["Fourth Weapon"];
-        _menuOpenAction = PlayerInput.actions["OpenMenu"];
+        _menuOpenAction = PlayerInput.actions["Open Menu"];
         _menuCloseAction = PlayerInput.actions["CloseMenu"];
         _abilitySwitchAction = PlayerInput.actions["Switch Ability"];
 
@@ -91,6 +118,9 @@ public class PlayerInputManager : MonoBehaviour
     {
         MovementInput = _movementInputAction.ReadValue<Vector2>();
         PointerInput = _pointerInputAction.ReadValue<Vector2>();
+        ItemPickupInput = _itemPickupInputAction.WasPressedThisFrame();
+        WeaponDropInput = _weaponDropInputAction.WasPressedThisFrame();
+        
         PrimaryAttackInput = _primaryAttackInputAction.IsPressed();
         SecondaryAttackInput = _secondaryAttackInputAction.IsPressed();
         AbilityUseInput = _abilityInputAction.WasPressedThisFrame();
@@ -119,20 +149,6 @@ public class PlayerInputManager : MonoBehaviour
             Cursor.lockState = CursorLockMode.Locked;
             Cursor.visible = false;
         }
-    }
-    
-    void OnPrimaryAttackPressed(InputAction.CallbackContext context)
-    {
-        IsPrimaryAttackPressedThisFrame = true;
-        IsPrimaryAttackHeld = true;               
-    }
-
-    void OnPrimaryAttackReleased(InputAction.CallbackContext context)
-    {
-        IsPrimaryAttackReleasedThisFrame = true;
-        IsPrimaryAttackHeld = false;              
-
-
     }
 
 

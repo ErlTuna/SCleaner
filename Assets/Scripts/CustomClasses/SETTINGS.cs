@@ -5,8 +5,56 @@ public static class SETTINGS
 
     public const float MIN_VOLUME = 0f;
     public const float MAX_VOLUME = 1f;
-    private static string s_SFXVolume = "SFXVolume";
-    private static string s_BGMVolume = "BGMVolume";
+    private static readonly string s_SFXVolume = "SFXVolume";
+    private static readonly string s_BGMVolume = "BGMVolume";
+    private static readonly string s_AutoSwitchWhenNoAmmo = "AutoSwitchWhenNoAmmoLeft";
+    private static readonly string s_AutoSwitchToPickedUpWeapon = "AutoSwitchToPickedUpWeapon";
+    public static bool AutoSwitchWhenNoAmmo
+    {
+        get
+        {
+            if (PlayerPrefs.HasKey(s_AutoSwitchWhenNoAmmo))
+            {
+                return PlayerPrefsExtensions.GetBool(s_AutoSwitchWhenNoAmmo);
+            }
+            else
+            {
+                if (_defaultSettings != null)
+                {
+                    return _defaultSettings.AutoSwitchWhenNoAmmo;
+                }
+                else
+                {
+                    Debug.Log("Default settings SO is missing!");
+                    return false;
+                }
+            }
+        }
+        set { PlayerPrefsExtensions.SetBool(s_AutoSwitchWhenNoAmmo, value); }
+    }
+    public static bool AutoSwitchToPickedUpWeapon
+    {
+        get
+        {
+            if (PlayerPrefs.HasKey(s_AutoSwitchToPickedUpWeapon))
+            {
+                return PlayerPrefsExtensions.GetBool(s_AutoSwitchToPickedUpWeapon);
+            }
+            else
+            {
+                if (_defaultSettings != null)
+                {
+                    return _defaultSettings.AutoSwitchToPickedUpWeapon;
+                }
+                else
+                {
+                    Debug.Log("Default settings SO is missing!");
+                    return false;
+                }
+            }
+        }
+        set { PlayerPrefsExtensions.SetBool(s_AutoSwitchToPickedUpWeapon, value); }
+    }
     public static float CurrentSFXVolume
     {
         get

@@ -41,7 +41,7 @@ public class PlayerMovementManager : MonoBehaviour
 
     void FixedUpdate()
     {
-        if (_owner.RuntimeDataHolder.TryGetRuntimeData<UnitStateData>(out var stateData))
+        if (_owner.RuntimeDataHolder.TryGetRuntimeData(out UnitStateData stateData))
             if (stateData.CanMove == false)
             {
                 //Debug.Log("Can't move!");

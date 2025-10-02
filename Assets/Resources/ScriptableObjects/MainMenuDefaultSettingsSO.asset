@@ -14,5 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   SFX_volume: 0.5
   BGM_volume: 0
+  AutoSwitchWhenNoAmmo: 1
+  AutoSwitchToPickedUpWeapon: 0
   minVolume: 0
   maxVolume: 1

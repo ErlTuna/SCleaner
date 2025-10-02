@@ -12,13 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 30849d1a569abb14ba30ccd9e0699ee0, type: 3}
   m_Name: PlayerInventoryConfig
   m_EditorClassIdentifier: 
-  currency: 0
-  maxCurrency: 9999
-  weaponPrefabs:
-  - {fileID: 5890597930396712892, guid: f722e5adba725d54a92c7dd30effc274, type: 3}
-  - {fileID: 5890597930396712892, guid: c9811e33e02839c489d5101f0c846dcd, type: 3}
-  - {fileID: 5890597930396712892, guid: 434f64dd444297848b8568e504356983, type: 3}
-  - {fileID: 5890597930396712892, guid: ff5ae5010cc129d459f653de22aa6aed, type: 3}
-  equipmentPrefabs:
+  OwnedCurrency: 0
+  MaxCurrency: 9999
+  MaxWeaponAmount: 2
+  WeaponPrefabs: []
+  EquipmentPrefabs:
   - {fileID: 3411235486444114872, guid: 3a7cd3ce19edb604d9e84789ae7bf950, type: 3}
-  weaponsHeld: 4

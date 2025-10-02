@@ -1,15 +1,10 @@
-using System.Collections;
-using System.Collections.Generic;
-using SerializeReferenceEditor;
 using UnityEngine;
-using UnityEngine.InputSystem;
 
 public class PlayerWeaponManager : MonoBehaviour
 {
     [SerializeField] GameObject _currentWeaponGO;
-    public Transform _weaponPosition;
-    public AudioClip weaponSwitchAudio;
-    public BaseWeapon currentWeaponScript;
+    [SerializeField] BaseWeapon _currentWeaponScript;
+    [SerializeField] Transform _weaponPosition;
 
     void OnEnable()
     {
@@ -25,44 +20,43 @@ public class PlayerWeaponManager : MonoBehaviour
     public void Update()
     {
 
-        if (currentWeaponScript == null) return;
+        if (_currentWeaponScript == null) return;
 
         if (PlayerInputManager.instance.ReloadInput)
             HandleReloadInput();
         
 
         if (PlayerInputManager.instance.PrimaryAttackInput)
-            currentWeaponScript.HandlePrimaryAttackInput();
+            _currentWeaponScript.HandlePrimaryAttackInput();
 
         else if (PlayerInputManager.instance.SecondaryAttackInput)
-            currentWeaponScript.HandleSecondaryAttackInput();
+            _currentWeaponScript.HandleSecondaryAttackInput();
 
 
         else
-            currentWeaponScript.HandlePrimaryAttackInputCancel();
+            _currentWeaponScript.HandlePrimaryAttackInputCancel();
     }
 
     public void ReceiveWeapon(GameObject weapon, BaseWeapon weaponScript)
     {
         _currentWeaponGO = weapon;
-        currentWeaponScript = weaponScript;
+        _currentWeaponScript = weaponScript;
         _currentWeaponGO.SetActive(true);
     }
 
     
-    public void SwitchWeapon(GameObject targetWeapon, BaseWeapon targetWeaponScript){
-        
-
-        PlayPlayerSounds.PlayAudio(weaponSwitchAudio);
-        currentWeaponScript.SwitchFrom();
+    public void SwitchWeapon(GameObject targetWeapon, BaseWeapon targetWeaponScript){        
+        if (_currentWeaponScript)
+            _currentWeaponScript.SwitchFrom();
 
         _currentWeaponGO = targetWeapon;
-        currentWeaponScript = targetWeaponScript;
+        _currentWeaponScript = targetWeaponScript;
 
-        _currentWeaponGO.SetActive(true);
+        if(_currentWeaponGO)
+            _currentWeaponGO.SetActive(true);
     }
 
     public void HandleReloadInput(){
-        currentWeaponScript.HandleReloadInput();
+        _currentWeaponScript.HandleReloadInput();
     }
 }

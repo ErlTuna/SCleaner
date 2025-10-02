@@ -4,9 +4,9 @@ using UnityEngine;
 
 public class BasicRevolver : BaseWeapon
 {
-        void Start()
+    void Start()
     {
-        WeaponRuntimeData = new WeaponRuntimeData(WeaponConfig);
+        //InitializeWithConfig();
     }
 
     void Update()
@@ -16,19 +16,17 @@ public class BasicRevolver : BaseWeapon
         {
             AmmoManager.HandleReloadStart();
         }
-
-        //weapon has no ammo and no reserve left, cancel the input of the player and reset the weapon's state and animator params
-        else if (AmmoManager.HasAmmo() == false && AmmoManager.HasReserveAmmo() == false)
-        {
-            WeaponRuntimeData.State = WeaponState.IDLE;
-            WeaponAnimator.ResetAnimParams();
-        }
     }
 
 
     public override void HandlePrimaryAttackInput()
     {
-        if (AmmoManager.HasAmmo() == false || WeaponRuntimeData.State != WeaponState.IDLE) return;
+        if (CanFire() == false && CanDryFire())
+        {
+            TryDryFire();
+            return;
+        }
+        if (WeaponRuntimeData.State != WeaponState.IDLE) return;
 
 
         HandlePreAttack();

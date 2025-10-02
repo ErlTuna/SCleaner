@@ -185,7 +185,7 @@ public class OLD_BasicShotgun : OLD_BaseWeapon
         _animator.ResetTrigger("ReloadLoopTrigger");
         _animator.ResetTrigger("ReloadCancelTrigger");
         _animator.SetTrigger("WeaponSwitchTrigger");
-        GetComponent<SpriteRenderer>().sprite = weaponConfig.sprite;
+        GetComponent<SpriteRenderer>().sprite = weaponConfig.Sprite;
         
     }
 }

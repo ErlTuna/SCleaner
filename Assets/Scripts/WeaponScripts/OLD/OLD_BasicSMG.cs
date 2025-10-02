@@ -134,7 +134,7 @@ public class OLD_BasicSMG : OLD_BaseWeapon
         _animator.SetBool("isFiring", false);
         _animator.ResetTrigger("ReloadTrigger");
         _animator.SetTrigger("WeaponSwitchTrigger");
-        GetComponent<SpriteRenderer>().sprite = weaponConfig.sprite;
+        GetComponent<SpriteRenderer>().sprite = weaponConfig.Sprite;
     }
 
     public override void HandleFiringAnimationEnd()

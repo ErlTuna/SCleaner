@@ -2,8 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class UnitCurrencyInventory : MonoBehaviour
+public class UnitCurrencyInventory
 {
-    public List<GameObject> WeaponPrefabs;
-    public List<GameObject> WeaponGOs;
+    public int OwnedCurrency;
+    public int MaxCurrency;
 }

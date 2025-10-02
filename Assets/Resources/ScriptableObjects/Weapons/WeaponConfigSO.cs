@@ -7,13 +7,13 @@ using UnityEngine.Device;
 public class WeaponConfigSO : ScriptableObject
 {
     [Header("General Info")]
-    public WeaponState State;
+    public string WeaponName;
     public WeaponType Type;
     public GameObject Prefab;
+    public GameObject PickupPrefab;
     public BulletConfigSO BulletData;
     public string Name;
     public int Damage;
-    public int CurrentAmmo;
     public int RoundCapacity;
     public int MaxReserveAmmo;
     public int StartingReserveAmmo;
@@ -21,8 +21,11 @@ public class WeaponConfigSO : ScriptableObject
     public float PushForce = 1f;
 
     [Header("Audio & VFX Info")]
-    public AudioClip gunSound;
-    public Sprite sprite;
+    public Sprite Sprite;
+    public AudioClip DryFireSFX;
+    public AudioClip FiringSFX;
+    public AudioClip WeaponSwitchSFX;
+    
 
     [Header("Misc")]
     public Vector3 offset = new(0, 0, 0);
@@ -35,8 +38,6 @@ public class WeaponConfigSO : ScriptableObject
 
     void OnEnable()
     {
-        State = WeaponState.IDLE;
-        CurrentAmmo = RoundCapacity;
         StartingReserveAmmo = MaxReserveAmmo;
     }
 
@@ -56,5 +57,6 @@ public enum WeaponState
     PRE_SECONDARY_ATTACK,
     SECONDARY_ATTACK,
     TRIGGER_RELEASED,
-    RELOADING
+    RELOADING,
+    DRY_FIRING
 }

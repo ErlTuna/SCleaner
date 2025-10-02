@@ -16,6 +16,7 @@ public class MagazineReloadStrategy : ReloadStrategySO
     public override void PerformReload(BaseWeapon owner)
     {
         int needed = owner.WeaponConfig.RoundCapacity - owner.WeaponRuntimeData.CurrentAmmo;
+        //owner.WeaponRuntimeData.CurrentAmmo = 0;
         int taken = Mathf.Min(needed, owner.WeaponRuntimeData.ReserveAmmo);
 
         owner.WeaponRuntimeData.CurrentAmmo += taken;

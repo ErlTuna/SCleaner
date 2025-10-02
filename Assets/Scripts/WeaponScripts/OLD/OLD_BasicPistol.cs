@@ -114,7 +114,7 @@ public class OLD_BasicPistol : OLD_BaseWeapon
         _animator.SetBool("isFiring", false);
         _animator.ResetTrigger("ReloadTrigger");
         _animator.SetTrigger("WeaponSwitchTrigger");
-        GetComponent<SpriteRenderer>().sprite = weaponConfig.sprite;
+        GetComponent<SpriteRenderer>().sprite = weaponConfig.Sprite;
         
     }
 }

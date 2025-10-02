@@ -20,7 +20,6 @@ public static class PlayerInventoryEvents
     public static void RaiseInventoryReadyEvent(GameObject weapon, BaseWeapon weaponScript)
     {
         OnInventoryReadyEvent?.Invoke(weapon, weaponScript);
-        OnWeaponSwitchUIUpdate?.Invoke(weaponScript.WeaponConfig.sprite, weaponScript.WeaponRuntimeData);
     }
 
     public static void RaiseEquipmentReadyEvent(GameObject equipment, BaseEquipment eqipmentScript)
@@ -32,7 +31,12 @@ public static class PlayerInventoryEvents
     public static void RaiseWeaponSwitchEvent(GameObject weapon, BaseWeapon weaponScript)
     {
         OnWeaponSwitchEvent?.Invoke(weapon, weaponScript);
-        OnWeaponSwitchUIUpdate?.Invoke(weaponScript.WeaponConfig.sprite, weaponScript.WeaponRuntimeData);
+        if (weaponScript)
+            OnWeaponSwitchUIUpdate?.Invoke(weaponScript.WeaponConfig.Sprite, weaponScript.WeaponRuntimeData);
+
+        else
+            OnWeaponSwitchUIUpdate?.Invoke(null, null);
+        
     }
 
     public static void RaiseEquipmentSwitchEvent(GameObject equipment, BaseEquipment equipmentScript)

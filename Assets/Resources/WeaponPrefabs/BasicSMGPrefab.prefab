@@ -78,6 +78,10 @@ GameObject:
   - component: {fileID: 4410049164486058850}
   - component: {fileID: 6790015413256836416}
   - component: {fileID: 3905944109122377642}
+  - component: {fileID: 2273477678660402675}
+  - component: {fileID: 934558084353508571}
+  - component: {fileID: 7736283730641543815}
+  - component: {fileID: 2024014712292503889}
   m_Layer: 0
   m_Name: BasicSMGPrefab
   m_TagString: Untagged
@@ -302,10 +306,12 @@ MonoBehaviour:
   WeaponConfig: {fileID: 11400000, guid: f5833629891c27544b95b1f096034f4d, type: 2}
   WeaponRuntimeData:
     State: 0
-    Config: {fileID: 0}
     CurrentAmmo: 0
     ReserveAmmo: 0
     Damage: 0
+  _weaponSoundManager: {fileID: 3725376543127102386}
+  _rigidbody2D: {fileID: 7736283730641543815}
+  _boxCollider2D: {fileID: 934558084353508571}
   FiringPoints:
   - {fileID: 7718260043891111844}
   rayCastStartPoint: {fileID: 631447325084974646}
@@ -340,6 +346,125 @@ MonoBehaviour:
   _owner: {fileID: 4410049164486058850}
   _paramTable: {fileID: 11400000, guid: f07a149dab15ab6438211d7c3cfada3f, type: 2}
   animator: {fileID: 1954626896692324193}
+--- !u!114 &2273477678660402675
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5890597930396712892}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 999969c20332a77478ed49e7d9a60691, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!61 &934558084353508571
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5890597930396712892}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: -1.44, y: -0.59000003}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.82, y: 0.795}
+    oldSize: {x: 4.5, y: 2}
+    newSize: {x: 4.5, y: 2}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 4.5, y: 2}
+  m_EdgeRadius: 0
+--- !u!50 &7736283730641543815
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5890597930396712892}
+  m_BodyType: 0
+  m_Simulated: 0
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
+--- !u!58 &2024014712292503889
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5890597930396712892}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  serializedVersion: 2
+  m_Radius: 0.5
 --- !u!1 &7652474678596303613
 GameObject:
   m_ObjectHideFlags: 0

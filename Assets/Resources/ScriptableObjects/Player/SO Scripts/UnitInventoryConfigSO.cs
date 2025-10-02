@@ -6,20 +6,12 @@ using UnityEngine;
 public class UnitInventoryConfigSO : ScriptableObject
 {
     [Header("Currency")]
-    public int currency = 0;
-    public int maxCurrency = 9999;
+    public int OwnedCurrency;
+    public int MaxCurrency;
 
     [Header("Weapons")]
-    //public List<WeaponConfig> weaponConfigs;
-    //public List<WeaponData> weaponConfigs;
-    public List<GameObject> weaponPrefabs = new();
-    public List<GameObject> equipmentPrefabs = new();
-
-    public int weaponsHeld;
-
-    void OnEnable()
-    {
-        weaponsHeld = weaponPrefabs.Count;
-    }
+    public int MaxWeaponAmount;
+    public List<GameObject> WeaponPrefabs = new();
+    public List<GameObject> EquipmentPrefabs = new();
 
 }

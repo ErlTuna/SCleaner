@@ -74,12 +74,10 @@ GameObject:
   - component: {fileID: 8610405281354072887}
   - component: {fileID: 6166882229596088855}
   - component: {fileID: 4472284901953710207}
-  - component: {fileID: 6620584969643870644}
-  - component: {fileID: 1889791732182129909}
-  - component: {fileID: 8229253210197446598}
-  - component: {fileID: 8075754141528242692}
+  - component: {fileID: 3725376543127102386}
+  - component: {fileID: 4340273538035046373}
   m_Layer: 0
-  m_Name: BasicPistolPrefab_v2
+  m_Name: OLD_BasicPistolPrefab
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -272,63 +270,7 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!114 &6620584969643870644
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5890597930396712892}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fb3d9e75cc6b9a644a0760b501c23327, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  PrimaryAttackStrategy: {fileID: 11400000, guid: 0e5de3ccb7ff2a64a9634e3de497298c, type: 2}
-  WeaponAnimator: {fileID: 8229253210197446598}
-  AmmoManager: {fileID: 1889791732182129909}
-  WeaponConfig: {fileID: 11400000, guid: e17c034cd1b2f244dbfdf103f490f202, type: 2}
-  WeaponRuntimeData:
-    State: 0
-    Config: {fileID: 0}
-    CurrentAmmo: 0
-    ReserveAmmo: 0
-    Damage: 0
-  FiringPoints:
-  - {fileID: 7718260043891111844}
-  rayCastStartPoint: {fileID: 7718260043891111844}
-  rayCastEndPoint: {fileID: 1397508322659143035}
-  muzzleTipCheck: {fileID: 1397508322659143035}
---- !u!114 &1889791732182129909
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5890597930396712892}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 94ea39655bf03c74880f9a43878f3cf4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Owner: {fileID: 6620584969643870644}
-  ReloadStrategy: {fileID: 11400000, guid: 0be6bec96fcf27145ae17c030d6f25cb, type: 2}
---- !u!114 &8229253210197446598
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5890597930396712892}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 68a3f9f85eb27024081467faa477b695, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _owner: {fileID: 6620584969643870644}
-  _paramTable: {fileID: 11400000, guid: f07a149dab15ab6438211d7c3cfada3f, type: 2}
-  animator: {fileID: 4472284901953710207}
---- !u!114 &8075754141528242692
+--- !u!114 &3725376543127102386
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -340,6 +282,34 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 86357c5d5e98e194684b2d80932657d6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &4340273538035046373
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5890597930396712892}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b846894af00194846b293cd5bc3ae79d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  weaponConfig: {fileID: 11400000, guid: e17c034cd1b2f244dbfdf103f490f202, type: 2}
+  firingPoint: {fileID: 7718260043891111844}
+  _animator: {fileID: 4472284901953710207}
+  _runtimeAnimatorController: {fileID: 0}
+  rayCastStartPoint: {fileID: 1040600231107457190}
+  rayCastEndPoint: {fileID: 1397508322659143035}
+  muzzleTipCheck: {fileID: 7718260043891111844}
+  enemyLayer:
+    serializedVersion: 2
+    m_Bits: 0
+  environmentLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  mixedLayerMask:
+    serializedVersion: 2
+    m_Bits: 0
 --- !u!1 &7652474678596303613
 GameObject:
   m_ObjectHideFlags: 0

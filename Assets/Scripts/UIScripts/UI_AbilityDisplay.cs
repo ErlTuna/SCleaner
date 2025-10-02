@@ -17,6 +17,11 @@ public class UI_AbilityDisplay : MonoBehaviour
 
     void UpdateAbilityDisplay(AbilityData abilityData)
     {
-        if (abilityData != null) _icon.sprite = abilityData.icon;
+        if (abilityData != null)
+        {
+            _icon.color = Color.white;
+            _icon.sprite = abilityData.icon;
+        }
+            
     }
 }

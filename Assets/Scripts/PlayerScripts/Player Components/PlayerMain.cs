@@ -8,7 +8,7 @@ public class PlayerMain : Unit
     [SerializeField] InputActionMap _playerActionMap;
     [SerializeField] PlayerHealthManager _playerHealthManager;
     [SerializeField] PlayerMovementManager _playerMovementManager;
-    [SerializeField] PlayerInventoryManager_v2 _playerInventoryManager;
+    [SerializeField] PlayerInventoryManager _playerInventoryManager;
     [SerializeField] PlayerEnergyManager _playerEnergyManager;
     [SerializeField] PlayerAbilityHandler _playerAbilityHandler;
     [SerializeField] PlayerAimManager _playerAimManager;
@@ -28,8 +28,8 @@ public class PlayerMain : Unit
     {
         if (UnitConfigWrapper == null)
         {
-            Debug.Log("Player info is null, creating");
-            //playerConfig = Resources.Load<UnitConfigSO>("Scriptable Objects/PlayerData");
+            Debug.Log("Player has no config wrapper.");
+            return;
         }
 
         RuntimeDataHolder = new UnitRuntimeDataHolder();
