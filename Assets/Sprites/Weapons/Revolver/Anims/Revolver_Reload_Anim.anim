@@ -137,16 +137,16 @@ AnimationClip:
   m_HasMotionFloatCurves: 0
   m_Events:
   - time: 0
-    functionName: PlayWeaponSFX
+    functionName: TryPlaySound
     data: 
-    objectReferenceParameter: {fileID: 8300000, guid: 6d2847e170d7e2a489df2d24cf0c38ff, type: 3}
+    objectReferenceParameter: {fileID: 11400000, guid: 335018c2be91a804f917267ad8c7d3dc, type: 2}
     floatParameter: 0
     intParameter: 0
     messageOptions: 0
   - time: 1.3333334
-    functionName: PlayWeaponSFX
+    functionName: TryPlaySound
     data: 
-    objectReferenceParameter: {fileID: 8300000, guid: cd003c38649e3894bbd97a7fff41e594, type: 3}
+    objectReferenceParameter: {fileID: 11400000, guid: a3a7c02fce6a2954081daa397ea985f6, type: 2}
     floatParameter: 0
     intParameter: 0
     messageOptions: 0

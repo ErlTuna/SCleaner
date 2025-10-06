@@ -1,3 +1,4 @@
+using Unity.Mathematics;
 using UnityEngine;
 
 public class BasicPistol : BaseWeapon
@@ -24,7 +25,7 @@ public class BasicPistol : BaseWeapon
         }
 
         //if (ObstructionChecker.CheckWeaponObstructionOverlap(rayCastStartPoint, rayCastEndPoint, WeaponConfig.environmentLayers, WeaponConfig.enemyLayer)) return;
-        if(CanFire() && PrimaryAttackStrategy != null)
+        if (CanFire() && PrimaryAttackStrategy != null)
             PrimaryAttackStrategy.HandleAttackStart(this);
     }
 
@@ -42,6 +43,7 @@ public class BasicPistol : BaseWeapon
 
     public override void SpawnBullet()
     {
+        /*
         Collider2D overlappingEnemyHitbox = ObstructionChecker.CheckMuzzleEnemyOverlap(muzzleTipCheck, WeaponConfig.enemyLayer);
 
         if (overlappingEnemyHitbox)
@@ -54,13 +56,16 @@ public class BasicPistol : BaseWeapon
                 return;
             }
         }
+        */
 
-        GameObject instantiatedBullet = Instantiate(WeaponConfig.BulletData.Prefab, FiringPoints[0].transform.position, transform.rotation);
+        
+        Quaternion bulletRotation = CalculateBulletSpread();
+        GameObject instantiatedBullet = Instantiate(WeaponConfig.BulletData.Prefab, FiringPoints[0].transform.position, bulletRotation);
         instantiatedBullet.SetActive(false);
         instantiatedBullet.GetComponent<Bullet>().Setup(gameObject, WeaponRuntimeData, WeaponConfig);
         instantiatedBullet.SetActive(true);
-
         AmmoManager.UseAmmo();
+        WeaponRuntimeData.TimeSinceLastFired = Time.unscaledTime;
     }
 
 }

@@ -269,7 +269,6 @@ public class PlayerInventoryManager : MonoBehaviour
         // if after dropping the weapon, we don't have any weapons in the inventory left
         if (_weaponSlots.Count == 0)
         {
-            Debug.Log("No more weapons left doe...");
             _currentlyUsedWeaponSlot = null;
             _currentlyUsedWeaponSlotIndex = -1;
             PlayerInventoryEvents.RaiseWeaponSwitchEvent(null, null);

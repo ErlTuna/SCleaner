@@ -16,8 +16,7 @@ public abstract class BaseWeapon : MonoBehaviour
     public AmmoManager AmmoManager;
     public WeaponConfigSO WeaponConfig;
     public WeaponRuntimeData WeaponRuntimeData;
-    [SerializeField] WeaponSoundManager _weaponSoundManager;
-
+    [SerializeField] protected WeaponSoundManager weaponSoundManager;
     [SerializeField] BoxCollider2D _boxCollider2D;
     [SerializeField] protected Transform[] FiringPoints;
     [SerializeField] protected Transform rayCastStartPoint;
@@ -61,7 +60,7 @@ public abstract class BaseWeapon : MonoBehaviour
         WeaponRuntimeData.State = WeaponState.IDLE;
         WeaponAnimator.ResetAnimParams();
         GetComponent<SpriteRenderer>().sprite = WeaponConfig.Sprite;
-        if(_dryFireCoroutine != null)
+        if (_dryFireCoroutine != null)
             StopCoroutine(_dryFireCoroutine);
         gameObject.SetActive(false);
     }
@@ -103,7 +102,7 @@ public abstract class BaseWeapon : MonoBehaviour
         {
             Debug.Log("Attempting to dry fire...");
             WeaponRuntimeData.State = WeaponState.DRY_FIRING;
-            _weaponSoundManager.PlayWeaponSFX(WeaponConfig.DryFireSFX);
+            weaponSoundManager.TryPlaySound(WeaponConfig.DryFiringSound);
             yield return new WaitForSeconds(.3f);
             WeaponRuntimeData.State = WeaponState.IDLE;
         }
@@ -122,7 +121,7 @@ public abstract class BaseWeapon : MonoBehaviour
 
     protected virtual void Toss(GameObject pickup, Vector2 direction)
     {
-        
+
         if (pickup.TryGetComponent(out Rigidbody2D rb) == false)
             rb = pickup.AddComponent<Rigidbody2D>();
 
@@ -131,4 +130,21 @@ public abstract class BaseWeapon : MonoBehaviour
 
     }
 
+    protected virtual Quaternion CalculateBulletSpread()
+    {
+
+        if (Time.unscaledTime - WeaponRuntimeData.TimeSinceLastFired <= WeaponConfig.SpreadResetThreshold)
+        {
+            float angleDeviation = UnityEngine.Random.Range(-WeaponConfig.SpreadAngle, WeaponConfig.SpreadAngle);
+            float baseAngle = FiringPoints[0].rotation.eulerAngles.z;
+            float finalAngle = baseAngle + angleDeviation;
+            return Quaternion.Euler(0, 0, finalAngle);
+        }
+
+        else
+            return transform.rotation;
+    }
+
 }
+
+

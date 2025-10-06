@@ -12,11 +12,11 @@ public class BugEnemyMain : Unit
     [SerializeField] EnemyMovementManager _movementManager;
     [SerializeField] PlayerDetection _detectionManager;
     [SerializeField] GameObject _visuals;
-    public EnemyStateData stateData;
+    EnemyStateData _stateData;
     public BoxCollider2D SpawnArea;
     StateMachine _stateMachine;
     GameObject _player;
-    UnitStateData playerStateData;
+    UnitStateData _playerStateData;
 
     // Expected states
     RoamState _roamState;
@@ -58,7 +58,7 @@ public class BugEnemyMain : Unit
             agent.updateUpAxis = false;
         }
 
-        playerStateData = _player.GetComponent<Unit>().GetRuntimeData<UnitStateData>();
+        _playerStateData = _player.GetComponent<Unit>().GetRuntimeData<UnitStateData>();
         PrepareStateMachineTransitions();
         InitializeComponents();
 
@@ -84,7 +84,7 @@ public class BugEnemyMain : Unit
     {
 
         _defeatState.SetLastHitContext(context);
-        stateData.IsAlive = false;
+        _stateData.IsAlive = false;
     }
 
     void InitializeRuntimeData()
@@ -98,7 +98,7 @@ public class BugEnemyMain : Unit
         RuntimeDataHolder?.InitializeWithWrapper(this, UnitConfigWrapper);
 
         // Caching as it is accessed frequently 
-        stateData = RuntimeDataHolder.GetRuntimeData<EnemyStateData>();
+        _stateData = RuntimeDataHolder.GetRuntimeData<EnemyStateData>();
     }
 
     void PrepareStateMachine()
@@ -114,20 +114,20 @@ public class BugEnemyMain : Unit
     void PrepareStateMachineTransitions()
     {
         //ROAM to STATES
-        At(_roamState, _chaseState, new FuncPredicate(() => stateData.HasDetectedPlayer));
+        At(_roamState, _chaseState, new FuncPredicate(() => _stateData.HasDetectedPlayer));
 
 
         //CHASE to STATES
-        At(_chaseState, _roamState, new FuncPredicate(() => !stateData.HasDetectedPlayer));
+        At(_chaseState, _roamState, new FuncPredicate(() => _stateData.HasDetectedPlayer == false));
 
         //IMMOBILE to STATES
-        At(_immobileState, _roamState, new FuncPredicate(() => stateData.CanMove && !stateData.HasDetectedPlayer));
-        At(_immobileState, _chaseState, new FuncPredicate(() => stateData.CanMove && stateData.HasDetectedPlayer));
+        At(_immobileState, _roamState, new FuncPredicate(() => _stateData.CanMove && _stateData.HasDetectedPlayer == false));
+        At(_immobileState, _chaseState, new FuncPredicate(() => _stateData.CanMove && _stateData.HasDetectedPlayer));
 
         //ANY TRANSITIONS
-        Any(_defeatState, new FuncPredicate(() => !stateData.IsAlive));
-        Any(_immobileState, new FuncPredicate(() => stateData.CanMove == false && stateData.IsAlive));
-        Any(_roamState, new FuncPredicate(() => !playerStateData.IsAlive && stateData.CanMove));
+        Any(_defeatState, new FuncPredicate(() => !_stateData.IsAlive));
+        Any(_immobileState, new FuncPredicate(() => _stateData.CanMove == false && _stateData.IsAlive));
+        Any(_roamState, new FuncPredicate(() => !_playerStateData.IsAlive && _stateData.CanMove));
     }
 
     void InitializeComponents()

@@ -21,6 +21,7 @@ public class CrackerEnemy : MonoBehaviour, IEnemy
     EnemyInfo.Init();
     }        
 
+    /*
     void Start()
     {
             
@@ -84,12 +85,15 @@ public class CrackerEnemy : MonoBehaviour, IEnemy
         _stateMachine.SetState(roamState);
     }
 
+    */
+
     void At(IState from, IState to, IPredicate condition) => _stateMachine.AddTransition(from, to, condition);
     void Any(IState to, IPredicate condition) => _stateMachine.AddAnyTransition(to, condition);
 
     void Update(){
         _stateMachine.Update();
     }
+    
 
     void FixedUpdate(){
         _stateMachine.FixedUpdate();

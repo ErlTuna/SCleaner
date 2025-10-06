@@ -2,6 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+// OLD
+// OLD
+// OLD
+
 [CreateAssetMenu(fileName = "EnemyInfoSO", menuName = "ScriptableObjects/Enemy Info")]
 public class EnemyConfigSO : ScriptableObject
 {

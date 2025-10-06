@@ -83,13 +83,13 @@ AnimationClip:
   m_HasMotionFloatCurves: 0
   m_Events:
   - time: 0
-    functionName: PlayWeaponSFX
+    functionName: TryPlaySound
     data: 
-    objectReferenceParameter: {fileID: 8300000, guid: f4181816d86635544b77fb16a9cf2bda, type: 3}
+    objectReferenceParameter: {fileID: 11400000, guid: f58e8a93f82b7674bbf7de59270f8454, type: 2}
     floatParameter: 0
     intParameter: 0
     messageOptions: 0
-  - time: 0.083333336
+  - time: 0
     functionName: SpawnBullet
     data: 
     objectReferenceParameter: {fileID: 0}

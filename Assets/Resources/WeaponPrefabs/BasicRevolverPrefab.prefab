@@ -287,6 +287,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 86357c5d5e98e194684b2d80932657d6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _soundEmitterPrefab: {fileID: 3145516217566028419, guid: 05a70453af3a50a4baa8ef2791b6c649, type: 3}
+  _maxEmitters: 3
 --- !u!114 &4725497832730239094
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -308,8 +310,9 @@ MonoBehaviour:
     CurrentAmmo: 0
     ReserveAmmo: 0
     Damage: 0
-  _weaponSoundManager: {fileID: 3725376543127102386}
-  _rigidbody2D: {fileID: 1255771124489727613}
+    TimeSinceLastFired: 0
+    SpreadResetThreshold: 0
+  weaponSoundManager: {fileID: 3725376543127102386}
   _boxCollider2D: {fileID: 6749309008744837292}
   FiringPoints:
   - {fileID: 7718260043891111844}

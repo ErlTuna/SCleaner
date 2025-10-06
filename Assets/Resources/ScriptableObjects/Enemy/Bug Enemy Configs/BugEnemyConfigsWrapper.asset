@@ -18,3 +18,4 @@ MonoBehaviour:
   EnergyConfig: {fileID: 0}
   StateConfig: {fileID: 11400000, guid: 7ee68f93f420ab84daa41bad1a6ab115, type: 2}
   InventoryConfig: {fileID: 0}
+  attackConfigSO: {fileID: 0}

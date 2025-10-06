@@ -4,27 +4,29 @@ using UnityEngine.AI;
 
 public class CrackerAttackRecoveryState : BaseState
 {
-    Coroutine recoveryRoutine;
-    IEnemy enemyScript;
+    Coroutine _recoveryRoutine;
+    Unit _ownerScript;
+    EnemyStateData _stateData;
     Vector2 targetDirection;
     Transform target;
 
-    public CrackerAttackRecoveryState(GameObject enemy, GameObject player, Rigidbody2D rb2D, NavMeshAgent agent, IEnemy enemyScript) : base(enemy, rb2D, agent){
-        this.enemyScript = enemyScript;
+    public CrackerAttackRecoveryState(GameObject owner, Unit ownerScript, GameObject player, Rigidbody2D rb2D, NavMeshAgent agent, EnemyStateData stateData) : base(owner, rb2D, agent){
+        _ownerScript = ownerScript;
+        _stateData = stateData;
         target = player.transform;
     }
     public override void OnEnter()
     {
         Debug.Log("entered recovery");
-        enemyScript.EnemyInfo.hasAttacked = false;
-        recoveryRoutine = enemyScript.TriggerCoroutine(PostAttackRecovery());
+        _stateData.HasAttacked = false;
+        _recoveryRoutine = _ownerScript.StartCoroutine(PostAttackRecovery());
     }
 
     public override void OnExit()
     {
-        if(enemyScript.EnemyInfo.isImmobilized){
-            if(recoveryRoutine != null)
-                enemyScript.CancelCoroutine(recoveryRoutine);
+        if(_stateData.CanMove){
+            if(_recoveryRoutine != null)
+                _ownerScript.StopCoroutine(_recoveryRoutine);
         }
         rb2D.velocity = Vector2.zero;
         rb2D.angularVelocity = 0f;
@@ -41,10 +43,15 @@ public class CrackerAttackRecoveryState : BaseState
         //CalculatePlayerDirection();
         //RotateTowardsPlayer();
     }
-    IEnumerator PostAttackRecovery(){
-        enemyScript.EnemyInfo.isRecovering = true;
+    IEnumerator PostAttackRecovery()
+    {
+        Debug.Log("entered attack recovery coroutine");
+        _stateData.IsRecoveringPostAttack = true;
+        _stateData.CanMove = false;
         yield return new WaitForSeconds(1.5f);
-        enemyScript.EnemyInfo.isRecovering = false;
+        _stateData.IsRecoveringPostAttack = false;
+        _stateData.CanMove = true;
+        Debug.Log("exited attack recovery coroutine");
     }
     void CalculatePlayerDirection(){
         //calculate direction

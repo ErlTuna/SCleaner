@@ -104,9 +104,9 @@ AnimationClip:
   m_HasMotionFloatCurves: 0
   m_Events:
   - time: 0
-    functionName: PlayWeaponSFX
+    functionName: TryPlaySound
     data: 
-    objectReferenceParameter: {fileID: 8300000, guid: 5935d7b9914bcd04587948432496d4fd, type: 3}
+    objectReferenceParameter: {fileID: 11400000, guid: 965ff4f72215d87409eaff6f0752bbd3, type: 2}
     floatParameter: 0
     intParameter: 0
     messageOptions: 0
@@ -118,9 +118,9 @@ AnimationClip:
     intParameter: 0
     messageOptions: 0
   - time: 0.9166667
-    functionName: PlayWeaponSFX
+    functionName: TryPlaySound
     data: 
-    objectReferenceParameter: {fileID: 8300000, guid: 87903a46f9b12a84da3577703f985e74, type: 3}
+    objectReferenceParameter: {fileID: 11400000, guid: d8266f2354cccbb4a9f62af83414381c, type: 2}
     floatParameter: 0
     intParameter: 0
     messageOptions: 0

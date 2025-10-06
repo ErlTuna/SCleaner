@@ -19,9 +19,13 @@ public class WeaponConfigSO : ScriptableObject
     public int StartingReserveAmmo;
     public int BulletPerShot = 1;
     public float PushForce = 1f;
+    public float SpreadAngle = 0f;
+    public float SpreadResetThreshold = .1f;
 
     [Header("Audio & VFX Info")]
     public Sprite Sprite;
+    public SoundData FiringSound;
+    public SoundData DryFiringSound;
     public AudioClip DryFireSFX;
     public AudioClip FiringSFX;
     public AudioClip WeaponSwitchSFX;

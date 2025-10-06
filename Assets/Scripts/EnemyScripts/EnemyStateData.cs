@@ -1,36 +1,42 @@
-using System.Collections;
-using System.Collections.Generic;
+using System;
 using UnityEngine;
 
+[Serializable]
 public class EnemyStateData : UnitStateData
 {
-    public EnemyCoreState CoreState = EnemyCoreState.Idle;
-
-    // flags
     public bool PlayerWithinAttackRange = false;
     public bool HasBeenAttacked = false;
     public bool HasAttacked = false;
     public bool IsRecoveringPostAttack = false;
+    public bool IsRoaming = false;
+    public bool HasDetectedPlayer = false;
+    public bool IsChargingAnAttack = false;
+    public bool IsAttacking = false;
+    public bool IsRecovering = false;
 
-    public bool IsRoaming => CoreState == EnemyCoreState.Roaming;
-    public bool HasDetectedPlayer => CoreState == EnemyCoreState.DetectedPlayer;
-    public bool IsChargingAnAttack => CoreState == EnemyCoreState.ChargingAttack;
-    public bool IsAttacking => CoreState == EnemyCoreState.Attacking;
-    public bool IsRecovering => CoreState == EnemyCoreState.Recovering;
+    public override void ConfigureWith(UnitStateConfigSO config)
+    {
+        if (config == null)
+        {
+            Debug.Log("StateData config missing!");
+            return;
+        }
 
-}
+        base.ConfigureWith(config);
 
+        if (config is EnemyStateConfigSO enemyConfig)
+        {
+            PlayerWithinAttackRange = enemyConfig.PlayerWithinAttackRange;
+            HasBeenAttacked = false;
+            HasAttacked = false;
+            IsRecoveringPostAttack = false;
+            IsRoaming = false;
+            HasDetectedPlayer = false;
+            IsChargingAnAttack = false;
+            IsAttacking = false;
+            IsRecovering = false;
+        }
 
-// The enemy can only be in one of these states at a time
-// Example : Enemy can't be Idle AND Attacking at the same time.
-public enum EnemyCoreState
-{
-    Roaming,
-    Idle,
-    DetectedPlayer,
-    ChargingAttack,
-    Attacking,
-    Recovering,
-    Stunned,
-    Dead
+    }
+
 }

@@ -1,17 +1,20 @@
 using System.Collections;
+using UnityEditorInternal;
 using UnityEngine;
 using UnityEngine.AI;
 
 public class CrackerAttackState : BaseState
 {
     Coroutine attackCoroutine;
-    IEnemy enemyScript;
+    Unit _ownerScript;
     Transform target;
     Vector2 targetDirection;
-    public CrackerAttackState(GameObject enemy, GameObject player, Rigidbody2D rb2D, NavMeshAgent agent, IEnemy enemyScript) : base(enemy, rb2D, agent){
+    EnemyStateData _stateData;
+    public CrackerAttackState(GameObject owner, Unit ownerScript, GameObject player, Rigidbody2D rb2D, NavMeshAgent agent, EnemyStateData stateData, UnitMovementData movementData) : base(owner, rb2D, agent)
+    {
         target = player.transform;
-        this.enemyScript = enemyScript;
-        
+        _ownerScript = ownerScript;
+        _stateData = stateData;
     }
     public override void OnEnter()
     {
@@ -41,20 +44,22 @@ public class CrackerAttackState : BaseState
         /*if(!enemyScript.EnemyInfo.isAttacking){
             attackCoroutine = enemyScript.TriggerCoroutine(PerformAttack());
         }*/
-        if(enemyScript.EnemyInfo.isAttacking){
+        if(_stateData.IsAttacking){
             CalculatePlayerDirection();
             Debug.Log("Launching");
             rb2D.AddForce(targetDirection * 7.5f, ForceMode2D.Impulse);
-            enemyScript.EnemyInfo.isAttacking = false;
-            enemyScript.TriggerCoroutine(AttackEnd());
+            
+            _ownerScript.StartCoroutine(AttackEnd());
         }
             
     }
 
-    IEnumerator AttackEnd(){
+    IEnumerator AttackEnd()
+    {
+        _stateData.IsAttacking = false;
         Debug.Log("Attack end!!");
-        yield return new WaitForSeconds(.5f);
-        enemyScript.EnemyInfo.hasAttacked = true;
+        yield return new WaitForSeconds(1.5f);
+        _stateData.HasAttacked = true;
     }
 
     void CalculatePlayerDirection(){

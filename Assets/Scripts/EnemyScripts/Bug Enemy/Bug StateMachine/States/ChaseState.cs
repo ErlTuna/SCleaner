@@ -7,7 +7,7 @@ public class ChaseState : BaseState
 {   
     Transform target;
     Vector2 targetDirection;
-    public ChaseState(GameObject enemy, GameObject player, Rigidbody2D rb2D, NavMeshAgent agent) : base(enemy, rb2D, agent){
+    public ChaseState(GameObject owner, GameObject player, Rigidbody2D rb2D, NavMeshAgent agent) : base(owner, rb2D, agent){
         target = player.transform;
     }
     public override void OnEnter()

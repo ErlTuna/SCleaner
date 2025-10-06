@@ -123,6 +123,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f882e547327fa8f4d89b23559b249864, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _owner: {fileID: 0}
+  _attackConfigSO: {fileID: 0}
 --- !u!114 &5312070763934905996
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -278,6 +280,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f882e547327fa8f4d89b23559b249864, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _owner: {fileID: 0}
+  _attackConfigSO: {fileID: 11400000, guid: 1d5830bb166932040bf96ff95c40d15e, type: 2}
 --- !u!195 &5296537056425378523
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -464,6 +468,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bdc161646302b6b4a856252764927a10, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _ownerScript: {fileID: 0}
   _attackRange: {fileID: 4201683308579508735}
 --- !u!1 &8806157274590480296
 GameObject:
@@ -545,3 +550,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0b6fa52a8abf9ed40b12a6d5ab167b61, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _owner: {fileID: 0}

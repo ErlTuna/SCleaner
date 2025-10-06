@@ -17,7 +17,7 @@ public class UnitStateData : IUnitStateData
         ConfigureWith(configWrapper.StateConfig);
     }
 
-    public void ConfigureWith(UnitStateConfigSO config)
+    public virtual void ConfigureWith(UnitStateConfigSO config)
     {
         if (config == null)
         {

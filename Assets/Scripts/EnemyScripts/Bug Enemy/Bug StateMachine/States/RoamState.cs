@@ -8,7 +8,6 @@ public class RoamState : BaseState
     Vector2 pointDirection;
     public RoamState(GameObject owner, Rigidbody2D rb2D, NavMeshAgent agent, BoxCollider2D spawnArea) : base(owner, rb2D, agent)
     {
-        
         this.spawnArea = spawnArea;
         areaBounds = new BoundPositions(this.spawnArea);
     }

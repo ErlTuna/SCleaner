@@ -9,5 +9,6 @@ public class UnitStateConfigSO : ScriptableObject
     public bool isInvuln = false;
     public bool canMove = false;
     public bool isShielded = false;
+    
 }
 

@@ -117,16 +117,16 @@ AnimationClip:
     intParameter: 0
     messageOptions: 0
   - time: 0.083333336
-    functionName: PlayWeaponSFX
+    functionName: UseAmmo
     data: 
-    objectReferenceParameter: {fileID: 8300000, guid: c10c9b338ddf8074fa5849ce0ee10db3, type: 3}
+    objectReferenceParameter: {fileID: 0}
     floatParameter: 0
     intParameter: 0
     messageOptions: 0
   - time: 0.083333336
-    functionName: UseAmmo
+    functionName: TryPlaySound
     data: 
-    objectReferenceParameter: {fileID: 0}
+    objectReferenceParameter: {fileID: 11400000, guid: 7f34227710a6a984ca505ce8130f0553, type: 2}
     floatParameter: 0
     intParameter: 0
     messageOptions: 0

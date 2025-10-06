@@ -4,27 +4,42 @@ using UnityEngine;
 
 public class AttackRangeCheck : MonoBehaviour
 {
-    IEnemy script;
+    [SerializeField] Unit _ownerScript;
     [SerializeField] CircleCollider2D _attackRange;
-    void Start(){
-        if(_attackRange == null)
-            _attackRange = GetComponent<CircleCollider2D>();
-        script = GetComponentInParent<IEnemy>();
+    EnemyStateData _stateData;
+    void Start()
+    {
+        if (_attackRange == null)
+            Debug.Log("Missing attack range circle collider");
+
+        if (_ownerScript.RuntimeDataHolder.TryGetRuntimeData(out EnemyStateData stateData))
+        {
+            _stateData = stateData;
+        }
+        else
+        {
+            Debug.LogError("EnemyStateData not found in runtime data");
+        }
+        
     }
 
-    void OnTriggerEnter2D(Collider2D other){
-        if(other.CompareTag("Player")){
-            if(_attackRange.IsTouching(other))
-                script.PlayerWithinAttackRange();
+    void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.CompareTag("Player"))
+        {
+            if(_stateData == null)
+                Debug.Log("The state data doe..." + _stateData);
+            if (_stateData != null)
+                _stateData.PlayerWithinAttackRange = true;
         }
     }
 
-    void OnTriggerExit2D(Collider2D other){
-        if(other.CompareTag("Player")){
-            if(!_attackRange.IsTouching(other)){
-                script.PlayerOutOfAttackRange();
-            }
-            
+    void OnTriggerExit2D(Collider2D other)
+    {
+        if(other.CompareTag("Player"))
+        {
+            if (_stateData != null)
+                _stateData.PlayerWithinAttackRange = false;
         }
     }
 }

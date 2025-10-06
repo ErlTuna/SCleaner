@@ -11,6 +11,9 @@ public class BasicSMG : BaseWeapon
 
     void Update()
     {
+        //if (AmmoManager.HasAmmo() == false && AmmoManager.CanReload() == false)
+            //HandlePrimaryAttackInputCancel();
+
         //weapon runs out of ammo but has reserve and isn't actively reloading, try starting a reload
         if (AmmoManager.HasAmmo() == false && AmmoManager.CanReload() && WeaponRuntimeData.State != WeaponState.RELOADING)
         {
@@ -26,16 +29,38 @@ public class BasicSMG : BaseWeapon
             TryDryFire();
             return;
         }
-        
+
         //if (ObstructionChecker.CheckWeaponObstructionOverlap(rayCastStartPoint, rayCastEndPoint, WeaponConfig.environmentLayers, WeaponConfig.enemyLayer)) return;
 
         if (PrimaryAttackStrategy != null)
+        {
             PrimaryAttackStrategy.HandleAttackStart(this);
+
+            if (WeaponRuntimeData.State == WeaponState.PRIMARY_ATTACK)
+            {
+                //weaponSoundManager.PlayFiringSFX();
+            }
+                
+        }
+            
     }
+
+    /*
+    public override void HandlePrimaryAttackInputCancel()
+    {
+        if (WeaponRuntimeData.State == WeaponState.PRIMARY_ATTACK)
+        {
+            WeaponRuntimeData.State = WeaponState.IDLE;
+            //weaponSoundManager.StopFiringSFX();
+        }
+
+
+    }
+    */
 
     public override void HandleReloadInput()
     {
-         AmmoManager.HandleReloadStart();
+        AmmoManager.HandleReloadStart();
     }
 
     public override void HandleReloadStart()
@@ -48,6 +73,7 @@ public class BasicSMG : BaseWeapon
     public override void SpawnBullet()
     {
 
+        /*
         Collider2D overlappingEnemyHitbox = ObstructionChecker.CheckMuzzleEnemyOverlap(muzzleTipCheck, WeaponConfig.enemyLayer);
 
         if (overlappingEnemyHitbox)
@@ -60,14 +86,15 @@ public class BasicSMG : BaseWeapon
                 return;
             }
         }
+        */
 
-        GameObject instantiatedBullet = Instantiate(WeaponConfig.BulletData.Prefab, FiringPoints[0].transform.position, transform.rotation);
+        Quaternion bulletRotation = CalculateBulletSpread();
+        GameObject instantiatedBullet = Instantiate(WeaponConfig.BulletData.Prefab, FiringPoints[0].transform.position, bulletRotation);
         instantiatedBullet.SetActive(false);
         instantiatedBullet.GetComponent<Bullet>().Setup(gameObject, WeaponRuntimeData, WeaponConfig);
         instantiatedBullet.SetActive(true);
-        
-        //instantiatedBullet.SetupBulletParameters(WeaponConfig.BulletData.ProjectileSpeed, WeaponConfig.BulletData.Size, WeaponConfig.Damage, WeaponConfig.BulletData.LifeTime);
-
-
+        WeaponRuntimeData.TimeSinceLastFired = Time.unscaledTime;
+        //weaponSoundManager.TryPlayFiringSFX();
+        AmmoManager.UseAmmo();
     }
 }

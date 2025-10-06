@@ -7,8 +7,8 @@ public class CollisionAttack : MonoBehaviour
     void OnTriggerStay2D(Collider2D col){
         if (col.CompareTag("PlayerHitbox"))
         {
-            IDamageable damageable = col.GetComponent<IDamageable>();
-            damageable?.TakeDamage(_attackConfigSO.Damage);
+            if (col.TryGetComponent<IDamageable>(out var damageable))
+                damageable.TakeDamage(_attackConfigSO.Damage);
         }
     }
 
