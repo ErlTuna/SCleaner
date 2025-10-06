@@ -1,29 +1,41 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class SpriteBlink : MonoBehaviour
 {
+    Coroutine _blinkCoroutine;
+    WaitForSeconds _blinkInterval = new(0.25f);
     [SerializeField] SpriteRenderer _spriteRenderer;
-    readonly int blinkCount = 4;
+    [SerializeField] int _maxBlinkCount = 4;
 
-    void OnEnable(){
-        PlayerHealth.onPlayerHitInvuln += Blink;
-        
+    void OnEnable()
+    {
+        PlayerHealthManager.OnPlayerHitSpriteUpdate += StartSpriteBlink;
     }
 
-    void OnDisable(){
-        PlayerHealth.onPlayerHitInvuln -= Blink;
+    void OnDisable()
+    {
+        PlayerHealthManager.OnPlayerHitSpriteUpdate -= StartSpriteBlink;
+    }
+
+    void StartSpriteBlink() {
+        _blinkCoroutine = StartCoroutine(Blink());
     }
     
     IEnumerator Blink(){
         int currentBlinkCount = 0;
-        while (currentBlinkCount < blinkCount){
+        if (_spriteRenderer == null)
+        {
+            Debug.Log("Sprite Renderer is missing!");
+            yield break;
+        }
+        while (currentBlinkCount < _maxBlinkCount)
+        {
             _spriteRenderer.enabled = false;
-            yield return new WaitForSeconds(0.25f);
+            yield return _blinkInterval;
             _spriteRenderer.enabled = true;
             ++currentBlinkCount;
-            yield return new WaitForSeconds(0.25f);
+            yield return _blinkInterval;
         }
     }
 

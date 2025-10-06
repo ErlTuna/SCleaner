@@ -74,16 +74,9 @@ AnimationClip:
   m_HasMotionFloatCurves: 0
   m_Events:
   - time: 0
-    functionName: PlayCurrentWeaponAudio
+    functionName: TryPlaySound
     data: 
-    objectReferenceParameter: {fileID: 8300000, guid: f5f0939fb765edc41aabce23fa67614b, type: 3}
-    floatParameter: 0
-    intParameter: 0
-    messageOptions: 0
-  - time: 0.083333336
-    functionName: HandleReloadEnd
-    data: 
-    objectReferenceParameter: {fileID: 0}
+    objectReferenceParameter: {fileID: 11400000, guid: 26369b5de25112e44a475fc570f2e85d, type: 2}
     floatParameter: 0
     intParameter: 0
     messageOptions: 0

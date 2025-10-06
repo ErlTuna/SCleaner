@@ -33,7 +33,16 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "Dash",
+                    "name": "Secondary Attack",
+                    "type": "Button",
+                    "id": "ccd49256-5c78-4fe5-81ea-b6af9c19fefe",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Ability",
                     "type": "Button",
                     "id": "715679a7-3480-4422-8ff7-6537c907ec3d",
                     "expectedControlType": "Button",
@@ -60,7 +69,7 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "Switch Weapons",
+                    "name": "Weapon Switch",
                     "type": "Button",
                     "id": "5fd72f26-8912-4ce2-a9cf-184d2716c7fb",
                     "expectedControlType": "Button",
@@ -69,7 +78,7 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "OpenMenu",
+                    "name": "Open Menu",
                     "type": "Button",
                     "id": "b6c6f9e0-9eb5-4c27-a66b-9a1f6d2d265e",
                     "expectedControlType": "Button",
@@ -108,6 +117,33 @@
                     "name": "Fourth Weapon",
                     "type": "Button",
                     "id": "95d63e3e-8949-4aad-a63e-f4a6cf9df6ea",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Switch Ability",
+                    "type": "Button",
+                    "id": "020b3b2f-d38a-4a37-8e77-402dada6e68d",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Pick Up Item",
+                    "type": "Button",
+                    "id": "79e19ffc-eb4b-4855-91d4-06f4395f8b40",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Drop Weapon",
+                    "type": "Button",
+                    "id": "158db150-6d81-4a7e-a54f-19b187e04a61",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
@@ -199,7 +235,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Dash",
+                    "action": "Ability",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -210,7 +246,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Switch Weapons",
+                    "action": "Weapon Switch",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -243,7 +279,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Switch Weapons",
+                    "action": "Weapon Switch",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -254,7 +290,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Switch Weapons",
+                    "action": "Weapon Switch",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -265,7 +301,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Switch Weapons",
+                    "action": "Weapon Switch",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -276,7 +312,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "OpenMenu",
+                    "action": "Open Menu",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -321,6 +357,50 @@
                     "processors": "",
                     "groups": "",
                     "action": "Fourth Weapon",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "318314ad-cb04-4789-bf21-660cae58a390",
+                    "path": "<Keyboard>/f",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Switch Ability",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "ac14457b-f0a3-4fa9-883d-63e9eb12438d",
+                    "path": "<Mouse>/rightButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Secondary Attack",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "77620992-2536-4c99-a657-657689d902be",
+                    "path": "<Keyboard>/e",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Pick Up Item",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "c7be3a3a-3c55-4260-ac1c-c285a110fa1b",
+                    "path": "<Keyboard>/t",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Drop Weapon",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

@@ -7,35 +7,36 @@ public class CrackerEnemy : MonoBehaviour, IEnemy
 {
     [SerializeField] NavMeshAgent agent;
     [SerializeField] Rigidbody2D _rb2D;
-    public EnemySO EnemyInfo{get;set;}
+    public EnemyConfigSO EnemyInfo{get;set;}
     public BoxCollider2D SpawnArea {get;set;}
-    public UnitInfoSO _playerInfo;
+    public UnitConfigsWrapperSO _playerInfo;
     StateMachine _stateMachine;
     GameObject _player;
     
     void Awake(){
         _player = GameObject.FindGameObjectWithTag("Player");
         if (EnemyInfo == null){
-            EnemyInfo = ScriptableObject.CreateInstance<EnemySO>();
+            EnemyInfo = ScriptableObject.CreateInstance<EnemyConfigSO>();
         }
     EnemyInfo.Init();
     }        
 
+    /*
     void Start()
     {
             
         //Initialize components
         _stateMachine = new StateMachine();
         _rb2D = GetComponent<Rigidbody2D>();
-        _playerInfo = _player.GetComponent<PlayerMain>().playerInfo;
+        //_playerInfo = _player.GetComponent<PlayerMain>().playerInfo;
         agent.updateRotation = false;
         agent.updateUpAxis = false;
 
 
         //Initialize states
-        RoamState roamState = new RoamState(gameObject, _player, _rb2D, agent, SpawnArea);
+        RoamState roamState = new RoamState(gameObject, _rb2D, agent, SpawnArea);
         ChaseState chaseState = new ChaseState(gameObject, _player, _rb2D, agent);
-        ImmobileState immobileState = new ImmobileState(gameObject, _player, _rb2D, agent);
+        ImmobileState immobileState = new ImmobileState(gameObject, _rb2D, agent);
         CrackerAttackState attackState = new CrackerAttackState(gameObject, _player, _rb2D, agent, this);
         CrackerAttackRecoveryState recoveryState = new CrackerAttackRecoveryState(gameObject, _player, _rb2D, agent, this);
         CrackerPreAttack preAttackState = new CrackerPreAttack(gameObject, _player, _rb2D, agent, this);
@@ -77,12 +78,14 @@ public class CrackerEnemy : MonoBehaviour, IEnemy
 
         //ANY to STATES
         Any(immobileState, new FuncPredicate( () => EnemyInfo.isImmobilized));
-        Any(roamState, new FuncPredicate(() => !_playerInfo.isAlive, "player is dead!"));
+        //Any(roamState, new FuncPredicate(() => !_playerInfo.stateData.isAlive, "player is dead!"));
 
         #endregion TRANSITIONS
 
         _stateMachine.SetState(roamState);
     }
+
+    */
 
     void At(IState from, IState to, IPredicate condition) => _stateMachine.AddTransition(from, to, condition);
     void Any(IState to, IPredicate condition) => _stateMachine.AddAnyTransition(to, condition);
@@ -90,6 +93,7 @@ public class CrackerEnemy : MonoBehaviour, IEnemy
     void Update(){
         _stateMachine.Update();
     }
+    
 
     void FixedUpdate(){
         _stateMachine.FixedUpdate();

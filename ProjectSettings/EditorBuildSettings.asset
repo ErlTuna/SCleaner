@@ -20,5 +20,8 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Loading_Screen.unity
     guid: 2d603f75cbebc2f45a164eb1aa56dd10
+  - enabled: 1
+    path: Assets/Scenes/GameplayUI.unity
+    guid: 29c696b19bc38404e9eb6140931af350
   m_configObjects:
     com.unity.input.settings: {fileID: 11400000, guid: caf28c9d0de53cf41b5bc566fa067552, type: 2}

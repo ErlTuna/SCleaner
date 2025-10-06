@@ -1,12 +1,14 @@
 using System;
 
+[Serializable]
 public class FuncPredicate : IPredicate
 {
-    public string Description {get; set;}
+    public string Description { get; set; }
 
     readonly Func<bool> func;
 
-    public FuncPredicate(Func<bool> func, string description = "default"){
+    public FuncPredicate(Func<bool> func, string description = "default")
+    {
         this.func = func;
         Description = description;
     }

@@ -1,9 +1,11 @@
 
 
-using System;
-
 public interface IHealth
 {
-    public UnitInfoSO UnitInfo{get;set;}
+    float CurrentHealth { get; }
+    float MaxHealth { get; }
+
+    void TakeDamage(float amount);
+    void Heal(float amount);
 
 }

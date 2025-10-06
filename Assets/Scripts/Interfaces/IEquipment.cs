@@ -5,6 +5,11 @@ using UnityEngine;
 
 public interface IEquipment
 {
+    /*
+    public static event Action<EquipmentSO> OnEquipmentChanged;
+    public static event Action<EquipmentSO> OnEquipmentUsed;
+    public static void InvokeEquipmentChangeEvent(EquipmentSO equipmentSO) => OnEquipmentChanged?.Invoke(equipmentSO);
+    public static void InvokeEquipmentUseEvent(EquipmentSO equipmentInfo) => OnEquipmentUsed?.Invoke(equipmentInfo);
     public event Action OnAbilityEnd;
     void ActivateScript();
     void DisableScript();
@@ -12,4 +17,6 @@ public interface IEquipment
     void UseEquipment();
     void TriggerAbility();
     IEnumerator TriggerAbilityAfterTime();
+    EquipmentSO EquipmentInfo { get; set; }
+    */
 }

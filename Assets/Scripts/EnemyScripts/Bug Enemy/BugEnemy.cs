@@ -7,9 +7,9 @@ public class BugEnemy : MonoBehaviour, IEnemy
 {
     [SerializeField] NavMeshAgent agent;
     [SerializeField] Rigidbody2D _rb2D;
-    public EnemySO EnemyInfo{get;set;}
+    public EnemyConfigSO EnemyInfo{get;set;}
     public BoxCollider2D SpawnArea {get;set;}
-    public UnitInfoSO _playerInfo;
+    public UnitConfigsWrapperSO _playerInfo;
     StateMachine _stateMachine;
     GameObject _player;
     
@@ -17,26 +17,22 @@ public class BugEnemy : MonoBehaviour, IEnemy
     
     void Awake(){
         _player = GameObject.FindGameObjectWithTag("Player");
-        if (EnemyInfo == null){
-            EnemyInfo = ScriptableObject.CreateInstance<EnemySO>();
+        
+        if (EnemyInfo == null)
+        {
+            EnemyInfo = ScriptableObject.CreateInstance<EnemyConfigSO>();
         }
+
     EnemyInfo.Init();
     }        
 
     void Start()
     {
-        
-
-        //Initialize fields
-        //string description1 = "roam to stop predicate";
-        //string description2 = "stop to roam predicate";
-        
-
-
+        /*
         //Initialize components
         _stateMachine = new StateMachine();
         _rb2D = GetComponent<Rigidbody2D>();
-        _playerInfo = _player.GetComponent<PlayerMain>().playerInfo;
+        //_playerInfo = _player.GetComponent<PlayerMain>().playerInfo;
         agent.updateRotation = false;
         agent.updateUpAxis = false;
         //agent.updatePosition = true;
@@ -62,11 +58,12 @@ public class BugEnemy : MonoBehaviour, IEnemy
 
         //ANY TRANSITIONS
         Any(immobileState, new FuncPredicate( () => EnemyInfo.isImmobilized));
-        Any(roamState, new FuncPredicate(() => !_playerInfo.isAlive && !EnemyInfo.isImmobilized));
+        //Any(roamState, new FuncPredicate(() => !_playerInfo.stateData.isAlive && !EnemyInfo.isImmobilized));
 
         #endregion TRANSITIONS
         //Set initial state
         _stateMachine.SetState(roamState);
+        */
     }
 
     void At(IState from, IState to, IPredicate condition) => _stateMachine.AddTransition(from, to, condition);

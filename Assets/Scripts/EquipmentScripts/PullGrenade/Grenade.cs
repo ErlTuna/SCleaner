@@ -1,15 +1,12 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
-using Unity.Burst;
 using UnityEngine;
 
 public class Grenade : MonoBehaviour, IEquipment
 {
-    
+    /*
     public event Action OnAbilityEnd;
-    EquipmentSO _equipmentSO;
     AudioSource _audioSource;
     Transform _grenadePosition;
     Transform _parentTransform;
@@ -18,17 +15,17 @@ public class Grenade : MonoBehaviour, IEquipment
     BoxCollider2D _boxCollider2D;
     public SuctionAbility _suctionAbility;
     public Explode _explosionAbility;
-    
     public float _speed = 3f;
-    //public bool _hasJustBeenTossed;
     public bool _hasActivated = false;
+    public EquipmentSO EquipmentInfo { get; set; }
+
 
     void Awake(){
         _rb2D = GetComponent<Rigidbody2D>();
         _audioSource = GetComponent<AudioSource>();
 
         _boxCollider2D = GetComponent<BoxCollider2D>();
-        _equipmentSO = Resources.Load<EquipmentSO>("ScriptableObjects/VacuumGrenadeSO");
+        EquipmentInfo = Resources.Load<EquipmentSO>("ScriptableObjects/VacuumGrenadeSO");
         
     }
 
@@ -42,9 +39,9 @@ public class Grenade : MonoBehaviour, IEquipment
         _rb2D.isKinematic = true;
         _parentTransform = transform.parent;
         _suctionAbility.ReceiveAudioSource(_audioSource);
-        _suctionAbility.ReceiveVacuumAudio(_equipmentSO.activatedSFX);
+        _suctionAbility.ReceiveVacuumAudio(EquipmentInfo.activatedSFX);
         _explosionAbility.ReceiveAudioSource(_audioSource);
-        _explosionAbility.ReceiveExplosionAudio(_equipmentSO.activatedSFX);
+        _explosionAbility.ReceiveExplosionAudio(EquipmentInfo.activatedSFX);
     }
 
     void OnDestroy(){
@@ -76,10 +73,9 @@ public class Grenade : MonoBehaviour, IEquipment
     }
 
     public void Toss(){
-        //_hasJustBeenTossed = true;
+        //IEquipment.InvokeEquipmentUseEvent(EquipmentInfo);
         _rb2D.AddTorque(2.5f, ForceMode2D.Impulse);
         _rb2D.AddForce(_trajectory * _speed, ForceMode2D.Impulse);
-        //StartCoroutine(SetTossedToFalse());
     }
 
     public IEnumerator TriggerAbilityAfterTime(){
@@ -127,4 +123,5 @@ public class Grenade : MonoBehaviour, IEquipment
     {
         enabled = false;
     }
+    */
 }
