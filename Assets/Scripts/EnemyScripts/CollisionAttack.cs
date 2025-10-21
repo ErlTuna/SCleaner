@@ -8,7 +8,7 @@ public class CollisionAttack : MonoBehaviour
         if (col.CompareTag("PlayerHitbox"))
         {
             if (col.TryGetComponent<IDamageable>(out var damageable))
-                damageable.TakeDamage(_attackConfigSO.Damage);
+                damageable.TakeDamage(_attackConfigSO.ContactDamage);
         }
     }
 

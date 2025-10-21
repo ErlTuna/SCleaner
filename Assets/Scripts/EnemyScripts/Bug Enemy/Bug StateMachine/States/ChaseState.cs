@@ -12,14 +12,14 @@ public class ChaseState : BaseState
     }
     public override void OnEnter()
     {
-        CalculatePlayerDirection();
+        //CalculatePlayerDirection();
         agent.SetDestination(target.position);
     }
 
 
     public override void StateUpdate()
     {
-        CalculatePlayerDirection();
+        //CalculatePlayerDirection();
         agent.SetDestination(target.position);
     }
 

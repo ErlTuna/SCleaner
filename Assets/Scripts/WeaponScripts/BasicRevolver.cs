@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BasicRevolver : BaseWeapon
+public class BasicRevolver : PlayerWeapon
 {
     void Start()
     {
@@ -12,7 +12,7 @@ public class BasicRevolver : BaseWeapon
     void Update()
     {
         //weapon runs out of ammo but has reserve and isn't actively reloading, try starting a reload
-        if (AmmoManager.HasAmmo() == false && WeaponRuntimeData.State != WeaponState.RELOADING)
+        if (AmmoManager.HasAmmo() == false && AmmoManager.CanReload() && WeaponRuntimeData.State != WeaponState.RELOADING)
         {
             AmmoManager.HandleReloadStart();
         }
@@ -26,10 +26,9 @@ public class BasicRevolver : BaseWeapon
             TryDryFire();
             return;
         }
+
         if (WeaponRuntimeData.State != WeaponState.IDLE) return;
-
-
-        HandlePreAttack();
+            HandlePreAttack();
     
     }
 

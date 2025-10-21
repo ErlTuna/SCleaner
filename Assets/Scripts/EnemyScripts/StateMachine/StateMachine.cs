@@ -1,9 +1,5 @@
 using System;
 using System.Collections.Generic;
-using Unity.VisualScripting;
-using UnityEditor.Experimental.GraphView;
-using UnityEngine;
-using UnityEngine.InputSystem.XR.Haptics;
 public class StateMachine
 {
     StateNode current;
@@ -77,7 +73,7 @@ public class StateMachine
 
     public void AddTransition(IState from, IState to, IPredicate condition){
         
-        GetOrAddNode(from).AddTransition(to, condition);
+        GetOrAddNode(from).AddTransition(GetOrAddNode(to).State, condition);
         //Debug.Log("Added Transition from: " + from + " to " + to + " with description" + condition.Description);
     }
     StateNode GetOrAddNode(IState state){

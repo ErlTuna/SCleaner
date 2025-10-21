@@ -1,7 +1,7 @@
 using Unity.Mathematics;
 using UnityEngine;
 
-public class BasicPistol : BaseWeapon
+public class BasicPistol : PlayerWeapon
 {
     void Start()
     {

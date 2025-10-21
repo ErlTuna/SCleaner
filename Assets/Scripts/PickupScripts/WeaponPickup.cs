@@ -109,6 +109,7 @@ public class WeaponPickup : MonoBehaviour, IPickup
 
         _weaponConfig = config;
         _spriteRenderer.sprite = _weaponConfig.Sprite;
+        //transform.localScale = _weaponConfig.Scale;
 
         SetupVisualsAndPrompt();
     }
@@ -124,6 +125,7 @@ public class WeaponPickup : MonoBehaviour, IPickup
 
         _weaponRuntimeData = runtimeData;
         _weaponConfig = runtimeData.Config;
+        //transform.localScale = _weaponConfig.Scale;
         _isWorldPickup = false;
         SetupVisualsAndPrompt();
     }

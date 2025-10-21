@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8b4ae213c8e1c284d8a16b45dbbd0ba4, type: 3}
+  m_Name: Ranged Cracker Config Wrapper
+  m_EditorClassIdentifier: 
+  UnitName: Ranged Cracker
+  defeatSprite: {fileID: 21300000, guid: a5b4209dc720b1a44b33979655065879, type: 3}
+  HealthConfig: {fileID: 11400000, guid: 83f07b4c97032fd47a842f64e7cfda6f, type: 2}
+  MovementConfig: {fileID: 11400000, guid: 17b556094df6a774a82d35067f7d9e83, type: 2}
+  EnergyConfig: {fileID: 0}
+  StateConfig: {fileID: 11400000, guid: 716dc31681173974186d23975f833e53, type: 2}
+  InventoryConfig: {fileID: 0}
+  attackConfigSO: {fileID: 11400000, guid: 4f338b0c4d26aa74cb41f0ef68efc9c3, type: 2}

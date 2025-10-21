@@ -13,14 +13,14 @@ using UnityEngine;
 public class WeaponSlot
 {
     public GameObject Weapon;
-    public BaseWeapon Script;
+    public PlayerWeapon Script;
 
     /// <summary>
     /// Initializes a new weapon slot with the specified weapon and script.
     /// </summary>
     /// <param name="weapon">The weapon GameObject.</param>
     /// <param name="script">The associated BaseWeapon script.</param>
-    public WeaponSlot(GameObject weapon, BaseWeapon script)
+    public WeaponSlot(GameObject weapon, PlayerWeapon script)
     {
         Weapon = weapon;
         Script = script;

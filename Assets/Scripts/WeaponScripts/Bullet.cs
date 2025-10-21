@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using UnityEngine;
 
 
@@ -10,6 +11,8 @@ public class Bullet : MonoBehaviour
     [SerializeField] Rigidbody2D _rb2D;
     [SerializeField] BulletConfigSO bulletConfig;
     [SerializeField] GameObject _owner;
+    [SerializeField] Animator _animator;
+    [SerializeField] GameObject _dissolveVFX;
     public LayerMask layerMask;
     Vector3 _trajectory;
     float _basePushForce;
@@ -53,7 +56,9 @@ public class Bullet : MonoBehaviour
     void OnCollisionEnter2D(Collision2D other){
         if((layerMask.value & (1 << other.transform.gameObject.layer)) > 0){
             _circleCollider2D.enabled = false;
-            Destroy(gameObject);
+
+            OnCollision();
+            //Destroy(gameObject);
             return;
         }
     }
@@ -61,7 +66,7 @@ public class Bullet : MonoBehaviour
     void OnTriggerEnter2D(Collider2D col){
         if(_hasHitAnEnemy) return;
 
-        
+
         if (col.TryGetComponent<IDamageable>(out var damageable))
         {
             _circleCollider2D.enabled = false;
@@ -78,11 +83,16 @@ public class Bullet : MonoBehaviour
 
             damageable?.TakeDamage(context);
 
-            Destroy(gameObject);
+            OnCollision();
+            //Destroy(gameObject);
         }        
     }
 
-
+    void OnCollision()
+    {
+        Instantiate(_dissolveVFX, transform.position, Quaternion.identity);
+        Destroy(gameObject);
+    }
 
     void OnDestroy()
     {

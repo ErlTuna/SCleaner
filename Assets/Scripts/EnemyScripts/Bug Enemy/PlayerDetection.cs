@@ -29,7 +29,7 @@ public class PlayerDetection : MonoBehaviour
 
     void OnTriggerExit2D(Collider2D other){
         if(other.CompareTag("Player") && _stateData != null){
-            _stateData.HasDetectedPlayer = false;
+            //_stateData.HasDetectedPlayer = false;
         }
     }
 

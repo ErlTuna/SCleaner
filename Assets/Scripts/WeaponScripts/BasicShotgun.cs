@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BasicShotgun : BaseWeapon
+public class BasicShotgun : PlayerWeapon
 {
     List<GameObject> _bullets = new();
     void Start()

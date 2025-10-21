@@ -6,8 +6,8 @@ using UnityEngine;
 public static class PlayerInventoryEvents
 {
     #region Events
-    public static Action<GameObject, BaseWeapon> OnInventoryReadyEvent;
-    public static Action<GameObject, BaseWeapon> OnWeaponSwitchEvent;
+    public static Action<GameObject, PlayerWeapon> OnInventoryReadyEvent;
+    public static Action<GameObject, PlayerWeapon> OnWeaponSwitchEvent;
     public static Action<Sprite, WeaponRuntimeData> OnWeaponSwitchUIUpdate;
     public static Action<GameObject, BaseEquipment> OnEquipmentReady;
     public static Action<GameObject, BaseEquipment> OnEquipmentSwitchEvent;
@@ -17,7 +17,7 @@ public static class PlayerInventoryEvents
 
     #region Invokers
 
-    public static void RaiseInventoryReadyEvent(GameObject weapon, BaseWeapon weaponScript)
+    public static void RaiseInventoryReadyEvent(GameObject weapon, PlayerWeapon weaponScript)
     {
         OnInventoryReadyEvent?.Invoke(weapon, weaponScript);
     }
@@ -28,7 +28,7 @@ public static class PlayerInventoryEvents
     }
 
 
-    public static void RaiseWeaponSwitchEvent(GameObject weapon, BaseWeapon weaponScript)
+    public static void RaiseWeaponSwitchEvent(GameObject weapon, PlayerWeapon weaponScript)
     {
         OnWeaponSwitchEvent?.Invoke(weapon, weaponScript);
         if (weaponScript)

@@ -11,6 +11,7 @@ public class PlayerAbilityHandler : MonoBehaviour
     [SerializeField] List<AbilityData> abilities;
     [SerializeField] AbilityData currentAbility;
     [SerializeField] AbilityContext context;
+    [SerializeField] SpriteRenderer _spriteRenderer;
     UnitEnergyData _playerEnergyData;
     Coroutine useStateCoroutine;
     public int currentAbilityIndex = 0;
@@ -36,6 +37,13 @@ public class PlayerAbilityHandler : MonoBehaviour
 
         foreach (AbilityEffect effect in currentAbility.Effects)
             effect.Execute(context, currentAbility);
+
+        /*
+        if (currentAbility.AbilityVisuals != null)
+        {
+            currentAbility.AbilityVisuals.TriggerVisual(this, context.user.transform.position, Quaternion.identity, _spriteRenderer);
+        }
+        */
 
     }
 

@@ -3,8 +3,8 @@ using UnityEngine;
 public class PlayerWeaponManager : MonoBehaviour
 {
     [SerializeField] GameObject _currentWeaponGO;
-    [SerializeField] BaseWeapon _currentWeaponScript;
-    [SerializeField] Transform _weaponPosition;
+    [SerializeField] PlayerWeapon _currentWeaponScript;
+    //[SerializeField] Transform _weaponPosition;
 
     void OnEnable()
     {
@@ -37,7 +37,7 @@ public class PlayerWeaponManager : MonoBehaviour
             _currentWeaponScript.HandlePrimaryAttackInputCancel();
     }
 
-    public void ReceiveWeapon(GameObject weapon, BaseWeapon weaponScript)
+    public void ReceiveWeapon(GameObject weapon, PlayerWeapon weaponScript)
     {
         _currentWeaponGO = weapon;
         _currentWeaponScript = weaponScript;
@@ -45,7 +45,7 @@ public class PlayerWeaponManager : MonoBehaviour
     }
 
     
-    public void SwitchWeapon(GameObject targetWeapon, BaseWeapon targetWeaponScript){        
+    public void SwitchWeapon(GameObject targetWeapon, PlayerWeapon targetWeaponScript){        
         if (_currentWeaponScript)
             _currentWeaponScript.SwitchFrom();
 

@@ -9,7 +9,6 @@ public class CrackerPreAttack : BaseState
     EnemyStateData _stateData;
     UnitMovementData _movementData;
     Transform _target;
-    Vector2 _targetDirection;
     float _originalSpeed;
     Coroutine _prepareAttack;
 
@@ -40,7 +39,6 @@ public class CrackerPreAttack : BaseState
 
     public override void StateUpdate()
     {
-        CalculatePlayerDirection();
         RotateTowardsPlayer();
         agent.SetDestination(_target.position);
     }
@@ -67,13 +65,12 @@ public class CrackerPreAttack : BaseState
         _stateData.IsChargingAnAttack = false;
         agent.speed = _movementData.CurrentMovementSpeed;
     }
-
-    void CalculatePlayerDirection(){
-        _targetDirection = (_target.position - owner.transform.position).normalized;
-    }
-
     void RotateTowardsPlayer(){
-        float angle = Mathf.Atan2(_targetDirection.y, _targetDirection.x) * Mathf.Rad2Deg;
+
+        // subtracting 90f to fix rotation issue as the sprite faces up
+        // without this, the enemy rotates 90 degrees more than it should
+        Vector2 _targetDirection = (_target.position - owner.transform.position).normalized;
+        float angle = Mathf.Atan2(_targetDirection.y, _targetDirection.x) * Mathf.Rad2Deg -90f;
         owner.transform.eulerAngles = new Vector3(0, 0, angle);
     }
 }

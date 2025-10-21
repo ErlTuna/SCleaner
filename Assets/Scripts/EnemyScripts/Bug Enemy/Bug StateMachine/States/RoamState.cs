@@ -35,8 +35,9 @@ public class RoamState : BaseState
             }
 
         }
-        
-        FaceTarget();
+
+        //if (agent.angularSpeed != 0)
+            //FaceTarget();
     }
 
     void FaceTarget()

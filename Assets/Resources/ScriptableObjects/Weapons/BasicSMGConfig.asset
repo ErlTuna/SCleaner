@@ -24,15 +24,15 @@ MonoBehaviour:
   StartingReserveAmmo: 120
   BulletPerShot: 1
   PushForce: 5
-  SpreadAngle: 7.5
+  SpreadAngle: 5
   SpreadResetThreshold: 0.75
-  Sprite: {fileID: 21300000, guid: ee9870b1675272d42a735fce29d0358a, type: 3}
+  Sprite: {fileID: 21300000, guid: 164da21782210a147b7f02ab6343eda9, type: 3}
   FiringSound: {fileID: 11400000, guid: 83484d1f01585144eb3e0bc48217bfef, type: 2}
   DryFiringSound: {fileID: 11400000, guid: 4a47d7325cbcaa64d96d8a9fe78951f9, type: 2}
   DryFireSFX: {fileID: 8300000, guid: 591753c0fc688dc4a8a4928848b5c518, type: 3}
   FiringSFX: {fileID: 8300000, guid: 22a53bb9dfae1634b8328e865a964e4d, type: 3}
   WeaponSwitchSFX: {fileID: 8300000, guid: d2b24e19405954a4c99252993fb90386, type: 3}
-  offset: {x: 0, y: 0, z: 0}
+  offset: {x: 1.5, y: 0, z: 0}
   rayCastStartPoint: {fileID: 0}
   rayCastEndPoint: {fileID: 0}
   muzzleTipCheck: {fileID: 0}

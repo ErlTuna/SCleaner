@@ -79,7 +79,7 @@ public class PlayerInventoryManager : MonoBehaviour
             weaponGO.transform.parent = _weaponParent;
             weaponGO.transform.SetPositionAndRotation(_weaponPosition.position, _weaponPosition.rotation);
 
-            BaseWeapon weaponScript = weaponGO.GetComponent<BaseWeapon>();
+            PlayerWeapon weaponScript = weaponGO.GetComponent<PlayerWeapon>();
             weaponScript.InitializeWithConfig();
 
             weaponGO.transform.localPosition += weaponScript.WeaponConfig.offset;
@@ -200,7 +200,7 @@ public class PlayerInventoryManager : MonoBehaviour
         bool wasWeaponInventoryEmpty = _inventoryData.WeaponInventory.IsEmpty();
 
         GameObject weaponGO = Instantiate(config.Prefab);
-        BaseWeapon weaponScript = weaponGO.GetComponent<BaseWeapon>();
+        PlayerWeapon weaponScript = weaponGO.GetComponent<PlayerWeapon>();
         SetupWeapon(weaponGO, weaponScript);
         weaponScript.InitializeWithConfig();
 
@@ -228,7 +228,7 @@ public class PlayerInventoryManager : MonoBehaviour
         bool wasWeaponInventoryEmpty = _inventoryData.WeaponInventory.IsEmpty();
 
         GameObject weaponGO = Instantiate(runtimeData.Config.Prefab);
-        BaseWeapon weaponScript = weaponGO.GetComponent<BaseWeapon>();
+        PlayerWeapon weaponScript = weaponGO.GetComponent<PlayerWeapon>();
         SetupWeapon(weaponGO, weaponScript);
         weaponScript.InitializeWithRuntimeData(runtimeData);
 
@@ -246,8 +246,8 @@ public class PlayerInventoryManager : MonoBehaviour
     void SetupWeapon(GameObject weaponGO, BaseWeapon weaponScript)
     {
         weaponGO.transform.parent = _weaponParent;
-        weaponGO.transform.SetPositionAndRotation(_weaponPosition.position, _weaponPosition.rotation);
-        weaponGO.transform.localPosition += weaponScript.WeaponConfig.offset;
+        weaponGO.transform.SetLocalPositionAndRotation(weaponScript.WeaponConfig.offset, Quaternion.identity);
+        //weaponGO.transform.SetPositionAndRotation(_weaponPosition.position, _weaponPosition.rotation);
         weaponGO.SetActive(false);
     }
 

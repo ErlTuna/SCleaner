@@ -26,13 +26,13 @@ MonoBehaviour:
   PushForce: 20
   SpreadAngle: 0
   SpreadResetThreshold: 0.1
-  Sprite: {fileID: 21300000, guid: b968b8789d15f934e8e5e107bb9614cb, type: 3}
+  Sprite: {fileID: 21300000, guid: 893a409cf5d919a4c9b1e80fdca80cbe, type: 3}
   FiringSound: {fileID: 11400000, guid: 7f34227710a6a984ca505ce8130f0553, type: 2}
   DryFiringSound: {fileID: 11400000, guid: 4a47d7325cbcaa64d96d8a9fe78951f9, type: 2}
   DryFireSFX: {fileID: 8300000, guid: 591753c0fc688dc4a8a4928848b5c518, type: 3}
   FiringSFX: {fileID: 8300000, guid: c10c9b338ddf8074fa5849ce0ee10db3, type: 3}
   WeaponSwitchSFX: {fileID: 8300000, guid: d2b24e19405954a4c99252993fb90386, type: 3}
-  offset: {x: 0, y: 0, z: 0}
+  offset: {x: 2.25, y: 0, z: 0}
   rayCastStartPoint: {fileID: 0}
   rayCastEndPoint: {fileID: 0}
   muzzleTipCheck: {fileID: 0}

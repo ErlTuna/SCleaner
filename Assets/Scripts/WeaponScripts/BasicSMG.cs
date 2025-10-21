@@ -2,22 +2,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BasicSMG : BaseWeapon
+public class BasicSMG : PlayerWeapon
 {
-    void Start()
-    {
-        //WeaponRuntimeData = new WeaponRuntimeData(WeaponConfig);
-    }
-
     void Update()
     {
-        //if (AmmoManager.HasAmmo() == false && AmmoManager.CanReload() == false)
-            //HandlePrimaryAttackInputCancel();
-
         //weapon runs out of ammo but has reserve and isn't actively reloading, try starting a reload
         if (AmmoManager.HasAmmo() == false && AmmoManager.CanReload() && WeaponRuntimeData.State != WeaponState.RELOADING)
         {
             AmmoManager.HandleReloadStart();
+            
         }
     }
 
@@ -33,30 +26,10 @@ public class BasicSMG : BaseWeapon
         //if (ObstructionChecker.CheckWeaponObstructionOverlap(rayCastStartPoint, rayCastEndPoint, WeaponConfig.environmentLayers, WeaponConfig.enemyLayer)) return;
 
         if (PrimaryAttackStrategy != null)
-        {
-            PrimaryAttackStrategy.HandleAttackStart(this);
-
-            if (WeaponRuntimeData.State == WeaponState.PRIMARY_ATTACK)
-            {
-                //weaponSoundManager.PlayFiringSFX();
-            }
-                
-        }
+            PrimaryAttackStrategy.HandleAttackStart(this);                
+        
             
     }
-
-    /*
-    public override void HandlePrimaryAttackInputCancel()
-    {
-        if (WeaponRuntimeData.State == WeaponState.PRIMARY_ATTACK)
-        {
-            WeaponRuntimeData.State = WeaponState.IDLE;
-            //weaponSoundManager.StopFiringSFX();
-        }
-
-
-    }
-    */
 
     public override void HandleReloadInput()
     {

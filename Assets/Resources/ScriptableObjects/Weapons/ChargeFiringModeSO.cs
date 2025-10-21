@@ -50,5 +50,12 @@ public class ChargeFiringModeSO : FiringModeSO
 
     }
 
+    public override void HandleDirectFire(BaseWeapon weapon)
+    {
+        if (weapon.WeaponRuntimeData.State == WeaponState.IDLE)
+        {
+            HandlePreAttack(weapon);
+        }
 
+    }
 }

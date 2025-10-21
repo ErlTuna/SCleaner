@@ -25,7 +25,7 @@ Transform:
   m_GameObject: {fileID: 954508032683026350}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 2, y: 0, z: 0}
+  m_LocalPosition: {x: 1.5, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -68,8 +68,8 @@ Transform:
   m_GameObject: {fileID: 990524889146674647}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 10, y: 0, z: 0}
-  m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 6206694984339685153}
@@ -182,7 +182,7 @@ Rigidbody2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 990524889146674647}
-  m_BodyType: 0
+  m_BodyType: 1
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
@@ -433,6 +433,14 @@ MonoBehaviour:
       m_Calls: []
     m_ActionId: ccd49256-5c78-4fe5-81ea-b6af9c19fefe
     m_ActionName: Gameplay/Secondary Attack[/Mouse/rightButton]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 79e19ffc-eb4b-4855-91d4-06f4395f8b40
+    m_ActionName: Gameplay/Pick Up Item[/Keyboard/e]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 158db150-6d81-4a7e-a54f-19b187e04a61
+    m_ActionName: Gameplay/Drop Weapon[/Keyboard/t]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Gameplay
@@ -530,8 +538,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   abilities:
   - {fileID: 11400000, guid: c77da009862edb841bbc0f74e1a091bd, type: 2}
-  - {fileID: 11400000, guid: 80d06cd2b41616849ab545d3e107161d, type: 2}
   currentAbility: {fileID: 11400000, guid: c77da009862edb841bbc0f74e1a091bd, type: 2}
+  _spriteRenderer: {fileID: 583302782020924355}
   currentAbilityIndex: 0
 --- !u!114 &7564687369081222863
 MonoBehaviour:
@@ -560,6 +568,10 @@ MonoBehaviour:
   _weaponParent: {fileID: 369740753222307388}
   _weaponPosition: {fileID: 4675471930827448633}
   _equipmentPosition: {fileID: 5441814769759427475}
+  _weaponSlots: []
+  references:
+    version: 2
+    RefIds: []
 --- !u!1 &2113836864039851442
 GameObject:
   m_ObjectHideFlags: 0
@@ -663,7 +675,6 @@ GameObject:
   m_Component:
   - component: {fileID: 369740753222307388}
   - component: {fileID: 655333980170022825}
-  - component: {fileID: 1095376695646202524}
   - component: {fileID: 4004060463098888693}
   - component: {fileID: 4990024825993343330}
   m_Layer: 7
@@ -700,18 +711,6 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 51261ccdc83380c40b01e9555971b52c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &1095376695646202524
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5574510567315748738}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 81ff3c7914f795543bc7213cc9ed9bef, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!114 &4004060463098888693
@@ -756,8 +755,9 @@ GameObject:
   - component: {fileID: 583302782020924355}
   - component: {fileID: 4241857346533454803}
   - component: {fileID: 469317821240395959}
+  - component: {fileID: 7678211427933293680}
   m_Layer: 7
-  m_Name: Sprite
+  m_Name: Visuals
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -772,7 +772,7 @@ Transform:
   m_GameObject: {fileID: 5790504939223317001}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: -0.014, y: 0.055, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -798,7 +798,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 6840ba544898d7c4e8327b2cd54d58f1, type: 2}
+  - {fileID: 2100000, guid: 1c108f2c25d912e4fa3533be4c904af4, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -818,7 +818,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 178966987
   m_SortingLayer: 1
-  m_SortingOrder: 1
+  m_SortingOrder: 3
   m_Sprite: {fileID: 21300000, guid: eb582e75f9b0ee040a2c0cffdfd28787, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -859,6 +859,23 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _spriteRenderer: {fileID: 583302782020924355}
   _maxBlinkCount: 4
+--- !u!114 &7678211427933293680
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5790504939223317001}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8ac369c0f5de4ca4cbe7a0604b0305e3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _spriteRenderer: {fileID: 583302782020924355}
+  _afterImagePrefab: {fileID: 2468076302534243569, guid: b5fd5590d4a90894f94199c3fbd2612b, type: 3}
+  _afterImageData: {fileID: 11400000, guid: 98aa4b6e43f265d4386a95d88db9508e, type: 2}
+  _defaultPoolCapacity: 10
+  _maxPoolSize: 10
 --- !u!1 &6008685107284160739
 GameObject:
   m_ObjectHideFlags: 0
@@ -926,7 +943,7 @@ CircleCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Radius: 4
+  m_Radius: 1
 --- !u!114 &1476426333361382282
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -966,7 +983,7 @@ Transform:
   m_GameObject: {fileID: 7547461531470411838}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 3, y: 0, z: 0}
+  m_LocalPosition: {x: 1.5, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

@@ -1,6 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using UnityEditor.Rendering.LookDev;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -8,10 +7,12 @@ public class DefeatState : BaseState
 {
     readonly GameObject visuals;
     DamageContext lastHitContext;
+    readonly Sprite _defeatSprite;
     //Vector2 lastHitDirection;
-    public DefeatState(GameObject owner, Rigidbody2D rb2D, NavMeshAgent agent, GameObject visuals) : base(owner, rb2D, agent)
+    public DefeatState(GameObject owner, Rigidbody2D rb2D, NavMeshAgent agent, GameObject visuals, Sprite defeatSprite = null) : base(owner, rb2D, agent)
     {
         this.visuals = visuals;
+        _defeatSprite = defeatSprite;
     }
 
     public override void OnEnter()
@@ -28,6 +29,12 @@ public class DefeatState : BaseState
         }
 
         Rigidbody2D visuals_RB2D = visuals.AddComponent<Rigidbody2D>();
+        
+        if (visuals.TryGetComponent<SpriteRenderer>(out var spriteRenderer))
+        {
+            if (_defeatSprite != null)
+                spriteRenderer.sprite = _defeatSprite; 
+        }
 
         if (visuals_RB2D != null)
         {
@@ -80,7 +87,7 @@ public class DefeatState : BaseState
             do
             {
                 direction = Random.insideUnitCircle;
-            } while (direction.sqrMagnitude < 0.01f); 
+            } while (direction.sqrMagnitude < 0.01f);
 
             direction.Normalize();
         }
@@ -93,5 +100,4 @@ public class DefeatState : BaseState
     }
 
 
-    
 }

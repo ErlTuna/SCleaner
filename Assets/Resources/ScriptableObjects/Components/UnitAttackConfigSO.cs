@@ -5,5 +5,6 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "Attack Config", menuName = "ScriptableObjects/Component Configs/Attack Config")]
 public class UnitAttackConfigSO : ScriptableObject
 {
-    public int Damage;
+    public int ContactDamage;
+    public float AttackCooldown = 0f;
 }

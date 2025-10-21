@@ -7,6 +7,7 @@ using UnityEngine;
 public class UnitAttackData : IUnitAttackData
 {
     public int Damage { get; set; }
+    public float AttackCooldown { get; set;}
 
     public void AutoConfigureWithWrapper(UnitConfigsWrapperSO configWrapper)
     {
@@ -15,6 +16,7 @@ public class UnitAttackData : IUnitAttackData
 
     public void ConfigureWith(UnitAttackConfigSO config)
     {
-        Damage = config.Damage;
+        Damage = config.ContactDamage;
+        AttackCooldown = config.AttackCooldown;
     }
 }

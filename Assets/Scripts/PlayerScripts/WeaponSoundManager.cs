@@ -23,37 +23,10 @@ public class WeaponSoundManager : MonoBehaviour
         emitters.Add(newEmitter);
     }
 
-    /*
-    public void TryPlayFiringSFX()
-    {
-        SoundEmitter emitter = null;
-        foreach (SoundEmitter e in emitters)
-        {
-            if (!e.IsPlaying)
-            {
-                emitter = e;
-                break;
-            }
-        }
-
-        if (emitter == null && emitters.Count < _maxEmitters)
-        {
-            CreateNewEmitter();
-            emitter = emitters[^1];
-        }
-
-        if (emitter == null)
-            return;
-
-        AudioClip clip = fireSounds[Random.Range(0, fireSounds.Length)];
-        float pitch = 1f + Random.Range(-_pitchVariance, _pitchVariance);
-        emitter.Play(clip, pitch);
-    }
-    */
-
     public void TryPlaySound(SoundData soundData)
     {
         SoundEmitter emitter = null;
+
         foreach (SoundEmitter e in emitters)
         {
             if (!e.IsPlaying)
@@ -72,16 +45,46 @@ public class WeaponSoundManager : MonoBehaviour
         if (emitter == null)
             return;
 
+
+        AudioClip clipToBePlayed = GetClip(soundData);
+
+        if (clipToBePlayed == null)
+        {
+            Debug.Log("There isn't a valid clip to play.");
+            return;
+        }
 
         if (soundData.withVaryingPitch)
         {
             float pitchVariance = soundData.pitchRange;
             float pitch = 1f + Random.Range(-pitchVariance, pitchVariance);
-            emitter.Play(soundData.clip, pitch);
+            emitter.Play(clipToBePlayed, pitch);
         }
+
         else
-            emitter.Play(soundData.clip);
-            
+            emitter.Play(clipToBePlayed);
+
+    }
+    
+    public AudioClip GetClip(SoundData soundData)
+    {
+        if (soundData.clips == null)
+        {
+            Debug.Log("Passed sound data has no clips.");
+            return null;
+        }
+
+        if (soundData.playRandomAmongGroup && soundData.clips.Length > 1)
+        {
+            return soundData.clips[Random.Range(0, soundData.clips.Length)];
+        }
+
+        else if (soundData.clips.Length > 0)
+        {
+            return soundData.clips[0];
+        }
+
+        return null;
     }
 }
 

@@ -11,6 +11,7 @@ public class CrackerEnemyMain : Unit
     [SerializeField] EnemyMovementManager _movementManager;
     [SerializeField] PlayerDetection _detectionManager;
     [SerializeField] AttackRangeCheck _attackRangeCheck;
+    [SerializeField] AfterImageEmitter _afterImageEmitter;
     [SerializeField] GameObject _visuals;
     EnemyStateData _stateData;
     UnitMovementData _movementData;
@@ -187,7 +188,7 @@ public class CrackerEnemyMain : Unit
         _immobileState = new(gameObject, _rb2D, agent);
         _defeatState = new(gameObject, _rb2D, agent, _visuals);
         _preAttackState = new(gameObject, this, _player, _rb2D, agent, _stateData, _movementData);
-        _attackState = new(gameObject, this, _player, _rb2D, agent, _stateData, _movementData);
+        _attackState = new(gameObject, this, _player, _rb2D, agent, _stateData, _afterImageEmitter);
         _postAttackRecoveryState = new(gameObject, this, _player, _rb2D, agent, _stateData);
     }
 

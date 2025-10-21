@@ -21,6 +21,7 @@ public class WeaponConfigSO : ScriptableObject
     public float PushForce = 1f;
     public float SpreadAngle = 0f;
     public float SpreadResetThreshold = .1f;
+    public bool HasInfiniteReserveAmmo = false;
 
     [Header("Audio & VFX Info")]
     public Sprite Sprite;

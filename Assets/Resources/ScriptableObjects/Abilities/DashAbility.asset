@@ -18,6 +18,7 @@ MonoBehaviour:
   State: 0
   EnergyCost: 1
   Duration: 0.25
+  AbilityVisuals: {fileID: 11400000, guid: ca184c532af34944a9ebc2e74be32ecb, type: 2}
   icon: {fileID: 21300000, guid: b656f54df181b3b42ba04e683cc970a6, type: 3}
   SFXClip: {fileID: 8300000, guid: ed1cf418affa282499df8f48dd67147e, type: 3}
   Effects:
@@ -34,6 +35,7 @@ MonoBehaviour:
       data:
         Strength: 15
         Duration: 0.25
+        EmitAfterImage: 1
     - rid: 3032814247641350145
       type: {class: InvulnEffect, ns: , asm: Assembly-CSharp}
       data:

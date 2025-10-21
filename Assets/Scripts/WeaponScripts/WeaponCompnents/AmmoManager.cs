@@ -24,6 +24,8 @@ public class AmmoManager : MonoBehaviour
     }
     public bool HasReserveAmmo()
     {
+        if (Owner.WeaponConfig.HasInfiniteReserveAmmo) return true;
+
         return Owner.WeaponRuntimeData.ReserveAmmo > 0;
     }
     public void UseAmmo()

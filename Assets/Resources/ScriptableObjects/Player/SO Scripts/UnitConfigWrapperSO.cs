@@ -7,6 +7,7 @@ using UnityEngine;
 public class UnitConfigsWrapperSO : ScriptableObject
 {
     public string UnitName;
+    public Sprite defeatSprite;
     public UnitHealthConfigSO HealthConfig;
     public UnitMovementConfigSO MovementConfig;
     public UnitEnergyConfigSO EnergyConfig;

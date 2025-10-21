@@ -19,8 +19,8 @@ public class BugEnemyMain : Unit
     UnitStateData _playerStateData;
 
     // Expected states
-    RoamState _roamState;
-    ChaseState _chaseState;
+    BugRoamState _roamState;
+    BugChaseState _chaseState;
     ImmobileState _immobileState;
     DefeatState _defeatState;
 

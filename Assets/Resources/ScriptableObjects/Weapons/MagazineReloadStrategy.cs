@@ -15,6 +15,12 @@ public class MagazineReloadStrategy : ReloadStrategySO
     }
     public override void PerformReload(BaseWeapon owner)
     {
+        if (owner.WeaponConfig.HasInfiniteReserveAmmo){
+            owner.WeaponRuntimeData.CurrentAmmo = owner.WeaponConfig.RoundCapacity;
+            Debug.Log("Has infinite ammo");
+            return;
+        }
+
         int needed = owner.WeaponConfig.RoundCapacity - owner.WeaponRuntimeData.CurrentAmmo;
         //owner.WeaponRuntimeData.CurrentAmmo = 0;
         int taken = Mathf.Min(needed, owner.WeaponRuntimeData.ReserveAmmo);
