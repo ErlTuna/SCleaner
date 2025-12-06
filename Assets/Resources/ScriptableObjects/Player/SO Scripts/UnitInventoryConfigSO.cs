@@ -12,6 +12,6 @@ public class UnitInventoryConfigSO : ScriptableObject
     [Header("Weapons")]
     public int MaxWeaponAmount;
     public List<GameObject> WeaponPrefabs = new();
-    public List<GameObject> EquipmentPrefabs = new();
+    public GameObject EquipmentPrefab;
 
 }

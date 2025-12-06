@@ -40,7 +40,7 @@ public class AudioManager : MonoBehaviour
         UpdateAudioSettings();
         if (_BGM != null && _BGMSource != null)
             PlayBGM();
-        DontDestroyOnLoad(gameObject);
+        
     }
 
     public void PlaySelectSound()

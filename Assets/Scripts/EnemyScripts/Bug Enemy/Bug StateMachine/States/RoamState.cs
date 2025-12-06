@@ -1,40 +1,50 @@
+using NavMeshPlus.Extensions;
 using UnityEngine;
 using UnityEngine.AI;
 
 public class RoamState : BaseState
 {
+    GameObject _owner;
+    NavMeshAgent _agent;
     BoxCollider2D spawnArea;
     BoundPositions areaBounds;
     Vector2 pointDirection;
-    public RoamState(GameObject owner, Rigidbody2D rb2D, NavMeshAgent agent, BoxCollider2D spawnArea) : base(owner, rb2D, agent)
+    Animator _animator;
+    public RoamState(GameObject owner, NavMeshAgent agent, BoxCollider2D spawnArea, Animator animator = null)
     {
+        _owner = owner;
+        _agent = agent;
         this.spawnArea = spawnArea;
         areaBounds = new BoundPositions(this.spawnArea);
+        _animator = animator;
     }
 
     public override void OnEnter()
     {
         Debug.Log("Entered roam state");
+        _animator.SetBool("isMoving", true);
     }
 
     public override void OnExit()
     {
-        //no op
+        _animator.SetBool("isMoving", false);
     }
 
     public override void StateUpdate()
     {
-        if (!agent.enabled) return;
+        if (_agent.enabled != true) return;
 
-        if (agent.remainingDistance <= agent.stoppingDistance)
+        if (_agent.remainingDistance <= _agent.stoppingDistance)
         {
             if (RandomPointWithinRectangle(spawnArea.transform.position, out Vector2 point))
             {
                 Debug.DrawRay(point, Vector2.up, Color.blue, 1.0f);
-                agent.SetDestination(point);
+                _agent.SetDestination(point);
             }
-
         }
+
+        if (_agent.speed < Mathf.Epsilon)
+            _animator.SetBool("isMoving", false);
 
         //if (agent.angularSpeed != 0)
             //FaceTarget();
@@ -42,12 +52,12 @@ public class RoamState : BaseState
 
     void FaceTarget()
     {
-        Vector3 velocity = agent.velocity;
+        Vector3 velocity = _agent.velocity;
 
         if (velocity.sqrMagnitude > 0.01f)
         {
             // Face in the direction of movement
-            owner.transform.right = velocity.normalized;
+            _owner.transform.right = velocity.normalized;
         }
     }
 
@@ -82,12 +92,12 @@ public class RoamState : BaseState
 
         CalcPointDirection(point);
         float angle = Mathf.Atan2(pointDirection.y, pointDirection.x) * Mathf.Rad2Deg;
-        owner.transform.eulerAngles = new Vector3(0, 0, angle);
+        _owner.transform.eulerAngles = new Vector3(0, 0, angle);
     }
 
     private void CalcPointDirection(Vector3 point)
     {
-        pointDirection = (point - owner.transform.position).normalized;
+        pointDirection = (point - _owner.transform.position).normalized;
     }
 
     bool RandomPointWithinRectangle(Vector2 center, out Vector2 result)

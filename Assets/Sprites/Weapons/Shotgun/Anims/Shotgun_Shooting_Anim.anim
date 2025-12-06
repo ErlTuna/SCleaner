@@ -102,13 +102,6 @@ AnimationClip:
     intParameter: 0
     messageOptions: 0
   - time: 0.083333336
-    functionName: UseAmmo
-    data: 
-    objectReferenceParameter: {fileID: 0}
-    floatParameter: 0
-    intParameter: 0
-    messageOptions: 0
-  - time: 0.083333336
     functionName: TryPlaySound
     data: 
     objectReferenceParameter: {fileID: 11400000, guid: 7f34227710a6a984ca505ce8130f0553, type: 2}

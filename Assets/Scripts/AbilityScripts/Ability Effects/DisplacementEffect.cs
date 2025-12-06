@@ -8,17 +8,13 @@ class DisplacementEffect : AbilityEffect
     public float Strength = 1f;
     public float Duration = 1f;
     public bool EmitAfterImage = true;
-    public IUnitStateData userStateData;
-    AbilityContext _context;
+    GameObject _user;
 
     public override void Execute(AbilityContext context, AbilityData abilityData)
     {
-        Duration = abilityData.Duration;
-        _context = context;
-
-        if (context.userRuntimeData == null)
+        if (context.userStateData == null)
         {
-            Debug.Log("User has no runtime data");
+            Debug.Log("User has no state data");
             return;
         }
 
@@ -34,47 +30,46 @@ class DisplacementEffect : AbilityEffect
             return;
         }
 
+        Duration = abilityData.Duration;
+        _user = context.user;
+
         if (abilityData.SFXClip)
             AudioSource.PlayClipAtPoint(abilityData.SFXClip, context.user.transform.position);
 
-        runner.StartCoroutine(DisplacementEffectTimer(context.userRuntimeData, Duration));
+        runner.StartCoroutine(DisplacementEffectTimer(context.userStateData, Duration));
         userRigidbody.velocity = context.direction.normalized * Strength;
 
     }
 
-    IEnumerator DisplacementEffectTimer(UnitRuntimeDataHolder unitRuntimeDataHolder, float duration)
+    IEnumerator DisplacementEffectTimer(UnitStateData userStateData, float duration)
     {
         float elapsedTime = 0f;
-        if (unitRuntimeDataHolder.TryGetRuntimeData(out IUnitStateData userStateData))
+        if (!userStateData.CanMove)
         {
-            if (!userStateData.CanMove)
-            {
-                Debug.LogWarning("Unit is already unable to move?..");
-                yield break;
-            }
-
-            userStateData.CanMove = false;
-            AfterImageEmitter emitter = _context.user.GetComponentInChildren<AfterImageEmitter>();
-
-            while (elapsedTime < duration)
-            {
-                if (EmitAfterImage)
-                    if (emitter != null)
-                        emitter.TryEmit();
-
-                elapsedTime += Time.deltaTime;
-                yield return null;
-            }
-            userStateData.CanMove = true;
+            Debug.LogWarning("Unit is already unable to move?..");
+            yield break;
         }
 
-        else
-            Debug.LogError("DisplacementEffectTimer failed: IUnitStateData not found.");
+        userStateData.CanMove = false;
+        AfterImageEmitter emitter = _user.GetComponentInChildren<AfterImageEmitter>();
+
+        while (elapsedTime < duration)
+        {
+            if (EmitAfterImage)
+                if (emitter != null)
+                    emitter.TryEmit();
+
+            elapsedTime += Time.deltaTime;
+            yield return null;
+        }
+
+        userStateData.CanMove = true;
+
     }
 
     public override void End(AbilityContext context)
     {
-        userStateData.CanMove = true;
+        //userStateData.CanMove = true;
     }
 
 }

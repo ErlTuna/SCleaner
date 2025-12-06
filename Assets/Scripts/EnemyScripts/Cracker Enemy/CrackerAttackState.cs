@@ -4,14 +4,20 @@ using UnityEngine.AI;
 
 public class CrackerAttackState : BaseState
 {
+    GameObject _owner;
+    NavMeshAgent _agent;
+    Rigidbody2D _rb2D;
     Coroutine attackCoroutine;
-    Unit _ownerScript;
+    MonoBehaviour _ownerScript;
     Transform _target;
     Vector2 _targetDirection;
     EnemyStateData _stateData;
     AfterImageEmitter _afterImageEmitter;
-    public CrackerAttackState(GameObject owner, Unit ownerScript, GameObject player, Rigidbody2D rb2D, NavMeshAgent agent, EnemyStateData stateData, AfterImageEmitter emitter) : base(owner, rb2D, agent)
+    public CrackerAttackState(GameObject owner, MonoBehaviour ownerScript, GameObject player, Rigidbody2D rb2D, NavMeshAgent agent, EnemyStateData stateData, AfterImageEmitter emitter)
     {
+        _owner = owner;
+        _agent = agent;
+        _rb2D = rb2D;
         _afterImageEmitter = emitter;
         _target = player.transform;
         _ownerScript = ownerScript;
@@ -46,7 +52,7 @@ public class CrackerAttackState : BaseState
         {
             CalculatePlayerDirection();
             Debug.Log("Launching");
-            rb2D.AddForce(_targetDirection * 7.5f, ForceMode2D.Impulse);
+            _rb2D.AddForce(_targetDirection * 7.5f, ForceMode2D.Impulse);
             _ownerScript.StartCoroutine(AttackEnd());
         }
         _afterImageEmitter.TryEmit();
@@ -62,13 +68,13 @@ public class CrackerAttackState : BaseState
 
     void CalculatePlayerDirection(){
         //calculate direction
-        _targetDirection = (_target.position - owner.transform.position).normalized;
+        _targetDirection = (_target.position - _owner.transform.position).normalized;
     }
     void DisableAgent(){
-        agent.ResetPath();
-        agent.enabled = false;
-        rb2D.isKinematic = false;
-        rb2D.bodyType = RigidbodyType2D.Dynamic;
+        _agent.ResetPath();
+        _agent.enabled = false;
+        _rb2D.isKinematic = false;
+        _rb2D.bodyType = RigidbodyType2D.Dynamic;
     }
 
 }

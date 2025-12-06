@@ -1,68 +1,60 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.Rendering.LookDev;
 using UnityEngine;
 using UnityEngine.AI;
 
 public class DefeatState : BaseState
 {
-    readonly GameObject visuals;
-    DamageContext lastHitContext;
-    readonly Sprite _defeatSprite;
-    //Vector2 lastHitDirection;
-    public DefeatState(GameObject owner, Rigidbody2D rb2D, NavMeshAgent agent, GameObject visuals, Sprite defeatSprite = null) : base(owner, rb2D, agent)
+    readonly GameObject _owner;
+    readonly NavMeshAgent _agent;
+    readonly GameObject _visualsGO;
+    DamageContext _lastHitContext;
+    readonly EnemyVisualConfigSO _visualConfig;
+    readonly Rigidbody2D _visualsRB;
+    public DefeatState(GameObject owner, Rigidbody2D visualsRB, NavMeshAgent agent, GameObject visuals, EnemyVisualConfigSO visualConfig = null)
     {
-        this.visuals = visuals;
-        _defeatSprite = defeatSprite;
+        _owner = owner;
+        _agent = agent;
+        _visualsRB = visualsRB;
+        _visualsGO = visuals;
+        _visualConfig = visualConfig;
     }
 
     public override void OnEnter()
     {
 
-        // DOESN'T WORK DUE TO SHADER
-        //if (visuals.TryGetComponent<SpriteRenderer>(out var renderer))
-        //renderer.color = Color.gray;
-
-        if (agent != null)
+        if (_agent != null && _agent.enabled)
         {
-            agent.isStopped = true;
-            agent.enabled = false;
+            _agent.isStopped = true;
+            _agent.enabled = false;
         }
 
-        Rigidbody2D visuals_RB2D = visuals.AddComponent<Rigidbody2D>();
+        if (_visualsGO.TryGetComponent<SpriteRenderer>(out var spriteRenderer))
+        {
+            if (_visualConfig != null)
+                spriteRenderer.sprite = _visualConfig.DefeatedBodyAppearance;
+            else
+                Debug.Log("defeat sprite null?");
+        }
         
-        if (visuals.TryGetComponent<SpriteRenderer>(out var spriteRenderer))
+        if (_visualsGO != null)
         {
-            if (_defeatSprite != null)
-                spriteRenderer.sprite = _defeatSprite; 
+            _visualsGO.transform.SetParent(null);
         }
 
-        if (visuals_RB2D != null)
+        if (_visualsRB != null)
         {
-            //Vector2 lastHitDirection = ((Vector2)owner.transform.position - lastHitContext.HitPosition).normalized;
-
-            Vector2 lastHitDirection = CalculateHitDirection(lastHitContext.HitPosition);
-            visuals_RB2D.isKinematic = false;
-            visuals_RB2D.drag = 2.5f;
-            visuals_RB2D.velocity = Vector2.zero;
-            //Debug.Log("Pushed with " + lastHitContext.PushForce + " in direction : " + lastHitDirection);
-            visuals_RB2D.AddForce(lastHitDirection * lastHitContext.PushForce, ForceMode2D.Impulse);
+            _visualsRB.simulated = true;
+            _visualsRB.isKinematic = false;
+            _visualsRB.drag = 2.5f;
+            _visualsRB.velocity = Vector2.zero;
+            Debug.Log("The visuals rb " + _visualsRB);
+            Debug.Log("Adding force : " + _lastHitContext.HitterMovementVector * _lastHitContext.PushForce);
+            _visualsRB.AddForce(_lastHitContext.HitterMovementVector * _lastHitContext.PushForce, ForceMode2D.Impulse);
         }
 
-
-        /*
-        if (rb2D != null)
-        {
-            rb2D.velocity = Vector2.zero;
-            rb2D.isKinematic = true;
-        }
-        */
-
-        if (visuals != null)
-        {
-            visuals.transform.SetParent(null);
-        }
-
-        Object.Destroy(owner);
+        Object.Destroy(_owner);
     }
 
     public override void OnExit()
@@ -72,32 +64,7 @@ public class DefeatState : BaseState
 
     public void SetLastHitContext(DamageContext context)
     {
-        //this.lastHitDirection = lastHitDirection;
-        lastHitContext = context;
+        _lastHitContext = context;
     }
-
-
-
-    Vector2 CalculateHitDirection(Vector2 attackPosition)
-    {
-        Vector2 direction = (Vector2)owner.transform.position - attackPosition;
-
-        if (direction.sqrMagnitude < 0.01f)
-        {
-            do
-            {
-                direction = Random.insideUnitCircle;
-            } while (direction.sqrMagnitude < 0.01f);
-
-            direction.Normalize();
-        }
-
-        else
-            direction.Normalize();
-
-
-        return direction;
-    }
-
 
 }

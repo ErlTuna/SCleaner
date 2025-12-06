@@ -1,12 +1,11 @@
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
+using UnityEngine.Events;
 
 public class ContinueButton : MonoBehaviour, IMenuItem
 {
-    [SerializeField] Image _selectionIndicator;
-    bool suppressEvents = false;
-    
+    [SerializeField] Image _selectionIndicator;    
     public void OnSelect(BaseEventData eventData)
     {
         MenuAnimationsManager.instance.OptionSelected(_selectionIndicator);
@@ -20,14 +19,7 @@ public class ContinueButton : MonoBehaviour, IMenuItem
 
     public void OnSubmit(BaseEventData eventData)
     {
-        Debug.Log("Continue Button OnSubmit called");
-        if (suppressEvents) return;
-
-        suppressEvents = true;
         AudioManager.instance.PlaySubmitSound();
-        MenuOpenCloseEvents.RaisePauseMenuClosed();
-        PauseManager.instance.UnPauseGame();
-        PlayerInputManager.instance.ToggleMouseInput(true);
-        suppressEvents = false;
+        GameManager.Instance.SetGameState(GameState.PLAYING);
     }
 }

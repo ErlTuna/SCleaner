@@ -1,10 +1,14 @@
-using System.Collections;
-using System.Collections.Generic;
+using System;
 using UnityEngine;
 
+[Serializable]
 public class UnitEquipmentInventory
 {
-    public int EquipmentsHeld;
-    public List<GameObject> EquipmentGOs = new();
-    public List<BaseEquipment> EquipmentScripts = new();
+    public GameObject EquipmentGO;
+    public BaseEquipment EquipmentScript;
+    public void AddEquipment(GameObject equipmentGO, BaseEquipment equipmentScript)
+    {
+        EquipmentGO = equipmentGO;
+        EquipmentScript = equipmentScript;
+    }
 }

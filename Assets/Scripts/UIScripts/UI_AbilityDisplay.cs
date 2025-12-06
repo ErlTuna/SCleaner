@@ -15,12 +15,12 @@ public class UI_AbilityDisplay : MonoBehaviour
         UIEvents.OnAbilityChanged -= UpdateAbilityDisplay;
     }
 
-    void UpdateAbilityDisplay(AbilityData abilityData)
+    void UpdateAbilityDisplay(Sprite abilityIcon)
     {
-        if (abilityData != null)
+        if (abilityIcon != null)
         {
             _icon.color = Color.white;
-            _icon.sprite = abilityData.icon;
+            _icon.sprite = abilityIcon;
         }
             
     }

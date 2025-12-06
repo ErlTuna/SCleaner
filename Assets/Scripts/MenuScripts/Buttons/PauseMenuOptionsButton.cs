@@ -1,12 +1,12 @@
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 public class PauseMenuOptionsButton : MonoBehaviour, IMenuItem
 {
     [SerializeField] Image _selectionIndicator;
-    [SerializeField] GameObject _selectionTarget;
-    bool _suppressEvents = false;
+    public UnityEvent OnSubmitted;
     
     public void OnSelect(BaseEventData eventData)
     {
@@ -21,13 +21,7 @@ public class PauseMenuOptionsButton : MonoBehaviour, IMenuItem
 
     public void OnSubmit(BaseEventData eventData)
     {
-        if (_suppressEvents) return;
-
-        _suppressEvents = true;
         AudioManager.instance.PlaySubmitSound();
-        UISelector.instance.SetSelected(_selectionTarget);
-        MenuOpenCloseEvents.RaiseSettingsOpened();
-        _suppressEvents = false;
-
+        OnSubmitted?.Invoke();
     }
 }

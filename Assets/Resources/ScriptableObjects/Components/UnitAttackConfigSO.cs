@@ -6,5 +6,4 @@ using UnityEngine;
 public class UnitAttackConfigSO : ScriptableObject
 {
     public int ContactDamage;
-    public float AttackCooldown = 0f;
 }

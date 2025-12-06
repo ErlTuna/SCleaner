@@ -1,9 +1,6 @@
-using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "Configs Wrapper", menuName = "ScriptableObjects/Unit Config/Configs Wrapper")]
+//[CreateAssetMenu(fileName = "Configs Wrapper", menuName = "ScriptableObjects/Unit Config/Configs Wrapper")]
 public class UnitConfigsWrapperSO : ScriptableObject
 {
     public string UnitName;

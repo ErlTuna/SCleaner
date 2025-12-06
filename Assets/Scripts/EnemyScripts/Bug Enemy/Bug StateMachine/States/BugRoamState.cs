@@ -4,11 +4,15 @@ using UnityEngine;
 using UnityEngine.AI;
 public class BugRoamState : BaseState
 {
+    GameObject _owner;
+    NavMeshAgent _agent;
     BoxCollider2D spawnArea;
     BoundPositions areaBounds;
 
-    public BugRoamState(GameObject owner, Rigidbody2D rb2D, NavMeshAgent agent, BoxCollider2D spawnArea) : base(owner, rb2D, agent)
+    public BugRoamState(GameObject owner, NavMeshAgent agent, BoxCollider2D spawnArea)
     {
+        _owner = owner;
+        _agent = agent;
         this.spawnArea = spawnArea;
         areaBounds = new BoundPositions(this.spawnArea);
     }
@@ -25,33 +29,33 @@ public class BugRoamState : BaseState
 
     public override void StateUpdate()
     {
-        if (!agent.enabled) return;
+        if (_agent.enabled != true) return;
 
-        if (agent.remainingDistance <= agent.stoppingDistance)
+        if (_agent.remainingDistance <= _agent.stoppingDistance)
         {
             if (RandomPointWithinRectangle(spawnArea.transform.position, out Vector2 newPoint))
             {
-                Debug.DrawRay(newPoint, Vector2.up, Color.blue, 1.0f);
-                agent.SetDestination(newPoint);
+                //Debug.DrawRay(newPoint, Vector2.up, Color.blue, 1.0f);
+                _agent.SetDestination(newPoint);
             }
 
         }
 
-        if (agent.hasPath)
+        if (_agent.hasPath)
         {
-            RotateTowardsPoint(agent.steeringTarget);
+            RotateTowardsPoint(_agent.steeringTarget);
         }
             
     }
 
     void FaceTarget()
     {
-        Vector3 velocity = agent.velocity;
+        Vector3 velocity = _agent.velocity;
 
         if (velocity.sqrMagnitude > 0.01f)
         {
             // Face in the direction of movement
-            owner.transform.right = velocity.normalized;
+            _owner.transform.right = velocity.normalized;
         }
     }
 
@@ -81,9 +85,9 @@ public class BugRoamState : BaseState
     void RotateTowardsPoint(Vector3 point)
     {
 
-        Vector2 pointDirection = (point - owner.transform.position).normalized;
+        Vector2 pointDirection = (point - _owner.transform.position).normalized;
         float angle = Mathf.Atan2(pointDirection.y, pointDirection.x) * Mathf.Rad2Deg - 90f;
-        owner.transform.eulerAngles = new Vector3(0, 0, angle);
+        _owner.transform.eulerAngles = new Vector3(0, 0, angle);
     }
 
     bool RandomPointWithinRectangle(Vector2 center, out Vector2 result)

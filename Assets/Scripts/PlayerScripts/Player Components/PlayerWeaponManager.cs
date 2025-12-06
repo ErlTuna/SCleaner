@@ -2,19 +2,22 @@ using UnityEngine;
 
 public class PlayerWeaponManager : MonoBehaviour
 {
+    [SerializeField] WeaponSwitchRequestEventChannelSO _weaponSwitchRequestChannel;
     [SerializeField] GameObject _currentWeaponGO;
     [SerializeField] PlayerWeapon _currentWeaponScript;
     //[SerializeField] Transform _weaponPosition;
 
     void OnEnable()
     {
-        PlayerInventoryEvents.OnInventoryReadyEvent += ReceiveWeapon;
-        PlayerInventoryEvents.OnWeaponSwitchEvent += SwitchWeapon;
+        //PlayerInventoryEvents.OnWeaponsReadyEvent += ReceiveWeapon;
+        //PlayerInventoryEvents.OnWeaponSwitchEvent += SwitchWeapon;
+        _weaponSwitchRequestChannel.OnEventRaised += SwitchWeapon;
     }
 
     void OnDisable(){
-        PlayerInventoryEvents.OnInventoryReadyEvent -= ReceiveWeapon;
-        PlayerInventoryEvents.OnWeaponSwitchEvent -= SwitchWeapon;
+        //PlayerInventoryEvents.OnWeaponsReadyEvent -= ReceiveWeapon;
+        //PlayerInventoryEvents.OnWeaponSwitchEvent -= SwitchWeapon;
+        _weaponSwitchRequestChannel.OnEventRaised -= SwitchWeapon;
     }
 
     public void Update()
@@ -22,14 +25,14 @@ public class PlayerWeaponManager : MonoBehaviour
 
         if (_currentWeaponScript == null) return;
 
-        if (PlayerInputManager.instance.ReloadInput)
+        if (PlayerInputManager.Instance.ReloadInput)
             HandleReloadInput();
         
 
-        if (PlayerInputManager.instance.PrimaryAttackInput)
+        if (PlayerInputManager.Instance.PrimaryAttackInput)
             _currentWeaponScript.HandlePrimaryAttackInput();
 
-        else if (PlayerInputManager.instance.SecondaryAttackInput)
+        else if (PlayerInputManager.Instance.SecondaryAttackInput)
             _currentWeaponScript.HandleSecondaryAttackInput();
 
 

@@ -112,6 +112,8 @@ MonoBehaviour:
   _firingPoint: {fileID: 5319443852953278838}
   _visuals: {fileID: 3972314041829519129}
   _wrapper: {fileID: 2399945189020309936}
+  _gripPointsWrapper: {fileID: 0}
+  _secondGripPoint: {fileID: 0}
 --- !u!1 &3557530581464279601
 GameObject:
   m_ObjectHideFlags: 0
@@ -384,6 +386,8 @@ MonoBehaviour:
   FiringPoints:
   - {fileID: 5319443852953278838}
   _animatorComponent: {fileID: 2313984585359081142}
+  stockGripPoint: {fileID: 0}
+  secondGripPoint: {fileID: 0}
   AmmoManager: {fileID: 5083089168760562356}
   WeaponConfig: {fileID: 11400000, guid: 18f4ed44f239e2149a1adcc39ce9e117, type: 2}
   WeaponRuntimeData:
@@ -426,6 +430,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Owner: {fileID: 3449890374486085321}
   ReloadStrategy: {fileID: 11400000, guid: 0be6bec96fcf27145ae17c030d6f25cb, type: 2}
+  _ammoChangeEventChannelSO: {fileID: 11400000, guid: 9488bffa05083e84cb5c58eb6fa7bc37, type: 2}
 --- !u!1 &8988911704350337711
 GameObject:
   m_ObjectHideFlags: 0

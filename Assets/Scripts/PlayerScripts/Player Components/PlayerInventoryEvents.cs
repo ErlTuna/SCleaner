@@ -6,20 +6,21 @@ using UnityEngine;
 public static class PlayerInventoryEvents
 {
     #region Events
-    public static Action<GameObject, PlayerWeapon> OnInventoryReadyEvent;
+    public static Action<GameObject, PlayerWeapon> OnWeaponsReadyEvent;
     public static Action<GameObject, PlayerWeapon> OnWeaponSwitchEvent;
     public static Action<Sprite, WeaponRuntimeData> OnWeaponSwitchUIUpdate;
     public static Action<GameObject, BaseEquipment> OnEquipmentReady;
+    public static Action<Sprite, EquipmentData> OnEquipmentSwitchUIUpdate;
     public static Action<GameObject, BaseEquipment> OnEquipmentSwitchEvent;
-    public static Action<GameObject, BaseEquipment> OnEquipmentSwitchUIUpdate;
+    //public static Action<GameObject, BaseEquipment> OnEquipmentSwitchUIUpdate;
 
     #endregion
 
     #region Invokers
 
-    public static void RaiseInventoryReadyEvent(GameObject weapon, PlayerWeapon weaponScript)
+    public static void RaiseWeaponsReadyEvent(GameObject weapon, PlayerWeapon weaponScript)
     {
-        OnInventoryReadyEvent?.Invoke(weapon, weaponScript);
+        OnWeaponsReadyEvent?.Invoke(weapon, weaponScript);
     }
 
     public static void RaiseEquipmentReadyEvent(GameObject equipment, BaseEquipment eqipmentScript)
@@ -32,7 +33,7 @@ public static class PlayerInventoryEvents
     {
         OnWeaponSwitchEvent?.Invoke(weapon, weaponScript);
         if (weaponScript)
-            OnWeaponSwitchUIUpdate?.Invoke(weaponScript.WeaponConfig.Sprite, weaponScript.WeaponRuntimeData);
+            OnWeaponSwitchUIUpdate?.Invoke(weaponScript.WeaponConfig.UI_Icon, weaponScript.WeaponRuntimeData);
 
         else
             OnWeaponSwitchUIUpdate?.Invoke(null, null);
@@ -42,6 +43,11 @@ public static class PlayerInventoryEvents
     public static void RaiseEquipmentSwitchEvent(GameObject equipment, BaseEquipment equipmentScript)
     {
         
+    }
+
+    public static void RaiseEquipmentSwitchUIUpdateEvent(Sprite equipmentSprite, EquipmentData equipmentData)
+    {
+        OnEquipmentSwitchUIUpdate?.Invoke(equipmentSprite, equipmentData);
     }
     
 

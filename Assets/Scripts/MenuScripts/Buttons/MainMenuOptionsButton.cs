@@ -1,12 +1,12 @@
 using UnityEngine.UI;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.Events;
 
 public class MainMenuOptionsButton : MonoBehaviour, IMenuItem
 {
     [SerializeField] Image _selectionIndicator;
-    [SerializeField] GameObject _selectionTarget;
-    bool _suppressEvents = false;
+    public UnityEvent OnSubmitted;
     
     public void OnSelect(BaseEventData eventData)
     {
@@ -21,13 +21,8 @@ public class MainMenuOptionsButton : MonoBehaviour, IMenuItem
 
     public void OnSubmit(BaseEventData eventData)
     {
-        if (_suppressEvents) return;
-
-        _suppressEvents = true;
         AudioManager.instance.PlaySubmitSound();
-        MenuOpenCloseEvents.RaiseSettingsOpened();
-        UISelector.instance.SetSelected(_selectionTarget);
-        _suppressEvents = false;
+        OnSubmitted?.Invoke();
 
     }
 }

@@ -52,6 +52,7 @@ GameObject:
   - component: {fileID: 6640803686068332035}
   - component: {fileID: 7564687369081222863}
   - component: {fileID: 766600507654131362}
+  - component: {fileID: 4930337555662369059}
   m_Layer: 7
   m_Name: Player
   m_TagString: Player
@@ -182,7 +183,7 @@ Rigidbody2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 990524889146674647}
-  m_BodyType: 1
+  m_BodyType: 0
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
@@ -199,7 +200,7 @@ Rigidbody2D:
     m_Bits: 0
   m_Interpolate: 1
   m_SleepingMode: 0
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
   m_Constraints: 4
 --- !u!58 &3301142905051991158
 CircleCollider2D:
@@ -235,7 +236,7 @@ CircleCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Radius: 1
+  m_Radius: 0.5
 --- !u!114 &1583821304977420460
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -262,19 +263,7 @@ MonoBehaviour:
       m_Calls: []
   m_ActionEvents:
   - m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1007409015436641985}
-        m_TargetAssemblyTypeName: PlayerMovement, Assembly-CSharp
-        m_MethodName: OnMovement
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
     m_ActionId: 6d977150-1569-4fc3-96e1-375bd9df24a3
     m_ActionName: Gameplay/Movement[/Keyboard/w,/Keyboard/a,/Keyboard/s,/Keyboard/d]
   - m_PersistentCalls:
@@ -282,83 +271,23 @@ MonoBehaviour:
     m_ActionId: 90648792-9548-448f-96f7-09b392360c16
     m_ActionName: Gameplay/Pointer[/Mouse/position]
   - m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: WeaponManager, Assembly-CSharp
-        m_MethodName: HandlePrimaryAttack
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
     m_ActionId: a3729c7f-985a-4b55-9506-fadfbeb0c0b0
     m_ActionName: Gameplay/Shooting[/Mouse/leftButton]
   - m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1007409015436641985}
-        m_TargetAssemblyTypeName: PlayerMovement, Assembly-CSharp
-        m_MethodName: OnDash
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
     m_ActionId: 715679a7-3480-4422-8ff7-6537c907ec3d
     m_ActionName: Gameplay/Dash[/Keyboard/space]
   - m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: PlayerEquipmentManager, Assembly-CSharp
-        m_MethodName: HandleEquipmentInput
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
     m_ActionId: f31edf2f-77da-4c7d-8346-36650ea0816b
     m_ActionName: Gameplay/Equipment[/Keyboard/g]
   - m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: WeaponManager, Assembly-CSharp
-        m_MethodName: TriggerReload
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
     m_ActionId: 4f29a2a7-eebb-43d2-953f-8b58b4e61d9a
     m_ActionName: Gameplay/Reload[/Keyboard/r]
   - m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: PlayerInventory, Assembly-CSharp
-        m_MethodName: WeaponSwap
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
     m_ActionId: 5fd72f26-8912-4ce2-a9cf-184d2716c7fb
     m_ActionName: Gameplay/Switch Weapons[/Keyboard/1,/Keyboard/2,/Keyboard/3,/Keyboard/4]
   - m_PersistentCalls:
@@ -458,21 +387,33 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d32c3a3e678640f49947d74ef7fdd622, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  RuntimeDataHolder:
-    Owner: {fileID: 3793509965958359214}
-  UnitConfigWrapper: {fileID: 11400000, guid: 77f621b67473a6641ae1df33db72517f, type: 2}
-  _playerActionMap:
-    m_Name: Player
-    m_Id: 07997b3c-075a-4f1d-b6a8-b774c57f5d35
+  faction: 0
+  _inputActionAsset:
+    m_Name: 
+    m_Id: 
     m_Asset: {fileID: 0}
     m_Actions: []
     m_Bindings: []
+  _playerInputManager: {fileID: 0}
   _playerHealthManager: {fileID: 2614403972491431392}
   _playerMovementManager: {fileID: 1007409015436641985}
   _playerInventoryManager: {fileID: 766600507654131362}
   _playerEnergyManager: {fileID: 7564687369081222863}
   _playerAbilityHandler: {fileID: 6640803686068332035}
   _playerAimManager: {fileID: 655333980170022825}
+  _playerHitboxManager: {fileID: 5344310077512343878}
+  _healthConfig: {fileID: 11400000, guid: bece28a020fcad84ea28a64f68a1fb6f, type: 2}
+  _movementConfig: {fileID: 11400000, guid: b7f9197c95e657c45834b86d2368c75e, type: 2}
+  _energyConfig: {fileID: 11400000, guid: c36532a46b878ab4085f5400b57e4ffe, type: 2}
+  _inventoryConfig: {fileID: 11400000, guid: d75f52ebf7aa6fd4c91d125464fdfa72, type: 2}
+  _stateConfig: {fileID: 11400000, guid: 5db4fa054e5e3f14a932a12772b2474f, type: 2}
+  _transformEventChannel: {fileID: 11400000, guid: 1431a561f6136344cb8b05bd8d509dbd, type: 2}
+  _stateData:
+    IsAlive: 0
+    IsHitInvuln: 0
+    IsInvuln: 0
+    CanMove: 0
+    IsShielded: 0
 --- !u!114 &1007409015436641985
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -485,6 +426,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 206b6b8f717912e49bf4c3f8008bbb64, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _playerMovementConfig: {fileID: 0}
+  _rb2D: {fileID: 9144200441260100531}
 --- !u!114 &3118084724917502932
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -540,7 +483,18 @@ MonoBehaviour:
   - {fileID: 11400000, guid: c77da009862edb841bbc0f74e1a091bd, type: 2}
   currentAbility: {fileID: 11400000, guid: c77da009862edb841bbc0f74e1a091bd, type: 2}
   _spriteRenderer: {fileID: 583302782020924355}
+  _playerEnergyData:
+    CurrentEnergy: 0
+    MaxEnergy: 0
+    RechargeInterval: 0
+    RechargeRate: 0
   currentAbilityIndex: 0
+  _playerStateData:
+    IsAlive: 0
+    IsHitInvuln: 0
+    IsInvuln: 0
+    CanMove: 0
+    IsShielded: 0
 --- !u!114 &7564687369081222863
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -553,6 +507,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 544d898f84706db4ba4e05eed6c282b5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _playerEnergyConfig: {fileID: 0}
+  _playerEnergyData:
+    CurrentEnergy: 0
+    MaxEnergy: 0
+    RechargeInterval: 0
+    RechargeRate: 0
 --- !u!114 &766600507654131362
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -565,13 +525,71 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3dd60289d248d5044953fcd94f8f904c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _weaponUIUpdateEventChannel: {fileID: 11400000, guid: d230ce9cbfae3024c88034ed3986baa4, type: 2}
+  _weaponSwitchRequestEventChannel: {fileID: 11400000, guid: 3cf85207d49748545a4a610e488ea80c, type: 2}
+  _playerInventoryData:
+    WeaponInventory:
+      WeaponsHeld: 0
+      MaxWeaponAmount: 0
+      WeaponGOs: []
+      WeaponScripts: []
+    EquipmentInventory:
+      EquipmentGO: {fileID: 0}
+      EquipmentScript: {fileID: 0}
+  _playerInventoryConfig: {fileID: 0}
   _weaponParent: {fileID: 369740753222307388}
   _weaponPosition: {fileID: 4675471930827448633}
   _equipmentPosition: {fileID: 5441814769759427475}
   _weaponSlots: []
+  _currentlyUsedEquipmentSlot:
+    Equipment: {fileID: 0}
+    Script: {fileID: 0}
   references:
     version: 2
     RefIds: []
+--- !u!114 &4930337555662369059
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 990524889146674647}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 18b5fdf92951be04eb93f810fbb6eae6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _gameplayActionMap:
+    m_Name: Gameplay
+    m_Id: 7075d896-2a5b-49a1-b33a-dca6021b3d19
+    m_Asset: {fileID: 0}
+    m_Actions: []
+    m_Bindings: []
+  _UIActionMap:
+    m_Name: UI
+    m_Id: 19df2a07-195a-48f5-8b0e-bf51dff5d6fc
+    m_Asset: {fileID: 0}
+    m_Actions: []
+    m_Bindings: []
+  MovementInput: {x: 0, y: 0}
+  PointerInput: {x: 0, y: 0}
+  ItemPickupInput: 0
+  WeaponDropInput: 0
+  AbilitySwitchInput: 0
+  PrimaryAttackInput: 0
+  IsPrimaryAttackHeld: 0
+  IsPrimaryAttackPressedThisFrame: 0
+  IsPrimaryAttackReleasedThisFrame: 0
+  SecondaryAttackInput: 0
+  AbilityUseInput: 0
+  FirstWeaponInput: 0
+  SecondWeaponInput: 0
+  ThirdWeaponInput: 0
+  FourthWeaponInput: 0
+  EquipmentInput: 0
+  ReloadInput: 0
+  MenuOpenInput: 0
+  MenuCloseInput: 0
 --- !u!1 &2113836864039851442
 GameObject:
   m_ObjectHideFlags: 0
@@ -640,7 +658,7 @@ CircleCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Radius: 1
+  m_Radius: 0.5
 --- !u!114 &2614403972491431392
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -653,6 +671,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 96d9de28a29f3e741a11e2f900883e67, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _playerHitEventChannel: {fileID: 11400000, guid: 0154c72f9ccd31549a5beba190005ef9, type: 2}
+  _healthConfig: {fileID: 11400000, guid: bece28a020fcad84ea28a64f68a1fb6f, type: 2}
+  _healthData:
+    CurrentHealth: 0
+    MaxHealth: 0
+    DamageThreshold: 0
 --- !u!114 &5344310077512343878
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -665,6 +689,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f4e4512d06ad32f47b759fee8dd58b70, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _hitbox: {fileID: 4907024617521774854}
+  _playerStateData:
+    IsAlive: 0
+    IsHitInvuln: 0
+    IsInvuln: 0
+    CanMove: 0
+    IsShielded: 0
 --- !u!1 &5574510567315748738
 GameObject:
   m_ObjectHideFlags: 0
@@ -725,9 +756,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eaa239986d7e6404fb5fc46050a3003b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _weaponSwitchRequestChannel: {fileID: 11400000, guid: 3cf85207d49748545a4a610e488ea80c, type: 2}
   _currentWeaponGO: {fileID: 0}
   _currentWeaponScript: {fileID: 0}
-  _weaponPosition: {fileID: 4675471930827448633}
 --- !u!114 &4990024825993343330
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -818,7 +849,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 178966987
   m_SortingLayer: 1
-  m_SortingOrder: 3
+  m_SortingOrder: 10
   m_Sprite: {fileID: 21300000, guid: eb582e75f9b0ee040a2c0cffdfd28787, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -973,7 +1004,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &4675471930827448633
 Transform:
   m_ObjectHideFlags: 0

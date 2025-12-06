@@ -99,6 +99,7 @@ public abstract class PlayerWeapon : BaseWeapon
     public override void OnReloadAnimEnd()
     {
         AmmoManager.UseReloadStrategy();
+        //WeaponEvents.RaiseWeaponReload(WeaponRuntimeData);
         AmmoManager.ShouldContinueReloading();
     }
 

@@ -6,24 +6,45 @@ using UnityEngine.AI;
 
 public class BugEnemyMain : Unit
 {
-    [SerializeField] NavMeshAgent agent;
-    [SerializeField] Rigidbody2D _rb2D;
-    [SerializeField] BugHealth_v2 _healthManager;
-    [SerializeField] EnemyMovementManager _movementManager;
-    [SerializeField] PlayerDetection _detectionManager;
-    [SerializeField] GameObject _visuals;
-    EnemyStateData _stateData;
-    public BoxCollider2D SpawnArea;
-    StateMachine _stateMachine;
-    GameObject _player;
-    UnitStateData _playerStateData;
 
-    // Expected states
+    [Header("Unity Components")]
+    [SerializeField] NavMeshAgent _agent;
+    [SerializeField] Rigidbody2D _rb2D;
+    [SerializeField] Rigidbody2D _bodyRB;
+
+
+    [Header("Visuals")]
+    [SerializeField] GameObject _visuals;
+
+    [Header("Managers")]
+    [SerializeField] BugHealthManager _healthManager;
+    [SerializeField] PlayerDetection _detectionManager;
+    [SerializeField] EnemyCollisionHandler _collisionHandler;
+
+    [Header("Configs")]
+    [SerializeField] UnitAttackConfigSO _attackConfig;
+    [SerializeField] UnitHealthConfigSO _healthConfig;
+    [SerializeField] UnitMovementConfigSO _movementConfig;
+    [SerializeField] EnemyStateConfigSO _stateConfig;
+    [SerializeField] EnemyVisualConfigSO _visualConfig;
+
+    [Header("Datas")]
+    [SerializeField] UnitHealthData _healthData;
+    [SerializeField] EnemyStateData _stateData;
+    
+
+    
+    [Header("State Machine & Expected States")]
+    StateMachine _stateMachine;
     BugRoamState _roamState;
     BugChaseState _chaseState;
     ImmobileState _immobileState;
     DefeatState _defeatState;
 
+    [Header("Misc")]
+    public BoxCollider2D SpawnArea;
+    GameObject _player;
+    UnitStateData _playerStateData;
 
     void OnEnable()
     {
@@ -37,30 +58,25 @@ public class BugEnemyMain : Unit
 
     void Awake()
     {
-        if (UnitConfigWrapper == null)
-        {
-            Debug.Log("Unit config is null");
-        }
-
-        InitializeRuntimeData();
 
         _player = GameObject.FindGameObjectWithTag("Player");
         
-        PrepareStateMachine();
     }
 
     void Start()
     {
         // Prep navmesh agent
-        if (agent != null)
+        if (_agent != null)
         {
-            agent.updateRotation = false;
-            agent.updateUpAxis = false;
+            _agent.updateRotation = false;
+            _agent.updateUpAxis = false;
         }
 
-        _playerStateData = _player.GetComponent<Unit>().GetRuntimeData<UnitStateData>();
-        PrepareStateMachineTransitions();
+        _playerStateData = _player.GetComponent<Unit>().GetStateData();
+        PrepareRuntimeData();
         InitializeComponents();
+        PrepareStateMachine();
+        PrepareStateMachineTransitions();
 
         // Default State
         if (_stateMachine != null && _roamState != null)
@@ -82,33 +98,32 @@ public class BugEnemyMain : Unit
 
     public void HandleDefeat(DamageContext context)
     {
-
         _defeatState.SetLastHitContext(context);
         _stateData.IsAlive = false;
     }
 
-    void InitializeRuntimeData()
+        void PrepareRuntimeData()
     {
-        RuntimeDataHolder = new UnitRuntimeDataHolder();
+        _healthData = new UnitHealthData(_healthConfig);
+        _stateData = new EnemyStateData(_stateConfig);
+    }
 
-        RuntimeDataHolder.AddRuntimeData(new UnitHealthData());
-        RuntimeDataHolder.AddRuntimeData(new UnitMovementData());
-        RuntimeDataHolder.AddRuntimeData(new EnemyStateData());
-
-        RuntimeDataHolder?.InitializeWithWrapper(this, UnitConfigWrapper);
-
-        // Caching as it is accessed frequently 
-        _stateData = RuntimeDataHolder.GetRuntimeData<EnemyStateData>();
+    void InitializeComponents()
+    {
+        _healthManager.InitializeManager(_healthData, _healthConfig, _visualConfig);
+        _healthManager.InitializeStateData(_stateData);
+        _detectionManager.InitializeStateData(_stateData);
+        _collisionHandler.Initialize(_attackConfig.ContactDamage);
     }
 
     void PrepareStateMachine()
     {
         //Initialize states
         _stateMachine = new StateMachine();
-        _roamState = new(gameObject, _rb2D, agent, SpawnArea);
-        _chaseState = new(gameObject, _player, _rb2D, agent);
-        _immobileState = new(gameObject, _rb2D, agent);
-        _defeatState = new(gameObject, _rb2D, agent, _visuals);
+        _roamState = new(gameObject, _agent, SpawnArea);
+        _chaseState = new(gameObject, _player, _agent);
+        _immobileState = new(gameObject, _rb2D, _agent);
+        _defeatState = new(gameObject, _bodyRB, _agent, _visuals, _visualConfig);
     }
 
     void PrepareStateMachineTransitions()
@@ -125,14 +140,13 @@ public class BugEnemyMain : Unit
         At(_immobileState, _chaseState, new FuncPredicate(() => _stateData.CanMove && _stateData.HasDetectedPlayer));
 
         //ANY TRANSITIONS
-        Any(_defeatState, new FuncPredicate(() => !_stateData.IsAlive));
+        Any(_defeatState, new FuncPredicate(() => _stateData.IsAlive == false));
         Any(_immobileState, new FuncPredicate(() => _stateData.CanMove == false && _stateData.IsAlive));
         Any(_roamState, new FuncPredicate(() => !_playerStateData.IsAlive && _stateData.CanMove));
     }
 
-    void InitializeComponents()
+    public override UnitStateData GetStateData()
     {
-        _detectionManager.Initialize(this);
-        _healthManager.Initialize(this);
+        return _stateData;
     }
 }

@@ -9,12 +9,11 @@ public class LoadingSceneManager : MonoBehaviour
     {
         if (_animator != null)
             _animator.Play("Loading");
-        StartCoroutine(LoadLevel());
     }
+}
 
-
-
-    IEnumerator LoadLevel()
+/*
+IEnumerator LoadLevel()
     {
         AsyncOperation UILoad = SceneManager.LoadSceneAsync("GameplayUI", LoadSceneMode.Additive);
         UILoad.allowSceneActivation = false;
@@ -53,7 +52,4 @@ public class LoadingSceneManager : MonoBehaviour
         LoadingScreenUnload.allowSceneActivation = false;
     
     }
-    
-    
-
-}
+*/

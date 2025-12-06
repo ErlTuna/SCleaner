@@ -1,0 +1,61 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+[CreateAssetMenu(fileName = "ChargeFiringMode", menuName = "ScriptableObjects/Weapon/FiringModes/Charge Firing Mode")]
+public class ChargeFiringModeSO : FiringModeSO
+{
+    public override void HandlePreAttack(BaseWeapon weapon)
+    {
+        
+        if (weapon.WeaponRuntimeData.State != WeaponState.PRE_PRIMARY_ATTACK)
+        {
+            weapon.WeaponRuntimeData.State = WeaponState.PRE_PRIMARY_ATTACK;
+            weapon.WeaponAnimator.SetBool("isTriggerHeld", true);
+        }
+
+    }
+
+    public override void HandleAttackCanceled(BaseWeapon weapon)
+    {
+        weapon.WeaponRuntimeData.State = WeaponState.IDLE;
+        weapon.WeaponAnimator.SetBool("isTriggerHeld", false);
+    }
+
+    public override void HandlePreAttackEnd(BaseWeapon weapon)
+    {
+        Debug.Log("Weapon charged");
+        HandleAttackStart(weapon);
+    }
+
+    public override void HandleAttackStart(BaseWeapon weapon)
+    {
+        weapon.WeaponRuntimeData.State = WeaponState.PRIMARY_ATTACK;
+        weapon.WeaponAnimator.StartPrimaryAttackAnim();
+    }
+
+    public override void HandleAttackEnd(BaseWeapon weapon)
+    {
+        weapon.WeaponAnimator.ResetAnimParams();
+
+        if (PlayerInputManager.Instance.PrimaryAttackInput == true && weapon.AmmoManager.HasAmmo())
+        {
+            weapon.WeaponRuntimeData.State = WeaponState.IDLE;
+            HandlePreAttack(weapon);
+        }
+
+        else
+            weapon.WeaponRuntimeData.State = WeaponState.IDLE;
+
+
+    }
+
+    public override void HandleDirectFire(BaseWeapon weapon)
+    {
+        if (weapon.WeaponRuntimeData.State == WeaponState.IDLE)
+        {
+            HandlePreAttack(weapon);
+        }
+
+    }
+}

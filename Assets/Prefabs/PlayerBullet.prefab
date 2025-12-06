@@ -74,7 +74,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 178966987
   m_SortingLayer: 1
-  m_SortingOrder: 2
+  m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 7702fdd384242584c84325fbfc2397f6, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -123,8 +123,8 @@ MonoBehaviour:
   m_LightType: 3
   m_BlendStyleIndex: 0
   m_FalloffIntensity: 0.5
-  m_Color: {r: 0.9960785, g: 0, b: 0, a: 1}
-  m_Intensity: 1
+  m_Color: {r: 0.9960785, g: 0.95294124, b: 0, a: 1}
+  m_Intensity: 0.3
   m_LightVolumeIntensity: 1
   m_LightVolumeIntensityEnabled: 0
   m_ApplyToSortingLayers: 3d6c4c9e00000000cbd1aa0a
@@ -169,6 +169,8 @@ GameObject:
   - component: {fileID: 919517772093030224}
   - component: {fileID: -2196210402528101077}
   - component: {fileID: -6332252317648718834}
+  - component: {fileID: -1009118927011475368}
+  - component: {fileID: 7958790506459721694}
   m_Layer: 8
   m_Name: PlayerBullet
   m_TagString: Bullet
@@ -248,12 +250,12 @@ CircleCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Radius: 0.3
+  m_Radius: 0.2
 --- !u!114 &-6332252317648718834
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -266,12 +268,52 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 48a0941365c9df94c90eb02d8c320930, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _circleCollider2D: {fileID: -2196210402528101077}
+  _collider2D: {fileID: -2196210402528101077}
+  _bulletConfig: {fileID: 11400000, guid: f14fd32a0eaaa1b4ba65496b2957cbb1, type: 2}
+  _bulletData:
+    Owner: {fileID: 0}
+    Faction: 0
+    Damage: 0
+    Size: 0
+    ProjectileSpeed: 0
+    PushForce: 0
+    Trajectory: {x: 0, y: 0}
+    LifeTime: 0
+    HasHitSomething: 0
+  _mover: {fileID: -1009118927011475368}
+  _collisionHandler: {fileID: 7958790506459721694}
+  _faction: 0
+  _visualsSr: {fileID: 0}
+--- !u!114 &-1009118927011475368
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6657017082548522162}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 76b0dbe28c38d0e4295c96da2a6e9d6f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
   _rb2D: {fileID: 919517772093030224}
-  bulletConfig: {fileID: 0}
-  _owner: {fileID: 0}
-  _animator: {fileID: 7546405664813294346}
+--- !u!114 &7958790506459721694
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6657017082548522162}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 33850da9b40894840944d5678ed50b9c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _ownerFaction: 0
+  _targetFaction: 1
+  _rb2D: {fileID: 919517772093030224}
+  _collider2D: {fileID: -2196210402528101077}
   _dissolveVFX: {fileID: 6753469986449514989, guid: 8ca46b7df4a34254292988745ff4ed93, type: 3}
-  layerMask:
+  _blockingLayers:
     serializedVersion: 2
-    m_Bits: 168448
+    m_Bits: 5120

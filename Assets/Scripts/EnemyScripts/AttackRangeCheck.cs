@@ -12,23 +12,17 @@ public class AttackRangeCheck : MonoBehaviour
         if (_attackRange == null)
             Debug.Log("Missing attack range circle collider");
 
-        if (_ownerScript.RuntimeDataHolder.TryGetRuntimeData(out EnemyStateData stateData))
-        {
-            _stateData = stateData;
-        }
-        else
-        {
-            Debug.LogError("EnemyStateData not found in runtime data");
-        }
-        
+    }
+    
+    public void InitializeStateData(EnemyStateData stateData)
+    {
+        _stateData = stateData;
     }
 
     void OnTriggerEnter2D(Collider2D other)
     {
         if (other.CompareTag("Player"))
         {
-            if(_stateData == null)
-                Debug.Log("The state data doe..." + _stateData);
             if (_stateData != null)
                 _stateData.PlayerWithinAttackRange = true;
         }

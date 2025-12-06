@@ -1,16 +1,13 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
+using UnityEngine.Events;
 
 public class PauseMenuOptionsReturn : MonoBehaviour, IMenuItem
 {
     [SerializeField] Image _selectionIndicator;
-    [SerializeField] GameObject _returnFirstSelection;
-    [SerializeField] GameObject _settingsUnsavedFirstSelection;
-
-    bool suppressEvents = false;
+    public UnityEvent OnSubmittedClean;
+    public UnityEvent OnSubmittedDirty;
     public void OnSelect(BaseEventData eventData)
     {
         MenuAnimationsManager.instance.OptionSelected(_selectionIndicator);
@@ -24,18 +21,15 @@ public class PauseMenuOptionsReturn : MonoBehaviour, IMenuItem
 
     public void OnSubmit(BaseEventData eventData)
     {
-        if (suppressEvents == true) return;
-        suppressEvents = true;
         if (SettingsManager.instance.CheckIfAltered())
         {
             SettingsEvents.RaiseSettingsChangesUnsaved();
-            UISelector.instance.SetSelected(_settingsUnsavedFirstSelection);
+            OnSubmittedDirty?.Invoke();
         }
         else
         {
-            MenuOpenCloseEvents.RaiseSettingsClosed();
-            UISelector.instance.SetSelected(_returnFirstSelection);
+            OnSubmittedClean?.Invoke();
         }
-        suppressEvents = false;
+
     }
 }

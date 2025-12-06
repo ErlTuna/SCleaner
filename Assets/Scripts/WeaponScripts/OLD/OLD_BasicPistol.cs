@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/*
 public class OLD_BasicPistol : OLD_BaseWeapon
 {
     public Transform rayCastStartPoint;
@@ -15,17 +16,21 @@ public class OLD_BasicPistol : OLD_BaseWeapon
         weaponRuntimeData = new WeaponRuntimeData(weaponConfig);
     }
 
-    void Update(){
-        if(!HasAmmo() && weaponRuntimeData.ReserveAmmo != 0 && weaponRuntimeData.State != WeaponState.RELOADING){
+    void Update()
+    {
+        if (!HasAmmo() && weaponRuntimeData.ReserveAmmo != 0 && weaponRuntimeData.State != WeaponState.RELOADING)
+        {
             HandlePrimaryAttackInputCancel();
             HandleReloadStart();
         }
-        else if (!HasAmmo() && weaponRuntimeData.ReserveAmmo == 0 && weaponRuntimeData.State != WeaponState.RELOADING){
+        else if (!HasAmmo() && weaponRuntimeData.ReserveAmmo == 0 && weaponRuntimeData.State != WeaponState.RELOADING)
+        {
             HandlePrimaryAttackInputCancel();
         }
     }
 
-    public void SetFiringPoint(Transform firingPoint){
+    public void SetFiringPoint(Transform firingPoint)
+    {
         this.firingPoint = firingPoint;
     }
 
@@ -42,7 +47,7 @@ public class OLD_BasicPistol : OLD_BaseWeapon
 
         --weaponRuntimeData.CurrentAmmo;
         WeaponEvents.RaiseWeaponFired(weaponRuntimeData);
-        
+
         weaponRuntimeData.State = WeaponState.IDLE;
     }
 
@@ -67,7 +72,8 @@ public class OLD_BasicPistol : OLD_BaseWeapon
         WeaponEvents.RaiseWeaponReload(weaponRuntimeData);
     }
 
-    void OnDrawGizmosSelected(){
+    void OnDrawGizmosSelected()
+    {
         //Gizmos.DrawWireSphere(muzzleTipCheck.position, 0.5f);
         //Debug.DrawLine(rayCastStartPoint.position, rayCastEndPoint.position, Color.green);
     }
@@ -79,27 +85,30 @@ public class OLD_BasicPistol : OLD_BaseWeapon
         if (!HasAmmo() || weaponRuntimeData.State == WeaponState.RELOADING || weaponRuntimeData.State == WeaponState.PRIMARY_ATTACK) return;
 
         _animator.SetBool("isFiring", true);
-        
+
     }
 
-    public override void HandlePrimaryAttackInputCancel(){
+    public override void HandlePrimaryAttackInputCancel()
+    {
         weaponRuntimeData.State = WeaponState.IDLE;
         _animator.SetBool("isFiring", false);
     }
 
-    public override void HandleReloadStart(){
+    public override void HandleReloadStart()
+    {
 
-        if(weaponRuntimeData.ReserveAmmo == 0 || weaponRuntimeData.CurrentAmmo == weaponConfig.RoundCapacity || weaponRuntimeData.State == WeaponState.RELOADING) 
-        return;
+        if (weaponRuntimeData.ReserveAmmo == 0 || weaponRuntimeData.CurrentAmmo == weaponConfig.RoundCapacity || weaponRuntimeData.State == WeaponState.RELOADING)
+            return;
 
         weaponRuntimeData.State = WeaponState.IDLE;
-        
+
         _animator.SetBool("isFiring", false);
         weaponRuntimeData.State = WeaponState.RELOADING;
         _animator.SetTrigger("ReloadTrigger");
     }
 
-    public override void HandleReloadEnd(){
+    public override void HandleReloadEnd()
+    {
         weaponRuntimeData.State = WeaponState.IDLE;
     }
 
@@ -107,7 +116,8 @@ public class OLD_BasicPistol : OLD_BaseWeapon
     {
         //no op
     }
-    public override void ResetWeaponState(){
+    public override void ResetWeaponState()
+    {
         //Weapon.isFiring = false;
         //Weapon.isReloading = false;
         weaponRuntimeData.State = WeaponState.IDLE;
@@ -115,6 +125,7 @@ public class OLD_BasicPistol : OLD_BaseWeapon
         _animator.ResetTrigger("ReloadTrigger");
         _animator.SetTrigger("WeaponSwitchTrigger");
         GetComponent<SpriteRenderer>().sprite = weaponConfig.Sprite;
-        
+
     }
 }
+*/

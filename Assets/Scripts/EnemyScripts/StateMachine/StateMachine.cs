@@ -1,14 +1,18 @@
 using System;
 using System.Collections.Generic;
+using UnityEngine;
+
+[Serializable]
 public class StateMachine
 {
+    [SerializeField] bool enabled = true;
     StateNode current;
-
-    //Dictionary<IState, StateNode> nodes = new();
     Dictionary<Type, StateNode> nodes = new();
     HashSet<ITransition> anyTransitions = new();
 
-    public void Update() {
+    public void Update()
+    {
+        if (enabled == false) return;
 
         ITransition transition = GetTransition();
 
@@ -20,11 +24,17 @@ public class StateMachine
         current.State?.StateUpdate();
     }
 
-    public void FixedUpdate(){
+    public void FixedUpdate()
+    {
+        if (enabled == false) return;
+
         current.State?.StateFixedUpdate();
     }
 
-    public void SetState(IState state){
+    public void SetState(IState state)
+    {
+        if (enabled == false) return;
+
         current = nodes[state.GetType()];
 
         //current = nodes[state];
@@ -33,6 +43,8 @@ public class StateMachine
 
     void ChangeState(IState state)
     {
+        if (enabled == false) return;
+
         if (current.State == state) return;
 
         IState previousState = current.State;
@@ -47,36 +59,44 @@ public class StateMachine
         //current = nodes[state];
     }
 
-    ITransition GetTransition() {
-        foreach (ITransition transition in anyTransitions){
-            if(transition.Condition.Evaluate()){
+    ITransition GetTransition()
+    {
+        foreach (ITransition transition in anyTransitions)
+        {
+            if (transition.Condition.Evaluate())
+            {
                 //Debug.Log("Found any transition : " + transition);
                 return transition;
             }
         }
 
-        foreach (ITransition transition in current.Transitions){
-            if(transition.Condition.Evaluate()){
+        foreach (ITransition transition in current.Transitions)
+        {
+            if (transition.Condition.Evaluate())
+            {
                 //Debug.Log("Found a transition : " + transition);
                 return transition;
             }
         }
-            
+
         return null;
     }
 
-    public void AddAnyTransition(IState to, IPredicate condition){
+    public void AddAnyTransition(IState to, IPredicate condition)
+    {
 
         //convert state to StateNode then add Any Transition to it
         anyTransitions.Add(new Transition(GetOrAddNode(to).State, condition));
     }
 
-    public void AddTransition(IState from, IState to, IPredicate condition){
-        
+    public void AddTransition(IState from, IState to, IPredicate condition)
+    {
+
         GetOrAddNode(from).AddTransition(GetOrAddNode(to).State, condition);
         //Debug.Log("Added Transition from: " + from + " to " + to + " with description" + condition.Description);
     }
-    StateNode GetOrAddNode(IState state){
+    StateNode GetOrAddNode(IState state)
+    {
 
         StateNode node = nodes.GetValueOrDefault(state.GetType());
         //StateNode node = nodes.GetValueOrDefault(state);
@@ -93,16 +113,19 @@ public class StateMachine
 
     }
 
-    private class StateNode{
+    private class StateNode
+    {
         public IState State { get; }
         public HashSet<ITransition> Transitions { get; }
 
-        public StateNode(IState state){
+        public StateNode(IState state)
+        {
             State = state;
             Transitions = new HashSet<ITransition>();
         }
 
-        public void AddTransition(IState to, IPredicate condition){
+        public void AddTransition(IState to, IPredicate condition)
+        {
             Transitions.Add(new Transition(to, condition));
         }
 

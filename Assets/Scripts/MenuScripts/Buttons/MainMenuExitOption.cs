@@ -19,7 +19,7 @@ public class MainMenuExitOption : MonoBehaviour, IMenuItem
 
     public void OnSubmit(BaseEventData eventData)
     {
-        Debug.Log("You're a black man!");
+        GameManager.Instance.SetGameState(GameState.SHUTTING_DOWN);
         AudioManager.instance.PlaySubmitSound();
     }
 }

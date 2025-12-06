@@ -271,13 +271,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   User: {fileID: 0}
-  Targets: []
   EquipmentConfig: {fileID: 11400000, guid: bcda96946e313db48a426c48b5678b73, type: 2}
   EquipmentData:
     EquipmentName: 
-    EquipmentConfig: {fileID: 0}
+    EquipmentConfig: {fileID: 11400000, guid: bcda96946e313db48a426c48b5678b73, type: 2}
     State: 0
-    Ability: {fileID: 0}
+    Ability: {fileID: 11400000, guid: 0f3829cca035e514fb55fa12a79256c6, type: 2}
     CurrentCount: 0
     MaxCount: 0
     Lifetime: 0

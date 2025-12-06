@@ -9,9 +9,9 @@ public class EquipmentConfigSO : ScriptableObject
 {
     public string ItemName;
     public Sprite Sprite;
-    public EquipmentAbilityData Ability;
-    public EquipmentType EquipmentType;
-    public int StartingCount;
-    public int MaxCount;
+    public Sprite UI_Icon;
+    public EquipmentAbilityConfig Ability;
+    public int StartingCarge;
+    public int MaxCharge;
     public float MaxLifetime;
 }

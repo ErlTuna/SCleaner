@@ -61,13 +61,14 @@ public class BasicSMG : PlayerWeapon
         }
         */
 
-        Quaternion bulletRotation = CalculateBulletSpread();
-        GameObject instantiatedBullet = Instantiate(WeaponConfig.BulletData.Prefab, FiringPoints[0].transform.position, bulletRotation);
-        instantiatedBullet.SetActive(false);
-        instantiatedBullet.GetComponent<Bullet>().Setup(gameObject, WeaponRuntimeData, WeaponConfig);
-        instantiatedBullet.SetActive(true);
+        Quaternion spreadRot = CalculateBulletSpread();
+        Vector2 trajectory = spreadRot * Vector2.right;
+        GameObject instantiatedBullet = Instantiate(WeaponConfig.BulletConfig.Prefab, FiringPoints[0].transform.position, Quaternion.identity);
+
+        instantiatedBullet.GetComponent<Bullet>().Initialize(gameObject, trajectory, WeaponRuntimeData, WeaponConfig);
         WeaponRuntimeData.TimeSinceLastFired = Time.unscaledTime;
         //weaponSoundManager.TryPlayFiringSFX();
         AmmoManager.UseAmmo();
+        //WeaponEvents.RaiseAmmoUsed(WeaponRuntimeData);
     }
 }

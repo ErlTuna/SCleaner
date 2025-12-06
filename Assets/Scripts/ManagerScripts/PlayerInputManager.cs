@@ -1,14 +1,16 @@
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.Controls;
+using UnityEngine.UI;
 
 public class PlayerInputManager : MonoBehaviour
 {
     public static PlayerInput PlayerInput;
-    [SerializeField] InputActionAsset _playerActionAsset;
+    //[SerializeField] InputActionAsset _playerActionAsset;
     [SerializeField] InputActionMap _gameplayActionMap;
-    [SerializeField] InputActionMap _pauseActionMap;
+    [SerializeField] InputActionMap _UIActionMap;
+    InputActionMap _previousActionMap;
+
     InputAction _movementInputAction;
     InputAction _pointerInputAction;
     InputAction _itemPickupInputAction;
@@ -67,21 +69,26 @@ public class PlayerInputManager : MonoBehaviour
     public bool MenuOpenInput;
     public bool MenuCloseInput;
 
-    public static PlayerInputManager instance;
+    public static PlayerInputManager Instance {get; private set;}
 
     void Awake()
     {
 
-        if (instance != null && instance != this)
+        if (Instance != null && Instance != this)
         {
             Destroy(this);
+            return;
         }
         else
-            instance = this;
+            Instance = this;
 
         PlayerInput = GetComponent<PlayerInput>();
-        _gameplayActionMap = _playerActionAsset.FindActionMap("Gameplay");
-        _gameplayActionMap.Enable();
+        //_gameplayActionMap = _playerActionAsset.FindActionMap("Gameplay");
+        //_UIActionMap = _playerActionAsset.FindActionMap("PauseMenu");
+        _gameplayActionMap = PlayerInput.actions.FindActionMap("Gameplay");
+        _UIActionMap = PlayerInput.actions.FindActionMap("UI");
+        PlayerInput.SwitchCurrentActionMap("Gameplay");
+        //_gameplayActionMap.Enable();
 
         _movementInputAction = PlayerInput.actions["Movement"];
         _pointerInputAction = PlayerInput.actions["Pointer"];
@@ -101,17 +108,21 @@ public class PlayerInputManager : MonoBehaviour
         _thirdWeaponInputAction = PlayerInput.actions["Third Weapon"];
         _fourthWeaponInputAction = PlayerInput.actions["Fourth Weapon"];
         _menuOpenAction = PlayerInput.actions["Open Menu"];
-        _menuCloseAction = PlayerInput.actions["CloseMenu"];
+        
         _abilitySwitchAction = PlayerInput.actions["Switch Ability"];
+
+        // Switching to UI map to cache the CloseMenu action
+        PlayerInput.SwitchCurrentActionMap("UI");
+        _menuCloseAction = PlayerInput.actions["CloseMenu"];
+
+        PlayerInput.SwitchCurrentActionMap("Gameplay");
+
 
     }
 
     void Start()
     {
-        InputSystem.EnableDevice(Mouse.current);
-        Cursor.visible = true;
-        Cursor.lockState = CursorLockMode.None;
-        Debug.Log("Mouse input enabled");
+        ToggleMouseInput(true);
     }
 
     void Update()
@@ -131,17 +142,20 @@ public class PlayerInputManager : MonoBehaviour
         ReloadInput = _reloadInputAction.WasPressedThisFrame();
         EquipmentInput = _equipmentInputAction.IsPressed();
         MenuOpenInput = _menuOpenAction.WasPressedThisFrame();
-        MenuCloseInput = _menuCloseAction.WasPerformedThisFrame();
+        MenuCloseInput = _menuCloseAction.WasPressedThisFrame();
         AbilitySwitchInput = _abilitySwitchAction.WasPerformedThisFrame();
+        
     }
 
     public void ToggleMouseInput(bool enable)
     {
+        
         if (enable)
         {
             InputSystem.EnableDevice(Mouse.current);
             Cursor.lockState = CursorLockMode.None;
             Cursor.visible = true;
+            Debug.Log("Mouse input enabled");
         }
         else
         {
@@ -149,7 +163,31 @@ public class PlayerInputManager : MonoBehaviour
             Cursor.lockState = CursorLockMode.Locked;
             Cursor.visible = false;
         }
+        
     }
 
+    public void SwitchToGameplayActionMap()
+    {
+        //_previousActionMap = _UIActionMap;
+        //_UIActionMap.Disable();
+        PlayerInput.SwitchCurrentActionMap("Gameplay");
+    }
+
+    public void SwitchToUIActionMap()
+    {
+        //_previousActionMap = _gameplayActionMap;
+        PlayerInput.SwitchCurrentActionMap("UI");
+        //_UIActionMap.Enable();
+    }
+
+    public void OnPlayerDefeat()
+    {
+        if (_UIActionMap == null) return;
+        if (_gameplayActionMap == null) return;
+            
+        _gameplayActionMap.Disable();
+        _UIActionMap.Enable();
+        Debug.Log("Switched input action maps.");
+    }
 
 }

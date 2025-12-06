@@ -10,11 +10,12 @@ class InvulnEffect : AbilityEffect
     {
         Duration = abilityData.Duration;
 
-        if (context.userRuntimeData == null)
+        if (context.userStateData == null)
         {
-            Debug.Log("User has no runtime data");
+            Debug.Log("User has no state data");
             return;
         }
+        
 
         if (context.user.TryGetComponent(out MonoBehaviour runner) == false)
         {
@@ -22,21 +23,17 @@ class InvulnEffect : AbilityEffect
             return;
         }
 
-        if (context.userRuntimeData.TryGetRuntimeData(out IUnitStateData stateData))
-        {
-            runner.StartCoroutine(InvulnTimer(stateData, Duration));
-        }
 
-
+        runner.StartCoroutine(InvulnTimer(context.userStateData, Duration));
+        
     }
 
-    IEnumerator InvulnTimer(IUnitStateData userState, float duration)
+    IEnumerator InvulnTimer(UnitStateData userStateData, float duration)
     {
-        userState.IsInvuln = true;
+        userStateData.IsInvuln = true;
         yield return new WaitForSeconds(duration);
-        userState.IsInvuln = false;
+        userStateData.IsInvuln = false;
     }
 
-    public override void End(AbilityContext context)
-    { }
+    public override void End(AbilityContext context){ }
 }

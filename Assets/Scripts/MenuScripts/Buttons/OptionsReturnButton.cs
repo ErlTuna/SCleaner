@@ -1,14 +1,13 @@
 using UnityEngine.UI;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.Events;
 
 public class OptionsReturnButton : MonoBehaviour, IMenuItem
 {
     [SerializeField] Image _selectionIndicator;
-    [SerializeField] GameObject _mainMenuTransitionFirstSelection;
-    [SerializeField] GameObject _settingsUnsavedFirstSelection;
-
-    bool suppressEvents = false;
+    public UnityEvent OnSubmittedClean;
+    public UnityEvent OnSubmittedDirty;
     public void OnSelect(BaseEventData eventData)
     {
         MenuAnimationsManager.instance.OptionSelected(_selectionIndicator);
@@ -22,20 +21,16 @@ public class OptionsReturnButton : MonoBehaviour, IMenuItem
 
     public void OnSubmit(BaseEventData eventData)
     {
-        if (suppressEvents == true) return;
-        suppressEvents = true;
         if (SettingsManager.instance.CheckIfAltered())
         {
             SettingsEvents.RaiseSettingsChangesUnsaved();
-            PopUpEvents.RaisePopUpTriggered();
-            UISelector.instance.SetSelected(_settingsUnsavedFirstSelection);
+            OnSubmittedDirty?.Invoke();
         }
         else
         {
-            MenuOpenCloseEvents.RaiseSettingsClosed();
-            UISelector.instance.SetSelected(_mainMenuTransitionFirstSelection);
+            OnSubmittedClean?.Invoke();
         }
-        suppressEvents = false;
+
     }
 
     

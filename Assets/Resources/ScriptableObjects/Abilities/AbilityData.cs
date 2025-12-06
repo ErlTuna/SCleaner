@@ -16,7 +16,8 @@ public class AbilityData : ScriptableObject
     public float Duration;
 
     [Header("Visual & SFX")]
-    public Sprite icon;
+    public Sprite Icon;
+    public Sprite UI_Icon;
     public AudioClip SFXClip;
 
     [Header("Effects and Conditions")]

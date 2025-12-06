@@ -111,7 +111,7 @@ public class WeaponPickup : MonoBehaviour, IPickup
         _spriteRenderer.sprite = _weaponConfig.Sprite;
         //transform.localScale = _weaponConfig.Scale;
 
-        SetupVisualsAndPrompt();
+        SetupVisuals();
     }
 
     public void Initialize(WeaponRuntimeData runtimeData)
@@ -127,23 +127,12 @@ public class WeaponPickup : MonoBehaviour, IPickup
         _weaponConfig = runtimeData.Config;
         //transform.localScale = _weaponConfig.Scale;
         _isWorldPickup = false;
-        SetupVisualsAndPrompt();
+        SetupVisuals();
     }
 
-    private void SetupVisualsAndPrompt()
+    void SetupVisuals()
     {
-
         _spriteRenderer.sprite = _weaponConfig.Sprite;
-        /*
-        if (promptInstance == null && promptPrefab != null)
-        {
-            GameObject promptGO = Instantiate(promptPrefab, _root);
-            promptGO.transform.localPosition = _promptPosition.localPosition;
-
-            promptInstance = promptGO.GetComponent<UI_PickupPrompt>();
-            promptInstance.Hide();
-        }
-        */
     }
 
     public void UpdateColliderSize()

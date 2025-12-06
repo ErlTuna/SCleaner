@@ -1,15 +1,11 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.InputSystem;
 
 public class PlayerAimManager : MonoBehaviour
 {
     Vector3 _mousePos;
     Camera _cam;
 
-    void Start()
+    void Awake()
     {
         _cam = Camera.main;
     }
@@ -21,7 +17,7 @@ public class PlayerAimManager : MonoBehaviour
 
     void Aiming()
     {
-        _mousePos = _cam.ScreenToWorldPoint(PlayerInputManager.instance.PointerInput);
+        _mousePos = _cam.ScreenToWorldPoint(PlayerInputManager.Instance.PointerInput);
         _mousePos.z = 0f;
         Vector3 aimDirection = (_mousePos - transform.position).normalized;
         float angle = Mathf.Atan2(aimDirection.y, aimDirection.x) * Mathf.Rad2Deg;

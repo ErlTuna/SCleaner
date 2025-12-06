@@ -200,7 +200,6 @@ public class WeaponAnimator : MonoBehaviour, IWeaponAnimator
     public IEnumerator WaitForAnimation(string stateName)
     {
         yield return new WaitUntil(() => animator.GetCurrentAnimatorStateInfo(0).IsName(stateName));
-        Debug.Log("Is it over?..");
         yield return new WaitWhile(() => animator.GetCurrentAnimatorStateInfo(0).IsName(stateName) &&
                                          animator.GetCurrentAnimatorStateInfo(0).normalizedTime < 1f
         );

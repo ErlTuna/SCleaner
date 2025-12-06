@@ -6,17 +6,9 @@ public class PlayerDetection : MonoBehaviour
     [SerializeField] Unit _owner;
     EnemyStateData _stateData;
 
-    void Start()
+    public void InitializeStateData(EnemyStateData stateData)
     {
-        //owner = GetComponentInParent<IEnemy>();
-    }
-
-    public void Initialize(Unit owner)
-    {
-        _owner = owner;
-        if (_owner.RuntimeDataHolder.TryGetRuntimeData(out EnemyStateData data))
-            _stateData = data;
-        
+        _stateData = stateData;
     }
 
     void OnTriggerEnter2D(Collider2D other){

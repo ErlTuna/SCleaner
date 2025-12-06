@@ -12,7 +12,7 @@ public class ItemDetector : MonoBehaviour
     void Update()
     {
         UpdateClosestPickup();
-        if (PlayerInputManager.instance.ItemPickupInput)
+        if (PlayerInputManager.Instance.ItemPickupInput)
             TryCollectingPickup();
     }
 
@@ -38,7 +38,6 @@ public class ItemDetector : MonoBehaviour
 
     public void TryCollectingPickup()
     {
-        Debug.Log(_closestPickup);
         if (_closestPickup == null) return;
 
         _closestPickup.OnPickupAttempt(_owner);

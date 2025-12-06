@@ -12,16 +12,14 @@ public class Flipper : MonoBehaviour
     Transform _parentTransform;
     [SerializeField] Transform _visuals;
     [SerializeField] Transform _wrapper;
+    [SerializeField] Transform _gripPointsWrapper;
+    [SerializeField] Transform _secondGripPoint;
     Vector3 _originalParentLocalPos;
     Vector3 _originalWrapperLocalPos;
     Vector3 _originalFiringPointLocalPos;
+    Vector3 _originalGripWrapperLocalPos;
+    Vector3 _originalSecondGripPointLocalPos;
     
-
-    void Awake()
-    {
-        if (spriteRenderer == null)
-            spriteRenderer = GetComponent<SpriteRenderer>();
-    }
 
     void Start()
     {
@@ -29,11 +27,18 @@ public class Flipper : MonoBehaviour
         if (_firingPoint)
             _originalFiringPointLocalPos = _firingPoint.localPosition;
 
-        if (_wrapper != null)
+        if (_wrapper)
             _originalWrapperLocalPos = _wrapper.localPosition;
-            
+
         if (_parentTransform)
             _originalParentLocalPos = _parentTransform.localPosition;
+
+        /*
+        if (_gripPointsWrapper)
+            _originalGripWrapperLocalPos = _gripPointsWrapper.localPosition;
+        */
+        if (_secondGripPoint)
+            _originalSecondGripPointLocalPos = _secondGripPoint.localPosition;
     }
 
     void Update()
@@ -64,12 +69,28 @@ public class Flipper : MonoBehaviour
                 ? new Vector3(_originalWrapperLocalPos.x, -_originalWrapperLocalPos.y, _originalWrapperLocalPos.z)
                 : _originalWrapperLocalPos;
 
-    
+
         if (_firingPoint != null)
             _firingPoint.localPosition = isFlipped
                 ? new Vector3(_originalFiringPointLocalPos.x, -_originalFiringPointLocalPos.y, _originalFiringPointLocalPos.z)
                 : _originalFiringPointLocalPos;
         
+        /*
+        if (_gripPointsWrapper != null)
+        {
+            _gripPointsWrapper.localPosition = isFlipped
+            ? new Vector3(_originalGripWrapperLocalPos.x, -_originalGripWrapperLocalPos.y, _originalGripWrapperLocalPos.z)
+            : _originalGripWrapperLocalPos;
+        }
+        */
+
+        if (_secondGripPoint != null)
+        {
+            _secondGripPoint.localPosition = isFlipped
+            ? new Vector3(_originalSecondGripPointLocalPos.x, -_originalSecondGripPointLocalPos.y, _originalSecondGripPointLocalPos.z)
+            : _originalSecondGripPointLocalPos;
+        }
+
 
     }
     

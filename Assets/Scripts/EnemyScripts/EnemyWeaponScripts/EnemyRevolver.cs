@@ -25,11 +25,9 @@ public class EnemyRevolver : BaseEnemyWeapon
 
     public override void SpawnBullet()
     {
-        GameObject instantiatedBullet = Instantiate(WeaponConfig.BulletData.Prefab, FiringPoints[0].transform.position, FiringPoints[0].transform.rotation);
-        instantiatedBullet.GetComponent<Bullet>().Setup(gameObject, WeaponRuntimeData, WeaponConfig);
-        instantiatedBullet.SetActive(true);
+        GameObject instantiatedBullet = Instantiate(WeaponConfig.BulletPrefab, FiringPoints[0].transform.position, Quaternion.identity);
+        instantiatedBullet.GetComponent<Bullet>().Initialize(gameObject, FiringPoints[0].transform.right, WeaponRuntimeData, WeaponConfig);
         AmmoManager.UseAmmo();
-        WeaponRuntimeData.TimeSinceLastFired = Time.unscaledTime;
     }
 
     public override void OnAttackAnimEnd()

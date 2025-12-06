@@ -64,25 +64,10 @@ public class BasicRevolver : PlayerWeapon
 
     public override void SpawnBullet()
     {
-        Collider2D overlappingEnemyHitbox = ObstructionChecker.CheckMuzzleEnemyOverlap(muzzleTipCheck, WeaponConfig.enemyLayer);
-
-        if (overlappingEnemyHitbox)
-        {
-            if (overlappingEnemyHitbox.TryGetComponent<IDamageable>(out var damageable))
-            {
-                DamageContext context = new(gameObject, transform.position, WeaponRuntimeData.Damage, WeaponConfig.PushForce);
-                damageable.TakeDamage(context);
-                AmmoManager.UseAmmo();
-                return;
-            }
-        }
-
-        GameObject instantiatedBullet = Instantiate(WeaponConfig.BulletData.Prefab, FiringPoints[0].transform.position, transform.rotation);
-        instantiatedBullet.SetActive(false);
-        instantiatedBullet.GetComponent<Bullet>().Setup(gameObject, WeaponRuntimeData, WeaponConfig);
-        instantiatedBullet.SetActive(true);
-
+        GameObject instantiatedBullet = Instantiate(WeaponConfig.BulletConfig.Prefab, FiringPoints[0].transform.position, transform.rotation);
+        instantiatedBullet.GetComponent<Bullet>().Initialize(gameObject, FiringPoints[0].transform.right, WeaponRuntimeData, WeaponConfig);
         AmmoManager.UseAmmo();
+        //WeaponEvents.RaiseAmmoUsed(WeaponRuntimeData);
 
     }
 }

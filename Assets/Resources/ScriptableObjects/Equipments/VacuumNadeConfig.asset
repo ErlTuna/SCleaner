@@ -13,9 +13,10 @@ MonoBehaviour:
   m_Name: VacuumNadeConfig
   m_EditorClassIdentifier: 
   ItemName: 
-  Sprite: {fileID: 0}
+  Sprite: {fileID: 21300000, guid: 18e8dbf32122174478706c984bd036ec, type: 3}
+  UI_Icon: {fileID: 21300000, guid: a38a607bf6f7cc14a923c71e9c909dfa, type: 3}
   Ability: {fileID: 11400000, guid: 0f3829cca035e514fb55fa12a79256c6, type: 2}
   EquipmentType: 0
-  StartingCount: 3
-  MaxCount: 3
+  StartingCarge: 0
+  MaxCharge: 0
   MaxLifetime: 5

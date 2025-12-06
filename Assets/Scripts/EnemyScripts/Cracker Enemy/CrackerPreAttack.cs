@@ -5,15 +5,21 @@ using UnityEngine.AI;
 
 public class CrackerPreAttack : BaseState
 {
-    Unit _ownerScript;
+    GameObject _owner;
+    NavMeshAgent _agent;
+    Rigidbody2D _rb2D;
+    MonoBehaviour _ownerScript;
     EnemyStateData _stateData;
     UnitMovementData _movementData;
     Transform _target;
     float _originalSpeed;
     Coroutine _prepareAttack;
 
-    public CrackerPreAttack(GameObject owner, Unit ownerScript, GameObject player, Rigidbody2D rb2D, NavMeshAgent agent, EnemyStateData stateData, UnitMovementData movementData) : base(owner, rb2D, agent)
+    public CrackerPreAttack(GameObject owner, Unit ownerScript, GameObject player, Rigidbody2D rb2D, NavMeshAgent agent, EnemyStateData stateData, UnitMovementData movementData)
     {
+        _owner = owner;
+        _agent = agent;
+        _rb2D = rb2D;
         _target = player.transform;
         _ownerScript = ownerScript;
         _movementData = movementData;
@@ -24,7 +30,7 @@ public class CrackerPreAttack : BaseState
 
     public override void OnEnter()
     {
-        agent.speed *= 0.5f;
+        _agent.speed *= 0.5f;
         _prepareAttack = _ownerScript.StartCoroutine(PrepareAttack());
     }
 
@@ -34,13 +40,13 @@ public class CrackerPreAttack : BaseState
             CancelCharge();
         }
 
-        agent.speed = _movementData.CurrentMovementSpeed;
+        _agent.speed = _movementData.CurrentMovementSpeed;
     }
 
     public override void StateUpdate()
     {
         RotateTowardsPlayer();
-        agent.SetDestination(_target.position);
+        _agent.SetDestination(_target.position);
     }
 
     public override void StateFixedUpdate()
@@ -63,14 +69,14 @@ public class CrackerPreAttack : BaseState
         _ownerScript.StopCoroutine(_prepareAttack);
         _prepareAttack = null;
         _stateData.IsChargingAnAttack = false;
-        agent.speed = _movementData.CurrentMovementSpeed;
+        _agent.speed = _movementData.CurrentMovementSpeed;
     }
     void RotateTowardsPlayer(){
 
         // subtracting 90f to fix rotation issue as the sprite faces up
         // without this, the enemy rotates 90 degrees more than it should
-        Vector2 _targetDirection = (_target.position - owner.transform.position).normalized;
+        Vector2 _targetDirection = (_target.position - _owner.transform.position).normalized;
         float angle = Mathf.Atan2(_targetDirection.y, _targetDirection.x) * Mathf.Rad2Deg -90f;
-        owner.transform.eulerAngles = new Vector3(0, 0, angle);
+        _owner.transform.eulerAngles = new Vector3(0, 0, angle);
     }
 }

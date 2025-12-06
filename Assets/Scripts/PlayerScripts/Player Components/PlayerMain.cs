@@ -5,70 +5,99 @@ using UnityEngine.InputSystem;
 
 public class PlayerMain : Unit
 {
-    [SerializeField] InputActionMap _playerActionMap;
+    [Header("Input Action Map")]
+    [SerializeField] InputActionMap _inputActionAsset;
+
+    [Header("Managers")]
+    [SerializeField] PlayerInputManager _playerInputManager;
     [SerializeField] PlayerHealthManager _playerHealthManager;
     [SerializeField] PlayerMovementManager _playerMovementManager;
     [SerializeField] PlayerInventoryManager _playerInventoryManager;
     [SerializeField] PlayerEnergyManager _playerEnergyManager;
     [SerializeField] PlayerAbilityHandler _playerAbilityHandler;
     [SerializeField] PlayerAimManager _playerAimManager;
+    [SerializeField] PlayerHitbox _playerHitboxManager;
+
+    [Header("Configs")]
+    [SerializeField] UnitHealthConfigSO _healthConfig;
+    [SerializeField] UnitMovementConfigSO _movementConfig;
+    [SerializeField] UnitEnergyConfigSO _energyConfig;
+    [SerializeField] UnitInventoryConfigSO _inventoryConfig;
+    [SerializeField] UnitStateConfigSO _stateConfig;
+
+    [Header("Event Channels")]
+    [SerializeField] TransformEventChannelSO _transformEventChannel;
+
+
+    [Header("Datas")]
+    UnitHealthData _healthData;
+    UnitMovementData _movementData;
+    UnitEnergyData _energyData;
+    UnitInventoryData _inventoryData;
+    [SerializeField] UnitStateData _stateData;
 
     void OnEnable()
     {
-        //PlayerHealth.onPlayerDeath += DisableInput;
+        GameManager.OnGameOver += OnPlayerDefeat;
     }
 
     void OnDisable()
     {
-        //PlayerHealth.onPlayerDeath -= DisableInput;
+        GameManager.OnGameOver -= OnPlayerDefeat;
     }
+
+
 
 
     void Awake()
     {
-        if (UnitConfigWrapper == null)
-        {
-            Debug.Log("Player has no config wrapper.");
-            return;
-        }
-
-        RuntimeDataHolder = new UnitRuntimeDataHolder();
-
-        // Storing uninitialized data
-        RuntimeDataHolder.AddRuntimeData(new UnitHealthData());
-        RuntimeDataHolder.AddRuntimeData(new UnitMovementData());
-        RuntimeDataHolder.AddRuntimeData(new UnitInventoryData());
-        RuntimeDataHolder.AddRuntimeData(new UnitEnergyData());
-        RuntimeDataHolder.AddRuntimeData(new UnitStateData());
-
-        // Initializing stored data
-        RuntimeDataHolder?.InitializeWithWrapper(this, UnitConfigWrapper);
-
-        // Initialized datas to be distributed to managers
-        UnitHealthData playerHealthData = RuntimeDataHolder.GetRuntimeData<UnitHealthData>();
-        UnitMovementData playerMovementData = RuntimeDataHolder.GetRuntimeData<UnitMovementData>();
-        UnitEnergyData playerEnergyData = RuntimeDataHolder.GetRuntimeData<UnitEnergyData>();
-        UnitInventoryData playerInventoryData = RuntimeDataHolder.GetRuntimeData<UnitInventoryData>();
-        UnitStateData playerStateData = RuntimeDataHolder.GetRuntimeData<UnitStateData>();
-
-        // Distribute runtime datas to managers
-        _playerHealthManager.InitializeWithData(this, playerHealthData);
-        _playerMovementManager.InitializeWithData(this, playerMovementData);
-        _playerEnergyManager.InitializeWithData(this, playerEnergyData);
-        _playerAbilityHandler.InitializeWithData(this, playerEnergyData);
-        _playerInventoryManager.InitializeWithData(this, playerInventoryData);
-
+        PrepareRuntimeData();
+        InitializeManagers();
     }
 
+    void Start()
+    {
+        if (_transformEventChannel != null)
+            _transformEventChannel.RaiseEvent(gameObject.transform);
+    }
+
+    void PrepareRuntimeData()
+    {
+        _healthData = new UnitHealthData(_healthConfig);
+        _movementData = new UnitMovementData(_movementConfig);
+        _energyData = new UnitEnergyData(_energyConfig);
+        _inventoryData = new UnitInventoryData(_inventoryConfig);
+        _stateData = new UnitStateData(_stateConfig);
+    }
     
-    /*void DisableInput(){
-        playerAim.enabled = false;
-        playerActionMap.Disable();
+    void InitializeManagers()
+    {
+        _playerHealthManager.InitializeManager(_healthData, _healthConfig);
+        _playerHealthManager.InitializeStateData(_stateData);
+
+
+        _playerMovementManager.InitializeManager(_movementData, _movementConfig);
+        _playerMovementManager.InitializeStateData(_stateData);
+
+        _playerEnergyManager.InitializeManager(_energyData, _energyConfig);
+        _playerInventoryManager.InitializeManager(_inventoryData, _inventoryConfig);
+
+        _playerAbilityHandler.InitializeManager(_energyData);
+        _playerAbilityHandler.InitializeStateData(_stateData);
+
+        _playerHitboxManager.InitializeStateData(_stateData);   
     }
 
-    void EnableInput(){
-        playerAim.enabled = true;
-        playerActionMap.Enable();
-    }*/
+    public override UnitStateData GetStateData()
+    {
+        return _stateData;
+    }
+
+    public void OnPlayerDefeat()
+    {
+        _stateData.IsAlive = false;
+        _stateData.CanMove = false;
+        _playerMovementManager.StopMovement();
+    }
     
 }

@@ -20,7 +20,7 @@ public class SettingsManager : MonoBehaviour
             Destroy(this);
             return;
         }
-        DontDestroyOnLoad(gameObject);
+
         instance = this;
     }
 

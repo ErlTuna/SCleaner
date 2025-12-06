@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public class VacuumNade : BaseEquipment, IThrowable
+public class VacuumNade : BaseEquipment
 {
     [SerializeField] float _throwStrength;
     [SerializeField] EnemyDetectionHandler _enemyDetectionHandler;
@@ -32,7 +32,7 @@ public class VacuumNade : BaseEquipment, IThrowable
         }
     }
 
-    public override void OnDeployment()
+    public override void OnUse()
     {
         if (_enemyDetectionHandler == null) return;
 
@@ -55,7 +55,7 @@ public class VacuumNade : BaseEquipment, IThrowable
 
     IEnumerator ApplyActivationEffects()
     {
-        Debug.Log("Waiting until FixedUpdate for physics to catch up :");
+        // waiting until fixed update for physics simulation to catch up
         yield return new WaitForFixedUpdate();
 
         List<GameObject> caughtEnemies = _enemyDetectionHandler.EnemyGOs.ToList();
@@ -66,9 +66,6 @@ public class VacuumNade : BaseEquipment, IThrowable
             Debug.Log("Attempting activation effect execution");
             effect.Execute(context, EquipmentData);
         }
-            
-        
-        
     }
 
     void ApplyOvertimeEffects()
@@ -101,7 +98,11 @@ public class VacuumNade : BaseEquipment, IThrowable
         gameObject.transform.parent = _parent;
         _enemyDetectionHandler.EnableCollider(false);
         gameObject.SetActive(false);
+    }
 
+    public override void OnReturn()
+    {
+        // no op
     }
 
     public override void InitializeDeployment(Quaternion rotation, Vector2 direction, Transform parentTransform, Vector2 grenadePosition)
@@ -114,12 +115,12 @@ public class VacuumNade : BaseEquipment, IThrowable
 
     public override bool CanUseEquipment()
     {
-        return EquipmentData.CurrentCount > 0 && EquipmentData.State == EquipmentState.INACTIVE;
+        return EquipmentData.CurrentCharge > 0 && EquipmentData.State == EquipmentState.INACTIVE;
     }
 
     public void Throw()
     {
-        //_rb2D.AddTorque(25f);
         _rb2D.AddForce(_trajectory * _throwStrength, ForceMode2D.Impulse);
     }
 }
+

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Device;
 
-[CreateAssetMenu(fileName = "WeaponInfoSO", menuName = "ScriptableObjects/Weapon/Weapon Data")]
+[CreateAssetMenu(fileName = "WeaponConfigSO", menuName = "ScriptableObjects/Weapon/Weapon Config")]
 public class WeaponConfigSO : ScriptableObject
 {
     [Header("General Info")]
@@ -11,7 +11,8 @@ public class WeaponConfigSO : ScriptableObject
     public WeaponType Type;
     public GameObject Prefab;
     public GameObject PickupPrefab;
-    public BulletConfigSO BulletData;
+    public GameObject BulletPrefab;
+    public BulletConfigSO BulletConfig;
     public string Name;
     public int Damage;
     public int RoundCapacity;
@@ -33,6 +34,7 @@ public class WeaponConfigSO : ScriptableObject
     
 
     [Header("Misc")]
+    public Sprite UI_Icon;
     public Vector3 offset = new(0, 0, 0);
     public GameObject rayCastStartPoint;
     public GameObject rayCastEndPoint;

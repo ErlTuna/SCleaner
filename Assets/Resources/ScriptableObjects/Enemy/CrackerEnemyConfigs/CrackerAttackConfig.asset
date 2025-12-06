@@ -12,4 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fafb1a8930cdc39428dca5c2a6864b50, type: 3}
   m_Name: CrackerAttackConfig
   m_EditorClassIdentifier: 
-  Damage: 50
+  ContactDamage: 1

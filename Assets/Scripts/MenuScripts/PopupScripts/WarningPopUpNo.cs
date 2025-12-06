@@ -1,12 +1,12 @@
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
+using UnityEngine.Events;
 
 public class WarningPopUpNo : MonoBehaviour, IMenuItem
 {
     [SerializeField] Image _selectionIndicator;
-    [SerializeField] GameObject _transitionFirstSelection;
-    public bool suppressEvents = false;
+    public UnityEvent OnSubmited;
 
     public void OnDeselect(BaseEventData eventData)
     {
@@ -21,12 +21,6 @@ public class WarningPopUpNo : MonoBehaviour, IMenuItem
 
     public void OnSubmit(BaseEventData eventData)
     {
-        if (suppressEvents) return;
-        
-        suppressEvents = true;
-        PopUpEvents.RaiseWarningNo();
-        UISelector.instance.SetSelected(_transitionFirstSelection);
-        suppressEvents = false;
-        
+        OnSubmited?.Invoke();
     }
 }

@@ -1,13 +1,12 @@
-using System.Collections;
-using System.Collections.Generic;
 using TMPro;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class UI_ActiveWeaponDisplay : MonoBehaviour
 {
-    [SerializeField] Image _imageComponent;
+    [SerializeField] AmmoChangeEventChannelSO _ammoChangeEventChannelSO;
+    [SerializeField] WeaponUIUpdateEventChannelSO _weaponChangeEventChannelSO;
+    [SerializeField] Image _weaponIcon;
     [SerializeField] TextMeshProUGUI _ammoText;
     [SerializeField] Sprite _fallbackSprite;
     readonly Color TransparentWhite = new(1f, 1f, 1f, 0f);
@@ -15,53 +14,82 @@ public class UI_ActiveWeaponDisplay : MonoBehaviour
 
     void OnEnable()
     {
-        PlayerInventoryEvents.OnWeaponSwitchUIUpdate += UpdateWeaponDisplayUI;
-        WeaponEvents.OnWeaponFiredEvent += UpdateAmmoDisplay;
-        WeaponEvents.OnWeaponReloadEvent += UpdateAmmoDisplay;
+        _weaponChangeEventChannelSO.OnEventRaised += UpdateDisplayOnWeaponSwitch;
+        _ammoChangeEventChannelSO.OnEventRaised += UpdateAmmoDisplay;
+        //PlayerInventoryEvents.OnWeaponSwitchUIUpdate += UpdateWeaponDisplayUI;
+        //WeaponEvents.OnWeaponFiredEvent += UpdateAmmoDisplay;
+        //WeaponEvents.OnWeaponReloadEvent += UpdateAmmoDisplay;
 
     }
 
     void OnDisable()
     {
-        PlayerInventoryEvents.OnWeaponSwitchUIUpdate -= UpdateWeaponDisplayUI;
-        WeaponEvents.OnWeaponFiredEvent -= UpdateAmmoDisplay;
-        WeaponEvents.OnWeaponReloadEvent -= UpdateAmmoDisplay;
+        _weaponChangeEventChannelSO.OnEventRaised -= UpdateDisplayOnWeaponSwitch;
+        _ammoChangeEventChannelSO.OnEventRaised -= UpdateAmmoDisplay;
+        //PlayerInventoryEvents.OnWeaponSwitchUIUpdate -= UpdateWeaponDisplayUI;
+        //WeaponEvents.OnWeaponFiredEvent -= UpdateAmmoDisplay;
+        //WeaponEvents.OnWeaponReloadEvent -= UpdateAmmoDisplay;
 
     }
 
-    void UpdateWeaponDisplayUI(Sprite weaponSprite, WeaponRuntimeData runtimeData)
+    void UpdateDisplayOnWeaponSwitch(WeaponUpdateData weaponUpdateData)
     {
-
-        if (weaponSprite == null)
+        if (weaponUpdateData.weaponIcon != null)
         {
-            //_imageComponent.sprite = _fallbackSprite;
-            _imageComponent.color = TransparentWhite;
-            UpdateAmmoDisplay(null);
-            return;
+            _weaponIcon.sprite = weaponUpdateData.weaponIcon;
+            _weaponIcon.color = Color.white;
         }
 
+        else
+        {
+            _weaponIcon.color = TransparentWhite;
+        }
 
-        _imageComponent.sprite = weaponSprite;
-        _imageComponent.color = Color.white;
-        UpdateAmmoDisplay(runtimeData);
+        AmmoData ammoData = new()
+        {
+            current = weaponUpdateData.currentAmmo,
+            reserve = weaponUpdateData.reserveAmmo
+        };
+
+        UpdateAmmoDisplay(ammoData);
     }
 
-    void UpdateAmmoDisplay(WeaponRuntimeData weaponData)
+     void UpdateAmmoDisplay(AmmoData ammoData)
     {
-        if (weaponData == null)
-        {
-            _ammoText.SetText("");
-            return;
-        }
-
-        string currentAmmo = weaponData.CurrentAmmo.ToString();
-        string currentReserve = weaponData.ReserveAmmo.ToString();
+        string currentAmmo = ammoData.current.ToString();
+        string currentReserve = ammoData.reserve.ToString();
         string text = currentAmmo + "/" + currentReserve;
         _ammoText.SetText(text);
     }
 
 
-
-
-
 }
+
+/*
+    void UpdateWeaponDisplayUI(Sprite weaponIcon, WeaponRuntimeData runtimeData)
+    {
+
+        if (weaponIcon == null)
+        {
+            //_imageComponent.sprite = _fallbackSprite;
+            _weaponIcon.color = TransparentWhite;
+            //UpdateAmmoDisplay(null);
+            return;
+        }
+
+
+        _weaponIcon.sprite = weaponIcon;
+        _weaponIcon.color = Color.white;
+        //UpdateAmmoDisplay(runtimeData);
+    }
+*/
+
+/*
+void UpdateAmmoDisplay(int current, int reserve)
+    {
+        string currentAmmo = current.ToString();
+        string currentReserve = reserve.ToString();
+        string text = currentAmmo + "/" + currentReserve;
+        _ammoText.SetText(text);
+    }
+*/

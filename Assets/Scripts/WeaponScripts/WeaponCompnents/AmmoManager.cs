@@ -13,6 +13,7 @@ public class AmmoManager : MonoBehaviour
 {
     public BaseWeapon Owner;
     public ReloadStrategySO ReloadStrategy;
+    [SerializeField] protected AmmoChangeEventChannelSO _ammoChangeEventChannelSO;
 
     public bool IsFullyLoaded()
     {
@@ -31,10 +32,21 @@ public class AmmoManager : MonoBehaviour
     public void UseAmmo()
     {
         if (Owner.WeaponRuntimeData.CurrentAmmo > 0)
+        {
             Owner.WeaponRuntimeData.CurrentAmmo--;
+            
 
-        //raise event to update UI
-        WeaponEvents.RaiseWeaponFired(Owner.WeaponRuntimeData);
+            if (_ammoChangeEventChannelSO != null)
+            {
+                AmmoData ammoData = new()
+                {
+                    current = Owner.WeaponRuntimeData.CurrentAmmo,
+                    reserve = Owner.WeaponRuntimeData.ReserveAmmo
+                };
+                _ammoChangeEventChannelSO.RaiseEvent(ammoData);
+            }
+                
+        }
     }
     public bool CanReload()
     {
@@ -47,9 +59,17 @@ public class AmmoManager : MonoBehaviour
     public void UseReloadStrategy()
     {
         ReloadStrategy.PerformReload(Owner);
-        //Update UI
-        WeaponEvents.RaiseWeaponReload(Owner.WeaponRuntimeData);
+        if (_ammoChangeEventChannelSO != null)
+            {
+                AmmoData ammoData = new()
+                {
+                    current = Owner.WeaponRuntimeData.CurrentAmmo,
+                    reserve = Owner.WeaponRuntimeData.ReserveAmmo
+                };
+                _ammoChangeEventChannelSO.RaiseEvent(ammoData);
+            }
     }
+
     public void ShouldContinueReloading()
     {
         ReloadStrategy.HandleReloadContinuation(Owner);

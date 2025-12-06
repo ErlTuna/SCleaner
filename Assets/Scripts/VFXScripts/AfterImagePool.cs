@@ -5,6 +5,7 @@ using UnityEngine.Pool;
 
 public class AfterImagePool : MonoBehaviour
 {
+    /*
     ObjectPool<AfterImage> _afterImagePool;
     [SerializeField] GameObject _afterImagePrefab;
     [SerializeField] int initialPoolSize = 10;
@@ -45,5 +46,6 @@ public class AfterImagePool : MonoBehaviour
     {
         Destroy(ai.gameObject);
     }
+    */
 
 }
