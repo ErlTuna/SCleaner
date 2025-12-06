@@ -1,12 +1,22 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class GameplayUIManager : MonoBehaviour
 {
-    void Start()
+    [SerializeField] Canvas _canvas;
+    [SerializeField] VoidEventChannelSO _pauseToggleEventChannel;
+
+    void OnEnable()
     {
-        DontDestroyOnLoad(gameObject);
+        _pauseToggleEventChannel.OnEventRaised += ToggleCanvas;
     }
 
+    void OnDisable()
+    {
+        _pauseToggleEventChannel.OnEventRaised -= ToggleCanvas;
+    }
+    
+    void ToggleCanvas()
+    {
+        _canvas.enabled = !_canvas.enabled;
+    }
 }

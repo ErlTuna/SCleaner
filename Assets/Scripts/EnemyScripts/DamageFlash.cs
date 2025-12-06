@@ -8,7 +8,7 @@ public class DamageFlash : MonoBehaviour
     [SerializeField] Color _flashColor = Color.white;
     [SerializeField] float _flashTime = 0.25f;
 
-    public SpriteRenderer _spriteRenderer;
+    [SerializeField] SpriteRenderer _spriteRenderer;
     Material _mat;
 
     void Start()

@@ -4,14 +4,25 @@ using UnityEngine;
 
 public class PlayerHitbox : MonoBehaviour
 {
-    /*
-    public static Action OnPlayerHit;
 
-    void OnTriggerEnter2D(Collider2D other)
+    [SerializeField] CircleCollider2D _hitbox;
+    [SerializeField] UnitStateData _playerStateData;
+    bool _previousInvulnState;
+
+    public void InitializeStateData(UnitStateData playerStateData)
     {
-        GameObject attacker = other.gameObject;
-        
-
+        _playerStateData = playerStateData;
     }
-    */
+
+    void Update()
+    {
+        bool isInvuln = _playerStateData.IsHitInvuln || _playerStateData.IsInvuln;
+
+        if (isInvuln != _previousInvulnState)
+        {
+            _hitbox.enabled = !isInvuln;
+            _previousInvulnState = isInvuln;
+        }
+    }
+    
 }

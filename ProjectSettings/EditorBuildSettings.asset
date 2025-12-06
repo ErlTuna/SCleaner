@@ -5,12 +5,18 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/Main_Menu.unity
     guid: a92e34080e57e3c45bee4d1a49eebace
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/odalar1.unity
     guid: 4a3dac9318fc08443b1f0648d2a0a918
+  - enabled: 1
+    path: Assets/Scenes/Bootstrap.unity
+    guid: 76290a59223c93c4d9e64770222c15ef
+  - enabled: 1
+    path: Assets/Scenes/PersistentScene.unity
+    guid: 9512ead92f586714c9308e3c35a163bc
   - enabled: 1
     path: Assets/Scenes/Main_Menu_v2.unity
     guid: b48d6716bda493b47a1bc731816ebafe
@@ -23,5 +29,11 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/GameplayUI.unity
     guid: 29c696b19bc38404e9eb6140931af350
+  - enabled: 1
+    path: Assets/Scenes/GameOver.unity
+    guid: de34e84e9c7e9694980c0d4efea87081
+  - enabled: 1
+    path: Assets/Scenes/PauseMenu.unity
+    guid: fdd27e07a1a7e0041b81a1bc5a33d522
   m_configObjects:
     com.unity.input.settings: {fileID: 11400000, guid: caf28c9d0de53cf41b5bc566fa067552, type: 2}

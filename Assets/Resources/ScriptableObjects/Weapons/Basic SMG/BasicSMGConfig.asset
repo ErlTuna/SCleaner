@@ -1,0 +1,50 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8af658472ac40bb42b3a626dc24f4a0c, type: 3}
+  m_Name: BasicSMGConfig
+  m_EditorClassIdentifier: 
+  WeaponName: Basic SMG
+  Type: 1
+  Prefab: {fileID: 5890597930396712892, guid: c9811e33e02839c489d5101f0c846dcd, type: 3}
+  PickupPrefab: {fileID: 5890597930396712892, guid: 6f09affdc9aaaf742a02f9e31b14b4fb, type: 3}
+  BulletPrefab: {fileID: 6657017082548522162, guid: c77308c80b6609f4eb203a2ff835a4b3, type: 3}
+  BulletConfig: {fileID: 11400000, guid: a3d432f8e7373a146a7bc5cdb97754b7, type: 2}
+  Name: Basic SMG
+  Damage: 3
+  RoundCapacity: 30
+  MaxReserveAmmo: 120
+  StartingReserveAmmo: 120
+  BulletPerShot: 1
+  PushForce: 5
+  SpreadAngle: 15
+  SpreadResetThreshold: 0.75
+  HasInfiniteReserveAmmo: 0
+  Sprite: {fileID: 21300000, guid: 164da21782210a147b7f02ab6343eda9, type: 3}
+  FiringSound: {fileID: 11400000, guid: 83484d1f01585144eb3e0bc48217bfef, type: 2}
+  DryFiringSound: {fileID: 11400000, guid: 4a47d7325cbcaa64d96d8a9fe78951f9, type: 2}
+  DryFireSFX: {fileID: 8300000, guid: 591753c0fc688dc4a8a4928848b5c518, type: 3}
+  FiringSFX: {fileID: 8300000, guid: 22a53bb9dfae1634b8328e865a964e4d, type: 3}
+  WeaponSwitchSFX: {fileID: 8300000, guid: d2b24e19405954a4c99252993fb90386, type: 3}
+  UI_Icon: {fileID: 21300000, guid: 3ac3254aa04000c43b9e4cd24c6ce0fd, type: 3}
+  offset: {x: 1.5, y: 0, z: 0}
+  rayCastStartPoint: {fileID: 0}
+  rayCastEndPoint: {fileID: 0}
+  muzzleTipCheck: {fileID: 0}
+  enemyLayer:
+    serializedVersion: 2
+    m_Bits: 1024
+  environmentLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  mixedLayerMask:
+    serializedVersion: 2
+    m_Bits: 0

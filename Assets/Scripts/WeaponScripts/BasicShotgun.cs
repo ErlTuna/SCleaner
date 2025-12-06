@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BasicShotgun : BaseWeapon
+public class BasicShotgun : PlayerWeapon
 {
     List<GameObject> _bullets = new();
     void Start()
@@ -46,31 +46,18 @@ public class BasicShotgun : BaseWeapon
     public override void SpawnBullet()
     {
 
-        Collider2D overlappingEnemyHitbox = ObstructionChecker.CheckMuzzleEnemyOverlap(muzzleTipCheck, WeaponConfig.enemyLayer);
-
-        if (overlappingEnemyHitbox)
-        {
-            if (overlappingEnemyHitbox.TryGetComponent<IDamageable>(out var damageable))
-            {
-                DamageContext context = new(gameObject, transform.position, WeaponRuntimeData.Damage * WeaponConfig.BulletPerShot, WeaponConfig.PushForce);
-                damageable.TakeDamage(context);
-                AmmoManager.UseAmmo();
-                return;
-            }
-        }
-
         BulletConfigSO bulletData;
         for (int i = 0; i < FiringPoints.Length; ++i)
         {
-            bulletData = WeaponConfig.BulletData;
-            GameObject bullet = Instantiate(bulletData.Prefab, FiringPoints[i].transform.position, FiringPoints[i].transform.rotation);
+            bulletData = WeaponConfig.BulletConfig;
+            GameObject bullet = Instantiate(bulletData.Prefab, FiringPoints[i].transform.position, Quaternion.identity);
             Bullet bulletScript = bullet.GetComponent<Bullet>();
-            bulletScript.Setup(gameObject, WeaponRuntimeData, WeaponConfig);
-
-            //bulletScript.SetupBulletParameters(bulletData.ProjectileSpeed, bulletData.Size, WeaponRuntimeData.Damage, bulletData.LifeTime);
+            bulletScript.Initialize(gameObject, FiringPoints[i].transform.right, WeaponRuntimeData, WeaponConfig, i);
             _bullets.Add(bullet);
         }
 
+        AmmoManager.UseAmmo();
+        //WeaponEvents.RaiseAmmoUsed(WeaponRuntimeData);
     }
     
     public override bool CanFire()

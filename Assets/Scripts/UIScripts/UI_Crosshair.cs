@@ -1,4 +1,3 @@
-using TMPro.EditorUtilities;
 using UnityEngine;
 
 public class UI_Crosshair : MonoBehaviour
@@ -22,8 +21,8 @@ public class UI_Crosshair : MonoBehaviour
 
     void Update()
     {
-        if (PlayerInputManager.instance == null) return;
-        rectTransform.position = PlayerInputManager.instance.PointerInput;
+        if (PlayerInputManager.Instance == null) return;
+        rectTransform.position = PlayerInputManager.Instance.PointerInput;
     }
 
     /*void EnlargeCrosshair()

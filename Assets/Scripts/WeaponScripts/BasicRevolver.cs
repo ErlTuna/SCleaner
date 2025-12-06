@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BasicRevolver : BaseWeapon
+public class BasicRevolver : PlayerWeapon
 {
     void Start()
     {
@@ -12,7 +12,7 @@ public class BasicRevolver : BaseWeapon
     void Update()
     {
         //weapon runs out of ammo but has reserve and isn't actively reloading, try starting a reload
-        if (AmmoManager.HasAmmo() == false && WeaponRuntimeData.State != WeaponState.RELOADING)
+        if (AmmoManager.HasAmmo() == false && AmmoManager.CanReload() && WeaponRuntimeData.State != WeaponState.RELOADING)
         {
             AmmoManager.HandleReloadStart();
         }
@@ -26,10 +26,9 @@ public class BasicRevolver : BaseWeapon
             TryDryFire();
             return;
         }
+
         if (WeaponRuntimeData.State != WeaponState.IDLE) return;
-
-
-        HandlePreAttack();
+            HandlePreAttack();
     
     }
 
@@ -65,25 +64,10 @@ public class BasicRevolver : BaseWeapon
 
     public override void SpawnBullet()
     {
-        Collider2D overlappingEnemyHitbox = ObstructionChecker.CheckMuzzleEnemyOverlap(muzzleTipCheck, WeaponConfig.enemyLayer);
-
-        if (overlappingEnemyHitbox)
-        {
-            if (overlappingEnemyHitbox.TryGetComponent<IDamageable>(out var damageable))
-            {
-                DamageContext context = new(gameObject, transform.position, WeaponRuntimeData.Damage, WeaponConfig.PushForce);
-                damageable.TakeDamage(context);
-                AmmoManager.UseAmmo();
-                return;
-            }
-        }
-
-        GameObject instantiatedBullet = Instantiate(WeaponConfig.BulletData.Prefab, FiringPoints[0].transform.position, transform.rotation);
-        instantiatedBullet.SetActive(false);
-        instantiatedBullet.GetComponent<Bullet>().Setup(gameObject, WeaponRuntimeData, WeaponConfig);
-        instantiatedBullet.SetActive(true);
-
+        GameObject instantiatedBullet = Instantiate(WeaponConfig.BulletConfig.Prefab, FiringPoints[0].transform.position, transform.rotation);
+        instantiatedBullet.GetComponent<Bullet>().Initialize(gameObject, FiringPoints[0].transform.right, WeaponRuntimeData, WeaponConfig);
         AmmoManager.UseAmmo();
+        //WeaponEvents.RaiseAmmoUsed(WeaponRuntimeData);
 
     }
 }

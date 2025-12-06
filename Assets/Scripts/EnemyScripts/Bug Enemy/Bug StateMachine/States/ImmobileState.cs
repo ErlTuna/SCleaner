@@ -4,28 +4,33 @@ using UnityEngine.InputSystem.Interactions;
 
 public class ImmobileState : BaseState
 {
-    public ImmobileState(GameObject enemy, Rigidbody2D rb2D, NavMeshAgent agent) : base(enemy, rb2D, agent){}
+    GameObject _owner;
+    NavMeshAgent _agent;
+    Rigidbody2D _rb2D;
+
+    public ImmobileState(GameObject owner, Rigidbody2D rb2D, NavMeshAgent agent)
+    {
+        _owner = owner;
+        _rb2D = rb2D;
+        _agent = agent;
+    }
     public override void OnEnter()
     {
-        if (agent.hasPath)
-            agent.ResetPath();
+        if (_agent.hasPath)
+            _agent.ResetPath();
 
-        agent.enabled = false;
-        rb2D.isKinematic = false;
-        //rb2D.bodyType = RigidbodyType2D.Dynamic;
-
+        _agent.enabled = false;
+        _rb2D.isKinematic = false;
         Debug.Log("Immobilized!");
     }
 
     public override void OnExit()
     {
-        rb2D.velocity = Vector2.zero;
-        rb2D.angularVelocity = 0f;
-        rb2D.isKinematic = true;
-        agent.enabled = true;
+        _rb2D.velocity = Vector2.zero;
+        _rb2D.angularVelocity = 0f;
+        _rb2D.isKinematic = true;
+        _agent.enabled = true;
         Debug.Log("Exited immobile state");
-        //rb2D.bodyType = RigidbodyType2D.Kinematic;
-
     }
 
 

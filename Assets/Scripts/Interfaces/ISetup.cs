@@ -4,5 +4,4 @@ using UnityEngine;
 
 public interface ISetup 
 {
-    void Init(UnitInfo info);
 }

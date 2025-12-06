@@ -4,20 +4,15 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [Serializable]
-public class UnitStateData : IUnitStateData
+public class UnitStateData
 {
-    public bool IsAlive { get; set; }
-    public bool IsHitInvuln { get; set;}
-    public bool IsInvuln { get; set; }
-    public bool CanMove { get; set; }
-    public bool IsShielded { get; set; }
+    public bool IsAlive;
+    public bool IsHitInvuln;
+    public bool IsInvuln;
+    public bool CanMove;
+    public bool IsShielded;
 
-    public void AutoConfigureWithWrapper(UnitConfigsWrapperSO configWrapper)
-    {
-        ConfigureWith(configWrapper.StateConfig);
-    }
-
-    public virtual void ConfigureWith(UnitStateConfigSO config)
+    public UnitStateData(UnitStateConfigSO config)
     {
         if (config == null)
         {

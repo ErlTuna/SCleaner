@@ -1,63 +1,30 @@
 using System;
-using System.Collections.Generic;
 using UnityEngine;
 
 [Serializable]
 public abstract class BaseEquipment : MonoBehaviour
 {
-    public GameObject User;
+    public GameObject Owner;
     public EquipmentConfigSO EquipmentConfig;
     public EquipmentData EquipmentData;
     public abstract void InitializeDeployment(Quaternion rotation, Vector2 direction, Transform parentTransform, Vector2 spawnPosition);
-    public abstract void OnDeployment();
+    public abstract void OnUse();
     public abstract void OnActivation();
     public abstract void OnDeactivation();
+    public abstract void OnReturn();
     public virtual bool CanUseEquipment()
     {
         return true;
     }
-    public virtual void InitializeWithData()
+    public virtual void InitializeEquipment()
     {
         EquipmentData = new EquipmentData(EquipmentConfig);
     }
 
-}
-
-
-[Serializable]
-public class EquipmentData
-{
-    public string EquipmentName;
-    public EquipmentConfigSO EquipmentConfig;
-    public EquipmentState State;
-    public EquipmentAbilityData Ability;
-    public int CurrentCount;
-    public int MaxCount;
-    public float Lifetime;
-
-
-    public EquipmentData(EquipmentConfigSO equipmentConfigSO)
+    public virtual void Recharge()
     {
-        State = EquipmentState.INACTIVE;
-        EquipmentConfig = equipmentConfigSO;
-        MaxCount = EquipmentConfig.MaxCount;
-        CurrentCount = EquipmentConfig.StartingCount;
-        Lifetime = EquipmentConfig.MaxLifetime;
-        Ability = equipmentConfigSO.Ability;
+        EquipmentData.CurrentCharge = Mathf.Min(EquipmentData.CurrentCharge + 0.1f, EquipmentData.MaxCharge);
     }
+    
 
-}
-
-[Serializable]
-public enum EquipmentState
-{
-    INACTIVE,
-    DEPLOYING,
-    ACTIVE
-}
-
-[Serializable]
-public enum EquipmentType
-{
-    THROWABLE
 }

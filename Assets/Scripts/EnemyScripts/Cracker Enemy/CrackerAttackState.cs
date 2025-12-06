@@ -1,18 +1,25 @@
 using System.Collections;
-using UnityEditorInternal;
 using UnityEngine;
 using UnityEngine.AI;
 
 public class CrackerAttackState : BaseState
 {
+    GameObject _owner;
+    NavMeshAgent _agent;
+    Rigidbody2D _rb2D;
     Coroutine attackCoroutine;
-    Unit _ownerScript;
-    Transform target;
-    Vector2 targetDirection;
+    MonoBehaviour _ownerScript;
+    Transform _target;
+    Vector2 _targetDirection;
     EnemyStateData _stateData;
-    public CrackerAttackState(GameObject owner, Unit ownerScript, GameObject player, Rigidbody2D rb2D, NavMeshAgent agent, EnemyStateData stateData, UnitMovementData movementData) : base(owner, rb2D, agent)
+    AfterImageEmitter _afterImageEmitter;
+    public CrackerAttackState(GameObject owner, MonoBehaviour ownerScript, GameObject player, Rigidbody2D rb2D, NavMeshAgent agent, EnemyStateData stateData, AfterImageEmitter emitter)
     {
-        target = player.transform;
+        _owner = owner;
+        _agent = agent;
+        _rb2D = rb2D;
+        _afterImageEmitter = emitter;
+        _target = player.transform;
         _ownerScript = ownerScript;
         _stateData = stateData;
     }
@@ -41,17 +48,14 @@ public class CrackerAttackState : BaseState
 
     public override void StateFixedUpdate()
     {
-        /*if(!enemyScript.EnemyInfo.isAttacking){
-            attackCoroutine = enemyScript.TriggerCoroutine(PerformAttack());
-        }*/
-        if(_stateData.IsAttacking){
+        if (_stateData.IsAttacking)
+        {
             CalculatePlayerDirection();
             Debug.Log("Launching");
-            rb2D.AddForce(targetDirection * 7.5f, ForceMode2D.Impulse);
-            
+            _rb2D.AddForce(_targetDirection * 7.5f, ForceMode2D.Impulse);
             _ownerScript.StartCoroutine(AttackEnd());
         }
-            
+        _afterImageEmitter.TryEmit();
     }
 
     IEnumerator AttackEnd()
@@ -64,13 +68,13 @@ public class CrackerAttackState : BaseState
 
     void CalculatePlayerDirection(){
         //calculate direction
-        targetDirection = (target.position - owner.transform.position).normalized;
+        _targetDirection = (_target.position - _owner.transform.position).normalized;
     }
     void DisableAgent(){
-        agent.ResetPath();
-        agent.enabled = false;
-        rb2D.isKinematic = false;
-        rb2D.bodyType = RigidbodyType2D.Dynamic;
+        _agent.ResetPath();
+        _agent.enabled = false;
+        _rb2D.isKinematic = false;
+        _rb2D.bodyType = RigidbodyType2D.Dynamic;
     }
 
 }

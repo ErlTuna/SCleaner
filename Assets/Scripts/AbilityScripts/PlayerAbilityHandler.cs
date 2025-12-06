@@ -1,24 +1,36 @@
 using System;
 using System.Collections.Generic;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
 public class PlayerAbilityHandler : MonoBehaviour
 {
-    Unit _owner;
     public static event Action<AbilityData> OnAbilityUsed;
     public static event Action OnAbilityFinished;
     [SerializeField] List<AbilityData> abilities;
     [SerializeField] AbilityData currentAbility;
     [SerializeField] AbilityContext context;
-    UnitEnergyData _playerEnergyData;
+    [SerializeField] SpriteRenderer _spriteRenderer;
+    [SerializeField] UnitEnergyData _playerEnergyData;
     Coroutine useStateCoroutine;
     public int currentAbilityIndex = 0;
+    public UnitStateData _playerStateData;
 
 
     void Start()
     {
-        UIEvents.RaiseAbilityChanged(currentAbility);
+        UIEvents.RaiseAbilityChanged(currentAbility.UI_Icon);
+    }
+
+    public void InitializeManager(UnitEnergyData playerEnergyData)
+    {
+        _playerEnergyData = playerEnergyData;
+    }
+
+    public void InitializeStateData(UnitStateData playerState)
+    {
+        _playerStateData = playerState;
     }
 
 
@@ -63,7 +75,7 @@ public class PlayerAbilityHandler : MonoBehaviour
         }
         */
         
-        if (PlayerInputManager.instance.AbilityUseInput)
+        if (PlayerInputManager.Instance.AbilityUseInput)
         {
             UseAbility();
         }
@@ -82,7 +94,7 @@ public class PlayerAbilityHandler : MonoBehaviour
         Debug.Log("Changing abilities");
         currentAbilityIndex = (currentAbilityIndex + 1) % abilities.Count;
         currentAbility = abilities[currentAbilityIndex];
-        UIEvents.RaiseAbilityChanged(currentAbility);
+        UIEvents.RaiseAbilityChanged(currentAbility.UI_Icon);
     }
 
     void UseAbility()
@@ -90,21 +102,10 @@ public class PlayerAbilityHandler : MonoBehaviour
         List<GameObject> _targets = new();
         _targets.Add(gameObject);
 
-        context = new AbilityContext
-            {
-                user = gameObject,
-                targets = _targets,
-                direction = PlayerInputManager.instance.MovementInput,
-                userRuntimeData = _owner.RuntimeDataHolder
-            };
+        context = new AbilityContext(gameObject, _targets, PlayerInputManager.Instance.MovementInput, _playerStateData);
         Execute(context);
     }
 
-    public void InitializeWithData(Unit owner, UnitEnergyData energyData)
-    {
-        _owner = owner;
-        _playerEnergyData = energyData;
-    }
 }
 
 

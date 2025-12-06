@@ -1,37 +1,26 @@
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using UnityEngine;
 
 [Serializable]
-public class UnitInventoryData : IUnitInventoryData
+public class UnitInventoryData
 {
-    public UnitInventoryConfigSO InventoryConfig;
-    public UnitWeaponInventory WeaponInventory { get; set; }    
-    public UnitEquipmentInventory EquipmentInventory { get; set; }
-    public UnitCurrencyInventory CurrencyInventory { get; set; }
-
-    public void AutoConfigureWithWrapper(UnitConfigsWrapperSO config)
+    public UnitWeaponInventory WeaponInventory;
+    public UnitEquipmentInventory EquipmentInventory;
+    public UnitCurrencyInventory CurrencyInventory;
+    public UnitInventoryData(UnitInventoryConfigSO config)
     {
-        ConfigureWith(config.InventoryConfig);
-    }
+        WeaponInventory = new UnitWeaponInventory
+        {
+            MaxWeaponAmount = config.MaxWeaponAmount,
+            WeaponsHeld = config.WeaponPrefabs.Count()
+        };
 
-    public void ConfigureWith(UnitInventoryConfigSO config)
-    {
-        InventoryConfig = config;
-        Debug.Log("InventoryConfig state : " + InventoryConfig);
-        WeaponInventory = new UnitWeaponInventory();
         EquipmentInventory = new UnitEquipmentInventory();
-        CurrencyInventory = new UnitCurrencyInventory();    
-    
-
-        CurrencyInventory.OwnedCurrency = InventoryConfig.OwnedCurrency;
-        CurrencyInventory.MaxCurrency = InventoryConfig.MaxCurrency;
-
-        WeaponInventory.MaxWeaponAmount = InventoryConfig.MaxWeaponAmount;
-        WeaponInventory.WeaponsHeld = InventoryConfig.WeaponPrefabs.Count();
-        EquipmentInventory.EquipmentsHeld = InventoryConfig.EquipmentPrefabs.Count();
-
+        CurrencyInventory = new UnitCurrencyInventory
+        {
+            OwnedCurrency = config.OwnedCurrency,
+            MaxCurrency = config.MaxCurrency
+        };
     }
 
 

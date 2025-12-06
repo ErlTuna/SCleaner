@@ -14,4 +14,5 @@ public class EnemyStateConfigSO : UnitStateConfigSO
     public bool IsChargingAnAttack = false;
     public bool IsAttacking = false;
     public bool IsRecovering = false;
+    
 }

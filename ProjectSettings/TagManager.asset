@@ -14,6 +14,7 @@ TagManager:
   - Pickup
   - EnemyHitbox
   - Equipment
+  - EnemyBullet
   layers:
   - Default
   - TransparentFX
@@ -23,7 +24,7 @@ TagManager:
   - UI
   - Enemy
   - Player
-  - Bullet
+  - PlayerBullet
   - Borders
   - EnemyHitbox
   - Detection
@@ -33,9 +34,9 @@ TagManager:
   - Props
   - OutsideOfGameArea
   - Items
-  - 
-  - 
-  - 
+  - EnemyHat
+  - Debris
+  - EnemyBullet
   - 
   - 
   - 

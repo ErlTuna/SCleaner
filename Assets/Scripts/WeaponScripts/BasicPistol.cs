@@ -1,7 +1,7 @@
 using Unity.Mathematics;
 using UnityEngine;
 
-public class BasicPistol : BaseWeapon
+public class BasicPistol : PlayerWeapon
 {
     void Start()
     {
@@ -42,30 +42,17 @@ public class BasicPistol : BaseWeapon
     }
 
     public override void SpawnBullet()
-    {
-        /*
-        Collider2D overlappingEnemyHitbox = ObstructionChecker.CheckMuzzleEnemyOverlap(muzzleTipCheck, WeaponConfig.enemyLayer);
-
-        if (overlappingEnemyHitbox)
-        {
-            if (overlappingEnemyHitbox.TryGetComponent<IDamageable>(out var damageable))
-            {
-                DamageContext context = new(gameObject, transform.position, WeaponRuntimeData.Damage, WeaponConfig.PushForce);
-                damageable.TakeDamage(context);
-                AmmoManager.UseAmmo();
-                return;
-            }
-        }
-        */
+    {   
+        Quaternion spreadRot = CalculateBulletSpread();
+        Vector2 trajectory = spreadRot * Vector2.right;
+        GameObject instantiatedBullet = Instantiate(WeaponConfig.BulletPrefab, FiringPoints[0].transform.position, Quaternion.identity);
 
         
-        Quaternion bulletRotation = CalculateBulletSpread();
-        GameObject instantiatedBullet = Instantiate(WeaponConfig.BulletData.Prefab, FiringPoints[0].transform.position, bulletRotation);
-        instantiatedBullet.SetActive(false);
-        instantiatedBullet.GetComponent<Bullet>().Setup(gameObject, WeaponRuntimeData, WeaponConfig);
-        instantiatedBullet.SetActive(true);
-        AmmoManager.UseAmmo();
+        instantiatedBullet.GetComponent<Bullet>().Initialize(gameObject, trajectory, WeaponRuntimeData, WeaponConfig);
         WeaponRuntimeData.TimeSinceLastFired = Time.unscaledTime;
+        AmmoManager.UseAmmo();
+        
+        //WeaponEvents.RaiseAmmoUsed(WeaponRuntimeData);
     }
 
 }

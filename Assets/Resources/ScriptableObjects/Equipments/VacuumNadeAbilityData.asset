@@ -17,32 +17,29 @@ MonoBehaviour:
   icon: {fileID: 0}
   SFXClip: {fileID: 0}
   Effects: []
-  ActivationEffects: []
+  ActivationEffects:
+  - rid: 7605421309699031040
   OverTimeEffects:
-  - rid: 3032814267037646850
-  - rid: 3032814267037646851
+  - rid: 7605421309699031041
   ExpirationEffects:
-  - rid: 3032814287824355330
+  - rid: 7605421309699031042
   Conditions: []
   references:
     version: 2
     RefIds:
-    - rid: 3032814267037646850
-      type: {class: PullEffect, ns: , asm: Assembly-CSharp}
+    - rid: 7605421309699031040
+      type: {class: EquipmentImmobilizeEffect, ns: , asm: Assembly-CSharp}
       data:
-        ApplicationType: 1
-        Duration: 0.009904164
-        PullForce: 50
-        PullDuration: 5
-        PullRadius: 10
-    - rid: 3032814267037646851
-      type: {class: ImmobilizeEffect, ns: , asm: Assembly-CSharp}
+        Duration: 1
+    - rid: 7605421309699031041
+      type: {class: EquipmentPullEffect, ns: , asm: Assembly-CSharp}
       data:
-        ApplicationType: 0
-        Duration: 0.009904164
-    - rid: 3032814287824355330
-      type: {class: DamageEffect, ns: , asm: Assembly-CSharp}
+        Duration: 0.008810479
+        PullForce: 1
+        PullDuration: 1
+        PullRadius: 5
+    - rid: 7605421309699031042
+      type: {class: EquipmentDamageEffect, ns: , asm: Assembly-CSharp}
       data:
-        ApplicationType: 0
-        Damage: 20
+        Damage: 0
         PushForce: 10

@@ -1,7 +1,9 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[Serializable]
 public class UnitWeaponInventory
 {
     public int WeaponsHeld;
@@ -49,29 +51,29 @@ public class UnitWeaponInventory
     public int FindNextWeaponWithAmmo(int currentSlot)
     {
 
-    // Check forwards
-    for (int i = 1; i < WeaponGOs.Count; i++)
-    {
-        int nextSlot = (currentSlot + i) % WeaponGOs.Count;
-        var weapon = WeaponScripts[nextSlot];
-        if (weapon != null && weapon.AmmoManager.HasAmmo() || weapon.AmmoManager.HasReserveAmmo())
-            return nextSlot;
+        // Check forwards
+        for (int i = 1; i < WeaponGOs.Count; i++)
+        {
+            int nextSlot = (currentSlot + i) % WeaponGOs.Count;
+            var weapon = WeaponScripts[nextSlot];
+            if (weapon != null && weapon.AmmoManager.HasAmmo() || weapon.AmmoManager.HasReserveAmmo())
+                return nextSlot;
+        }
+
+        // Check backwards
+        for (int i = currentSlot; i < 0; i--)
+        {
+            int previousSlot = currentSlot - i;
+            if (previousSlot < 0)
+                break; // no more slots backward
+
+            var weapon = WeaponScripts[previousSlot];
+            if (weapon != null && weapon.AmmoManager.HasAmmo() || weapon.AmmoManager.HasReserveAmmo())
+                return previousSlot;
+        }
+
+        return -1; // didn't find any valid weapon
     }
-
-    // Check backwards
-    for (int i = currentSlot; i < 0; i--)
-    {
-        int previousSlot = currentSlot - i;
-        if (previousSlot < 0)
-            break; // no more slots backward
-
-        var weapon = WeaponScripts[previousSlot];
-        if (weapon != null && weapon.AmmoManager.HasAmmo() || weapon.AmmoManager.HasReserveAmmo() )
-            return previousSlot;
-    }
-
-    return -1; // didn't find any valid weapon
-}
 
     public bool IsEmpty()
     {

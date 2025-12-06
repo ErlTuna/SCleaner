@@ -52,7 +52,8 @@ public class MenuAnimationsManager : MonoBehaviour
 
     public void OptionDeselected()
     {
-        selectionIndicator.enabled = false;
+        if (selectionIndicator != null)
+            selectionIndicator.enabled = false;
     }
 
     public void ReceiveAnimator(Animator animator)

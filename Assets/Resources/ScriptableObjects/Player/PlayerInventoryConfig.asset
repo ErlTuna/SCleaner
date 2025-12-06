@@ -16,5 +16,4 @@ MonoBehaviour:
   MaxCurrency: 9999
   MaxWeaponAmount: 2
   WeaponPrefabs: []
-  EquipmentPrefabs:
-  - {fileID: 3411235486444114872, guid: 3a7cd3ce19edb604d9e84789ae7bf950, type: 3}
+  EquipmentPrefab: {fileID: 3411235486444114872, guid: 3a7cd3ce19edb604d9e84789ae7bf950, type: 3}

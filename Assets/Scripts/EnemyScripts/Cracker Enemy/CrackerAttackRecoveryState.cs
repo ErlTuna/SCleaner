@@ -4,13 +4,20 @@ using UnityEngine.AI;
 
 public class CrackerAttackRecoveryState : BaseState
 {
+    GameObject _owner;
+    NavMeshAgent _agent;
+    Rigidbody2D _rb2D;
     Coroutine _recoveryRoutine;
-    Unit _ownerScript;
+    MonoBehaviour _ownerScript;
     EnemyStateData _stateData;
     Vector2 targetDirection;
     Transform target;
 
-    public CrackerAttackRecoveryState(GameObject owner, Unit ownerScript, GameObject player, Rigidbody2D rb2D, NavMeshAgent agent, EnemyStateData stateData) : base(owner, rb2D, agent){
+    public CrackerAttackRecoveryState(GameObject owner, MonoBehaviour ownerScript, GameObject player, Rigidbody2D rb2D, NavMeshAgent agent, EnemyStateData stateData)
+    {
+        _owner = owner;
+        _agent = agent;
+        _rb2D = rb2D;
         _ownerScript = ownerScript;
         _stateData = stateData;
         target = player.transform;
@@ -24,12 +31,14 @@ public class CrackerAttackRecoveryState : BaseState
 
     public override void OnExit()
     {
-        if(_stateData.CanMove){
-            if(_recoveryRoutine != null)
+        if (_stateData.CanMove)
+        {
+            if (_recoveryRoutine != null)
                 _ownerScript.StopCoroutine(_recoveryRoutine);
         }
-        rb2D.velocity = Vector2.zero;
-        rb2D.angularVelocity = 0f;
+        
+        _rb2D.velocity = Vector2.zero;
+        _rb2D.angularVelocity = 0f;
         EnableAgent();
     }
 
@@ -55,17 +64,17 @@ public class CrackerAttackRecoveryState : BaseState
     }
     void CalculatePlayerDirection(){
         //calculate direction
-        targetDirection = (target.position - owner.transform.position).normalized;
+        targetDirection = (target.position - _owner.transform.position).normalized;
     }
 
     void RotateTowardsPlayer(){
         float angle = Mathf.Atan2(targetDirection.y, targetDirection.x) * Mathf.Rad2Deg;
-        owner.transform.eulerAngles = new Vector3(0, 0, angle);
+        _owner.transform.eulerAngles = new Vector3(0, 0, angle);
     }
 
     void EnableAgent(){
-        agent.enabled = true;
-        rb2D.isKinematic = true;
-        rb2D.bodyType = RigidbodyType2D.Kinematic;
+        _agent.enabled = true;
+        _rb2D.isKinematic = true;
+        _rb2D.bodyType = RigidbodyType2D.Kinematic;
     }
 }

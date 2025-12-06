@@ -15,6 +15,6 @@ public class UnitAttackData : IUnitAttackData
 
     public void ConfigureWith(UnitAttackConfigSO config)
     {
-        Damage = config.Damage;
+        Damage = config.ContactDamage;
     }
 }

@@ -6,7 +6,6 @@ using UnityEngine.SceneManagement;
 public class ReturnToMainMenuButton : MonoBehaviour, IMenuItem
 {
     [SerializeField] Image _selectionIndicator;
-    bool suppressEvents = false;
     
     public void OnSelect(BaseEventData eventData)
     {
@@ -18,15 +17,9 @@ public class ReturnToMainMenuButton : MonoBehaviour, IMenuItem
     {
         MenuAnimationsManager.instance.OptionDeselected();
     }
-
     public void OnSubmit(BaseEventData eventData)
     {
-        if (suppressEvents) return;
-
-        suppressEvents = true;
         AudioManager.instance.PlaySubmitSound();
-        Time.timeScale = 1f;
-        SceneManager.LoadScene("Main_Menu_v2");
-        suppressEvents = false;
+        GameManager.Instance.SetGameState(GameState.RETURNING_TO_MAIN_MENU);
     }
 }

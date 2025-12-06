@@ -4,60 +4,44 @@ using UnityEngine.InputSystem;
 
 public class PlayerMovementManager : MonoBehaviour
 {
-    Unit _owner;
-    UnitMovementData _movementData;
-    Rigidbody2D _rb2D;
+    [SerializeField] UnitMovementConfigSO _playerMovementConfig;
+    UnitStateData _playerStateData;
+    [SerializeField] UnitMovementData _playerMovementData;
+    [SerializeField] Rigidbody2D _rb2D;
     Vector2 _moveDirection;
 
 
-
-    void OnEnable()
+    public void InitializeManager(UnitMovementData playerMovementData, UnitMovementConfigSO playerMovementConfig)
     {
-        //PlayerHealth.onPlayerDeath += DisableScript;
+        _playerMovementData = playerMovementData;
+        _playerMovementConfig = playerMovementConfig;
+
     }
-
-    void OnDisable()
+    public void InitializeStateData(UnitStateData playerStateData)
     {
-        //PlayerHealth.onPlayerDeath -= DisableScript;
-    }
-
-
-    void Start()
-    {
-        _rb2D = GetComponent<Rigidbody2D>();
-    }
-
-    public void InitializeWithData(Unit owner, UnitMovementData movementData)
-    {
-        _owner = owner;
-        _movementData = movementData;
+        _playerStateData = playerStateData;
     }
 
     void Update()
     {
-        _moveDirection = PlayerInputManager.instance.MovementInput;
+        _moveDirection = PlayerInputManager.Instance.MovementInput;
 
     }
 
     void FixedUpdate()
     {
-        if (_owner.RuntimeDataHolder.TryGetRuntimeData(out UnitStateData stateData))
-            if (stateData.CanMove == false)
-            {
-                //Debug.Log("Can't move!");
-                return;
-            }
-
-        _rb2D.velocity = _moveDirection * _movementData.CurrentMovementSpeed;
+        
+        if (_playerStateData.CanMove == false) return;
+        if (_rb2D == null) return;
+            
+        _rb2D.velocity = _moveDirection * _playerMovementData.CurrentMovementSpeed;
     }
 
-    public void DisableScript()
+    public void StopMovement()
     {
-        Debug.Log("Disabled player movement input action");
-        _rb2D.constraints = RigidbodyConstraints2D.FreezeAll;
-        //_movementInputAction.Disable();
-        enabled = false;
+        _rb2D.velocity = Vector2.zero;
     }
+
 
 }
 

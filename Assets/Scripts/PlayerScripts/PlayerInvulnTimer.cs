@@ -9,12 +9,12 @@ public class PlayerInvulnTimer : MonoBehaviour
 
     void OnEnable()
     {
-        PlayerHealthManager.OnPlayerHit += StartInvulnTimer;
+        PlayerHealthManager.OnPlayerHitStateUpdate += StartInvulnTimer;
     }
 
     void OnDisable()
     {
-        PlayerHealthManager.OnPlayerHit -= StartInvulnTimer;
+        PlayerHealthManager.OnPlayerHitStateUpdate -= StartInvulnTimer;
     }
     [SerializeField] float _invulnTimer = 3f;
 

@@ -1,7 +1,14 @@
+using SerializeReferenceEditor;
 using UnityEngine;
 
-public abstract class Unit : MonoBehaviour
+public abstract class Unit : MonoBehaviour, IFactionMember
 {
+    [SerializeField] private Faction faction;
+    public Faction Faction => faction;
+    public abstract UnitStateData GetStateData();
+}
+
+    /*
     public UnitRuntimeDataHolder RuntimeDataHolder;
     public UnitConfigsWrapperSO UnitConfigWrapper;
 
@@ -20,5 +27,4 @@ public abstract class Unit : MonoBehaviour
         component = RuntimeDataHolder?.GetRuntimeData<T>();
         return component != null;
     }
-    
-}
+    */

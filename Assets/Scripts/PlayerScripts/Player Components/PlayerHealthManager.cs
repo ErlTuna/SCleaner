@@ -1,153 +1,128 @@
 using System;
-using System.Collections;
-using Unity.VisualScripting;
+using SerializeReferenceEditor;
 using UnityEngine;
 
-public class PlayerHealthManager : MonoBehaviour, IDamageable, IHealable
+public class PlayerHealthManager : MonoBehaviour, IDamageable, IDefeatable, IHealable
 {
-    Unit _owner;
-    public IUnitHealthData HealthData;
-    public static event Action<UnitStateData> OnPlayerHit;
+    [SerializeField] PlayerHitUIEventChannelSO _playerHitEventChannel;
+    [SerializeField] UnitHealthConfigSO _healthConfig;
+    [SerializeField] UnitHealthData _healthData;
+    public static event Action<UnitStateData> OnPlayerHitStateUpdate;
     public static event Action OnPlayerHitSpriteUpdate;
-    public static event Action<int> OnPlayerHitUIUpdate;
+    public static event Action<int, int> OnPlayerHitUIUpdate;
+    public event Action OnDefeat;
+    public event Action<DamageContext> OnDefeatContext;
 
-    void OnEnable()
+
+    UnitStateData _stateData;
+
+    public void InitializeManager(UnitHealthData healthData, UnitHealthConfigSO unitHealthConfig)
     {
-        //PlayerHitbox.onPlayerHitTakeDamage += TakeDamage;
+        _healthData = healthData;
+        _healthConfig = unitHealthConfig;
+    }
+    
+    public void InitializeStateData(UnitStateData playerStateData)
+    {
+        _stateData = playerStateData;
     }
 
-    void OnDisable()
-    {
-        //PlayerHitbox.onPlayerHitTakeDamage -= TakeDamage;
-    }
-
-
-    public void InitializeWithData(Unit owner, UnitHealthData healthData)
-    {
-        _owner = owner;
-        HealthData = healthData;
-        //Debug.Log("Got " + healthData);
-        //Debug.Log("HealthData is now " + healthData.CurrentHealth);
-    }
-
-
-
-
-    public void TakeDamage(IEnemy attacker)
-    {
-        //no op
-    }
 
     public void TakeDamage(int amount)
     {
-        if (_owner.RuntimeDataHolder.TryGetRuntimeData(out UnitStateData stateData) != true) return;
-        if (stateData.IsInvuln)
+
+        if (_stateData.IsAlive == false) return;
+        
+        if (_stateData.IsInvuln)
         {
             Debug.Log("Invuln due to an external effect");
             return;
         }
-        if (stateData.IsHitInvuln)
+        if (_stateData.IsHitInvuln)
         {
             Debug.Log("Invuln due to taking damage recently");
             return;
-        }
-        if (!stateData.IsAlive)
+        }        
+
+        _healthData.CurrentHealth -= amount;
+
+        //Update State Data
+        OnPlayerHitStateUpdate?.Invoke(_stateData);
+
+        //For sprite blinking
+        OnPlayerHitSpriteUpdate?.Invoke();
+
+        // UI Update and Audio Cue
+        if (_playerHitEventChannel != null) _playerHitEventChannel.RaiseEvent(_healthData.CurrentHealth, _healthData.MaxHealth);
+        if (_healthConfig.OnHitSFX != null) AudioSource.PlayClipAtPoint(_healthConfig.OnHitSFX, gameObject.transform.position);
+
+        if (_healthData.CurrentHealth <= 0)
         {
-            Debug.Log("Can't take damage while dead...");
-            return;
-        } 
-
-        HealthData.CurrentHealth -= amount;
-        Debug.Log("My health now... " + HealthData.CurrentHealth);
-
-        //Update UI
-        //OnPlayerHit?.Invoke(healthData.CurrentHealth);
-
-        if (HealthData.CurrentHealth <= 0)
-        {
-            stateData.IsAlive = false;
+            //_stateData.IsAlive = false;
 
             //Update game state
-            //onPlayerDeath?.Invoke();
+            GameManager.Instance.SetGameState(GameState.PLAYER_DEFEAT);
             return;
         }
-        else
-        {
-            OnPlayerHit?.Invoke(stateData);
-            OnPlayerHitSpriteUpdate?.Invoke();
-            OnPlayerHitUIUpdate?.Invoke(HealthData.CurrentHealth);
-            if (HealthData.OnHitSFX != null)
-                AudioSource.PlayClipAtPoint(HealthData.OnHitSFX, gameObject.transform.position);
-        }
     }
-
-    /*
-    public void TakeDamage(int amount)
-    {
-
-        if (_owner.RuntimeDataHolder.TryGetRuntimeData<UnitStateData>(out var stateData) != true) return;
-        if (stateData.IsInvuln) return;
-        if (!stateData.IsAlive) return;
-
-        HealthData.CurrentHealth -= 10;
-        //OnPlayerHit?.Invoke(healthData.CurrentHealth);
-
-        if (HealthData.CurrentHealth <= 0)
-        {
-            stateData.IsAlive = false;
-            //PlayPlayerSounds.PlayAudio(PlayerSoundsSO.OnDefeatSFX);
-            //spriteRenderer.sprite = UnitInfo.DefeatSprite;
-            onPlayerDeath?.Invoke();
-            return;
-        }
-        //PlayPlayerSounds.PlayAudio(UnitInfo.OnHitSFX);
-        //StartCoroutine(onPlayerDamaged?.Invoke(UnitInfo));
-        //StartCoroutine(onPlayerHitInvuln?.Invoke());
-
-
-        if (_owner.TryGetRuntimeComponent<IUnitState>(out var state))
-        {
-            if (state.IsInvuln || !state.IsAlive) return;
-        }
-
-        CurrentHealth = Mathf.Max(CurrentHealth - amount, 0f);
-
-        if (CurrentHealth <= 0)
-            Debug.Log("health has hit zero");
-        
-
-    }
-    */
 
     public void TakeDamage(DamageContext context)
     {
-        //Debug.Log("Taking damage... : " + context.Damage);
+        if (_stateData.IsAlive == false) return;
+        
+        if (_stateData.IsInvuln)
+        {
+            Debug.Log("Invuln due to an external effect");
+            return;
+        }
+        
+        if (_stateData.IsHitInvuln)
+        {
+            Debug.Log("Invuln due to taking damage recently");
+            return;
+        }        
+
+        _healthData.CurrentHealth -= context.Damage;
+
+        //Update State Data
+        OnPlayerHitStateUpdate?.Invoke(_stateData);
+
+        //For sprite blinking
+        OnPlayerHitSpriteUpdate?.Invoke();
+
+        // UI Update and Audio Cue
+        if (_playerHitEventChannel != null) _playerHitEventChannel.RaiseEvent(_healthData.CurrentHealth, _healthData.MaxHealth);
+        if (_healthConfig.OnHitSFX != null) AudioSource.PlayClipAtPoint(_healthConfig.OnHitSFX, gameObject.transform.position);
+
+        if (_healthData.CurrentHealth <= 0)
+        {
+            //_stateData.IsAlive = false;
+
+            //Update game state
+            GameManager.Instance.SetGameState(GameState.PLAYER_DEFEAT);
+            return;
+        }
     }
 
     public void Heal(int amount)
     {
         Debug.Log("Attempting heal on player...");
 
-        if (HealthData.CurrentHealth >= HealthData.MaxHealth)
+        if (_healthData.CurrentHealth >= _healthData.MaxHealth)
         {
             Debug.Log("Health is greater than or equal to max health");
             return;
         }
 
         Debug.Log("Healing" + gameObject.name + "by : " + amount);
-        HealthData.CurrentHealth += amount;
+        _healthData.CurrentHealth += amount;
 
 
-        if (HealthData.CurrentHealth > HealthData.MaxHealth)
-            HealthData.CurrentHealth = HealthData.MaxHealth;
+        if (_healthData.CurrentHealth > _healthData.MaxHealth)
+            _healthData.CurrentHealth = _healthData.MaxHealth;
 
-        Debug.Log("The health value is now : " + HealthData.CurrentHealth);
+        Debug.Log("The health value is now : " + _healthData.CurrentHealth);
     }
-}
-
-
-
-public interface IHealthComponent : IDamageable
-{
 
 }
+

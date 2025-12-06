@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1d929175737723e458bf920089f7b29b, type: 3}
   m_Name: CrackerHealthConfig
   m_EditorClassIdentifier: 
-  Health: 50
-  MaxHealth: 50
+  Health: 10
+  MaxHealth: 10
+  DamageThreshold: 25
   OnHitSFX: {fileID: 8300000, guid: 9ebeea4bb81bbb54e93c5f611904841d, type: 3}

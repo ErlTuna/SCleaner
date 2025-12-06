@@ -1,45 +1,51 @@
 using System;
+using SerializeReferenceEditor;
+using Unity.VisualScripting;
 using UnityEngine;
-public class CrackerHealthManager : MonoBehaviour, IHealthComponent
+public class CrackerHealthManager : MonoBehaviour, IDamageable, IDefeatable
 {
     public Action OnHitReceived;
-    public Action<DamageContext> OnDefeat;
-    Unit _owner;
-    UnitHealthData HealthData;
-    UnitStateData stateData;
+    public event Action OnDefeat;
+    public event Action<DamageContext> OnDefeatContext;
+    public IDetachable _hatScript;
+    [SerializeField] UnitHealthData _healthData;
+    UnitHealthConfigSO _healthConfig;
+    UnitStateData _stateData;
     [SerializeField] DamageFlash _damageFlash;
-    Vector2 lastHitDirection;
+    EnemyVisualConfigSO _visualConfig;
 
-    public void Initialize(Unit owner)
+    public void InitializeManager(UnitHealthData healthData, UnitHealthConfigSO healthConfig, EnemyVisualConfigSO visualConfig, EnemyHat hatScript = null)
     {
-        _owner = owner;
-        if (_owner.RuntimeDataHolder.TryGetRuntimeData(out UnitHealthData health))
-            HealthData = health;
-
-        if (_owner.RuntimeDataHolder.TryGetRuntimeData(out EnemyStateData data))
-            stateData = data;
-
+        _healthData = healthData;
+        _healthConfig = healthConfig;
+        _hatScript = hatScript;
+        _visualConfig = visualConfig;
+    }
+    
+    public void InitializeStateData(EnemyStateData stateData)
+    {
+        _stateData = stateData;
     }
 
     public void TakeDamage(int amount)
     {
-        if (stateData == null)
+        if (_stateData == null)
         {
             Debug.Log("State Data is missing");
             return;
         }
 
-        if (stateData.IsAlive != true)
+        if (_stateData.IsAlive != true)
         {
             Debug.Log("Can't take damage while dead...");
             return;
-        } 
+        }
 
         ApplyDamage(amount);
         
-        if (HealthData.CurrentHealth <= 0)
+        if (_healthData.CurrentHealth <= 0)
         {
-            stateData.IsAlive = false;
+            _stateData.IsAlive = false;
             Debug.Log("I'm dead!!");
         }
     }
@@ -47,23 +53,26 @@ public class CrackerHealthManager : MonoBehaviour, IHealthComponent
 
     public void TakeDamage(DamageContext context)
     {
-        if (stateData == null)
+        if (_stateData == null)
         {
             Debug.Log("State Data is missing");
             return;
         }
 
-        if (stateData.IsAlive != true)
+        if (_stateData.IsAlive != true)
         {
             Debug.Log("Can't take damage while dead...");
             return;
-        } 
+        }
 
         ApplyDamage(context.Damage);
 
-        if (HealthData.CurrentHealth <= 0)
+        if (_healthData.CurrentHealth <= 0)
         {
-            OnDefeat?.Invoke(context);
+            Debug.Log("Defeated...");
+            if (_hatScript != null)
+                _hatScript.Detach(context);
+            OnDefeatContext?.Invoke(context);
         }
     }
     
@@ -71,10 +80,11 @@ public class CrackerHealthManager : MonoBehaviour, IHealthComponent
     {
         _damageFlash.TriggerDamageFlash();
 
-        if (HealthData.OnHitSFX)
-            AudioSource.PlayClipAtPoint(HealthData.OnHitSFX, gameObject.transform.position);
-         
-        HealthData.CurrentHealth -= amount;
-        //Debug.Log("Took : " + amount + " damage");
+        if (_healthConfig.OnHitSFX)
+            AudioSource.PlayClipAtPoint(_healthConfig.OnHitSFX, transform.position);
+
+        _healthData.CurrentHealth -= amount;
+        
     }
+
 }

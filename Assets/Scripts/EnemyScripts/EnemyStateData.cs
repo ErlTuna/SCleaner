@@ -14,15 +14,13 @@ public class EnemyStateData : UnitStateData
     public bool IsAttacking = false;
     public bool IsRecovering = false;
 
-    public override void ConfigureWith(UnitStateConfigSO config)
+    public EnemyStateData(UnitStateConfigSO config) : base(config)
     {
         if (config == null)
         {
             Debug.Log("StateData config missing!");
             return;
         }
-
-        base.ConfigureWith(config);
 
         if (config is EnemyStateConfigSO enemyConfig)
         {

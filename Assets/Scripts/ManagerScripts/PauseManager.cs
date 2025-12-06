@@ -1,32 +1,29 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class PauseManager : MonoBehaviour
 {
-    public static PauseManager instance;
-    public bool IsPaused;
+    public static PauseManager Instance {get; private set;}
 
     void Awake(){
         
-        if (instance != null && instance != this){
+        if (Instance != null && Instance != this){
             Destroy(this);
+            return;
         }
-        else
-            instance = this;  
+        
+        Instance = this;
     }
 
-    public void PauseGame()
+    void Update()
     {
-        IsPaused = true;
-        Time.timeScale = 0f;
-        PlayerInputManager.PlayerInput.SwitchCurrentActionMap("UI");
-    }
+        if (PlayerInputManager.Instance.MenuOpenInput && GameManager.Instance.CurrentState == GameState.PLAYING)
+        {
+            GameManager.Instance.SetGameState(GameState.PAUSED);
+        }
 
-    public void UnPauseGame()
-    {
-        IsPaused = false;
-        Time.timeScale = 1f;
-        PlayerInputManager.PlayerInput.SwitchCurrentActionMap("Gameplay");
+        else if (PlayerInputManager.Instance.MenuCloseInput && GameManager.Instance.CurrentState == GameState.PAUSED)
+        {
+            GameManager.Instance.SetGameState(GameState.PLAYING);
+        }
     }
 }

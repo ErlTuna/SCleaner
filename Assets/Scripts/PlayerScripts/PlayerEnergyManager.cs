@@ -4,9 +4,16 @@ using UnityEngine;
 public class PlayerEnergyManager : MonoBehaviour
 {
     Unit _owner;
-    UnitEnergyData _playerEnergyData;
+    [SerializeField] UnitEnergyConfigSO _playerEnergyConfig;
+    [SerializeField] UnitEnergyData _playerEnergyData;
     Coroutine rechargeCoroutine;
     bool isRecharging = false;
+
+    public void InitializeManager(UnitEnergyData playerEnergyData, UnitEnergyConfigSO playerEnergyConfig)
+    {
+        _playerEnergyData = playerEnergyData;
+        _playerEnergyConfig = playerEnergyConfig;
+    }
 
     void OnEnable()
     {
@@ -38,7 +45,7 @@ public class PlayerEnergyManager : MonoBehaviour
             {
                 _playerEnergyData.CurrentEnergy = _playerEnergyData.MaxEnergy;
                 UIEvents.RaiseEnergyChanged(_playerEnergyData.CurrentEnergy, _playerEnergyData.MaxEnergy);
-                AudioSource.PlayClipAtPoint(_playerEnergyData.FullEnergySFX, gameObject.transform.position);
+                AudioSource.PlayClipAtPoint(_playerEnergyConfig.fullEnergySFX, gameObject.transform.position);
                 isRecharging = false;
                 yield break;
             }

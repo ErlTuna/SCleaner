@@ -21,31 +21,13 @@ AnimationClip:
   - serializedVersion: 2
     curve:
     - time: 0
-      value: {fileID: -1827483293, guid: 38fe033420ef93049b4577b5972d9c17, type: 3}
+      value: {fileID: 476039425, guid: 310b2accbf77b5c40bf08ea436c00da4, type: 3}
     - time: 0.083333336
-      value: {fileID: 1536532800, guid: 38fe033420ef93049b4577b5972d9c17, type: 3}
-    - time: 0.16666667
-      value: {fileID: -1411965812, guid: 38fe033420ef93049b4577b5972d9c17, type: 3}
-    - time: 0.25
-      value: {fileID: -1191015254, guid: 38fe033420ef93049b4577b5972d9c17, type: 3}
-    - time: 0.33333334
-      value: {fileID: 1368087748, guid: 38fe033420ef93049b4577b5972d9c17, type: 3}
-    - time: 0.41666666
-      value: {fileID: -325935520, guid: 38fe033420ef93049b4577b5972d9c17, type: 3}
-    - time: 0.5
-      value: {fileID: 677274903, guid: 38fe033420ef93049b4577b5972d9c17, type: 3}
-    - time: 0.5833333
-      value: {fileID: -719734216, guid: 38fe033420ef93049b4577b5972d9c17, type: 3}
-    - time: 0.6666667
-      value: {fileID: 1221521316, guid: 38fe033420ef93049b4577b5972d9c17, type: 3}
-    - time: 0.75
-      value: {fileID: 651737774, guid: 38fe033420ef93049b4577b5972d9c17, type: 3}
+      value: {fileID: -930618956, guid: 310b2accbf77b5c40bf08ea436c00da4, type: 3}
     - time: 0.8333333
-      value: {fileID: 897940422, guid: 38fe033420ef93049b4577b5972d9c17, type: 3}
-    - time: 0.9166667
-      value: {fileID: 1345309670, guid: 38fe033420ef93049b4577b5972d9c17, type: 3}
+      value: {fileID: -1376182819, guid: 310b2accbf77b5c40bf08ea436c00da4, type: 3}
     attribute: m_Sprite
-    path: 
+    path: Visuals & Firing Point/Visuals
     classID: 212
     script: {fileID: 0}
     flags: 2
@@ -57,7 +39,7 @@ AnimationClip:
   m_ClipBindingConstant:
     genericBindings:
     - serializedVersion: 2
-      path: 0
+      path: 1215681134
       attribute: 0
       script: {fileID: 0}
       typeID: 212
@@ -66,24 +48,15 @@ AnimationClip:
       isIntCurve: 0
       isSerializeReferenceCurve: 0
     pptrCurveMapping:
-    - {fileID: -1827483293, guid: 38fe033420ef93049b4577b5972d9c17, type: 3}
-    - {fileID: 1536532800, guid: 38fe033420ef93049b4577b5972d9c17, type: 3}
-    - {fileID: -1411965812, guid: 38fe033420ef93049b4577b5972d9c17, type: 3}
-    - {fileID: -1191015254, guid: 38fe033420ef93049b4577b5972d9c17, type: 3}
-    - {fileID: 1368087748, guid: 38fe033420ef93049b4577b5972d9c17, type: 3}
-    - {fileID: -325935520, guid: 38fe033420ef93049b4577b5972d9c17, type: 3}
-    - {fileID: 677274903, guid: 38fe033420ef93049b4577b5972d9c17, type: 3}
-    - {fileID: -719734216, guid: 38fe033420ef93049b4577b5972d9c17, type: 3}
-    - {fileID: 1221521316, guid: 38fe033420ef93049b4577b5972d9c17, type: 3}
-    - {fileID: 651737774, guid: 38fe033420ef93049b4577b5972d9c17, type: 3}
-    - {fileID: 897940422, guid: 38fe033420ef93049b4577b5972d9c17, type: 3}
-    - {fileID: 1345309670, guid: 38fe033420ef93049b4577b5972d9c17, type: 3}
+    - {fileID: 476039425, guid: 310b2accbf77b5c40bf08ea436c00da4, type: 3}
+    - {fileID: -930618956, guid: 310b2accbf77b5c40bf08ea436c00da4, type: 3}
+    - {fileID: -1376182819, guid: 310b2accbf77b5c40bf08ea436c00da4, type: 3}
   m_AnimationClipSettings:
     serializedVersion: 2
     m_AdditiveReferencePoseClip: {fileID: 0}
     m_AdditiveReferencePoseTime: 0
     m_StartTime: 0
-    m_StopTime: 1
+    m_StopTime: 0.9166666
     m_OrientationOffsetY: 0
     m_Level: 0
     m_CycleOffset: 0
@@ -103,24 +76,24 @@ AnimationClip:
   m_HasGenericRootTransform: 0
   m_HasMotionFloatCurves: 0
   m_Events:
-  - time: 0
+  - time: 0.083333336
     functionName: TryPlaySound
     data: 
     objectReferenceParameter: {fileID: 11400000, guid: 965ff4f72215d87409eaff6f0752bbd3, type: 2}
     floatParameter: 0
     intParameter: 0
     messageOptions: 0
-  - time: 0.9166667
-    functionName: HandleReloadAnimEnd
-    data: 
-    objectReferenceParameter: {fileID: 0}
-    floatParameter: 0
-    intParameter: 0
-    messageOptions: 0
-  - time: 0.9166667
+  - time: 0.8333333
     functionName: TryPlaySound
     data: 
     objectReferenceParameter: {fileID: 11400000, guid: d8266f2354cccbb4a9f62af83414381c, type: 2}
+    floatParameter: 0
+    intParameter: 0
+    messageOptions: 0
+  - time: 0.8333333
+    functionName: HandleReloadAnimEnd
+    data: 
+    objectReferenceParameter: {fileID: 0}
     floatParameter: 0
     intParameter: 0
     messageOptions: 0

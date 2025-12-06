@@ -7,5 +7,6 @@ public class UnitHealthConfigSO : ScriptableObject
 {
     public int Health;
     public int MaxHealth;
+    public int DamageThreshold;
     public AudioClip OnHitSFX;
 }

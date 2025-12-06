@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: CrackerConfigWrapper
   m_EditorClassIdentifier: 
   UnitName: 
+  defeatSprite: {fileID: 21300000, guid: 334c349a30ce84742ad69ee8ffad35ef, type: 3}
   HealthConfig: {fileID: 11400000, guid: 7b69e0e866eee1c40bcb01254d3dae48, type: 2}
   MovementConfig: {fileID: 11400000, guid: 697020d050571b5419be9339988e8eba, type: 2}
   EnergyConfig: {fileID: 0}
