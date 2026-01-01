@@ -5,6 +5,7 @@ using UnityEngine;
 
 public static class PlayerInventoryEvents
 {
+    /*
     #region Events
     public static Action<GameObject, PlayerWeapon> OnWeaponsReadyEvent;
     public static Action<GameObject, PlayerWeapon> OnWeaponSwitchEvent;
@@ -52,4 +53,5 @@ public static class PlayerInventoryEvents
     
 
     #endregion
+    */
 }

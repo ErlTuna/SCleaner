@@ -2,7 +2,7 @@ using System;
 using UnityEngine;
 
 [Serializable]
-public class WeaponRuntimeData
+public class WeaponRuntimeData : IInventoryAddable
 {
     readonly public WeaponConfigSO Config;
     public WeaponState State;
@@ -25,5 +25,15 @@ public class WeaponRuntimeData
         Damage = Config.Damage;
         TimeSinceLastFired = 0;
         SpreadResetThreshold = config.SpreadResetThreshold;
+    }
+
+    public bool CanBeAdded(PlayerInventoryManager inventory)
+    {
+        return inventory.CanPickupWeapon(Config);
+    }
+
+    public void AddToInventory(PlayerInventoryManager inventory)
+    {
+        inventory.TryAddWeapon(this);
     }
 }

@@ -72,10 +72,10 @@ public class PauseMenuManager : MonoBehaviour
                 case PauseMenuSection.MAIN:
                     OnEnterMain();
                     break;
-                case PauseMenuSection.IN_SETTINGS:
+                case PauseMenuSection.SETTINGS:
                     OnEnterSettings();
                     break;
-                case PauseMenuSection.SHOWING_UNSAVED_WARNING:
+                case PauseMenuSection.UNSAVED_WARNING:
                     OnShowWarning();
                     break;
             }
@@ -101,9 +101,9 @@ public class PauseMenuManager : MonoBehaviour
     // ------------------------
 
     // These are exposed for UnityEvents
-    public void GoToSettings() => SetSection(PauseMenuSection.IN_SETTINGS);
+    public void GoToSettings() => SetSection(PauseMenuSection.SETTINGS);
     public void GoToMain() => SetSection(PauseMenuSection.MAIN);
-    public void ShowWarning() => SetSection(PauseMenuSection.SHOWING_UNSAVED_WARNING);
+    public void ShowWarning() => SetSection(PauseMenuSection.UNSAVED_WARNING);
 
     void OnEnterMain()
     {
@@ -178,8 +178,26 @@ public class PauseMenuManager : MonoBehaviour
     {
         NONE, // Pause Menu is not active
         MAIN,       // Default Pause Menu
-        IN_SETTINGS,   // Settings Menu
-        SHOWING_UNSAVED_WARNING,     // Unsaved changes popup
+        SETTINGS,   // Settings Menu
+        UNSAVED_WARNING,     // Unsaved changes popup
+        INVENTORY
+    }
+
+    [System.Serializable]
+    public enum MenuOverlay
+    {
+        TIPS,
+        STATS,
+        ACHIEVEMENTS
+    }
+
+    [System.Serializable]
+    public enum MainMenuSection
+    {
+        NONE, // Pause Menu is not active
+        MAIN,       // Default Pause Menu
+        SETTINGS,   // Settings Menu
+        UNSAVED_WARNING,     // Unsaved changes popup
     }
 
     [System.Serializable]

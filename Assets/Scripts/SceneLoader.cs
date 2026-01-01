@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,7 +21,7 @@ public class SceneLoader : MonoBehaviour
     [Header("Internal")]
     readonly Queue<SceneLoaderRequest> _queue = new();
     bool _isProcessing;
-    readonly HashSet<SceneReference> loadedsceneReferences = new();
+    readonly HashSet<SceneReference> loadedSceneReferences = new();
 
     void OnEnable()
     {
@@ -39,7 +40,7 @@ public class SceneLoader : MonoBehaviour
         if (!string.IsNullOrEmpty(persistentSceneRef.SceneName))
         {
             //loadedScenes.Add(persistentSceneRef.SceneName);
-            loadedsceneReferences.Add(persistentSceneRef);
+            loadedSceneReferences.Add(persistentSceneRef);
             Debug.Log("Added persistent scene to the list.");
         }
     }
@@ -128,9 +129,17 @@ public class SceneLoader : MonoBehaviour
                 break;
 
             case SceneLoaderRequestType.UNLOAD_TYPE_UI:
-                yield return TryUnloadScenesOfType(req.RequestType);
+                yield return TryUnloadScenesOfType(GetSceneRefsOfType(SceneType.UI));
                 break;
-
+            case SceneLoaderRequestType.UNLOAD_MAIN_MENU:
+                yield return TryUnloadScenesOfType(GetSceneRefsOfType(SceneType.MAIN_MENU));
+                break;
+            case SceneLoaderRequestType.UNLOAD_CURRENT_GAME_LEVEL:
+                yield return TryUnloadScenesOfType(GetSceneRefsOfType(SceneType.GAMEPLAY_LEVEL));
+                break;
+            default:
+                Debug.Log("Unsupported request.");
+                break;
         }         
     }
 
@@ -151,7 +160,7 @@ public class SceneLoader : MonoBehaviour
 
         Debug.Log("Successfuly loaded scene : " + sceneRef.SceneName);
         //loadedScenes.Add(sceneRef.SceneName);
-        loadedsceneReferences.Add(sceneRef);
+        loadedSceneReferences.Add(sceneRef);
     }
     
     IEnumerator TryUnloadScene(SceneReference sceneRef)
@@ -163,28 +172,19 @@ public class SceneLoader : MonoBehaviour
 
         Debug.Log("Successfuly unloaded scene : " + sceneRef.SceneName);
         //loadedScenes.Remove(sceneRef.SceneName);
-        loadedsceneReferences.Remove(sceneRef);
+        loadedSceneReferences.Remove(sceneRef);
     }
 
-    IEnumerator TryUnloadScenesOfType(SceneLoaderRequestType requestType)
+    IEnumerator TryUnloadScenesOfType(List<SceneReference> foundScenes)
     {
-        Debug.Log($"Attempting to unload multiple scenes as per request {requestType}");
-
-        switch (requestType)
+        if (foundScenes.Count == 0)
         {
-            case SceneLoaderRequestType.UNLOAD_TYPE_UI:
-            var scenesToUnload = GetLoadedScenesOfType(SceneType.UI);
-
-            if (scenesToUnload.Count == 0)
-            {
-                Debug.Log("No scenes of this type were loaded.");
-                yield break;
-            }
-
-            yield return UnloadSceneList(scenesToUnload);
-            break;
+            Debug.Log("No scenes to unload.");
+            yield break;
         }
+        yield return UnloadSceneList(foundScenes);
     }
+
 
     IEnumerator UnloadSceneList(List<SceneReference> scenes)
     {
@@ -194,7 +194,7 @@ public class SceneLoader : MonoBehaviour
             while (!op.isDone)
                 yield return null;
 
-            loadedsceneReferences.Remove(sceneRef);
+            loadedSceneReferences.Remove(sceneRef);
         }
     }
 
@@ -218,8 +218,8 @@ public class SceneLoader : MonoBehaviour
     // Done before the request is queued
     bool IsRequestValidToEnqueue(SceneLoaderRequest sceneReq)
     {
-        // Special case : Does not require a scene reference if the request is asking to unload all UI type scenes
-        if (sceneReq.RequestType == SceneLoaderRequestType.UNLOAD_TYPE_UI && sceneReq.SceneReference == null)
+        // Special case : Does not require a scene reference if the request is asking to unload all "of type" scenes
+        if (IsUnloadType(sceneReq.RequestType))
             return true;
 
         if (string.IsNullOrEmpty(sceneReq.SceneReference.SceneName))
@@ -267,16 +267,23 @@ public class SceneLoader : MonoBehaviour
 
     bool IsLoaded(SceneReference sceneRef)
     {       
-        return sceneRef != null && loadedsceneReferences.Contains(sceneRef);
+        return sceneRef != null && loadedSceneReferences.Contains(sceneRef);
+    }
+
+    bool IsUnloadType(SceneLoaderRequestType type)
+    {
+        return type == SceneLoaderRequestType.UNLOAD_TYPE_UI ||
+                type == SceneLoaderRequestType.UNLOAD_MAIN_MENU ||
+                type == SceneLoaderRequestType.UNLOAD_CURRENT_GAME_LEVEL;
     }
 
 
 
     List<SceneReference> GetLoadedScenesOfType(SceneType type)
     {
-        var result = new List<SceneReference>();
+        List<SceneReference> result = new List<SceneReference>();
 
-        foreach (var sceneReference in loadedsceneReferences)
+        foreach (var sceneReference in loadedSceneReferences)
         {
             if (sceneReference.SceneType == type)
                 result.Add(sceneReference);
@@ -285,12 +292,31 @@ public class SceneLoader : MonoBehaviour
         return result;
     }
 
+    SceneReference GetLoadedSceneOfType(SceneType type)
+    {
+        SceneReference result = new();
+
+        foreach (SceneReference sceneReference in loadedSceneReferences)
+        {
+            if (sceneReference.SceneType == type)
+                result = sceneReference;
+        }
+
+        return result;
+    }
+
     void PrintLoadedSceneReferences()
     {
-        foreach (var sceneReference in loadedsceneReferences)
+        foreach (var sceneReference in loadedSceneReferences)
         {
             Debug.Log("Currently loaded scenes : " + sceneReference.SceneName);
         }
     }
+
+    List<SceneReference> GetSceneRefsOfType(SceneType type)
+    {
+        return loadedSceneReferences.Where(scene => scene.SceneType == type).ToList();
+    }
+
 
 }

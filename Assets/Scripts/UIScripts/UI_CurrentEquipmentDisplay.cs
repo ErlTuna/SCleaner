@@ -10,14 +10,14 @@ public class UI_CurrentEquipmentDisplay : MonoBehaviour
 
     void OnEnable()
     {
-        PlayerInventoryEvents.OnEquipmentSwitchUIUpdate += UpdateEquipmentDisplay;
+        //PlayerInventoryEvents.OnEquipmentSwitchUIUpdate += UpdateEquipmentDisplay;
         //IEquipment.OnEquipmentChanged += UpdateEquipmentDisplay;
         //IEquipment.OnEquipmentUsed += UpdateEquipmentCount;
     }
 
     void OnDisable()
     {
-        PlayerInventoryEvents.OnEquipmentSwitchUIUpdate -= UpdateEquipmentDisplay;
+        //PlayerInventoryEvents.OnEquipmentSwitchUIUpdate -= UpdateEquipmentDisplay;
         //IEquipment.OnEquipmentChanged -= UpdateEquipmentDisplay;
         //IEquipment.OnEquipmentUsed -= UpdateEquipmentCount;
     }

@@ -1,34 +1,21 @@
 using UnityEngine;
 
 
-// deprecated
-
-public class UnsavedSettingsPopup : MonoBehaviour
-{
-
-    /*[SerializeField] GameObject _popUpGO;
-    [SerializeField] GameObject _defaultSelectedOption;
-
-    bool _isActive = false;
-
-    void OnEnable()
+public class UnsavedSettingsPopup : MonoBehaviour, IMenuSection
+{   
+    [SerializeField] GameObject _defaultSelected;
+    public bool IsVisible { get; set;}
+    public void Show()
     {
-        //SettingsEvents.OnSettingsChangesUnsaved += ToggleVisibility;
-        //PopUpEvents.OnWarningNo += ToggleVisibility;
-        //PopUpEvents.OnWarningYes += ToggleVisibility;
+        gameObject.SetActive(true);
+        UISelector.instance.SetSelected(_defaultSelected);
+        IsVisible = true;
     }
 
-    void OnDisable()
+    public void Hide()
     {
-        //SettingsEvents.OnSettingsChangesUnsaved -= ToggleVisibility;
-        //PopUpEvents.OnWarningNo -= ToggleVisibility;
-        PopUpEvents.OnWarningYes -= ToggleVisibility;
+        gameObject.SetActive(false);
+        UISelector.instance.SetSelected(null);
+        IsVisible = false;
     }
-
-    public void ToggleVisibility()
-    {
-        _isActive = !_isActive;
-        _popUpGO.SetActive(_isActive);
-    }*/
-
 }

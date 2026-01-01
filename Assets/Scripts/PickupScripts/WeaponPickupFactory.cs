@@ -1,61 +1,33 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public static class WeaponPickupFactory
 {
-    // This method converts a dropped weapon into a weapon pickup
-    public static GameObject CreatePickupFromWeapon(BaseWeapon weapon)
+    public static WeaponPickup Create(WeaponRuntimeData runtimeData, Vector3 location)
     {
-        if (weapon == null || weapon.WeaponRuntimeData == null || weapon.WeaponRuntimeData.Config == null)
+        if (runtimeData == null || runtimeData.Config == null || runtimeData.Config.PickupDefinition == null)
         {
-            Debug.LogError("Cannot create pickup: invalid weapon or runtime data.");
+            Debug.LogError("Weapon runtime data or config or pickup definition is missing. Cannot create pickup.");
             return null;
         }
 
-        WeaponRuntimeData runtimeData = weapon.WeaponRuntimeData;
-        WeaponConfigSO config = weapon.WeaponConfig;
+        WeaponPickupDefinitionSO definition = runtimeData.Config.PickupDefinition;
+        GameObject prefab = definition.PickupPrefab;
 
-        // + Vector3.down * 0.5f;
-        Vector3 dropPosition = weapon.transform.position + Vector3.down * 0.5f;
-        //Debug.Log("Dropping at ..." + dropPosition);
-        GameObject pickupPrefab = config.PickupPrefab;
+        Vector3 dropPosition = location + Vector3.down * 0.5f;
 
-        GameObject pickupGO = GameObject.Instantiate(pickupPrefab, dropPosition, Quaternion.identity);
+        GameObject pickupGO = Object.Instantiate(prefab, dropPosition, Quaternion.identity);
 
-        if (pickupGO.TryGetComponent(out WeaponPickup pickupComponent) == false)
+        if (!pickupGO.TryGetComponent(out WeaponPickup pickup))
         {
-            Debug.LogError("Pickup prefab is missing WeaponPickup script. Can't create.");
-            GameObject.Destroy(pickupGO);
+            Debug.LogError("Pickup prefab is missing WeaponPickup.");
+            Object.Destroy(pickupGO);
             return null;
         }
 
-        pickupComponent.Initialize(runtimeData);
-        return pickupGO;
+        pickup.Initialize(definition, runtimeData);
+        return pickup;
     }
-
-    // Might come in handy later if I ever decide to spawn fresh weapon pick ups
-    public static WeaponPickup CreatePickupFromConfig(WeaponConfigSO config, Vector3 position)
-    {
-        if (config == null || config.PickupPrefab == null)
-        {
-            Debug.LogError("Missing config or pickup prefab.");
-            return null;
-        }
-
-        GameObject pickupGO = GameObject.Instantiate(config.PickupPrefab, position, Quaternion.identity);
-        WeaponPickup pickupComponent = pickupGO.GetComponent<WeaponPickup>();
-
-        if (pickupComponent == null)
-        {
-            Debug.LogError("Pickup prefab missing WeaponPickup component.");
-            GameObject.Destroy(pickupGO);
-            return null;
-        }
-
-        pickupComponent.Initialize(config); // Initializes with just static data
-        return pickupComponent;
-    }
+    
 }
 
 

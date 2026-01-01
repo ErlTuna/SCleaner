@@ -87,10 +87,10 @@ public class MainMenuManager : MonoBehaviour
                 case PauseMenuSection.MAIN:
                     OnEnterMain();
                     break;
-                case PauseMenuSection.IN_SETTINGS:
+                case PauseMenuSection.SETTINGS:
                     OnEnterSettings();
                     break;
-                case PauseMenuSection.SHOWING_UNSAVED_WARNING:
+                case PauseMenuSection.UNSAVED_WARNING:
                     OnShowWarning();
                     break;
             }
@@ -114,9 +114,9 @@ public class MainMenuManager : MonoBehaviour
     // ------------------------
 
     // These are exposed for UnityEvents
-    public void GoToSettings() => SetSection(PauseMenuSection.IN_SETTINGS);
+    public void GoToSettings() => SetSection(PauseMenuSection.SETTINGS);
     public void GoToMain() => SetSection(PauseMenuSection.MAIN);
-    public void ShowWarning() => SetSection(PauseMenuSection.SHOWING_UNSAVED_WARNING);
+    public void ShowWarning() => SetSection(PauseMenuSection.UNSAVED_WARNING);
 
     void OnEnterMain()
     {

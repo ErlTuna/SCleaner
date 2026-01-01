@@ -12,17 +12,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8af658472ac40bb42b3a626dc24f4a0c, type: 3}
   m_Name: BasicShotgunConfig
   m_EditorClassIdentifier: 
+  InventoryItem: {fileID: 11400000, guid: 05d23768b14145543898540ea4f7eac9, type: 2}
+  PickupDefinition: {fileID: 11400000, guid: afc53f1859841564594054413e44b45d, type: 2}
   WeaponName: Basic Shotgun
   Type: 1
   Prefab: {fileID: 5890597930396712892, guid: 434f64dd444297848b8568e504356983, type: 3}
-  PickupPrefab: {fileID: 5890597930396712892, guid: 6f09affdc9aaaf742a02f9e31b14b4fb, type: 3}
   BulletPrefab: {fileID: 6657017082548522162, guid: c77308c80b6609f4eb203a2ff835a4b3, type: 3}
   BulletConfig: {fileID: 11400000, guid: ff4c160dc961a4e48a857227680f539b, type: 2}
-  Name: Shotgun
   Damage: 8
   RoundCapacity: 6
   MaxReserveAmmo: 36
-  StartingReserveAmmo: 36
   BulletPerShot: 3
   PushForce: 20
   SpreadAngle: 0
@@ -34,7 +33,6 @@ MonoBehaviour:
   DryFireSFX: {fileID: 8300000, guid: 591753c0fc688dc4a8a4928848b5c518, type: 3}
   FiringSFX: {fileID: 8300000, guid: c10c9b338ddf8074fa5849ce0ee10db3, type: 3}
   WeaponSwitchSFX: {fileID: 8300000, guid: d2b24e19405954a4c99252993fb90386, type: 3}
-  UI_Icon: {fileID: 21300000, guid: 584c91053424a9b41935b43d48a4a647, type: 3}
   offset: {x: 2.25, y: 0, z: 0}
   rayCastStartPoint: {fileID: 0}
   rayCastEndPoint: {fileID: 0}

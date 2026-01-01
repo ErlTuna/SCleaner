@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Grenade : MonoBehaviour, IEquipment
+public class Grenade : MonoBehaviour
 {
     /*
     public event Action OnAbilityEnd;

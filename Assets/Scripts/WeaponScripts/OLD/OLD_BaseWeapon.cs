@@ -1,12 +1,8 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 
-[Serializable]
 public abstract class OLD_BaseWeapon : MonoBehaviour
 {
+    /*
     public WeaponRuntimeData weaponRuntimeData;
     public WeaponConfigSO weaponConfig;
     public Transform firingPoint;
@@ -25,5 +21,5 @@ public abstract class OLD_BaseWeapon : MonoBehaviour
     public abstract void PrimaryAttack();
     public bool HasAmmo() { return weaponRuntimeData.CurrentAmmo > 0; }
     public abstract void ResetWeaponState();
-
+    */
 }

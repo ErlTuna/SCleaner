@@ -9,12 +9,12 @@ public class PlayerEquipmentManager : MonoBehaviour
 
     void OnEnable()
     {
-        PlayerInventoryEvents.OnEquipmentReady += ReceiveEquipment;
+        //PlayerInventoryEvents.OnEquipmentReady += ReceiveEquipment;
     }
 
     void OnDisable()
     {
-        PlayerInventoryEvents.OnEquipmentReady -= ReceiveEquipment;
+        //PlayerInventoryEvents.OnEquipmentReady -= ReceiveEquipment;
 
     }
 

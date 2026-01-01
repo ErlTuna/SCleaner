@@ -3,13 +3,13 @@ using System.Collections.Generic;
 
 public class SceneLoaderRequest
 {
-    public SceneReference SceneReference { get; private set; } // optional depending on type
-    public bool ShowLoadingScreen { get; private set; }
-    public bool SetSceneActive { get; private set; }
-    public SceneLoaderRequestType RequestType { get; private set; }
-    public Action OnCompleted { get; private set; } // optional
+    public SceneReference SceneReference { get; internal set; } // optional depending on type
+    public bool ShowLoadingScreen { get; internal set; }
+    public bool SetSceneActive { get; internal set; }
+    public SceneLoaderRequestType RequestType { get; internal set; }
+    public Action OnCompleted { get; internal set; } // optional
 
-    private SceneLoaderRequest() { } // private constructor
+    internal SceneLoaderRequest() { }
 
     public static SceneLoaderRequest BuildSingleLoadRequest(SceneReference scene, bool showLoadingScreen = false, bool setActive = false, Action onCompleted = null)
     {
@@ -57,16 +57,24 @@ public class SceneLoaderRequest
                     RequestType = SceneLoaderRequestType.UNLOAD_TYPE_UI,
                     OnCompleted = onCompleted
                 };
-
+            case SceneType.MAIN_MENU:
+                return new SceneLoaderRequest
+                {
+                    RequestType = SceneLoaderRequestType.UNLOAD_MAIN_MENU,
+                    OnCompleted = onCompleted
+                };
+            case SceneType.GAMEPLAY_LEVEL:
+                return new SceneLoaderRequest
+                {
+                    RequestType = SceneLoaderRequestType.UNLOAD_CURRENT_GAME_LEVEL,
+                    OnCompleted = onCompleted
+                };
             default:
                 return null;
             // future cases...    
         }
     }
 
-    
-
-    // Add other factory methods for other request types
 }
 
 public enum SceneLoaderRequestType
@@ -74,5 +82,7 @@ public enum SceneLoaderRequestType
     LOAD_SINGLE,
     UNLOAD_SINGLE,
     RELOAD_SINGLE,
+    UNLOAD_CURRENT_GAME_LEVEL,
+    UNLOAD_MAIN_MENU,
     UNLOAD_TYPE_UI
 }

@@ -123,6 +123,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f882e547327fa8f4d89b23559b249864, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _owner: {fileID: 0}
+  _contactDamage: 0
 --- !u!114 &5207038175615385040
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -277,6 +279,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f882e547327fa8f4d89b23559b249864, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _owner: {fileID: 0}
+  _contactDamage: 0
 --- !u!195 &5296537056425378523
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -380,7 +384,7 @@ SpriteRenderer:
   m_Size: {x: 2, y: 2}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
+  m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!1 &8806157274590480296
@@ -463,3 +467,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0b6fa52a8abf9ed40b12a6d5ab167b61, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _owner: {fileID: 0}

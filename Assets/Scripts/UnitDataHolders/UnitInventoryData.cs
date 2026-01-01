@@ -4,21 +4,18 @@ using System.Linq;
 [Serializable]
 public class UnitInventoryData
 {
-    public UnitWeaponInventory WeaponInventory;
-    public UnitEquipmentInventory EquipmentInventory;
-    public UnitCurrencyInventory CurrencyInventory;
+    public UnitWeaponInventory WeaponInventory {get; private set;}
+    public UnitEquipmentInventory EquipmentInventory {get; private set;}
+    public UnitCurrencyInventory CurrencyInventory {get; private set;}
     public UnitInventoryData(UnitInventoryConfigSO config)
     {
-        WeaponInventory = new UnitWeaponInventory
-        {
-            MaxWeaponAmount = config.MaxWeaponAmount,
-            WeaponsHeld = config.WeaponPrefabs.Count()
-        };
-
-        EquipmentInventory = new UnitEquipmentInventory();
+        // These event channels can be bundled in a struct later
+        WeaponInventory = new(config.WeaponPrefabs.Count(), config.MaxWeaponAmount, config.WeaponAddedEventChannel, config.WeaponDropEventChannel);
+        
+        EquipmentInventory = new UnitEquipmentInventory(config.EquipmentPickedUpChannel, config.EquipmentDroppedChannel);
         CurrencyInventory = new UnitCurrencyInventory
         {
-            OwnedCurrency = config.OwnedCurrency,
+            OwnedCurrency = 0,
             MaxCurrency = config.MaxCurrency
         };
     }

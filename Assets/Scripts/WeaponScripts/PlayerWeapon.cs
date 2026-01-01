@@ -71,20 +71,15 @@ public abstract class PlayerWeapon : BaseWeapon
     public virtual void Drop()
     {
         ResetWeapon();
-        //Vector2 tossDirection = gameObject.transform.parent.right;
-        //GameObject pickup = TransformToPickup();
         TransformToPickup();
-        //Toss(pickup, tossDirection);
         Destroy(gameObject);
     }
 
-    GameObject TransformToPickup()
+    void TransformToPickup()
     {
         gameObject.transform.localPosition = Vector3.zero;
         gameObject.transform.parent = null;
-
-        GameObject pickupGO = WeaponPickupFactory.CreatePickupFromWeapon(this);
-        return pickupGO;
+        WeaponPickupFactory.Create(WeaponRuntimeData, transform.position);
     }
 
     public virtual bool CanDryFire()

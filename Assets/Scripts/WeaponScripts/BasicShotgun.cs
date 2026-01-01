@@ -5,10 +5,6 @@ using UnityEngine;
 public class BasicShotgun : PlayerWeapon
 {
     List<GameObject> _bullets = new();
-    void Start()
-    {
-        WeaponRuntimeData = new WeaponRuntimeData(WeaponConfig);
-    }
 
     void Update()
     {

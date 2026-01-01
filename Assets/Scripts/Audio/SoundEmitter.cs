@@ -1,10 +1,11 @@
+using System;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(AudioSource))]
 public class SoundEmitter : MonoBehaviour
 {
+    Action<SoundEmitter> _returnToPoolCallback;
     AudioSource _audioSource;
     Coroutine disableRoutine;
     public bool IsPlaying => _audioSource.isPlaying;
@@ -18,11 +19,13 @@ public class SoundEmitter : MonoBehaviour
             Debug.Log("AudioSource missing!");
             return;
         }
-           
 
-        audioSource.playOnAwake = false;
-        gameObject.SetActive(false);
+        _audioSource.playOnAwake = false;
+        //if (_returnToPoolCallback != null)
+            //gameObject.SetActive(false);
     }
+
+    
 
     public void Play(AudioClip clip, float pitch = 1f, float volume = 1f)
     {
@@ -40,9 +43,20 @@ public class SoundEmitter : MonoBehaviour
         disableRoutine = StartCoroutine(DisableAfterPlayback());
     }
 
-    private IEnumerator DisableAfterPlayback()
+    IEnumerator DisableAfterPlayback()
     {
-        yield return new WaitWhile(() => _audioSource.isPlaying);
-        gameObject.SetActive(false);
+        float clipLength = _audioSource.clip != null ? _audioSource.clip.length / _audioSource.pitch : 0f;
+        //yield return new WaitWhile(() => _audioSource.isPlaying);
+        yield return new WaitForSeconds(clipLength);
+        if (_returnToPoolCallback != null)
+            _returnToPoolCallback.Invoke(this);
+
+        else
+            gameObject.SetActive(false);
+    }
+
+    public void SetReturnAction(Action<SoundEmitter> onReturn)
+    {
+        _returnToPoolCallback = onReturn;
     }
 }

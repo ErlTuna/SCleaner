@@ -12,9 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5e85dc2a279ff6341a7889587a9de534, type: 3}
   m_Name: Pistol_ClipInSound
   m_EditorClassIdentifier: 
-  clip: {fileID: 8300000, guid: 1df3f79f747e29e40b11db6e2672bea6, type: 3}
+  clips:
+  - {fileID: 8300000, guid: 1df3f79f747e29e40b11db6e2672bea6, type: 3}
   loop: 0
   playOnAwake: 0
+  playRandomAmongGroup: 0
   pitch: 0
   withVaryingPitch: 0
   pitchRange: 0.1

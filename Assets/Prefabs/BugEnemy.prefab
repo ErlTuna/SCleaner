@@ -278,7 +278,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4e7d384def15bb34199b86412e521277, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  faction: 0
+  _faction: 1
+  _deathEventChannel: {fileID: 11400000, guid: 0d8d67cf4c6de084f8475f891009e8e7, type: 2}
   _agent: {fileID: 5296537056425378523}
   _rb2D: {fileID: 7926535529223704634}
   _bodyRB: {fileID: 3983031734168495030}

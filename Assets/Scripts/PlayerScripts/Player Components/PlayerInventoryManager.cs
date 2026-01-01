@@ -23,7 +23,7 @@ public class PlayerInventoryManager : MonoBehaviour
         yield return new WaitUntil(() => _playerInventoryConfig != null);
         PrepareWeapons();
         //SetDefaultWeapon();
-        PrepareEquipment();
+        //PrepareEquipment();
         SetDefaultEquipment();
     }
 
@@ -84,8 +84,8 @@ public class PlayerInventoryManager : MonoBehaviour
                 equipmentGO.SetActive(false);
             }
 
-            PlayerInventoryEvents.RaiseEquipmentReadyEvent(equipmentGO, equipmentScript);
-            PlayerInventoryEvents.RaiseEquipmentSwitchUIUpdateEvent(equipmentScript.EquipmentConfig.UI_Icon, equipmentScript.EquipmentData);
+            //PlayerInventoryEvents.RaiseEquipmentReadyEvent(equipmentGO, equipmentScript);
+            //PlayerInventoryEvents.RaiseEquipmentSwitchUIUpdateEvent(equipmentScript.EquipmentConfig.UI_Icon, equipmentScript.EquipmentData);
     }
 
     void SwitchToWeaponSlot(int slotToSwitchTo)
@@ -122,7 +122,8 @@ public class PlayerInventoryManager : MonoBehaviour
         if (_weaponUIUpdateEventChannel != null)
         {
             WeaponUpdateData weaponUpdateData = new(
-            _currentlyUsedWeaponSlot.Script.WeaponConfig.UI_Icon,
+            //_currentlyUsedWeaponSlot.Script.WeaponConfig.UI_Icon,
+            _currentlyUsedWeaponSlot.Script.WeaponConfig.InventoryItem.ItemIcon,
             _currentlyUsedWeaponSlot.Script.WeaponRuntimeData.CurrentAmmo,
              _currentlyUsedWeaponSlot.Script.WeaponRuntimeData.ReserveAmmo
             );
@@ -147,7 +148,7 @@ public class PlayerInventoryManager : MonoBehaviour
         if (_currentlyUsedWeaponSlot != null)
         {
             _currentlyUsedWeaponSlot.Weapon.SetActive(true);
-            PlayerInventoryEvents.RaiseWeaponsReadyEvent(_currentlyUsedWeaponSlot.Weapon, _currentlyUsedWeaponSlot.Script);
+            //PlayerInventoryEvents.RaiseWeaponsReadyEvent(_currentlyUsedWeaponSlot.Weapon, _currentlyUsedWeaponSlot.Script);
         }
         
     }
@@ -174,44 +175,24 @@ public class PlayerInventoryManager : MonoBehaviour
         return true;
     }
 
-    public void TryAddWeapon(WeaponConfigSO config)
+    public void TryAddWeaponFromConfig(WeaponConfigSO config)
     {
+        if (config == null) return;
 
-        if (config == null)
-        {
-            Debug.LogError("Config is null. Inventory can't add weapon.");
-            return;
-        }
-
-        bool wasWeaponInventoryEmpty = _playerInventoryData.WeaponInventory.IsEmpty();
-
-        GameObject weaponGO = Instantiate(config.Prefab);
-        PlayerWeapon weaponScript = weaponGO.GetComponent<PlayerWeapon>();
-        SetupWeapon(weaponGO, weaponScript);
-        weaponScript.InitializeWithConfig();
-
-        
-
-        _playerInventoryData.WeaponInventory.AddWeaponToInventory(weaponGO, weaponScript);
-        WeaponSlot slot = new(weaponGO, weaponScript);
-        _weaponSlots.Add(slot);
-
-        if (wasWeaponInventoryEmpty)
-        {
-            SwitchToWeaponSlot(0);
-        }
+        WeaponRuntimeData runtimeData = new WeaponRuntimeData(config);
+        HandleWeaponAdding(runtimeData);
     }
 
     public void TryAddWeapon(WeaponRuntimeData runtimeData)
     {
+        if (runtimeData == null || runtimeData.Config == null) return;
         
-        if (runtimeData == null || runtimeData.Config == null)
-        {
-            Debug.LogError("Config and/or runtime data are/is null.");
-            return;
-        }
+        HandleWeaponAdding(runtimeData);
+    }
 
-        bool wasWeaponInventoryEmpty = _playerInventoryData.WeaponInventory.IsEmpty();
+    void HandleWeaponAdding(WeaponRuntimeData runtimeData)
+    {
+        bool wasEmpty = _playerInventoryData.WeaponInventory.IsEmpty();
 
         GameObject weaponGO = Instantiate(runtimeData.Config.Prefab);
         PlayerWeapon weaponScript = weaponGO.GetComponent<PlayerWeapon>();
@@ -219,15 +200,14 @@ public class PlayerInventoryManager : MonoBehaviour
         weaponScript.InitializeWithRuntimeData(runtimeData);
 
         _playerInventoryData.WeaponInventory.AddWeaponToInventory(weaponGO, weaponScript);
-        WeaponSlot slot = new(weaponGO, weaponScript);
-        _weaponSlots.Add(slot);
+        _weaponSlots.Add(new WeaponSlot(weaponGO, weaponScript));
 
-        if (wasWeaponInventoryEmpty)
-        {
+        if (wasEmpty)
             SwitchToWeaponSlot(0);
-        }
 
+        
     }
+
 
     void SetupWeapon(GameObject weaponGO, BaseWeapon weaponScript)
     {
@@ -259,7 +239,6 @@ public class PlayerInventoryManager : MonoBehaviour
             _currentlyUsedWeaponSlotIndex = -1;
             WeaponUpdateData weaponUpdateData = new();
 
-            //PlayerInventoryEvents.RaiseWeaponSwitchEvent(null, null);
             _weaponUIUpdateEventChannel.RaiseEvent(weaponUpdateData);
             return;
         }

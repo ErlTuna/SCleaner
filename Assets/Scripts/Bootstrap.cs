@@ -28,7 +28,7 @@ public class Bootstrap : MonoBehaviour
         bool done = false;
         SceneReference mainMenuSceneRef = new()
         {
-            SceneName = "Main_Menu_v2",
+            SceneName = "Main_Menu_v3",
             SceneType = SceneType.MAIN_MENU
         };
 

@@ -12,17 +12,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8af658472ac40bb42b3a626dc24f4a0c, type: 3}
   m_Name: BasicRevolverConfig
   m_EditorClassIdentifier: 
+  InventoryItem: {fileID: 11400000, guid: 6cef30d386c25014684fcb19098b249f, type: 2}
+  PickupDefinition: {fileID: 11400000, guid: 4f2533060589d834d954e19aad5de68f, type: 2}
   WeaponName: Basic Revolver
   Type: 1
   Prefab: {fileID: 7835682278847929839, guid: ff5ae5010cc129d459f653de22aa6aed, type: 3}
-  PickupPrefab: {fileID: 5890597930396712892, guid: 6f09affdc9aaaf742a02f9e31b14b4fb, type: 3}
   BulletPrefab: {fileID: 6657017082548522162, guid: c77308c80b6609f4eb203a2ff835a4b3, type: 3}
   BulletConfig: {fileID: 11400000, guid: a82aa05a3bcd30a4bb278b029a78a0d9, type: 2}
-  Name: Revolver
   Damage: 10
   RoundCapacity: 6
   MaxReserveAmmo: 36
-  StartingReserveAmmo: 36
   BulletPerShot: 1
   PushForce: 100
   SpreadAngle: 0
@@ -34,7 +33,6 @@ MonoBehaviour:
   DryFireSFX: {fileID: 8300000, guid: 591753c0fc688dc4a8a4928848b5c518, type: 3}
   FiringSFX: {fileID: 8300000, guid: f4181816d86635544b77fb16a9cf2bda, type: 3}
   WeaponSwitchSFX: {fileID: 8300000, guid: d2b24e19405954a4c99252993fb90386, type: 3}
-  UI_Icon: {fileID: 21300000, guid: c4933bb320f2fff42b059dc9b9806b59, type: 3}
   offset: {x: 2, y: 0, z: 0}
   rayCastStartPoint: {fileID: 0}
   rayCastEndPoint: {fileID: 0}
