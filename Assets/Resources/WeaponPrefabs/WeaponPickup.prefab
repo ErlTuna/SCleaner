@@ -144,12 +144,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b4423396d12f3dd4c846674d3f82060c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _weaponConfig: {fileID: 11400000, guid: e17c034cd1b2f244dbfdf103f490f202, type: 2}
+  pickupSO: {fileID: 0}
   _boxCollider2D: {fileID: 2839240475316576872}
-  _spriteRenderer: {fileID: 8610405281354072887}
+  spriteRenderer: {fileID: 8610405281354072887}
   normalMaterial: {fileID: 2100000, guid: 1c108f2c25d912e4fa3533be4c904af4, type: 2}
   outlineMaterial: {fileID: 2100000, guid: cfe45899948b34e44bc241a26bbbb6fe, type: 2}
-  _isWorldPickup: 1
+  isWorldPickup: 1
+  _weaponRuntimeData:
+    State: 0
+    CurrentAmmo: 0
+    ReserveAmmo: 0
+    Damage: 0
+    TimeSinceLastFired: 0
+    SpreadResetThreshold: 0
+  _weaponConfig: {fileID: 11400000, guid: e17c034cd1b2f244dbfdf103f490f202, type: 2}
 --- !u!50 &2099867089774209457
 Rigidbody2D:
   serializedVersion: 4

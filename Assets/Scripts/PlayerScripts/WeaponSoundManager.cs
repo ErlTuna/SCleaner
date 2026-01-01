@@ -1,7 +1,5 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Audio;
 
 [RequireComponent(typeof(AudioSource))]
 public class WeaponSoundManager : MonoBehaviour
@@ -9,12 +7,6 @@ public class WeaponSoundManager : MonoBehaviour
     [SerializeField] GameObject _soundEmitterPrefab;
     [SerializeField] int _maxEmitters = 10;
     readonly List<SoundEmitter> emitters = new();
-
-    void Start()
-    {
-        // Optionally instantiate one to start
-        //CreateNewEmitter();
-    }
 
     void CreateNewEmitter()
     {

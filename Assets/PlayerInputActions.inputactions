@@ -423,7 +423,7 @@
                     "name": "Submit",
                     "type": "Button",
                     "id": "81b328c8-e36c-467d-9975-001811fd5903",
-                    "expectedControlType": "Button",
+                    "expectedControlType": "",
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
@@ -432,7 +432,7 @@
                     "name": "Cancel",
                     "type": "Button",
                     "id": "206dcefd-0c8f-492a-8879-6e4eeca950cb",
-                    "expectedControlType": "Button",
+                    "expectedControlType": "",
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
@@ -504,7 +504,16 @@
                     "name": "CloseMenu",
                     "type": "Button",
                     "id": "d9118ae2-24cd-4bc6-96f9-0b496f56d566",
-                    "expectedControlType": "Button",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "MySubmit",
+                    "type": "Button",
+                    "id": "e46b3415-c5db-48c2-b365-3ed99b3f2a07",
+                    "expectedControlType": "",
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
@@ -788,6 +797,17 @@
                 },
                 {
                     "name": "",
+                    "id": "6d127cf1-0aaf-4c79-8430-03e81f5ed801",
+                    "path": "<Keyboard>/enter",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Submit",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
                     "id": "3a13a63a-7022-46e6-945b-f58ed944e475",
                     "path": "*/{Cancel}",
                     "interactions": "",
@@ -937,6 +957,17 @@
                     "processors": "",
                     "groups": "",
                     "action": "CloseMenu",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "8617de1b-4822-4769-bd5c-f1a5239ca14a",
+                    "path": "<Keyboard>/enter",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "MySubmit",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

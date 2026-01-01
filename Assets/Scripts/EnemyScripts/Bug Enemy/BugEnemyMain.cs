@@ -46,6 +46,9 @@ public class BugEnemyMain : Unit
     GameObject _player;
     UnitStateData _playerStateData;
 
+    
+    
+
     void OnEnable()
     {
         _healthManager.OnDefeat += HandleDefeat;
@@ -100,6 +103,8 @@ public class BugEnemyMain : Unit
     {
         _defeatState.SetLastHitContext(context);
         _stateData.IsAlive = false;
+        if (_deathEventChannel != null)
+            _deathEventChannel.RaiseEvent();
     }
 
         void PrepareRuntimeData()

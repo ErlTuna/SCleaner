@@ -12,8 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 30849d1a569abb14ba30ccd9e0699ee0, type: 3}
   m_Name: PlayerInventoryConfig
   m_EditorClassIdentifier: 
-  OwnedCurrency: 0
   MaxCurrency: 9999
   MaxWeaponAmount: 2
   WeaponPrefabs: []
   EquipmentPrefab: {fileID: 3411235486444114872, guid: 3a7cd3ce19edb604d9e84789ae7bf950, type: 3}
+  WeaponAddedEventChannel: {fileID: 11400000, guid: 7ef08a65916c60b4fb18c5a4bfb84e1f, type: 2}
+  WeaponDropEventChannel: {fileID: 11400000, guid: bf7a3f8b818d30843802703d6d90a7c2, type: 2}
+  CurrencyChangedEventChannel: {fileID: 0}

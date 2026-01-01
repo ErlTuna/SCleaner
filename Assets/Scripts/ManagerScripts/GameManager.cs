@@ -2,17 +2,19 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
     [SerializeField] SceneRequestEventChannelSO _sceneRequestEventChannel;
     [SerializeField] VoidEventChannelSO _pauseToggleEventChannel;
-    [SerializeField] VoidEventChannelSO _gameOverEventChannel;
+    //[SerializeField] VoidEventChannelSO _gameOverEventChannel;
     public static Action OnGameStart;
     public static Action OnLevelLoaded;
     public static Action OnGameOver;
     public static Action OnGameOverCameraMovement;
+    public static Action OnGameOverShowGameOverMenu;
     GameState _previousState;
     [SerializeField] GameState _currentState;
     public GameState CurrentState => _currentState; 
@@ -71,19 +73,42 @@ public class GameManager : MonoBehaviour
 
         SceneReference testSceneRef = new() { SceneName = "Test", SceneType = SceneType.GAMEPLAY_LEVEL };
         SceneReference gameplayUISceneRef = new() { SceneName = "GameplayUI", SceneType = SceneType.UI };
-        SceneReference mainMenuSceneRef = new() { SceneName = "Main_Menu_v2", SceneType = SceneType.MAIN_MENU };
-        SceneReference pauseMenuSceneRef = new() { SceneName = "PauseMenu", SceneType = SceneType.UI };
+        SceneReference mainMenuSceneRef = new() { SceneName = "Main_Menu_v3", SceneType = SceneType.MAIN_MENU };
+        SceneReference pauseMenuSceneRef = new() { SceneName = "PauseMenu_v2", SceneType = SceneType.UI };
         SceneReference gameOverUIScene = new() { SceneName = "GameOver", SceneType = SceneType.UI };
 
         
-
+        SceneLoaderRequest testReq = SceneLoaderRequest.BuildUnloadByTypeRequest(SceneType.MAIN_MENU, () => --pendingRequests);
         SceneLoaderRequest mainMenuUnloadReq = SceneLoaderRequest.BuildSingleUnloadRequest(mainMenuSceneRef, false, false, () => --pendingRequests);
         SceneLoaderRequest gamePlayUILoadReq = SceneLoaderRequest.BuildSingleLoadRequest(gameplayUISceneRef, false, false, () => --pendingRequests);
         SceneLoaderRequest pauseMenuLoadReq = SceneLoaderRequest.BuildSingleLoadRequest(pauseMenuSceneRef, false, false, () => --pendingRequests);
         SceneLoaderRequest gameOverUIReq = SceneLoaderRequest.BuildSingleLoadRequest( gameOverUIScene, false, false, () => --pendingRequests);
         SceneLoaderRequest testSceneLoadReq = SceneLoaderRequest.BuildSingleLoadRequest(testSceneRef, true, true, () => --pendingRequests);
+        
+        SceneLoaderRequest req0 = SceneLoaderRequest.BuildUnloadByTypeRequest(SceneType.MAIN_MENU).OnComplete(() => --pendingRequests);
+        SceneLoaderRequest req1 = SceneLoaderRequest.BuildSingleLoadRequest(gameplayUISceneRef).
+                                                     SetActive(false).
+                                                     WithLoadingScreen(false).
+                                                     OnComplete(() => --pendingRequests);
 
-        List<SceneLoaderRequest> requests = new() {testSceneLoadReq, gamePlayUILoadReq, pauseMenuLoadReq, gameOverUIReq, mainMenuUnloadReq};
+        SceneLoaderRequest req2 = SceneLoaderRequest.BuildSingleLoadRequest(pauseMenuSceneRef).
+                                                     SetActive(false).
+                                                     WithLoadingScreen(false).
+                                                     OnComplete(() => --pendingRequests);
+
+        SceneLoaderRequest req3 = SceneLoaderRequest.BuildSingleLoadRequest(gameOverUIScene).
+                                                     SetActive(false).
+                                                     WithLoadingScreen(false).
+                                                     OnComplete(() => --pendingRequests);                                             
+
+        SceneLoaderRequest req4 = SceneLoaderRequest.BuildSingleLoadRequest(testSceneRef).
+                                                     SetActive(true).
+                                                     WithLoadingScreen(true).
+                                                     OnComplete(() => --pendingRequests);
+
+
+        //List<SceneLoaderRequest> requests = new() {testSceneLoadReq, gamePlayUILoadReq, pauseMenuLoadReq, gameOverUIReq, testReq};
+        List<SceneLoaderRequest> requests = new() {req0, req1, req2, req3, req4};
         pendingRequests = requests.Count;
 
         foreach (var req in requests)_sceneRequestEventChannel.RaiseEvent(req);
@@ -101,7 +126,7 @@ public class GameManager : MonoBehaviour
     {
         int pendingRequests = 0;
 
-        SceneReference mainMenuSceneRef = new() { SceneName = "Main_Menu_v2", SceneType = SceneType.MAIN_MENU };
+        SceneReference mainMenuSceneRef = new() { SceneName = "Main_Menu_v3", SceneType = SceneType.MAIN_MENU };
         SceneReference currentGameplayScene = new() { SceneName = SceneManager.GetActiveScene().name, SceneType = SceneType.GAMEPLAY_LEVEL };
         
         SceneLoaderRequest mainMenuLoadReq = SceneLoaderRequest.BuildSingleLoadRequest(mainMenuSceneRef, true, true, () => --pendingRequests);
@@ -151,7 +176,6 @@ public class GameManager : MonoBehaviour
 
     IEnumerator PlayerDefeatSequence()
     {
-        Debug.Log("Starting game over sequence");
 
         OnGameOver?.Invoke();
         PlayerInputManager.Instance.OnPlayerDefeat();
@@ -160,17 +184,11 @@ public class GameManager : MonoBehaviour
         // small lambda method
         CameraTargetFollow.OnCameraMovedToPlayer += () => cameraOnPlayer = true;
         OnGameOverCameraMovement.Invoke();
-
         yield return new WaitUntil(() => cameraOnPlayer == true);
-
         CameraTargetFollow.OnCameraMovedToPlayer -= () => cameraOnPlayer = true;
 
-        // Show game over UI / scene
-        if (_gameOverEventChannel != null)
-        {
-            Debug.Log("Showing game over scene");
-            _gameOverEventChannel.RaiseEvent();
-        }
+        PlayerInputManager.Instance.SwitchToUIActionMap();
+        OnGameOverShowGameOverMenu?.Invoke();
     }
 
 }

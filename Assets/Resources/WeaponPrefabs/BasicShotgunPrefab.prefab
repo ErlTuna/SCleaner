@@ -991,14 +991,7 @@ MonoBehaviour:
   stockGripPoint: {fileID: 0}
   secondGripPoint: {fileID: 0}
   AmmoManager: {fileID: 968184645804837554}
-  WeaponConfig: {fileID: 11400000, guid: 8a5bb5bc2f2a38a4db6856940f765c5e, type: 2}
-  WeaponRuntimeData:
-    State: 0
-    CurrentAmmo: 0
-    ReserveAmmo: 0
-    Damage: 0
-    TimeSinceLastFired: 0
-    SpreadResetThreshold: 0
+  _weaponConfig: {fileID: 11400000, guid: 8a5bb5bc2f2a38a4db6856940f765c5e, type: 2}
   PrimaryAttackStrategy: {fileID: 11400000, guid: 0e5de3ccb7ff2a64a9634e3de497298c, type: 2}
   rayCastStartPoint: {fileID: 5669385491526425842}
   rayCastEndPoint: {fileID: 2212139409652299717}

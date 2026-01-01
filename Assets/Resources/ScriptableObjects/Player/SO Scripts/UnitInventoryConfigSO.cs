@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -6,12 +5,20 @@ using UnityEngine;
 public class UnitInventoryConfigSO : ScriptableObject
 {
     [Header("Currency")]
-    public int OwnedCurrency;
     public int MaxCurrency;
 
     [Header("Weapons")]
     public int MaxWeaponAmount;
     public List<GameObject> WeaponPrefabs = new();
     public GameObject EquipmentPrefab;
+
+    [Header("Event Channels")]
+    public ItemPickedUpEventChannel WeaponAddedEventChannel;
+    public ItemDroppedEventChannel WeaponDropEventChannel;
+    public ItemPickedUpEventChannel EquipmentPickedUpChannel;
+    public ItemDroppedEventChannel EquipmentDroppedChannel;
+
+    [Header("Currently Unusued")]
+    public VoidEventChannelSO CurrencyChangedEventChannel;
 
 }

@@ -370,6 +370,10 @@ MonoBehaviour:
       m_Calls: []
     m_ActionId: 158db150-6d81-4a7e-a54f-19b187e04a61
     m_ActionName: Gameplay/Drop Weapon[/Keyboard/t]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: e46b3415-c5db-48c2-b365-3ed99b3f2a07
+    m_ActionName: UI/MySubmit[/Keyboard/enter]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Gameplay
@@ -387,10 +391,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d32c3a3e678640f49947d74ef7fdd622, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  faction: 0
+  _faction: 0
+  _deathEventChannel: {fileID: 0}
   _inputActionAsset:
-    m_Name: 
-    m_Id: 
+    m_Name: Input Action Asset
+    m_Id: 8a6cbdda-c7d5-4c7b-bd26-ba44cb01c932
     m_Asset: {fileID: 0}
     m_Actions: []
     m_Bindings: []
@@ -408,6 +413,9 @@ MonoBehaviour:
   _inventoryConfig: {fileID: 11400000, guid: d75f52ebf7aa6fd4c91d125464fdfa72, type: 2}
   _stateConfig: {fileID: 11400000, guid: 5db4fa054e5e3f14a932a12772b2474f, type: 2}
   _transformEventChannel: {fileID: 11400000, guid: 1431a561f6136344cb8b05bd8d509dbd, type: 2}
+  _inventoryEventHub:
+    WeaponAddedEvent: {fileID: 11400000, guid: 7ef08a65916c60b4fb18c5a4bfb84e1f, type: 2}
+    CurrencyChangedEvent: {fileID: 0}
   _stateData:
     IsAlive: 0
     IsHitInvuln: 0
@@ -527,15 +535,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _weaponUIUpdateEventChannel: {fileID: 11400000, guid: d230ce9cbfae3024c88034ed3986baa4, type: 2}
   _weaponSwitchRequestEventChannel: {fileID: 11400000, guid: 3cf85207d49748545a4a610e488ea80c, type: 2}
-  _playerInventoryData:
-    WeaponInventory:
-      WeaponsHeld: 0
-      MaxWeaponAmount: 0
-      WeaponGOs: []
-      WeaponScripts: []
-    EquipmentInventory:
-      EquipmentGO: {fileID: 0}
-      EquipmentScript: {fileID: 0}
   _playerInventoryConfig: {fileID: 0}
   _weaponParent: {fileID: 369740753222307388}
   _weaponPosition: {fileID: 4675471930827448633}
@@ -571,25 +570,6 @@ MonoBehaviour:
     m_Asset: {fileID: 0}
     m_Actions: []
     m_Bindings: []
-  MovementInput: {x: 0, y: 0}
-  PointerInput: {x: 0, y: 0}
-  ItemPickupInput: 0
-  WeaponDropInput: 0
-  AbilitySwitchInput: 0
-  PrimaryAttackInput: 0
-  IsPrimaryAttackHeld: 0
-  IsPrimaryAttackPressedThisFrame: 0
-  IsPrimaryAttackReleasedThisFrame: 0
-  SecondaryAttackInput: 0
-  AbilityUseInput: 0
-  FirstWeaponInput: 0
-  SecondWeaponInput: 0
-  ThirdWeaponInput: 0
-  FourthWeaponInput: 0
-  EquipmentInput: 0
-  ReloadInput: 0
-  MenuOpenInput: 0
-  MenuCloseInput: 0
 --- !u!1 &2113836864039851442
 GameObject:
   m_ObjectHideFlags: 0

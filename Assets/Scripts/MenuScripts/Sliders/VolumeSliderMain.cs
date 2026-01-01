@@ -1,11 +1,13 @@
 using UnityEngine.EventSystems;
 using UnityEngine;
 
-public class VolumeSliderMain : MonoBehaviour, IMenuItem
+public class VolumeSliderMain : MonoBehaviour, ISelectHandler, IDeselectHandler, IDescriptionProvider
 {
     public BaseAudioSliderLogic logic;
     public BaseAudioSliderVisuals visuals;
-
+    [SerializeField] string _description;
+    public string Label { get; set;}
+    public string Description => _description;
 
     void OnEnable()
     {
@@ -35,13 +37,13 @@ public class VolumeSliderMain : MonoBehaviour, IMenuItem
 
     void PlayAdjustmentSFX()
     {
-        AudioManager.instance.PlaySubmitSound();
+        AudioManager.Instance.PlaySubmitSound();
     }
     
     public void OnSelect(BaseEventData eventData)
     {
         MenuAnimationsManager.instance.OptionSelected(visuals.selectionIndicator);
-        AudioManager.instance.PlaySelectSound();
+        AudioManager.Instance.PlaySelectSound();
     }
 
     public void OnDeselect(BaseEventData eventData)
@@ -49,7 +51,6 @@ public class VolumeSliderMain : MonoBehaviour, IMenuItem
         MenuAnimationsManager.instance.OptionDeselected();
     }
 
-    public void OnSubmit(BaseEventData eventData){}
 }
 
 

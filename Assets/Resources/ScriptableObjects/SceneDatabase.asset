@@ -20,12 +20,14 @@ MonoBehaviour:
   - SceneName: Main_Menu_v2
     SceneType: 2
   - SceneName: Loading_Screen
-    SceneType: 3
+    SceneType: 4
   - SceneName: GameplayUI
     SceneType: 5
   - SceneName: Test
-    SceneType: 4
-  - SceneName: GameOver
     SceneType: 5
-  - SceneName: PauseMenu
+  - SceneName: GameOver
     SceneType: 6
+  - SceneName: PauseMenu_v2
+    SceneType: 6
+  - SceneName: Main_Menu_v3
+    SceneType: 2

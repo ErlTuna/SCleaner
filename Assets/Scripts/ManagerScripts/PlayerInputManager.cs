@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.Controls;
@@ -6,11 +7,8 @@ using UnityEngine.UI;
 public class PlayerInputManager : MonoBehaviour
 {
     public static PlayerInput PlayerInput;
-    //[SerializeField] InputActionAsset _playerActionAsset;
     [SerializeField] InputActionMap _gameplayActionMap;
     [SerializeField] InputActionMap _UIActionMap;
-    InputActionMap _previousActionMap;
-
     InputAction _movementInputAction;
     InputAction _pointerInputAction;
     InputAction _itemPickupInputAction;
@@ -27,18 +25,20 @@ public class PlayerInputManager : MonoBehaviour
     InputAction _fourthWeaponInputAction;
     InputAction _menuOpenAction;
     InputAction _menuCloseAction;
+    InputAction _submitAction;
     InputAction _abilitySwitchAction;
-    public Vector2 MovementInput;
-    public Vector2 PointerInput;
-    public bool ItemPickupInput;
-    public bool WeaponDropInput;
-    public bool AbilitySwitchInput;
-    public bool PrimaryAttackInput;
-    public bool IsPrimaryAttackHeld;
-    public bool IsPrimaryAttackPressedThisFrame;
-    public bool IsPrimaryAttackReleasedThisFrame;
-    public bool SecondaryAttackInput;
-    public bool AbilityUseInput;
+    InputAction _navigationAction;
+    public Vector2 MovementInput { get; private set; }
+    public Vector2 PointerInput { get; private set; }
+    public bool ItemPickupInput { get; private set; }
+    public bool WeaponDropInput { get; private set; }
+    public bool AbilitySwitchInput { get; private set; }
+    public bool PrimaryAttackInput { get; private set; }
+    public bool IsPrimaryAttackHeld { get; private set; }
+    public bool IsPrimaryAttackPressedThisFrame { get; private set; }
+    public bool IsPrimaryAttackReleasedThisFrame { get; private set; }
+    public bool SecondaryAttackInput { get; private set; }
+    public bool AbilityUseInput { get; private set; }
     public int WeaponSwitchInput
         {
             get
@@ -60,14 +60,17 @@ public class PlayerInputManager : MonoBehaviour
                 return -1;
             }
         }
-    public bool FirstWeaponInput;
-    public bool SecondWeaponInput;
-    public bool ThirdWeaponInput;
-    public bool FourthWeaponInput;
-    public bool EquipmentInput;
-    public bool ReloadInput;
-    public bool MenuOpenInput;
-    public bool MenuCloseInput;
+    public bool FirstWeaponInput { get; private set; }
+    public bool SecondWeaponInput { get; private set; }
+    public bool ThirdWeaponInput { get; private set; }
+    public bool FourthWeaponInput { get; private set; }
+    public bool EquipmentInput { get; private set; }
+    public bool ReloadInput { get; private set; }
+    public bool MenuOpenInput { get; private set; }
+    public bool MenuCloseInput { get; private set; }
+    public bool SubmitPressed { get; private set; }    // single-frame press
+    public bool SubmitHeld { get; private set; }     // continuous hold
+    public Vector2 NavigationInput {get; private set; }
 
     public static PlayerInputManager Instance {get; private set;}
 
@@ -113,7 +116,10 @@ public class PlayerInputManager : MonoBehaviour
 
         // Switching to UI map to cache the CloseMenu action
         PlayerInput.SwitchCurrentActionMap("UI");
-        _menuCloseAction = PlayerInput.actions["CloseMenu"];
+        _menuCloseAction = PlayerInput.currentActionMap.FindAction("CloseMenu");
+        _submitAction = PlayerInput.currentActionMap.FindAction("Submit");
+        _navigationAction = PlayerInput.currentActionMap.FindAction("Navigate");
+
 
         PlayerInput.SwitchCurrentActionMap("Gameplay");
 
@@ -144,8 +150,14 @@ public class PlayerInputManager : MonoBehaviour
         MenuOpenInput = _menuOpenAction.WasPressedThisFrame();
         MenuCloseInput = _menuCloseAction.WasPressedThisFrame();
         AbilitySwitchInput = _abilitySwitchAction.WasPerformedThisFrame();
-        
+        SubmitPressed = _submitAction.WasPressedThisFrame();
+        SubmitHeld = _submitAction.ReadValue<float>() > 0;
+        NavigationInput = _navigationAction.ReadValue<Vector2>();
+
     }
+
+    public static event Action<Vector2> OnUINavigation;
+
 
     public void ToggleMouseInput(bool enable)
     {
@@ -177,6 +189,8 @@ public class PlayerInputManager : MonoBehaviour
     {
         //_previousActionMap = _gameplayActionMap;
         PlayerInput.SwitchCurrentActionMap("UI");
+        Debug.Log("Switched to UI action map : " + _UIActionMap.enabled);
+        Debug.Log($"UI map switched. Submit enabled: {_submitAction.enabled}, CloseMenu enabled: {_menuCloseAction.enabled}");
         //_UIActionMap.Enable();
     }
 
@@ -184,10 +198,9 @@ public class PlayerInputManager : MonoBehaviour
     {
         if (_UIActionMap == null) return;
         if (_gameplayActionMap == null) return;
-            
         _gameplayActionMap.Disable();
-        _UIActionMap.Enable();
-        Debug.Log("Switched input action maps.");
+
+        Debug.Log("Gameplay action map is disabled.");
     }
 
 }

@@ -1,9 +1,10 @@
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Playables;
 
 public class AudioManager : MonoBehaviour
 {
-    public static AudioManager instance;
+    public static AudioManager Instance;
     public AudioLevel SFXLevel;
     public AudioLevel BGMLevel;
     [SerializeField] AudioSource _SFXSource;
@@ -11,15 +12,18 @@ public class AudioManager : MonoBehaviour
     [SerializeField] AudioClip _BGM;
     [SerializeField] AudioClip _selectSFX;
     [SerializeField] AudioClip _submitSFX;
+    [SerializeField] AudioCueEventChannelSO _sfxEventChannel;
 
     void OnEnable()
     {
+        _sfxEventChannel.OnAudioCueRequested += PlayAudioCue;
         SettingsEvents.OnSettingsAltered += UpdateAudioSettings;
         SettingsEvents.OnSettingsReverted += UpdateAudioSettings;
     }
 
     void OnDisable()
     {
+        _sfxEventChannel.OnAudioCueRequested -= PlayAudioCue;
         SettingsEvents.OnSettingsAltered -= UpdateAudioSettings;
         SettingsEvents.OnSettingsReverted -= UpdateAudioSettings;
     }
@@ -27,12 +31,14 @@ public class AudioManager : MonoBehaviour
 
     void Awake()
     {
-        if (instance != null && instance != this)
-            Destroy(this);
+        if (Instance != null && Instance != this)
+        {
+            Destroy(gameObject);
+            return;
+        }
 
-        else
-            instance = this;
-
+        Instance = this;
+        
     }
 
     void Start()
@@ -65,26 +71,66 @@ public class AudioManager : MonoBehaviour
         _SFXSource.PlayOneShot(_submitSFX);
     }
 
+    void PlayAudioCue(SoundData soundData, Vector3 location)
+    {
+        AudioClip clipToBePlayed = GetClip(soundData);
+
+        if (clipToBePlayed == null)
+        {
+            Debug.Log("There isn't a valid clip to play.");
+            return;
+        }
+
+        if (soundData.withVaryingPitch)
+        {
+            float pitchVariance = soundData.pitchRange;
+            float pitch = 1f + Random.Range(-pitchVariance, pitchVariance);
+            PlaySFXClip(clipToBePlayed, pitch);
+        }
+
+        else
+            PlaySFXClip(clipToBePlayed);
+
+    }
+
+    public void PlaySFXClip(AudioClip clip, float pitch = 1f, float volume = 1f)
+    {
+        if (clip == null) return;
+
+        _SFXSource.clip = clip;
+        _SFXSource.pitch = pitch;
+        _SFXSource.volume = volume;
+        _SFXSource.Play();
+
+    }
+    
+    public AudioClip GetClip(SoundData soundData)
+    {
+        if (soundData.clips == null)
+        {
+            Debug.Log("Passed sound data has no clips.");
+            return null;
+        }
+
+        if (soundData.playRandomAmongGroup && soundData.clips.Length > 1)
+        {
+            return soundData.clips[Random.Range(0, soundData.clips.Length)];
+        }
+
+        else if (soundData.clips.Length > 0)
+        {
+            return soundData.clips[0];
+        }
+
+        return null;
+    }
+    
+
     public void PlayBGM()
     {
         _BGMSource.clip = _BGM;
         _BGMSource.loop = true;
         _BGMSource.Play();
-    }
-
-    public void StopMusic()
-    {
-        _BGMSource.Stop();
-    }
-
-    public void PauseMusic()
-    {
-        _BGMSource.Pause();
-    }
-
-    public void ResumeMusic()
-    {
-        _BGMSource.UnPause();
     }
 
     public void UpdateAudioSettings()
@@ -114,4 +160,6 @@ public class AudioManager : MonoBehaviour
     {
         return (AudioLevel)Mathf.FloorToInt(Test(volume) * 10);
     }
+
 }
+

@@ -1,156 +1,74 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class WeaponPickup : MonoBehaviour, IPickup
+public class WeaponPickup : ItemPickup<WeaponPickupDefinitionSO>
 {
-    public Vector3 Location => transform.position;
-    //[SerializeField] Transform _root;
-    WeaponRuntimeData _weaponRuntimeData;
-    [SerializeField] WeaponConfigSO _weaponConfig;
-    [SerializeField] BoxCollider2D _boxCollider2D;
-    [SerializeField] SpriteRenderer _spriteRenderer;
-    [SerializeField] Material normalMaterial;
-    [SerializeField] Material outlineMaterial;
-
-    // This bool marks whether or not a pickup is hand-placed/dynamically created
-    // Dropped weapons are converted into weapon pick ups, as such
-    // this bool is used to distinguish between the two 
-    [SerializeField] bool _isWorldPickup;
-
-    void Awake()
-    {
-        _spriteRenderer.material = normalMaterial;
-    }
+    [SerializeField] WeaponRuntimeData _weaponRuntimeData;
 
     void Start()
     {
-        if (_isWorldPickup)
-            Initialize(_weaponConfig);
+        _weaponRuntimeData = null;
+        // If hand-placed, create fresh runtime data
+        if (_weaponRuntimeData == null && pickupDefinition.WeaponConfig != null)
+        {
+            _weaponRuntimeData = new WeaponRuntimeData(pickupDefinition.WeaponConfig);
+        }
 
-
-        //_spriteRenderer.flipY = transform.rotation.z > 90f && transform.rotation.z < 270f;
-
+        SetupVisuals();
         UpdateColliderSize();
     }
 
-
-    /*
-    public void ShowPrompt()
+    public override void OnPickupAttempt(GameObject collector)
     {
-        if (promptInstance != null)
-            promptInstance.Show();
-
-        Debug.Log("Displaying prompt");
-    }
-    */
-
-    /*
-    public void HidePrompt()
-    {
-        if (promptInstance != null)
-            promptInstance.Hide();
-    }
-    */
-
-
-    public void OnPickupAttempt(GameObject collector)
-    {
-
         if (CanBePickedUp(collector))
             OnCollected(collector);
 
         else
             Debug.Log("Can't pick up...");
-
     }
 
-    public bool CanBePickedUp(GameObject collector)
+    public override bool CanBePickedUp(GameObject collector)
     {
-        if (collector.TryGetComponent(out PlayerInventoryManager playerInventory))
+        if (TryGetInventory(collector, out PlayerInventoryManager inventory))
         {
-            if (playerInventory.CanPickupWeapon(_weaponConfig))
+            if (inventory.CanPickupWeapon(pickupDefinition.WeaponConfig))
                 return true;
         }
 
         return false;
     }
 
-    public void OnCollected(GameObject collector)
+    public override void OnCollected(GameObject collector)
     {
-        PlayerInventoryManager inventory = collector.GetComponentInParent<PlayerInventoryManager>();
-        if (inventory == null)
-        {
-            Debug.Log("Inventory null?..");
-            return;
-        }
+        var inventory = collector.GetComponentInParent<PlayerInventoryManager>();
+        if (inventory == null) return;
 
-
-        if (_isWorldPickup)
-            inventory.TryAddWeapon(_weaponConfig);
-
-        else
-            inventory.TryAddWeapon(_weaponRuntimeData);
-
-        HighlightPickup(false);
-
+        
+        inventory.TryAddWeapon(_weaponRuntimeData);
         Destroy(gameObject);
-
     }
 
-    public void Initialize(WeaponConfigSO config)
+    public void Initialize(WeaponPickupDefinitionSO definition, WeaponRuntimeData runtimeData)
     {
-        if (config == null)
+        if (runtimeData == null || runtimeData.Config == null || definition == null)
         {
-            Debug.LogError("WeaponConfig is null in WeaponPickup initialization. Can't create pickup.");
+            Debug.LogError("Weapon Runtime Data or Config or Pickup Definition is null. Can't create pickup");
             Destroy(gameObject);
             return;
         }
 
-        _weaponConfig = config;
-        _spriteRenderer.sprite = _weaponConfig.Sprite;
-        //transform.localScale = _weaponConfig.Scale;
-
-        SetupVisuals();
-    }
-
-    public void Initialize(WeaponRuntimeData runtimeData)
-    {
-        if (runtimeData == null || runtimeData.Config == null)
-        {
-            Debug.LogError("WeaponConfig is null in WeaponPickup initialization. Can't create pickup.");
-            Destroy(gameObject);
-            return;
-        }
-
-        _weaponRuntimeData = runtimeData;
-        _weaponConfig = runtimeData.Config;
-        //transform.localScale = _weaponConfig.Scale;
-        _isWorldPickup = false;
+        pickupDefinition = definition;
         SetupVisuals();
     }
 
     void SetupVisuals()
     {
-        _spriteRenderer.sprite = _weaponConfig.Sprite;
+        if (spriteRenderer != null)
+        {
+            spriteRenderer.material = normalMaterial;
+            spriteRenderer.sprite = pickupDefinition.PickupSprite;
+        }
+            
     }
-
-    public void UpdateColliderSize()
-    {
-        if (_spriteRenderer.sprite == null) return;
-
-
-        Vector2 spriteSize = _spriteRenderer.sprite.bounds.size;
-        _boxCollider2D.size = spriteSize;
-        _boxCollider2D.offset = _spriteRenderer.sprite.bounds.center;
-    }
-
-    public void HighlightPickup(bool higlighted)
-    {
-        if(_spriteRenderer != null)
-            _spriteRenderer.material = higlighted ? outlineMaterial : normalMaterial;
-    }
-
 
 }
 

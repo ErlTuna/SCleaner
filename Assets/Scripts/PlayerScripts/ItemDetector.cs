@@ -48,7 +48,7 @@ public class ItemDetector : MonoBehaviour
         if (_pickupsInRange.Count == 0)
         {
             if(_closestPickup != null)
-                _closestPickup?.HighlightPickup(false);
+                _closestPickup?.Highlight(false);
                 
             _closestPickup = null;
             return;
@@ -76,9 +76,9 @@ public class ItemDetector : MonoBehaviour
         //If the closest pickup has changed, update highlight
         if (newClosest != null)
         {
-            _closestPickup?.HighlightPickup(false);
+            _closestPickup?.Highlight(false);
             _closestPickup = newClosest;
-            _closestPickup?.HighlightPickup(true);
+            _closestPickup?.Highlight(true);
         }
     
     }

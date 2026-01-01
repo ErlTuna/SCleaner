@@ -14,7 +14,7 @@ public class SFXSliderVisuals : BaseAudioSliderVisuals
     public override void UpdateVisuals()
     {
         UnityEngine.Debug.Log("SFX Slider visual update called");
-        AudioLevel SFXAudioLevel = AudioManager.instance.SFXLevel;
+        AudioLevel SFXAudioLevel = AudioManager.Instance.SFXLevel;
         volumeBarImage.sprite = volumeBarSprites[(int)SFXAudioLevel];
     }
 }

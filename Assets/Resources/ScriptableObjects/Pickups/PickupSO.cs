@@ -1,14 +1,10 @@
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "PickupSO", menuName = "ScriptableObjects/Pickup Info")]
-public class PickupSO : ScriptableObject
+[CreateAssetMenu(fileName = "Pickup Definition", menuName = "ScriptableObjects/Pickup Definition")]
+public class PickupDefinitionSO : ScriptableObject
 {
-    public int value;
-    public AudioClip PickUpAudio;
-    public AudioClip FailToPickUpAudio;
-
-    public enum PickupType{
-        HEALTH,
-        AMMO
-    }
+    public AudioClip PickUpSuccessAudio;
+    public AudioClip PickUpFailureAudio;
+    public Sprite PickupSprite;
+    public GameObject PickupPrefab;
 }

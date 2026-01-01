@@ -12,17 +12,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8af658472ac40bb42b3a626dc24f4a0c, type: 3}
   m_Name: BasicSMGConfig
   m_EditorClassIdentifier: 
+  InventoryItem: {fileID: 11400000, guid: abe11eb80a5b82743a28dd685b86e94b, type: 2}
+  PickupDefinition: {fileID: 11400000, guid: 66a0edee4e273734686e1d290290901f, type: 2}
   WeaponName: Basic SMG
   Type: 1
   Prefab: {fileID: 5890597930396712892, guid: c9811e33e02839c489d5101f0c846dcd, type: 3}
-  PickupPrefab: {fileID: 5890597930396712892, guid: 6f09affdc9aaaf742a02f9e31b14b4fb, type: 3}
   BulletPrefab: {fileID: 6657017082548522162, guid: c77308c80b6609f4eb203a2ff835a4b3, type: 3}
   BulletConfig: {fileID: 11400000, guid: a3d432f8e7373a146a7bc5cdb97754b7, type: 2}
-  Name: Basic SMG
   Damage: 3
   RoundCapacity: 30
   MaxReserveAmmo: 120
-  StartingReserveAmmo: 120
   BulletPerShot: 1
   PushForce: 5
   SpreadAngle: 15
@@ -34,7 +33,6 @@ MonoBehaviour:
   DryFireSFX: {fileID: 8300000, guid: 591753c0fc688dc4a8a4928848b5c518, type: 3}
   FiringSFX: {fileID: 8300000, guid: 22a53bb9dfae1634b8328e865a964e4d, type: 3}
   WeaponSwitchSFX: {fileID: 8300000, guid: d2b24e19405954a4c99252993fb90386, type: 3}
-  UI_Icon: {fileID: 21300000, guid: 3ac3254aa04000c43b9e4cd24c6ce0fd, type: 3}
   offset: {x: 1.5, y: 0, z: 0}
   rayCastStartPoint: {fileID: 0}
   rayCastEndPoint: {fileID: 0}
