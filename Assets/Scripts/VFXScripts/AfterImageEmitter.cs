@@ -29,7 +29,8 @@ public class AfterImageEmitter : MonoBehaviour
 
     void InitializePool()
     {
-        _pool = new ObjectPool<AfterImage>(
+        _pool = new ObjectPool<AfterImage>
+        (
         createFunc: CreatePooledObject,
         actionOnGet: OnGetFromPool,
         actionOnRelease: OnReleaseToPool,

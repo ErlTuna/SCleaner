@@ -14,8 +14,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   MaxCurrency: 9999
   MaxWeaponAmount: 2
-  WeaponPrefabs: []
+  DefaultWeaponConfig: {fileID: 11400000, guid: ebb13ce2f9a01b84ebdccc234a822d90, type: 2}
   EquipmentPrefab: {fileID: 3411235486444114872, guid: 3a7cd3ce19edb604d9e84789ae7bf950, type: 3}
   WeaponAddedEventChannel: {fileID: 11400000, guid: 7ef08a65916c60b4fb18c5a4bfb84e1f, type: 2}
   WeaponDropEventChannel: {fileID: 11400000, guid: bf7a3f8b818d30843802703d6d90a7c2, type: 2}
-  CurrencyChangedEventChannel: {fileID: 0}
+  ItemPickedUpEventChannel: {fileID: 11400000, guid: 0fe08280ff0d0744698d735d0d8d1dab, type: 2}
+  ItemDroppedEventChannel: {fileID: 11400000, guid: 41ddb2cee07718c498b73f4ca4d3aca2, type: 2}
+  CurrencyPickedUpEventChannel: {fileID: 11400000, guid: fa09fab29f71fd84a88017110ac4dc16, type: 2}

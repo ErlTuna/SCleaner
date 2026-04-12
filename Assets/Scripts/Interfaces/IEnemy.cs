@@ -4,8 +4,13 @@ using UnityEngine;
 
 public interface IEnemy
 {
-    public EnemyConfigSO EnemyInfo{get;set;}
-    public BoxCollider2D SpawnArea{get;set;}
+    //public EnemyConfigSO EnemyInfo{get;set;}
+    public BoxCollider2D SpawnArea{get; set;}
+
+    void AssignSpawnArea(BoxCollider2D spawnArea);
+    void AssignOnDefeatCallback(Action onDefeat);
+
+    /*
     void SetProvoked();
     void PlayerIsDetected();
     void PlayerOutOfRange();
@@ -13,4 +18,5 @@ public interface IEnemy
     void PlayerOutOfAttackRange();
     Coroutine TriggerCoroutine(IEnumerator coroutine);
     void CancelCoroutine(Coroutine coroutine);
+    */
 }

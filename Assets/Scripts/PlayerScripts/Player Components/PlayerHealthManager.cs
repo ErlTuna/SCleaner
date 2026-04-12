@@ -1,17 +1,26 @@
 using System;
-using SerializeReferenceEditor;
+using System.Linq;
 using UnityEngine;
 
-public class PlayerHealthManager : MonoBehaviour, IDamageable, IDefeatable, IHealable
+public class PlayerHealthManager : MonoBehaviour, IDamageable, IDefeatable, IHealable, IHealthPickupHandler, IManagerComponent
 {
+    [Header("Event Channels")]
+    [SerializeField] PlayerHealthInitializedEventChannel _playerHealthInitializedEventChannel;
+    [SerializeField] PlayerMaxHealthChangedEventChannel _playerMaxHealthChangedEventChannel;
+    [SerializeField] PlayerHealthChangedEventChannel _playerHealthChangedEventChannel;
+    [SerializeField] PlayerShieldHealthChangedEventChannel _playerShieldHealthChangedEventChannel;
     [SerializeField] PlayerHitUIEventChannelSO _playerHitEventChannel;
+
+    [Header("Config and Data")]
     [SerializeField] UnitHealthConfigSO _healthConfig;
     [SerializeField] UnitHealthData _healthData;
+
+    // EVENTS
     public static event Action<UnitStateData> OnPlayerHitStateUpdate;
     public static event Action OnPlayerHitSpriteUpdate;
-    public static event Action<int, int> OnPlayerHitUIUpdate;
+    public event Func<bool> OnBeforeDefeat;
     public event Action OnDefeat;
-    public event Action<DamageContext> OnDefeatContext;
+    public event Action<DamageContext> OnDefeatWithContext;
 
 
     UnitStateData _stateData;
@@ -20,6 +29,7 @@ public class PlayerHealthManager : MonoBehaviour, IDamageable, IDefeatable, IHea
     {
         _healthData = healthData;
         _healthConfig = unitHealthConfig;
+        _playerHealthInitializedEventChannel.RaiseEvent(_healthData);
     }
     
     public void InitializeStateData(UnitStateData playerStateData)
@@ -28,23 +38,41 @@ public class PlayerHealthManager : MonoBehaviour, IDamageable, IDefeatable, IHea
     }
 
 
-    public void TakeDamage(int amount)
+    
+    public void TakeDamage(int damage)
     {
-
         if (_stateData.IsAlive == false) return;
+        if (_stateData.IsInvuln || _stateData.IsHitInvuln) return;
         
-        if (_stateData.IsInvuln)
-        {
-            Debug.Log("Invuln due to an external effect");
-            return;
-        }
-        if (_stateData.IsHitInvuln)
-        {
-            Debug.Log("Invuln due to taking damage recently");
-            return;
-        }        
+        int remainingDamage = damage;
+        int previousHealth = _healthData.CurrentHealth;
+        StatChangedArgs healthChangedArgs;
 
-        _healthData.CurrentHealth -= amount;
+        if (_healthData.HasShield)
+        {
+            remainingDamage = ApplyDamageToShield(damage);
+            //_healthData.CurrentHealth -= remainingDamage;
+            _healthData.CurrentHealth = Mathf.Max(_healthData.CurrentHealth - remainingDamage, 0);
+            healthChangedArgs = new()
+            {
+                Current = _healthData.CurrentHealth,
+                Previous = previousHealth
+            };
+        }
+
+        else
+        {
+            //_healthData.CurrentHealth -= remainingDamage;
+            _healthData.CurrentHealth = Mathf.Max(_healthData.CurrentHealth - remainingDamage, 0);
+            healthChangedArgs = new()
+            {
+                Current = _healthData.CurrentHealth,
+                Previous = previousHealth
+            };
+        }
+        
+        if (healthChangedArgs.Delta < 0)
+            _playerHealthChangedEventChannel.RaiseEvent(healthChangedArgs);
 
         //Update State Data
         OnPlayerHitStateUpdate?.Invoke(_stateData);
@@ -53,36 +81,67 @@ public class PlayerHealthManager : MonoBehaviour, IDamageable, IDefeatable, IHea
         OnPlayerHitSpriteUpdate?.Invoke();
 
         // UI Update and Audio Cue
-        if (_playerHitEventChannel != null) _playerHitEventChannel.RaiseEvent(_healthData.CurrentHealth, _healthData.MaxHealth);
+        if (_playerHitEventChannel != null) _playerHitEventChannel.RaiseEvent(_healthData.CurrentHealth, _healthData.MaxHealth.Value);
         if (_healthConfig.OnHitSFX != null) AudioSource.PlayClipAtPoint(_healthConfig.OnHitSFX, gameObject.transform.position);
+
+
+
 
         if (_healthData.CurrentHealth <= 0)
         {
-            //_stateData.IsAlive = false;
+            if (OnBeforeDefeat != null)
+            {
+                foreach (Delegate subscriber in OnBeforeDefeat.GetInvocationList().Cast<Func<bool>>())
+                {
+                    Func<bool> interceptor = (Func<bool>)subscriber;
+                    if (interceptor())
+                    {
+                        return;
+                    }  
+                }
+                    
+            }
 
-            //Update game state
+
+            _stateData.IsAlive = false;
             GameManager.Instance.SetGameState(GameState.PLAYER_DEFEAT);
-            return;
         }
     }
+    
 
     public void TakeDamage(DamageContext context)
     {
         if (_stateData.IsAlive == false) return;
+        if (_stateData.IsInvuln || _stateData.IsHitInvuln) return;
         
-        if (_stateData.IsInvuln)
+        int remainingDamage = context.Damage;
+        int previousHealth = _healthData.CurrentHealth;
+        StatChangedArgs healthChangedArgs;
+
+        if (_healthData.HasShield)
         {
-            Debug.Log("Invuln due to an external effect");
-            return;
+            remainingDamage = ApplyDamageToShield(context.Damage);
+            _healthData.CurrentHealth -= remainingDamage;
+            healthChangedArgs = new()
+            {
+                Current = _healthData.CurrentHealth,
+                Previous = previousHealth
+            };
+        }
+
+        else
+        {
+            _healthData.CurrentHealth -= remainingDamage;
+            healthChangedArgs = new()
+            {
+                Current = _healthData.CurrentHealth,
+                Previous = previousHealth
+            };
         }
         
-        if (_stateData.IsHitInvuln)
-        {
-            Debug.Log("Invuln due to taking damage recently");
-            return;
-        }        
-
-        _healthData.CurrentHealth -= context.Damage;
+        // For notifying UI
+        if (healthChangedArgs.Delta < 0)
+            _playerHealthChangedEventChannel.RaiseEvent(healthChangedArgs);
 
         //Update State Data
         OnPlayerHitStateUpdate?.Invoke(_stateData);
@@ -91,37 +150,96 @@ public class PlayerHealthManager : MonoBehaviour, IDamageable, IDefeatable, IHea
         OnPlayerHitSpriteUpdate?.Invoke();
 
         // UI Update and Audio Cue
-        if (_playerHitEventChannel != null) _playerHitEventChannel.RaiseEvent(_healthData.CurrentHealth, _healthData.MaxHealth);
-        if (_healthConfig.OnHitSFX != null) AudioSource.PlayClipAtPoint(_healthConfig.OnHitSFX, gameObject.transform.position);
+       _playerHitEventChannel.RaiseEvent(_healthData.CurrentHealth, _healthData.MaxHealth.Value);
+        AudioSource.PlayClipAtPoint(_healthConfig.OnHitSFX, gameObject.transform.position);
 
         if (_healthData.CurrentHealth <= 0)
         {
-            //_stateData.IsAlive = false;
-
-            //Update game state
+            _stateData.IsAlive = false;
             GameManager.Instance.SetGameState(GameState.PLAYER_DEFEAT);
-            return;
         }
     }
 
     public void Heal(int amount)
     {
-        Debug.Log("Attempting heal on player...");
 
-        if (_healthData.CurrentHealth >= _healthData.MaxHealth)
+        if (CanBeHealed() == false) return;
+        
+        
+        int previousHealth = _healthData.CurrentHealth;
+
+
+
+        _healthData.CurrentHealth = Mathf.Min(_healthData.CurrentHealth + amount, _healthData.MaxHealth.Value);
+
+        StatChangedArgs healthChangedArgs = new()
+        {
+            Previous = previousHealth,
+            Current = _healthData.CurrentHealth    
+        };
+
+        _playerHealthChangedEventChannel.RaiseEvent(healthChangedArgs);
+        
+    }
+    public bool CanBeHealed()
+    {
+        if (_healthData.CurrentHealth >= _healthData.MaxHealth.Value)
         {
             Debug.Log("Health is greater than or equal to max health");
-            return;
+            return false;
         }
 
-        Debug.Log("Healing" + gameObject.name + "by : " + amount);
-        _healthData.CurrentHealth += amount;
+        return true;
+    }
 
+    public void AddMaxHealthModifier(IntModifier mod, int healOnApply = 0)
+    {
+        int previousMaxHealth = _healthData.MaxHealth.Value;
+        _healthData.MaxHealth.AddModifier(mod);
 
-        if (_healthData.CurrentHealth > _healthData.MaxHealth)
-            _healthData.CurrentHealth = _healthData.MaxHealth;
+        StatChangedArgs maxHealthChangeArgs = new()
+        {
+            Previous = previousMaxHealth,
+            Current = _healthData.MaxHealth.Value    
+        };
+    
+        _playerMaxHealthChangedEventChannel.RaiseEvent(maxHealthChangeArgs);
+        if (healOnApply != 0)
+            Heal(healOnApply);
+    }
 
-        Debug.Log("The health value is now : " + _healthData.CurrentHealth);
+    int ApplyDamageToShield(int amount)
+    {
+        int previousShieldHealth = _healthData.CurrentShieldHealth;
+        int remainingDamage = amount - _healthData.CurrentShieldHealth;
+        _healthData.CurrentShieldHealth = Mathf.Max(_healthData.CurrentShieldHealth - amount, 0);
+
+        StatChangedArgs shieldHealthChangeArgs = new()
+        {
+            Previous = previousShieldHealth,
+            Current = _healthData.CurrentShieldHealth
+        };
+
+        _playerShieldHealthChangedEventChannel.RaiseEvent(shieldHealthChangeArgs);
+        
+        if (remainingDamage <= 0)
+            return 0;
+        else 
+            return remainingDamage;
+    }
+
+    public void AddShieldHP(int amount)
+    {
+        int previousShieldHealth = _healthData.CurrentShieldHealth;
+        _healthData.CurrentShieldHealth += amount;
+
+        StatChangedArgs shieldChangeArgs = new()
+        {
+            Previous = previousShieldHealth,
+            Current = _healthData.CurrentShieldHealth    
+        };
+
+        _playerShieldHealthChangedEventChannel.RaiseEvent(shieldChangeArgs);
     }
 
 }

@@ -1,13 +1,17 @@
 using System;
 using UnityEngine;
-public class BugHealthManager : MonoBehaviour, IDamageable
+public class BugHealthManager : MonoBehaviour, IDamageable, IDefeatable
 {
     public Action OnHitReceived;
-    public Action<DamageContext> OnDefeat;
+    public event Func<bool> OnBeforeDefeat;
+    public event Action OnDefeat;
+    public event Action<DamageContext> OnDefeatWithContext;
     [SerializeField] UnitHealthData _healthData;
     [SerializeField] UnitHealthConfigSO _healthConfig;
     [SerializeField] UnitStateData _stateData;
     [SerializeField] DamageFlash _damageFlash;
+
+
     public void InitializeManager(UnitHealthData healthData, UnitHealthConfigSO healthConfig, EnemyVisualConfigSO visualConfig)
     {
         _healthData = healthData;
@@ -62,7 +66,8 @@ public class BugHealthManager : MonoBehaviour, IDamageable
 
         if (_healthData.CurrentHealth <= 0)
         {
-            OnDefeat?.Invoke(context);
+            OnDefeat?.Invoke();
+            OnDefeatWithContext?.Invoke(context);
         }
     }
     

@@ -1,0 +1,16 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f333347ba151bdd4d9363fcdcda9a2c5, type: 3}
+  m_Name: BronzeCurrencyLootItem
+  m_EditorClassIdentifier: 
+  Name: Bronze Gear
+  Prefab: {fileID: 7418406498753305431, guid: e55c296d0dd3c3247a3957df3e0eac40, type: 3}

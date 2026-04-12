@@ -6,6 +6,7 @@ using UnityEngine;
 
 public class SuctionAbility : MonoBehaviour
 {
+    /*
     public static event Action<List<IDamageable>, List<IEnemy>> OnAbilityEndExplosion;
     public float _activationTime;
     float _activationLifeTime = 3f;
@@ -176,4 +177,6 @@ public class SuctionAbility : MonoBehaviour
         if(!_vacuumAudio)
         _vacuumAudio = audioClip;
     }
+
+    */
 }

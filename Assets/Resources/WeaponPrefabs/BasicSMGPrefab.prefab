@@ -26,7 +26,7 @@ Transform:
   m_GameObject: {fileID: 1836945411139771354}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.88, y: -0.254, z: 0}
+  m_LocalPosition: {x: -1.25, y: -0.35, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -109,7 +109,7 @@ Transform:
   m_GameObject: {fileID: 4105136310910802702}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.1, y: -0.015, z: 0}
+  m_LocalPosition: {x: 0, y: 0.025, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -156,7 +156,7 @@ SpriteRenderer:
   m_SortingLayerID: 178966987
   m_SortingLayer: 1
   m_SortingOrder: 3
-  m_Sprite: {fileID: 21300000, guid: 164da21782210a147b7f02ab6343eda9, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 676c1bf06056c2f46a0d7475ac604bdc, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -207,12 +207,13 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8058229202172802661}
+  - component: {fileID: 6166882229596088855}
   - component: {fileID: 1954626896692324193}
   - component: {fileID: 3725376543127102386}
   - component: {fileID: 4410049164486058850}
   - component: {fileID: 6790015413256836416}
-  - component: {fileID: 3905944109122377642}
-  - component: {fileID: 6166882229596088855}
+  - component: {fileID: 941974119815356739}
+  - component: {fileID: 2533312252406287145}
   m_Layer: 0
   m_Name: BasicSMGPrefab
   m_TagString: Untagged
@@ -238,96 +239,6 @@ Transform:
   - {fileID: 3300757158746238805}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!95 &1954626896692324193
-Animator:
-  serializedVersion: 5
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5890597930396712892}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: ee830818190d49148960a7d4eaf44fae, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_StabilizeFeet: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorStateOnDisable: 0
-  m_WriteDefaultValuesOnDisable: 0
---- !u!114 &3725376543127102386
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5890597930396712892}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 86357c5d5e98e194684b2d80932657d6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _soundEmitterPrefab: {fileID: 3145516217566028419, guid: 05a70453af3a50a4baa8ef2791b6c649, type: 3}
-  _maxEmitters: 15
---- !u!114 &4410049164486058850
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5890597930396712892}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5167b0e885975ca40b12d0bc56300ec7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _spriteRenderer: {fileID: 1734696809259491468}
-  weaponSoundManager: {fileID: 3725376543127102386}
-  FiringPoints:
-  - {fileID: 7718260043891111844}
-  _animatorComponent: {fileID: 3905944109122377642}
-  stockGripPoint: {fileID: 0}
-  secondGripPoint: {fileID: 0}
-  AmmoManager: {fileID: 6790015413256836416}
-  _weaponConfig: {fileID: 11400000, guid: f5833629891c27544b95b1f096034f4d, type: 2}
-  PrimaryAttackStrategy: {fileID: 11400000, guid: 0e5de3ccb7ff2a64a9634e3de497298c, type: 2}
-  rayCastStartPoint: {fileID: 631447325084974646}
-  rayCastEndPoint: {fileID: 3300757158746238805}
-  muzzleTipCheck: {fileID: 7718260043891111844}
---- !u!114 &6790015413256836416
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5890597930396712892}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 94ea39655bf03c74880f9a43878f3cf4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Owner: {fileID: 4410049164486058850}
-  ReloadStrategy: {fileID: 11400000, guid: 0be6bec96fcf27145ae17c030d6f25cb, type: 2}
-  _ammoChangeEventChannelSO: {fileID: 11400000, guid: 9488bffa05083e84cb5c58eb6fa7bc37, type: 2}
---- !u!114 &3905944109122377642
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5890597930396712892}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 68a3f9f85eb27024081467faa477b695, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _owner: {fileID: 4410049164486058850}
-  _paramTable: {fileID: 11400000, guid: f07a149dab15ab6438211d7c3cfada3f, type: 2}
-  animator: {fileID: 1954626896692324193}
 --- !u!82 &6166882229596088855
 AudioSource:
   m_ObjectHideFlags: 0
@@ -424,6 +335,193 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!95 &1954626896692324193
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5890597930396712892}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: ee830818190d49148960a7d4eaf44fae, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &3725376543127102386
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5890597930396712892}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 86357c5d5e98e194684b2d80932657d6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _soundEmitterPrefab: {fileID: 3145516217566028419, guid: 05a70453af3a50a4baa8ef2791b6c649, type: 3}
+  _maxEmitters: 15
+--- !u!114 &4410049164486058850
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5890597930396712892}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5167b0e885975ca40b12d0bc56300ec7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  spriteRenderer: {fileID: 1734696809259491468}
+  weaponSoundManager: {fileID: 3725376543127102386}
+  FiringPoints:
+  - {fileID: 7718260043891111844}
+  weaponAnimatorComponent: {fileID: 941974119815356739}
+  ammoManager: {fileID: 6790015413256836416}
+  weaponConfig: {fileID: 11400000, guid: 918f2ff326508214c9ceafeac9d0a2ca, type: 2}
+  PrimaryAttackStrategy: {fileID: 11400000, guid: 22075be31292e1f4dbdd82635ed68f26, type: 2}
+  rayCastStartPoint: {fileID: 631447325084974646}
+  rayCastEndPoint: {fileID: 3300757158746238805}
+  muzzleTipCheck: {fileID: 7718260043891111844}
+--- !u!114 &6790015413256836416
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5890597930396712892}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 94ea39655bf03c74880f9a43878f3cf4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _reloadStrategy: {fileID: 11400000, guid: 0be6bec96fcf27145ae17c030d6f25cb, type: 2}
+  _ammoChangeEventChannelSO: {fileID: 11400000, guid: 9488bffa05083e84cb5c58eb6fa7bc37, type: 2}
+--- !u!114 &941974119815356739
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5890597930396712892}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0acaa79ccdce56940b04c7dd7841aa49, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _paramTable: {fileID: 11400000, guid: e5b98ac6750200a499bfb218d4be9caf, type: 2}
+  animator: {fileID: 1954626896692324193}
+--- !u!114 &2533312252406287145
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5890597930396712892}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cbe80126baae4cf0ba8194133e415a29, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  animationEvents:
+  - eventName: OnPrimaryAttackAnimEnd
+    OnAnimationEvent:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 941974119815356739}
+          m_TargetAssemblyTypeName: SimpleWeaponAnimatorV2, Assembly-CSharp
+          m_MethodName: AnimationEvent_PrimaryAttackAnimEnd
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+  - eventName: OnBulletSpawnPointReached
+    OnAnimationEvent:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 941974119815356739}
+          m_TargetAssemblyTypeName: SimpleWeaponAnimator, Assembly-CSharp
+          m_MethodName: AnimationEvent_BulletSpawnPointReached
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+        - m_Target: {fileID: 3725376543127102386}
+          m_TargetAssemblyTypeName: WeaponSoundManager, Assembly-CSharp
+          m_MethodName: TryPlaySound
+          m_Mode: 2
+          m_Arguments:
+            m_ObjectArgument: {fileID: 11400000, guid: 83484d1f01585144eb3e0bc48217bfef, type: 2}
+            m_ObjectArgumentAssemblyTypeName: SoundDataSO, Assembly-CSharp
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+  - eventName: OnReloadAnimEnd
+    OnAnimationEvent:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 941974119815356739}
+          m_TargetAssemblyTypeName: SimpleWeaponAnimatorV2, Assembly-CSharp
+          m_MethodName: AnimationEvent_HandleReloadAnimEnd
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+        - m_Target: {fileID: 3725376543127102386}
+          m_TargetAssemblyTypeName: WeaponSoundManager, Assembly-CSharp
+          m_MethodName: TryPlaySound
+          m_Mode: 2
+          m_Arguments:
+            m_ObjectArgument: {fileID: 11400000, guid: 965ff4f72215d87409eaff6f0752bbd3, type: 2}
+            m_ObjectArgumentAssemblyTypeName: SoundDataSO, Assembly-CSharp
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+  - eventName: OnReloadAnimStart
+    OnAnimationEvent:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 3725376543127102386}
+          m_TargetAssemblyTypeName: WeaponSoundManager, Assembly-CSharp
+          m_MethodName: TryPlaySound
+          m_Mode: 2
+          m_Arguments:
+            m_ObjectArgument: {fileID: 11400000, guid: d8266f2354cccbb4a9f62af83414381c, type: 2}
+            m_ObjectArgumentAssemblyTypeName: SoundDataSO, Assembly-CSharp
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
 --- !u!1 &7652474678596303613
 GameObject:
   m_ObjectHideFlags: 0
@@ -449,7 +547,7 @@ Transform:
   m_GameObject: {fileID: 7652474678596303613}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.876, y: 0.255, z: 0}
+  m_LocalPosition: {x: 1.25, y: 0.35, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

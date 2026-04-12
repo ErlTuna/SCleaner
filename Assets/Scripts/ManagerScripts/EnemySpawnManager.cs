@@ -7,36 +7,45 @@ using UnityEngine;
 
 public class EnemySpawnManager : MonoBehaviour
 {
-    public static EnemySpawnManager instance{get; private set;}
+    public static EnemySpawnManager Instance{get; private set;}
     public GameObject[] roomsInScene;
-    public Dictionary<int, GameObject> roomsDictionary = new Dictionary<int, GameObject>();
-    public Dictionary<int, Room> roomInfoDictionary = new Dictionary<int, Room>();    
-    public int iteration = 0;
-    public int increase = 5;
-    void Awake(){
-        if (instance != null && instance != this){
+    public Dictionary<int, GameObject> roomsDictionary = new();
+    public Dictionary<int, RoomController> roomInfoDictionary = new();
+
+    void Awake()
+    {
+        if (Instance != null && Instance != this)
             Destroy(this);
-        } else {
-            instance = this;
-        }
+
+        else 
+            Instance = this;
+        
         if(roomsInScene.Length != 0)
             SetupRooms();
     }
 
-    void SetupRooms(){
+    void SetupRooms()
+    {
         print("Rooms in scene : " + roomsInScene.Length);
-        for(int i = 0; i < roomsInScene.Length; ++i){
+        for(int i = 0; i < roomsInScene.Length; ++i)
+        {
             if(roomsInScene[i] != null){
-                Room roomScript = roomsInScene[i].GetComponent<Room>();
-                roomScript.roomID = i;
+                RoomController roomScript = roomsInScene[i].GetComponent<RoomController>();
+                //roomScript.RoomID = i;
                 roomsDictionary[i] = roomsInScene[i];
                 roomInfoDictionary[i] = roomScript;
             }
         }
+
         PopulateRoomsWithEnemies();
     }
-    void PopulateRoomsWithEnemies(){
-        for(int i = 0; i < roomsInScene.Length; ++i){
+
+    void PopulateRoomsWithEnemies()
+    {
+        Debug.Log("Attempting to populate room.");
+
+        for(int i = 0; i < roomsInScene.Length; ++i)
+        {
             roomInfoDictionary[i].PopulateRoom();
         }
     }

@@ -5,48 +5,119 @@ using UnityEngine;
 
 [Serializable]
 [RequireComponent(typeof(WeaponSoundManager))]
-public abstract class BaseWeapon : MonoBehaviour
+public abstract class BaseWeapon<TConfig> : MonoBehaviour
+where TConfig : WeaponConfigSO
 {
-    [SerializeField] protected SpriteRenderer _spriteRenderer;
+    
+    # region Serialize Fields
+    [SerializeField] protected SpriteRenderer spriteRenderer;
     [SerializeField] protected WeaponSoundManager weaponSoundManager;
     [SerializeField] protected Transform[] FiringPoints;
-    [SerializeField] WeaponAnimator _animatorComponent;
-    [SerializeField] protected Transform stockGripPoint;
-    [SerializeField] protected Transform secondGripPoint;
-    IWeaponAnimator _weaponAnimator;
-    public IWeaponAnimator WeaponAnimator => _weaponAnimator;
-    public Transform StockGripPoint => stockGripPoint;
-    public Transform SecondGripPoint => secondGripPoint;
-    public AmmoManager AmmoManager;
-    [SerializeField] WeaponConfigSO _weaponConfig;
-    public WeaponConfigSO WeaponConfig => _weaponConfig;
-    [SerializeField] WeaponRuntimeData _weaponRuntimeData;
-    public WeaponRuntimeData WeaponRuntimeData => _weaponRuntimeData;
+    [SerializeField] protected WeaponAnimatorBase weaponAnimatorComponent;
+    [SerializeField] protected AmmoManager ammoManager;
+    IWeaponAnimator weaponAnimator;
+
+    // Config and Runtime Data
+    [SerializeField] protected TConfig weaponConfig;
+    [SerializeField] protected WeaponRuntimeData weaponRuntimeData;
+
+    # endregion
+    
+    # region Getters
+    public AmmoManager AmmoManager => ammoManager;
+    public IWeaponAnimator WeaponAnimator => weaponAnimator;
+    public WeaponRuntimeData WeaponRuntimeData
+    {
+        get
+        {
+            if (weaponRuntimeData == null)
+            {
+                Debug.LogWarning($"{name} was not initialized. Creating fallback runtime data.");
+                //weaponRuntimeData = InitializeWithConfig();
+            }
+            return weaponRuntimeData;
+        }
+    }
+    public SpriteRenderer SpriteRenderer => spriteRenderer;
+    public TConfig WeaponConfig => weaponConfig;
+
+    # endregion
+
+    # region Abstract Methods
+    protected abstract void SpawnBullet();
+    protected abstract void OnPrimaryAttackAnimEnd();
+    protected abstract void OnReloadAnimEnd();
+
+    # endregion
+
+    # region Virtual Methods
+
+    protected virtual void Awake()
+    {
+        if (weaponAnimatorComponent)
+            weaponAnimator = weaponAnimatorComponent;
+    }
+
+    protected virtual ReloadContext CreateReloadContext()
+    {
+        return new ReloadContext
+        (
+            runtimeAmmoData: WeaponRuntimeData.AmmoData,
+            ammoConfig: weaponConfig.AmmoConfig
+        );
+    }
+    
+    public virtual void LoopFire()
+    {
+        //Debug.Log("Looping fire");
+        weaponAnimatorComponent.LoopPrimaryAttackAnim();
+    }
+
+    public virtual void RequestFire()
+    {
+        //Debug.Log("Fire requested at : " + Time.time);
+        SetState(WeaponState.PRIMARY_ATTACK);
+        weaponAnimatorComponent.StartPrimaryAttackAnim();
+    }
+    public virtual bool CanFire() => WeaponRuntimeData.State == WeaponState.IDLE && AmmoManager.HasAmmo();
+    protected virtual bool CanContinuePrimaryAttack() => AmmoManager.HasAmmo() == true;
+    protected virtual void OnInitialized() => AmmoManager.Initialize(weaponRuntimeData.AmmoData);
+    
+
+    # endregion
+
+    # region Initialization Methods
+
+    // Called when accessing WeaponRuntimeData if it is not initialized yet.
+    WeaponRuntimeData InitializeWithConfig()
+    {
+        WeaponRuntimeAmmoData ammoData = new(WeaponConfig.AmmoConfig);
+        weaponRuntimeData = new(WeaponConfig, ammoData);
+        Debug.Log("Initialized weapon with weapons' own config.");
+
+        return weaponRuntimeData;
+    }
+
+    public void InitializeWithRuntimeData(WeaponRuntimeData runtimeData)
+    {
+        if (weaponRuntimeData != null)
+        {
+            Debug.LogWarning($"{name} initialized twice.");
+            return;
+        }
 
 
-    void Awake()
-    {
-        if (_animatorComponent)
-            _weaponAnimator = _animatorComponent;
+        Debug.Log("Initialized weapon with provided runtime data.");
+        weaponRuntimeData = runtimeData;
+        OnInitialized();
     }
 
-    public abstract void SpawnBullet();
-    public virtual void InitializeWithConfig()
+    # endregion
+
+    public void SetState(WeaponState state)
     {
-        Debug.Log("Initialized weapon with config.");
-        _weaponRuntimeData = new WeaponRuntimeData(WeaponConfig);
+        WeaponRuntimeData.State = state;
     }
-    public virtual void InitializeWithRuntimeData(WeaponRuntimeData runtimeData)
-    {
-        Debug.Log("Initialized weapon with config.");
-        _weaponRuntimeData = runtimeData;
-    }
-    public virtual bool CanFire()
-    {
-        return WeaponRuntimeData.State == WeaponState.IDLE && AmmoManager.HasAmmo();
-    }
-    public abstract void OnAttackAnimEnd();
-    public abstract void OnReloadAnimEnd();
 }
 
 

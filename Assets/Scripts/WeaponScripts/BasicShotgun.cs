@@ -1,47 +1,81 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BasicShotgun : PlayerWeapon
+public class BasicShotgun : PlayerWeapon, IInstantFiringWeapon
 {
     List<GameObject> _bullets = new();
+    IShellBasedWeaponAnimator _shellBasedWeaponAnimator;
+
+    void OnEnable()
+    {
+        weaponAnimatorComponent.OnBulletSpawnPointReached += SpawnBullet;
+        weaponAnimatorComponent.OnAttackAnimEnd += OnPrimaryAttackAnimEnd;
+
+        _shellBasedWeaponAnimator = weaponAnimatorComponent as IShellBasedWeaponAnimator;
+        _shellBasedWeaponAnimator.OnShellInserted += HandleShellInserted;
+    }
+
+    void OnDisable()
+    {
+        weaponAnimatorComponent.OnBulletSpawnPointReached -= SpawnBullet;
+        weaponAnimatorComponent.OnAttackAnimEnd -= OnPrimaryAttackAnimEnd;
+        
+        _shellBasedWeaponAnimator.OnShellInserted -= HandleShellInserted;
+        
+    }
+    
 
     void Update()
     {
-        if (AmmoManager.HasAmmo() == false && AmmoManager.HasReserveAmmo() == true && WeaponRuntimeData.State != WeaponState.RELOADING)
-        {
-            AmmoManager.HandleReloadStart();
-        }
+        CheckAmmoStatus();
+    }
+
+    #region Overrides
+
+    // This weapon can fire while reloading if it has any ammo (reload cancellable)
+    public override bool CanFire()
+    {
+        return AmmoManager.HasAmmo() && PrimaryAttackStrategy && WeaponRuntimeData.State != WeaponState.PRIMARY_ATTACK;
     }
 
 
+    # region Input Handlers
     public override void HandlePrimaryAttackInput()
     {
-        if (CanFire() == false && CanDryFire())
+        if (CanFire())
         {
-            TryDryFire();
-            return;
+            PrimaryAttackStrategy.OnTriggerPressed(this);
         }
 
-        //if (ObstructionChecker.CheckWeaponObstructionOverlap(rayCastStartPoint, rayCastEndPoint, WeaponConfig.environmentLayers, WeaponConfig.enemyLayer)) return;
-        if (CanFire() && PrimaryAttackStrategy != null)
-            PrimaryAttackStrategy.HandleAttackStart(this);
+        else
+        {
+            weaponRuntimeData.isTriggerHeld = true;
+        }
+    }
+    
+    public override void HandlePrimaryAttackInputRelease()
+    {
+        if (weaponRuntimeData.isTriggerHeld == false) return;
+
+        weaponRuntimeData.isTriggerHeld = false;
+        weaponAnimatorComponent.SetBool("isTriggerHeld", false);
     }
 
     public override void HandleReloadInput()
     {
-        //HandleReloadStart();
-        AmmoManager.HandleReloadStart();
+        if (AmmoManager.CanReload() && WeaponRuntimeData.State != WeaponState.RELOADING)
+        {    
+            ReloadContext reloadContext = CreateReloadContext();
+            AmmoManager.SetReloadContext(reloadContext);
+
+            SetState(WeaponState.RELOADING);
+            WeaponAnimator.StartReloadAnim();
+        }
     }
 
-    public override void HandleReloadStart()
+    // This is called through an event inside WeaponAnimator.
+    protected override void SpawnBullet()
     {
-        //if (AmmoManager.HasReserveAmmo() != true || WeaponRuntimeData.State == WeaponState.RELOADING) return;
-    }
-
-    public override void SpawnBullet()
-    {
-
         BulletConfigSO bulletData;
         for (int i = 0; i < FiringPoints.Length; ++i)
         {
@@ -53,15 +87,60 @@ public class BasicShotgun : PlayerWeapon
         }
 
         AmmoManager.UseAmmo();
-        //WeaponEvents.RaiseAmmoUsed(WeaponRuntimeData);
     }
+
+    #endregion
     
-    public override bool CanFire()
+
+
+    # region Animation End Handlers (subscribed in OnEnable, called by WeaponAnimator)
+
+    // This weapon spawns bullet using an animation event.
+    protected override void OnPrimaryAttackAnimEnd()
     {
-        return AmmoManager.HasAmmo();
+        if (weaponRuntimeData.isTriggerHeld && CanContinuePrimaryAttack())
+            weaponAnimatorComponent.LoopPrimaryAttackAnim();
+        
+        else 
+            SetState(WeaponState.IDLE);
     }
 
-}
-    
+    protected override void OnReloadAnimEnd()
+    {
+        weaponAnimatorComponent.ResetAnimParams();
+        weaponAnimatorComponent.SetTrigger("ReloadCompleted");
+        SetState(WeaponState.IDLE);
+    }
 
+    // This method is for one cycle of the overall reload
+    void HandleShellInserted()
+    {
+        AmmoManager.UseReloadStrategy();
+        
+        // If we can keep reloading after a shell insertion, keep going.
+        if (AmmoManager.CanReload())
+        {
+            // Tell the animator to loop the shell insert animation
+            _shellBasedWeaponAnimator.LoopReload();
+        }
+        
+        else
+        {
+            OnReloadAnimEnd();
+        }
+    }
+
+    public void OnAttackInputReleased()
+    {
+        if (WeaponRuntimeData.State == WeaponState.PRIMARY_ATTACK)
+        {
+            weaponAnimatorComponent.ResetAnimParams();
+            SetState(WeaponState.IDLE);
+        }
+    }
+
+    #endregion
+
+    #endregion
+}
 

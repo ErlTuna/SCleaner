@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 8d44bf139470a0c41b60265272ce6155
+guid: 97c2d43c82605ac4ab5aaa303d8467f8
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -48,7 +48,7 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 64
+  spritePixelsToUnits: 128
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -69,7 +69,7 @@ TextureImporter:
   platformSettings:
   - serializedVersion: 3
     buildTarget: DefaultTexturePlatform
-    maxTextureSize: 1024
+    maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
     textureCompression: 0
@@ -97,106 +97,106 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Revolver_Cocking_Remade_0
+      name: Revolver_Cocking_Remade_v2_0
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 112
-        height: 86
+        width: 256
+        height: 128
       alignment: 9
-      pivot: {x: 0.1, y: 0.4}
+      pivot: {x: 0.09, y: 0.35}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: d5069abc69040e54b9c6574752fd2f22
-      internalID: -1480316739
+      spriteID: cd6b6bb9282c6c645812422323dfb2c2
+      internalID: 2082665093
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Revolver_Cocking_Remade_1
+      name: Revolver_Cocking_Remade_v2_1
       rect:
         serializedVersion: 2
-        x: 112
+        x: 256
         y: 0
-        width: 112
-        height: 86
+        width: 256
+        height: 128
       alignment: 9
-      pivot: {x: 0.1, y: 0.4}
+      pivot: {x: 0.09, y: 0.35}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 563ac20515911404f892fff1fd583ddd
-      internalID: 1503686380
+      spriteID: 39a9b5de0a9a4304aba250a45e60bb82
+      internalID: 1094480760
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Revolver_Cocking_Remade_2
+      name: Revolver_Cocking_Remade_v2_2
       rect:
         serializedVersion: 2
-        x: 224
+        x: 512
         y: 0
-        width: 112
-        height: 86
+        width: 256
+        height: 128
       alignment: 9
-      pivot: {x: 0.1, y: 0.4}
+      pivot: {x: 0.09, y: 0.35}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: a16c4895ad05baf4fb13a1ed4c0ece2e
-      internalID: 1901421359
+      spriteID: 06a1615aeb28ab641a0cb157bb47a0a2
+      internalID: 870528000
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Revolver_Cocking_Remade_3
+      name: Revolver_Cocking_Remade_v2_3
       rect:
         serializedVersion: 2
-        x: 336
+        x: 768
         y: 0
-        width: 112
-        height: 86
+        width: 256
+        height: 128
       alignment: 9
-      pivot: {x: 0.1, y: 0.4}
+      pivot: {x: 0.09, y: 0.35}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 213225178c0726a4cb76a2bec26bb208
-      internalID: 235673698
+      spriteID: e80695c6dd8072445b072e4b6e5b8bc0
+      internalID: -534050828
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Revolver_Cocking_Remade_4
+      name: Revolver_Cocking_Remade_v2_4
       rect:
         serializedVersion: 2
-        x: 448
+        x: 1024
         y: 0
-        width: 112
-        height: 86
+        width: 256
+        height: 128
       alignment: 9
-      pivot: {x: 0.1, y: 0.4}
+      pivot: {x: 0.09, y: 0.35}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: c623ffe1f527fef4bb7c7e7bdc5720ab
-      internalID: 1197141249
+      spriteID: 5f9b92c2555bc1144adbd5ca0ff2a801
+      internalID: -325348928
       vertices: []
       indices: 
       edges: []
@@ -212,11 +212,11 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      Revolver_Cocking_Remade_0: -1480316739
-      Revolver_Cocking_Remade_1: 1503686380
-      Revolver_Cocking_Remade_2: 1901421359
-      Revolver_Cocking_Remade_3: 235673698
-      Revolver_Cocking_Remade_4: 1197141249
+      Revolver_Cocking_Remade_v2_0: 2082665093
+      Revolver_Cocking_Remade_v2_1: 1094480760
+      Revolver_Cocking_Remade_v2_2: 870528000
+      Revolver_Cocking_Remade_v2_3: -534050828
+      Revolver_Cocking_Remade_v2_4: -325348928
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

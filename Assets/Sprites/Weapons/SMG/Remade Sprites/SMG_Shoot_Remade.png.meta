@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 95d1424c0c8f407458699150d5baf550
+guid: e866bbaecca39c5439d3ca8052c9a59c
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -48,7 +48,7 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 48
+  spritePixelsToUnits: 160
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -69,7 +69,7 @@ TextureImporter:
   platformSettings:
   - serializedVersion: 3
     buildTarget: DefaultTexturePlatform
-    maxTextureSize: 512
+    maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
     textureCompression: 0
@@ -97,148 +97,148 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: SMG_Shoot_Remade_0
+      name: SMG_Shoot_Remade_v2_0
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 64
-        height: 32
+        width: 256
+        height: 128
       alignment: 9
-      pivot: {x: 0.27, y: 0.4}
+      pivot: {x: 0.275, y: 0.35}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: e55aa0e10c4f1ae4ea1b5f47c03edf32
-      internalID: 1549494892
+      spriteID: 853ec7ff75cbec74eab8528401e8f21d
+      internalID: 1927984505
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: SMG_Shoot_Remade_1
-      rect:
-        serializedVersion: 2
-        x: 64
-        y: 0
-        width: 64
-        height: 32
-      alignment: 9
-      pivot: {x: 0.27, y: 0.4}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: ad53f7a536ff08f4fb31ab5543f8453c
-      internalID: 404233902
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: SMG_Shoot_Remade_2
-      rect:
-        serializedVersion: 2
-        x: 128
-        y: 0
-        width: 64
-        height: 32
-      alignment: 9
-      pivot: {x: 0.27, y: 0.4}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: a1d1f8b803bb8a34380f6365a0456701
-      internalID: 1627215023
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: SMG_Shoot_Remade_3
-      rect:
-        serializedVersion: 2
-        x: 192
-        y: 0
-        width: 64
-        height: 32
-      alignment: 9
-      pivot: {x: 0.27, y: 0.4}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 6d9ce29ddab749d4e818a97d001a2b4a
-      internalID: 1142628741
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: SMG_Shoot_Remade_4
+      name: SMG_Shoot_Remade_v2_1
       rect:
         serializedVersion: 2
         x: 256
         y: 0
-        width: 64
-        height: 32
+        width: 256
+        height: 128
       alignment: 9
-      pivot: {x: 0.27, y: 0.4}
+      pivot: {x: 0.24, y: 0.35}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 9050b4c583ee31f4fa7b6d97992327f9
-      internalID: -239600617
+      spriteID: 7a9aa9ebebc478147b802a35d746ed2f
+      internalID: -983969725
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: SMG_Shoot_Remade_5
+      name: SMG_Shoot_Remade_v2_2
       rect:
         serializedVersion: 2
-        x: 320
+        x: 512
         y: 0
-        width: 64
-        height: 32
+        width: 256
+        height: 128
       alignment: 9
-      pivot: {x: 0.27, y: 0.4}
+      pivot: {x: 0.22, y: 0.35}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 543bdae70db8f504c959be49d41d1be0
-      internalID: -1982147264
+      spriteID: 64fc9cb955a39b143875e0b81eff7f1d
+      internalID: 1710718349
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: SMG_Shoot_Remade_6
+      name: SMG_Shoot_Remade_v2_3
       rect:
         serializedVersion: 2
-        x: 384
+        x: 768
         y: 0
-        width: 64
-        height: 32
+        width: 256
+        height: 128
       alignment: 9
-      pivot: {x: 0.27, y: 0.4}
+      pivot: {x: 0.23, y: 0.35}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 23ebdc5cfa230524496c7b0bf4d19437
-      internalID: 1297131198
+      spriteID: 3e2d6f0555aaa5b4cb78fd50985283b6
+      internalID: 810681623
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SMG_Shoot_Remade_v2_4
+      rect:
+        serializedVersion: 2
+        x: 1024
+        y: 0
+        width: 256
+        height: 128
+      alignment: 9
+      pivot: {x: 0.245, y: 0.35}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3c7d93a7d82777d409c083f08c8d1949
+      internalID: 1874974978
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SMG_Shoot_Remade_v2_5
+      rect:
+        serializedVersion: 2
+        x: 1280
+        y: 0
+        width: 256
+        height: 128
+      alignment: 9
+      pivot: {x: 0.26, y: 0.35}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0e653f8012225114898b14af3a5a2467
+      internalID: -989403278
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SMG_Shoot_Remade_v2_6
+      rect:
+        serializedVersion: 2
+        x: 1536
+        y: 0
+        width: 256
+        height: 128
+      alignment: 9
+      pivot: {x: 0.275, y: 0.35}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 739c706629e78dc4f8f4479282b44502
+      internalID: 1689945514
       vertices: []
       indices: 
       edges: []
@@ -254,13 +254,13 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      SMG_Shoot_Remade_0: 1549494892
-      SMG_Shoot_Remade_1: 404233902
-      SMG_Shoot_Remade_2: 1627215023
-      SMG_Shoot_Remade_3: 1142628741
-      SMG_Shoot_Remade_4: -239600617
-      SMG_Shoot_Remade_5: -1982147264
-      SMG_Shoot_Remade_6: 1297131198
+      SMG_Shoot_Remade_v2_0: 1927984505
+      SMG_Shoot_Remade_v2_1: -983969725
+      SMG_Shoot_Remade_v2_2: 1710718349
+      SMG_Shoot_Remade_v2_3: 810681623
+      SMG_Shoot_Remade_v2_4: 1874974978
+      SMG_Shoot_Remade_v2_5: -989403278
+      SMG_Shoot_Remade_v2_6: 1689945514
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

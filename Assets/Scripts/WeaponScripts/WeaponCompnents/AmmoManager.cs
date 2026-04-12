@@ -1,78 +1,121 @@
 using UnityEngine;
 
-// Trakcs a weapon's ammunition states and handles reload requests
-// Is the weapon fully loaded?
-// Does the weapon have ammo in it currenty?
-// Does the weapon have reserve ammo?
-// Using ammunition
-// Can the weapon reload?
-// Actual handling of the reload requests are done by the ReloadStrategy object
-
-
 public class AmmoManager : MonoBehaviour
 {
-    public BaseWeapon Owner;
-    public ReloadStrategySO ReloadStrategy;
-    [SerializeField] protected AmmoChangeEventChannelSO _ammoChangeEventChannelSO;
+    ReloadContext _currentReloadContext;
+    [SerializeField] ReloadStrategySO _reloadStrategy;
+    [SerializeField] AmmoChangeEventChannelSO _ammoChangeEventChannelSO;
+    WeaponRuntimeAmmoData _ammoData;
 
-    public bool IsFullyLoaded()
+    public void Initialize(WeaponRuntimeAmmoData ammoData)
     {
-        return Owner.WeaponConfig.RoundCapacity - Owner.WeaponRuntimeData.CurrentAmmo == 0;
+        _ammoData = ammoData;
+        Debug.Log("AmmoManager initialized with AMMODATA...");
     }
-    public bool HasAmmo()
-    {
-        return Owner.WeaponRuntimeData.CurrentAmmo > 0;
-    }
-    public bool HasReserveAmmo()
-    {
-        if (Owner.WeaponConfig.HasInfiniteReserveAmmo) return true;
 
-        return Owner.WeaponRuntimeData.ReserveAmmo > 0;
-    }
-    public void UseAmmo()
+    public void SetReloadContext(ReloadContext reloadContext)
     {
-        if (Owner.WeaponRuntimeData.CurrentAmmo > 0)
-        {
-            Owner.WeaponRuntimeData.CurrentAmmo--;
-            
+        _currentReloadContext = reloadContext;
+    }
 
-            if (_ammoChangeEventChannelSO != null)
-            {
-                AmmoData ammoData = new()
-                {
-                    current = Owner.WeaponRuntimeData.CurrentAmmo,
-                    reserve = Owner.WeaponRuntimeData.ReserveAmmo
-                };
-                _ammoChangeEventChannelSO.RaiseEvent(ammoData);
-            }
-                
-        }
-    }
-    public bool CanReload()
+    public void UseAmmo(int amount = 1)
     {
-        return HasReserveAmmo() && !IsFullyLoaded();
+        if (_ammoData.CurrentAmmo <= 0) return;
+
+        _ammoData.CurrentAmmo -= amount;
+        Debug.Log("Consumed ammo. Now ammo is : " + _ammoData.CurrentAmmo);
+
+        RaiseAmmoChangeEvent();
     }
-    public void HandleReloadStart()
-    {
-        ReloadStrategy.ReloadStart(Owner);
-    }
+
+    // This gets called at the end of an animation (invoked by concrete weapon)
     public void UseReloadStrategy()
     {
-        ReloadStrategy.PerformReload(Owner);
-        if (_ammoChangeEventChannelSO != null)
-            {
-                AmmoData ammoData = new()
-                {
-                    current = Owner.WeaponRuntimeData.CurrentAmmo,
-                    reserve = Owner.WeaponRuntimeData.ReserveAmmo
-                };
-                _ammoChangeEventChannelSO.RaiseEvent(ammoData);
-            }
+        _reloadStrategy.PerformReload(_currentReloadContext);
+        RaiseAmmoChangeEvent();
     }
 
-    public void ShouldContinueReloading()
+    void RaiseAmmoChangeEvent()
     {
-        ReloadStrategy.HandleReloadContinuation(Owner);
-    }
-}
+        if (_ammoChangeEventChannelSO == null) return;
 
+        AmmoData newAmmoData = new()
+        {
+            current = _ammoData.CurrentAmmo,
+            reserve = _ammoData.CurrentReserveAmmo,
+            hasInfiniteReserve = _ammoData.HasInfiniteReserveAmmo
+            
+
+        };
+
+        _ammoChangeEventChannelSO.RaiseEvent(newAmmoData);
+    }
+
+    # region Helper Methods
+
+    public bool CanReload()
+    {
+        Debug.Log("Ammo before reload check : " + _ammoData.CurrentAmmo);
+        return HasReserveAmmo() && !IsFullyLoaded();
+    }
+    public bool IsFullyLoaded()
+    {
+        return _ammoData.CurrentAmmo >= _ammoData.RoundCapacity;
+    }
+
+    public bool HasAmmo()
+    {
+        if (_ammoData == null)
+        {
+            Debug.Log("ammmo data is null.");
+            return false;
+        }
+        return _ammoData.CurrentAmmo > 0;
+    }
+
+    public bool HasReserveAmmo()
+    {
+        return _ammoData.CurrentReserveAmmo > 0 || _ammoData.HasInfiniteReserveAmmo;
+    }
+
+    public void AddReserveAmmo(AmmoPickupType ammoPickupType)
+    {
+        int temp;
+        switch (ammoPickupType)
+        {
+            case AmmoPickupType.SMALL:
+            temp = _ammoData.CurrentReserveAmmo + Mathf.RoundToInt(_ammoData.MaxReserveAmmo * .25f);
+            _ammoData.CurrentReserveAmmo = Mathf.Min(_ammoData.MaxReserveAmmo, temp);
+            break;
+
+            case AmmoPickupType.MEDIUM:
+            temp = _ammoData.CurrentReserveAmmo + Mathf.RoundToInt(_ammoData.MaxReserveAmmo * .5f);
+            _ammoData.CurrentReserveAmmo = Mathf.Min(_ammoData.MaxReserveAmmo, temp);
+            break;
+
+            case AmmoPickupType.LARGE:
+            _ammoData.CurrentReserveAmmo = _ammoData.MaxReserveAmmo;
+            break;
+        }
+
+        RaiseAmmoChangeEvent();
+    }
+
+    public bool CanPickupReserveAmmo()
+    {
+        return _ammoData.HasInfiniteReserveAmmo == false && _ammoData.CurrentReserveAmmo != _ammoData.MaxReserveAmmo;
+    }
+
+
+    bool HasValidReloadContext()
+    {
+        return _currentReloadContext != null;
+    }
+
+    bool HasValidStrategy()
+    {
+        return _currentReloadContext != null;
+    }
+
+    # endregion
+}

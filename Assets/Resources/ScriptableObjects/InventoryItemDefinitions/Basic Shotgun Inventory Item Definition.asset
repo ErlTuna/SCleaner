@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 787768cfb9d135848ab0c91f45a12e0f, type: 3}
+  m_Name: Basic Shotgun Inventory Item Definition
+  m_EditorClassIdentifier: 
+  _sourceItem: {fileID: 11400000, guid: 22aa17e6e95803049a6733e71527498b, type: 2}
+  ItemName: Basic Shotgun
+  ItemDescription: Reliable shotgun.
+  ItemDescriptionShort: 
+  ItemIcon: {fileID: 21300000, guid: 8bd468b8a69a97841a5e7413a89af64e, type: 3}
+  ItemType: 0

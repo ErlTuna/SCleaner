@@ -5,16 +5,17 @@ using UnityEngine;
 
 public abstract class FiringModeSO : ScriptableObject
 {
-    public string Description;
-    public virtual void HandleDirectFire(BaseWeapon weapon)
-    {
-        HandleAttackStart(weapon);
-    }
-    public virtual void HandlePreAttack(BaseWeapon weapon) { }
-    public virtual void HandleAttackCanceled(BaseWeapon weapon) { }
-    public virtual void HandlePreAttackEnd(BaseWeapon weapon) { }
-    public abstract void HandleAttackStart(BaseWeapon weapon);
-    public abstract void HandleAttackEnd(BaseWeapon weapon);
+    // Called when the player presses the trigger
+    public abstract void OnTriggerPressed(IWeaponAttackInputHandler weapon);
+    
+    // Optional: called while trigger is held
+    public virtual void OnTriggerHeld(IWeaponAttackInputHandler weapon) { }
 
+    // Called when the player releases the trigger
+    public abstract void OnTriggerReleased(IWeaponAttackInputHandler weapon);
+
+    
 }
+
+
 

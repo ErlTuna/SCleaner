@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3be52762b434d054e9e014ea94b35821, type: 3}
+  m_Name: DanteHeadPickupDefinition
+  m_EditorClassIdentifier: 
+  PickupType: 4
+  PickUpName: Burning Clock
+  PickUpDescription: Cheat Death
+  DefaultPickupSprite: {fileID: 21300000, guid: 50083ef0134185640a6dbcecb470ee6f, type: 3}
+  PickUpSuccessSoundData: {fileID: 11400000, guid: 6e6dbc2eb95310240b3cccefd278660e, type: 2}
+  PickUpFailureSoundData: {fileID: 0}

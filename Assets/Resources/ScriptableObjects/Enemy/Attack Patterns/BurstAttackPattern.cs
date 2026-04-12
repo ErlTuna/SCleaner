@@ -4,38 +4,44 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "Attack Pattern", menuName = "ScriptableObjects/Attack Patterns/Burst Attack Pattern")]
 public class BurstPattern : AttackPatternSO
 {
-    public int burstCount = 1;
+    public int BurstCount = 0;
+    public int ShotsPerBurst = 0;
     public float TimeBetweenShots = 0f;
 
     public override IEnumerator Execute(BaseEnemyWeapon weapon)
     {
-        if (IsWeaponAndAnimatorValid(weapon) != true) yield break;
+        Debug.Log("Executing attack pattern.");
+        Debug.Log("What is the wait time?" + TimeBetweenShots);
 
         IsExecuting = true;
         yield return new WaitForSeconds(InitialDelay);
-        for (int i = 0; i < burstCount; i++)
+
+        for (int currentBurst = 0; currentBurst < BurstCount; ++currentBurst)
         {
-            if (weapon == null || weapon.WeaponAnimator == null) yield break;
-
-            if (weapon.CanFire())
+            for (int remainingShots = ShotsPerBurst; 0 < remainingShots; --remainingShots)
             {
-                weapon.WeaponAnimator.StartPrimaryAttackAnim();
-                //weapon.WeaponAnimator.SetTrigger("FireTrigger");
-                //weapon.WeaponAnimator.SetBool("isFiring", true);
-                yield return weapon.WeaponAnimator.WaitForAnimation("Shooting");
-                //weapon.WeaponAnimator.SetBool("isFiring", false);
-                yield return new WaitForSeconds(TimeBetweenShots);
-            }
+                weapon.RequestFire();
+                if (weapon.AmmoManager.HasAmmo() == false)
+                    yield break;
+                
+                yield return new WaitUntil(() => weapon.CanFire());
 
-            else
-            {
-                break;
+                if (TimeBetweenShots > 0)
+                {
+                    yield return new WaitForSeconds(TimeBetweenShots);
+                    
+                }
+
+                else
+                {
+                    Debug.Log("Looping fire.");
+                    weapon.LoopFire();
+                }
+
             }
         }
 
-
         cooldownCoroutine = weapon.StartCoroutine(Cooldown(weapon));
-        weapon.WeaponAnimator.SetBool("isFiring", false);
         IsExecuting = false;
     }
     

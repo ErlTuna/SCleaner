@@ -1,210 +1,310 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PauseMenuManager : MonoBehaviour
+public class PauseMenuManager : MenuContext
 {
-    [SerializeField] VoidEventChannelSO _pauseToggleEventChannel;
-    [SerializeField] GameObject _backgroundDim;
+    [SerializeField] GameStateEventChannel _gameStateChangedEventChannel;
+
+    [Header("Sections")]
+    [SerializeField] PauseMenuMainSection _mainSection;
+    //[SerializeField] PauseMenuSettingsSection _settingsSection;
+    [SerializeField] SettingsMenu _settingsSection;
+    [SerializeField] PauseMenuInventorySection _inventorySection;
+    [SerializeField] UnsavedSettingsPopup _warningPopUpGO;
+
+    [Header("Overlays")]
+    [SerializeField] StatsOverlay _statsOverlay;
+
+    [Header("Other")]
     [SerializeField] Canvas _canvas;
-    [SerializeField] GameObject _pauseMenuGO;
-    [SerializeField] GameObject _pauseMenuFirstSelected;
-    [SerializeField] GameObject _settingsMenuGO;
-    [SerializeField] GameObject _settingsMenuFirstSelected;
-    [SerializeField] GameObject _warningPopUpGO;
-    [SerializeField] GameObject _warningMenuFirstSelected;
-    [SerializeField] List<GameObject> _menus = new();
+    [SerializeField] GameObject _background;
+    [SerializeField] GameObject _separatorGroup;
+    [SerializeField] GameObject _bottomItemsGroup;
     [SerializeField] PauseMenuSection _currentSection = PauseMenuSection.NONE;
     [SerializeField] MenuWindowState _currentWindowState = MenuWindowState.INACTIVE;
+    
+    Dictionary<PauseMenuSection, IMenuSection> _sectionsDict;
+    Dictionary<MenuOverlay, IMenuOverlay> _overlaysDict;
 
 
     void OnEnable()
     {
-        _pauseToggleEventChannel.OnEventRaised += TogglePauseMenu;
-
+        _gameStateChangedEventChannel.OnEventRaised += HandleGameStateChanged;
+        
     }
 
     void OnDisable()
     {
-        _pauseToggleEventChannel.OnEventRaised -= TogglePauseMenu;
+        _gameStateChangedEventChannel.OnEventRaised -= HandleGameStateChanged;
+    }
+    void Awake()
+    {
+        _sectionsDict = new()
+        {
+            { PauseMenuSection.MAIN, _mainSection },
+            { PauseMenuSection.SETTINGS, _settingsSection },
+            { PauseMenuSection.UNSAVED_WARNING, _warningPopUpGO },
+            { PauseMenuSection.INVENTORY, _inventorySection}
+        };
+
+        _overlaysDict = new()
+        {
+          { MenuOverlay.STATS, _statsOverlay}  
+        };
     }
 
-    public void SetWindowState(MenuWindowState newState)
+    void Start()
+    {
+        SetCanvasActive(false);
+    }
+
+    void Update()
+    {
+        if (PlayerInputManager.Instance.MenuBackInput)
+            Execute(MenuAction.Back);
+    }
+
+    void HandleGameStateChanged(GameState state)
+    {
+        switch(state)
+        {
+            case GameState.PAUSED:
+                TransitionToWindowState(MenuWindowState.OPENING);
+                break;
+            case GameState.PLAYING:
+                TransitionToWindowState(MenuWindowState.CLOSING);
+                break;
+        }
+    }
+
+    void TransitionToWindowState(MenuWindowState newState)
     {
         _currentWindowState = newState;
-
+    
         switch (_currentWindowState)
-        {            
+        {
             case MenuWindowState.OPENING:
-                Debug.Log("Pause Menu window is opening.");
-                ToggleCanvas(true);
-                SetSection(PauseMenuSection.MAIN);
-                SetWindowState(MenuWindowState.ACTIVE);
+                BeginOpening();
                 break;
-
+    
             case MenuWindowState.ACTIVE:
-                Debug.Log("Pause menu window is open.");
+                //Debug.Log("Pause menu window is open.");
                 break;
-
+    
             case MenuWindowState.CLOSING:
-                Debug.Log("Pause Menu window is closing.");
-                SetWindowState(MenuWindowState.INACTIVE);
+                BeginClosing();
                 break;
-
+    
             case MenuWindowState.INACTIVE:
-                ToggleCanvas(false);
-                ToggleBackgroundDim(false);
-                CloseAllMenuItems();
-                SetSection(PauseMenuSection.NONE);
-                UISelector.instance.SetSelected(null);
-                Debug.Log("Pause Menu window is closed.");
+                //Debug.Log("Pause Menu window is closed.");
                 break;
         }
+    }
 
+    void BeginOpening()
+    {
+        //Debug.Log("Pause Menu window is opening.");
+        SetCanvasActive(true);
+        SetBackgroundActive(true);
+        SetSeparatorsActive(true);
+        SetBottomItemsActive(true);
+
+        SetSection(PauseMenuSection.MAIN);
+        SetCurrentContext(this);
+        _currentWindowState = MenuWindowState.ACTIVE;
+        IMenuSection currentSection = _sectionsDict[_currentSection];
+        PushSection(currentSection);
+
+        if (_statsOverlay.IsVisible)
+            _statsOverlay.RefreshDisplays();
+    }
+
+    void BeginClosing()
+    {
         
+        SetCanvasActive(false);
+        SetBackgroundActive(false);
+        SetSeparatorsActive(false);
+        SetBottomItemsActive(false);
+
+        PopSection();
+        SetSection(PauseMenuSection.NONE);
+        _currentWindowState = MenuWindowState.INACTIVE;
+        UISelector.instance.SetSelected(null);
+        Debug.Log("Pause Menu window is closing.");
     }
 
-    public void SetSection(PauseMenuSection newState)
+    void SetSection(PauseMenuSection newSection)
     {
-        _currentSection = newState;
-
-        switch (_currentSection)
-            {
-                case PauseMenuSection.MAIN:
-                    OnEnterMain();
-                    break;
-                case PauseMenuSection.SETTINGS:
-                    OnEnterSettings();
-                    break;
-                case PauseMenuSection.UNSAVED_WARNING:
-                    OnShowWarning();
-                    break;
-            }
-
+        if (_currentSection != PauseMenuSection.NONE)
+            _sectionsDict[_currentSection].Hide();
         
+        _currentSection = newSection;
+
+        if (_currentSection != PauseMenuSection.NONE)
+            _sectionsDict[_currentSection].Show();
     }
 
-    void TogglePauseMenu()
+    void ToggleOverlay(MenuOverlay overlay)
     {
-        if (_currentWindowState == MenuWindowState.INACTIVE)
+        if (_overlaysDict.TryGetValue(overlay, out var o) != true) return;
+
+        if (o.IsVisible)
         {
-            SetWindowState(MenuWindowState.OPENING);
-        }
-            
-        else if (_currentWindowState != MenuWindowState.INACTIVE)
+            Debug.Log("Hiding visible overlay."); 
+            o.Hide();
+        } 
+        
+        else 
         {
-            SetWindowState(MenuWindowState.CLOSING);
+            Debug.Log("Showing invisible overlay."); 
+            o.Show();
         }
     }
 
-    // ------------------------
-    // TRANSITIONS
-    // ------------------------
-
-    // These are exposed for UnityEvents
-    public void GoToSettings() => SetSection(PauseMenuSection.SETTINGS);
-    public void GoToMain() => SetSection(PauseMenuSection.MAIN);
-    public void ShowWarning() => SetSection(PauseMenuSection.UNSAVED_WARNING);
-
-    void OnEnterMain()
-    {
-        ToggleBackgroundDim(true);
-        _settingsMenuGO.SetActive(false);
-        _pauseMenuGO.SetActive(true);
-        UISelector.instance.SetSelected(_pauseMenuFirstSelected);
-    }
-
-    void OnEnterSettings()
-    {
-        _pauseMenuGO.SetActive(false);
-        _settingsMenuGO.SetActive(true);
-        UISelector.instance.SetSelected(_settingsMenuFirstSelected);
-    }
-
-    void OnShowWarning()
-    {
-        _settingsMenuGO.SetActive(false);
-        _warningPopUpGO.SetActive(true);
-        UISelector.instance.SetSelected(_warningMenuFirstSelected);
-    }
-
-    // These two methods are exposed for UnityEvents
-    public void OnWarningNo()
-    {
-        _warningPopUpGO.SetActive(false);
-        _settingsMenuGO.SetActive(true);
-        UISelector.instance.SetSelected(_settingsMenuFirstSelected);
-    }
-
-    public void OnWarningYes()
-    {
-        SettingsManager.instance.HandleSettingsReverted();
-        _warningPopUpGO.SetActive(false);
-        _pauseMenuGO.SetActive(true);
-        UISelector.instance.SetSelected(_pauseMenuFirstSelected);
-    }
 
     // ----------------------------
     // HELPERS
     // ----------------------------
-    void ToggleCanvas(bool enable)
+    void SetCanvasActive(bool enable)
     {
         _canvas.enabled = enable;
     }
-    void ToggleBackgroundDim(bool enable)
+
+    void SetBackgroundActive(bool enable)
     {
-        _backgroundDim.SetActive(enable);
+        _background.SetActive(enable);
     }
 
-    void EnableAllMenuItems()
+    void SetBottomItemsActive(bool enable)
     {
-        foreach (GameObject menu in _menus)
+        _bottomItemsGroup.SetActive(enable);
+    }
+
+    void SetSeparatorsActive(bool enable)
+    {
+        _separatorGroup.SetActive(enable);
+    }
+
+    void CloseAllSections()
+    {
+        foreach (KeyValuePair<PauseMenuSection, IMenuSection> section in _sectionsDict)
         {
-            menu.SetActive(true);
+            section.Value.Hide();
         }
     }
 
-    void CloseAllMenuItems()
+    public override void Execute(MenuAction action)
     {
-        foreach (GameObject menu in _menus)
+        //Debug.Log("Executing menu action : " + action);
+
+        IMenuSection currentSection;
+        switch (action)
         {
-            menu.SetActive(false);
+            case MenuAction.ContinueGame:
+                TransitionToWindowState(MenuWindowState.CLOSING);
+                GameManager.Instance.SetGameState(GameState.PLAYING);
+                break;
+
+            case MenuAction.OpenSettings:
+                SetSection(PauseMenuSection.SETTINGS);
+                currentSection = _sectionsDict[_currentSection];
+                PushSection(currentSection);
+
+                if (_statsOverlay.IsVisible)
+                    ToggleOverlay(MenuOverlay.STATS);
+                break;
+
+            case MenuAction.Back:
+                HandleBack();
+                break;
+
+            case MenuAction.ApplySettings:
+                SettingsManager.Instance.HandleSettingsSaved();
+                break;
+            
+            case MenuAction.ShowUnsavedWarning:
+                SetSection(PauseMenuSection.UNSAVED_WARNING);
+                break;
+
+            case MenuAction.WarningConfirmYes:
+                OnWarningYes();
+                break;
+
+            case MenuAction.WarningConfirmNo:
+                OnWarningNo();
+                break;
+
+            case MenuAction.ToggleStats:
+                ToggleOverlay(MenuOverlay.STATS);
+                break;
+
+            case MenuAction.OpenInventory:
+                SetSection(PauseMenuSection.INVENTORY);
+                currentSection = _sectionsDict[_currentSection];
+                PushSection(currentSection);
+                break;
+
+            case MenuAction.ReturnToMainMenu:
+                GameManager.Instance.SetGameState(GameState.RETURNING_TO_MAIN_MENU);
+                break;
+
+            case MenuAction.QuitGame:
+                GameManager.Instance.SetGameState(GameState.SHUTTING_DOWN);
+                break;
+
+            default :
+                Debug.Log("The action is not supported for this context.");
+                break;
+        }
+    }
+
+    void OnWarningYes()
+    {
+        SettingsManager.Instance.HandleSettingsReverted();
+        SetSection(PauseMenuSection.MAIN);
+    }
+
+    void OnWarningNo()
+    {
+        SetSection(PauseMenuSection.SETTINGS);
+    }
+
+    void HandleBack()
+    {
+        IMenuSection currentSection;
+        switch (_currentSection)
+        {
+            case PauseMenuSection.MAIN:
+            TransitionToWindowState(MenuWindowState.CLOSING);
+            PauseManager.Instance.Resume();
+            break;
+
+            case PauseMenuSection.SETTINGS:
+                if (SettingsManager.Instance.CheckIfDirty())
+                {
+                    currentSection = _sectionsDict[_currentSection];
+                    PushSection(currentSection);
+                    SetSection(PauseMenuSection.UNSAVED_WARNING);
+                }
+                else
+                {
+                    PopSection();
+                    SetSection(PauseMenuSection.MAIN);
+                    //SetSection(PeekSection());
+                }
+                break;
+
+            case PauseMenuSection.UNSAVED_WARNING:
+                OnWarningYes();
+            break;
+
+            default:
+                PopSection();
+                SetSection(PauseMenuSection.MAIN);
+                //Debug.Log("Returning to main.");
+                break;
         }
     }
 
 }
-
-    [System.Serializable]
-    public enum PauseMenuSection
-    {
-        NONE, // Pause Menu is not active
-        MAIN,       // Default Pause Menu
-        SETTINGS,   // Settings Menu
-        UNSAVED_WARNING,     // Unsaved changes popup
-        INVENTORY
-    }
-
-    [System.Serializable]
-    public enum MenuOverlay
-    {
-        TIPS,
-        STATS,
-        ACHIEVEMENTS
-    }
-
-    [System.Serializable]
-    public enum MainMenuSection
-    {
-        NONE, // Pause Menu is not active
-        MAIN,       // Default Pause Menu
-        SETTINGS,   // Settings Menu
-        UNSAVED_WARNING,     // Unsaved changes popup
-    }
-
-    [System.Serializable]
-    public enum MenuWindowState
-    {
-        OPENING,
-        ACTIVE,
-        CLOSING,
-        INACTIVE,
-    }

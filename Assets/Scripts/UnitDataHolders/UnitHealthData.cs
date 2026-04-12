@@ -1,15 +1,17 @@
 using System;
-using UnityEngine;
+
+
 [Serializable]
 public class UnitHealthData
 {
     public int CurrentHealth;
-    public int MaxHealth;
-    public int DamageThreshold;
+    public IntStat MaxHealth;
+    public int CurrentShieldHealth;
+    public bool HasShield => CurrentShieldHealth > 0;
     public UnitHealthData(UnitHealthConfigSO healthConfig)
     {
-        MaxHealth = healthConfig.MaxHealth;
-        CurrentHealth = MaxHealth;
-        DamageThreshold = healthConfig.DamageThreshold;
+        MaxHealth = new IntStat(healthConfig.MaxHealth);
+        CurrentHealth = MaxHealth.Value;
+        CurrentShieldHealth = healthConfig.StartingShieldHealth;
     }
 }

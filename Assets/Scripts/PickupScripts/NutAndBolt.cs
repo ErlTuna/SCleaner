@@ -7,6 +7,12 @@ using UnityEngine;
 // FIX NEEDED!
 public class NutAndBolt : MonoBehaviour
 {
+    [SerializeField] Rigidbody2D _rigidbody2D;
+
+    void Start()
+    {
+        //_rigidbody2D.AddForce(Vector2.up * 2.5f, ForceMode2D.Impulse);
+    }
 
     /*public PickupSO pickupSO;
     public AudioSource audioSource;

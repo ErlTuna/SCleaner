@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 787768cfb9d135848ab0c91f45a12e0f, type: 3}
+  m_Name: Small Ammo Box Inventory Definition
+  m_EditorClassIdentifier: 
+  _sourceItem: {fileID: 11400000, guid: df6f4493ef34d9a45b537d256fb53524, type: 2}
+  ItemName: Small Ammo Box
+  ItemDescription: 
+  ItemDescriptionShort: 
+  ItemIcon: {fileID: 21300000, guid: 5555f40b45850bb4e901c9d7a322b50f, type: 3}
+  ItemType: 0

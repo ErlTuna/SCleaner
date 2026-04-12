@@ -3,12 +3,12 @@ public class BGMSliderVisuals : BaseAudioSliderVisuals
 
     void OnEnable()
     {
-        SettingsEvents.OnSettingsReverted += UpdateVisuals;
+        SettingsManager.OnChangesReverted += UpdateVisuals;
     }
 
     void OnDisable()
     {
-        SettingsEvents.OnSettingsReverted -= UpdateVisuals;
+        SettingsManager.OnChangesReverted -= UpdateVisuals;
     }
 
     public override void UpdateVisuals()

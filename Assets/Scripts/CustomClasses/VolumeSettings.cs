@@ -3,11 +3,13 @@ public struct VolumeSettings
 {
     public float SFXVolume;
     public float BGMVolume;
+    public float WeaponSFXVolume;
 
-    public VolumeSettings(float sfx, float bgm)
+    public VolumeSettings(float sfx, float bgm, float wepVol)
     {
         SFXVolume = sfx;
         BGMVolume = bgm;
+        WeaponSFXVolume = wepVol;
     }
 
     public bool Equals(VolumeSettings other, float tolerance = 0.001f)

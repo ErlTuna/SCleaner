@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-[CreateAssetMenu(menuName = "ScriptableObjects/Event Channels/Int Event Channel")]
+[CreateAssetMenu(menuName = "ScriptableObjects/Event Channels/Int Int Event Channel")]
 public class IntIntEventChannelSO : ScriptableObject
 {
     public Action<int, int> OnEventRaised;

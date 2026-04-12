@@ -12,9 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1d56de787801bd6499e95c08d221e197, type: 3}
   m_Name: Burst Attack Pattern
   m_EditorClassIdentifier: 
-  InitialDelay: 0.1
-  CooldownDuration: 0.5
+  InitialDelay: 0.5
+  CooldownDuration: 0
   IsOnCooldown: 0
   IsExecuting: 0
-  burstCount: 6
-  TimeBetweenShots: 0.25
+  BurstCount: 2
+  ShotsPerBurst: 3
+  TimeBetweenShots: 0

@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 0362bd4c775fbbb4d8a9214520a7bd7d
+guid: 5bcdb65421665f7419938a80906ead41
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -48,7 +48,7 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 64
+  spritePixelsToUnits: 128
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -69,7 +69,7 @@ TextureImporter:
   platformSettings:
   - serializedVersion: 3
     buildTarget: DefaultTexturePlatform
-    maxTextureSize: 512
+    maxTextureSize: 1024
     resizeAlgorithm: 0
     textureFormat: -1
     textureCompression: 0
@@ -97,85 +97,85 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Revolver_Shoot_Remade_0
+      name: Revolver_Shoot_Remade_v2_0
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 112
-        height: 86
+        width: 256
+        height: 172
       alignment: 9
-      pivot: {x: 0.1, y: 0.4}
+      pivot: {x: 0.09, y: 0.4}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: e9edd48713125654aa829e2f292a0d87
-      internalID: -789463681
+      spriteID: 01aeaf121079ae945b61159a356b5866
+      internalID: -1497983525
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Revolver_Shoot_Remade_1
+      name: Revolver_Shoot_Remade_v2_1
       rect:
         serializedVersion: 2
-        x: 112
+        x: 256
         y: 0
-        width: 112
-        height: 86
+        width: 256
+        height: 172
       alignment: 9
-      pivot: {x: 0.27624676, y: 0.11028285}
+      pivot: {x: 0.35, y: 0.09}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: a3dad9e15ab85cd41b0fcf30924ec178
-      internalID: -1918624069
+      spriteID: 69e55336ae26c5041a429eb2d811f68f
+      internalID: -70841460
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Revolver_Shoot_Remade_2
+      name: Revolver_Shoot_Remade_v2_2
       rect:
         serializedVersion: 2
-        x: 224
+        x: 512
         y: 0
-        width: 112
-        height: 86
+        width: 256
+        height: 172
       alignment: 9
-      pivot: {x: 0.1795559, y: 0.22923957}
+      pivot: {x: 0.135, y: 0.22}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: f85f724f47575ce44886cacb7d59484e
-      internalID: -1883582124
+      spriteID: 47be7efb90da1fb4186729e719fcec9e
+      internalID: -710324231
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Revolver_Shoot_Remade_3
+      name: Revolver_Shoot_Remade_v2_3
       rect:
         serializedVersion: 2
-        x: 336
+        x: 768
         y: 0
-        width: 112
-        height: 86
+        width: 256
+        height: 172
       alignment: 9
-      pivot: {x: 0.1, y: 0.4}
+      pivot: {x: 0.09, y: 0.4}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 1a1e90e654080874bb5c25ef91d113a4
-      internalID: 443211598
+      spriteID: c805172fe26b99c4cb4b0c7a14b50080
+      internalID: -453636865
       vertices: []
       indices: 
       edges: []
@@ -191,10 +191,10 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      Revolver_Shoot_Remade_0: -789463681
-      Revolver_Shoot_Remade_1: -1918624069
-      Revolver_Shoot_Remade_2: -1883582124
-      Revolver_Shoot_Remade_3: 443211598
+      Revolver_Shoot_Remade_v2_0: -1497983525
+      Revolver_Shoot_Remade_v2_1: -70841460
+      Revolver_Shoot_Remade_v2_2: -710324231
+      Revolver_Shoot_Remade_v2_3: -453636865
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

@@ -3,13 +3,15 @@ using UnityEngine;
 
 public class PlayerEnergyManager : MonoBehaviour
 {
+    private static WaitForSeconds _waitForSeconds_1 = new(.1f);
     Unit _owner;
-    [SerializeField] UnitEnergyConfigSO _playerEnergyConfig;
-    [SerializeField] UnitEnergyData _playerEnergyData;
-    Coroutine rechargeCoroutine;
-    bool isRecharging = false;
+    [SerializeField] FloatFloatEventChannel _playerEnergyChangedEventChannel;
+    [SerializeField] PlayerEnergyConfigSO _playerEnergyConfig;
+    [SerializeField] PlayerEnergyData _playerEnergyData;
+    Coroutine _rechargeCoroutine;
+    bool _isRecharging = false;
 
-    public void InitializeManager(UnitEnergyData playerEnergyData, UnitEnergyConfigSO playerEnergyConfig)
+    public void InitializeManager(PlayerEnergyData playerEnergyData, PlayerEnergyConfigSO playerEnergyConfig)
     {
         _playerEnergyData = playerEnergyData;
         _playerEnergyConfig = playerEnergyConfig;
@@ -30,7 +32,7 @@ public class PlayerEnergyManager : MonoBehaviour
     public void TriggerRecharge()
     {
         if (CanRecharge() == false) return;
-        rechargeCoroutine = StartCoroutine(RechargeOvertime());
+        _rechargeCoroutine = StartCoroutine(RechargeOvertime());
 
     }
 
@@ -38,29 +40,30 @@ public class PlayerEnergyManager : MonoBehaviour
     {
         while (_playerEnergyData.CurrentEnergy < _playerEnergyData.MaxEnergy)
         {
-            isRecharging = true;
+            _isRecharging = true;
             _playerEnergyData.CurrentEnergy += _playerEnergyData.RechargeRate;
 
             if (_playerEnergyData.CurrentEnergy >= _playerEnergyData.MaxEnergy)
             {
                 _playerEnergyData.CurrentEnergy = _playerEnergyData.MaxEnergy;
-                UIEvents.RaiseEnergyChanged(_playerEnergyData.CurrentEnergy, _playerEnergyData.MaxEnergy);
+
+                _playerEnergyChangedEventChannel.RaiseEvent(_playerEnergyData.CurrentEnergy, _playerEnergyData.MaxEnergy);
                 AudioSource.PlayClipAtPoint(_playerEnergyConfig.fullEnergySFX, gameObject.transform.position);
-                isRecharging = false;
+                _isRecharging = false;
                 yield break;
             }
 
-            UIEvents.RaiseEnergyChanged(_playerEnergyData.CurrentEnergy, _playerEnergyData.MaxEnergy);
-            yield return new WaitForSeconds(.1f);
+            _playerEnergyChangedEventChannel.RaiseEvent(_playerEnergyData.CurrentEnergy, _playerEnergyData.MaxEnergy);
+            yield return _waitForSeconds_1;
         }
 
-        isRecharging = false;
-        rechargeCoroutine = null;
+        _isRecharging = false;
+        _rechargeCoroutine = null;
     }
 
     public bool CanRecharge()
     {
-        return _playerEnergyData.CurrentEnergy != _playerEnergyData.MaxEnergy && !isRecharging;
+        return _playerEnergyData.CurrentEnergy != _playerEnergyData.MaxEnergy && !_isRecharging;
     }
 
     public void OnEnergyUse(AbilityData abilityData)
@@ -69,15 +72,15 @@ public class PlayerEnergyManager : MonoBehaviour
         if (Mathf.Approximately(energyAfterUse, 0))
         {
             _playerEnergyData.CurrentEnergy = 0;
-            UIEvents.RaiseEnergyChanged(_playerEnergyData.CurrentEnergy, _playerEnergyData.MaxEnergy);
+            _playerEnergyChangedEventChannel.RaiseEvent(_playerEnergyData.CurrentEnergy, _playerEnergyData.MaxEnergy);
             return;
         }
 
         _playerEnergyData.CurrentEnergy -= abilityData.EnergyCost;
-        UIEvents.RaiseEnergyChanged(_playerEnergyData.CurrentEnergy, _playerEnergyData.MaxEnergy);
+        _playerEnergyChangedEventChannel.RaiseEvent(_playerEnergyData.CurrentEnergy, _playerEnergyData.MaxEnergy);
     }
 
-    public void InitializeWithData(Unit owner, UnitEnergyData energyData)
+    public void InitializeWithData(Unit owner, PlayerEnergyData energyData)
     {
         _owner = owner;
         _playerEnergyData = energyData;

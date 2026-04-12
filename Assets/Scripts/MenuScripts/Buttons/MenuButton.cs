@@ -14,7 +14,8 @@ public class MenuButton : MonoBehaviour, ISelectHandler, IDeselectHandler, ISubm
         if (_selectionIndicator != null)
             MenuAnimationsManager.instance.OptionSelected(_selectionIndicator);
 
-        AudioManager.Instance.PlaySelectSound();
+        //Debug.Log("Selected me! " + gameObject.name);
+        AudioManager.Instance.PlayMenuSelectSound();
     }
 
     public void OnDeselect(BaseEventData eventData)
@@ -25,7 +26,7 @@ public class MenuButton : MonoBehaviour, ISelectHandler, IDeselectHandler, ISubm
 
     public void OnSubmit(BaseEventData eventData)
     {
-        AudioManager.Instance.PlaySubmitSound();
+        AudioManager.Instance.PlayMenuSubmitSound();
 
         if (MenuContext.Current != null)
         {

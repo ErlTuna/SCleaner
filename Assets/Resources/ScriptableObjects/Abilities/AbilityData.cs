@@ -29,7 +29,7 @@ public class AbilityData : ScriptableObject
     void OnEnable()
     {
         if (string.IsNullOrEmpty(AbilityName)) AbilityName = name;
-        if (Effects == null) Effects = new List<AbilityEffect>();
+        Effects ??= new List<AbilityEffect>();
 
         State = AbilityState.INACTIVE;
     }

@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 2170552204956567613}
   - component: {fileID: 2359066280069495797}
   - component: {fileID: 7561437575387747518}
-  - component: {fileID: 5207038175615385040}
   - component: {fileID: 3569957628636953028}
   m_Layer: 10
   m_Name: Hitbox
@@ -93,23 +92,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _owner: {fileID: 1781327534618252848}
-  _contactDamage: 0
---- !u!114 &5207038175615385040
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1192845639007755496}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 261b1daffa0aa06429c049f16ffde121, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  lootTable:
-  - {fileID: 7418406498753305431, guid: be26205eb226542459483901ff51368f, type: 3}
-  - {fileID: 7418406498753305431, guid: 7e3925452e214d440a76442d5109246e, type: 3}
-  itemHolder: {fileID: 8480903527150212984}
+  _overrideContactDamage: 0
+  _overrideValue: 0
 --- !u!114 &3569957628636953028
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -124,8 +108,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _healthData:
     CurrentHealth: 0
-    MaxHealth: 0
-    DamageThreshold: 0
+    CurrentShieldHealth: 0
   _healthConfig: {fileID: 0}
   _stateData:
     IsAlive: 0
@@ -279,7 +262,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _faction: 1
-  _deathEventChannel: {fileID: 11400000, guid: 0d8d67cf4c6de084f8475f891009e8e7, type: 2}
+  _defeatEventChannel: {fileID: 11400000, guid: 0d8d67cf4c6de084f8475f891009e8e7, type: 2}
   _agent: {fileID: 5296537056425378523}
   _rb2D: {fileID: 7926535529223704634}
   _bodyRB: {fileID: 3983031734168495030}
@@ -287,6 +270,7 @@ MonoBehaviour:
   _healthManager: {fileID: 3569957628636953028}
   _detectionManager: {fileID: 2682223785703577852}
   _collisionHandler: {fileID: 7561437575387747518}
+  _itemDropper: {fileID: 7334195890755838241}
   _attackConfig: {fileID: 11400000, guid: 3a797925fb3851e429b4909c83dcf96f, type: 2}
   _healthConfig: {fileID: 11400000, guid: def09bc8452bf5c4fb9cf05923534a2b, type: 2}
   _movementConfig: {fileID: 11400000, guid: 33a36ff3659b3834bbd3be9a5a916618, type: 2}
@@ -294,8 +278,7 @@ MonoBehaviour:
   _visualConfig: {fileID: 11400000, guid: 4108d4caaf50bbc47887b949f527a50b, type: 2}
   _healthData:
     CurrentHealth: 0
-    MaxHealth: 0
-    DamageThreshold: 0
+    CurrentShieldHealth: 0
   _stateData:
     IsAlive: 0
     IsHitInvuln: 0
@@ -311,7 +294,7 @@ MonoBehaviour:
     IsChargingAnAttack: 0
     IsAttacking: 0
     IsRecovering: 0
-  SpawnArea: {fileID: 0}
+  _spawnArea: {fileID: 0}
 --- !u!1 &2562611876699014425
 GameObject:
   m_ObjectHideFlags: 0
@@ -357,6 +340,7 @@ GameObject:
   - component: {fileID: 7737932914747523351}
   - component: {fileID: 6218039027248376032}
   - component: {fileID: 3983031734168495030}
+  - component: {fileID: 7334195890755838241}
   m_Layer: 6
   m_Name: Body
   m_TagString: Untagged
@@ -399,7 +383,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
+  - {fileID: 2100000, guid: 6840ba544898d7c4e8327b2cd54d58f1, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -420,7 +404,7 @@ SpriteRenderer:
   m_SortingLayerID: 178966987
   m_SortingLayer: 1
   m_SortingOrder: 1
-  m_Sprite: {fileID: 21300000, guid: 6b88544765db803448699735da8fdb0b, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 702ca7c030b20274c9becbefaf48a87b, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -505,7 +489,7 @@ Rigidbody2D:
   m_UseAutoMass: 0
   m_Mass: 1
   m_LinearDrag: 0
-  m_AngularDrag: 0.05
+  m_AngularDrag: 0.25
   m_GravityScale: 1
   m_Material: {fileID: 0}
   m_IncludeLayers:
@@ -518,6 +502,22 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
+--- !u!114 &7334195890755838241
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5159522017992402268}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 261b1daffa0aa06429c049f16ffde121, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  itemHolder: {fileID: 2939067407346256185}
+  _rb2D: {fileID: 3983031734168495030}
+  _lootConfigSO: {fileID: 11400000, guid: ab61ba72430b57448938f5ca46a4d227, type: 2}
+  _angleStep: 90
 --- !u!1 &8806157274590480296
 GameObject:
   m_ObjectHideFlags: 0

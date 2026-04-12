@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3be52762b434d054e9e014ea94b35821, type: 3}
+  m_Name: SmallAmmoPickupDefinition
+  m_EditorClassIdentifier: 
+  PickupType: 1
+  PickUpName: Small Ammo Box
+  PickUpDescription: Ammo Restored
+  DefaultPickupSprite: {fileID: 21300000, guid: 5555f40b45850bb4e901c9d7a322b50f, type: 3}
+  PickUpSuccessSoundData: {fileID: 11400000, guid: 90908844938fdc248b12bc15cdab9bd5, type: 2}
+  PickUpFailureSoundData: {fileID: 0}

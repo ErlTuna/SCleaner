@@ -21,15 +21,15 @@ AnimationClip:
   - serializedVersion: 2
     curve:
     - time: 0
-      value: {fileID: -1480316739, guid: 8d44bf139470a0c41b60265272ce6155, type: 3}
+      value: {fileID: 2082665093, guid: 97c2d43c82605ac4ab5aaa303d8467f8, type: 3}
     - time: 0.083333336
-      value: {fileID: 1503686380, guid: 8d44bf139470a0c41b60265272ce6155, type: 3}
+      value: {fileID: 1094480760, guid: 97c2d43c82605ac4ab5aaa303d8467f8, type: 3}
     - time: 0.16666667
-      value: {fileID: 1901421359, guid: 8d44bf139470a0c41b60265272ce6155, type: 3}
+      value: {fileID: 870528000, guid: 97c2d43c82605ac4ab5aaa303d8467f8, type: 3}
     - time: 0.25
-      value: {fileID: 235673698, guid: 8d44bf139470a0c41b60265272ce6155, type: 3}
+      value: {fileID: -534050828, guid: 97c2d43c82605ac4ab5aaa303d8467f8, type: 3}
     - time: 0.33333334
-      value: {fileID: 1197141249, guid: 8d44bf139470a0c41b60265272ce6155, type: 3}
+      value: {fileID: -325348928, guid: 97c2d43c82605ac4ab5aaa303d8467f8, type: 3}
     attribute: m_Sprite
     path: Visuals & Muzzle/Visuals
     classID: 212
@@ -52,11 +52,11 @@ AnimationClip:
       isIntCurve: 0
       isSerializeReferenceCurve: 0
     pptrCurveMapping:
-    - {fileID: -1480316739, guid: 8d44bf139470a0c41b60265272ce6155, type: 3}
-    - {fileID: 1503686380, guid: 8d44bf139470a0c41b60265272ce6155, type: 3}
-    - {fileID: 1901421359, guid: 8d44bf139470a0c41b60265272ce6155, type: 3}
-    - {fileID: 235673698, guid: 8d44bf139470a0c41b60265272ce6155, type: 3}
-    - {fileID: 1197141249, guid: 8d44bf139470a0c41b60265272ce6155, type: 3}
+    - {fileID: 2082665093, guid: 97c2d43c82605ac4ab5aaa303d8467f8, type: 3}
+    - {fileID: 1094480760, guid: 97c2d43c82605ac4ab5aaa303d8467f8, type: 3}
+    - {fileID: 870528000, guid: 97c2d43c82605ac4ab5aaa303d8467f8, type: 3}
+    - {fileID: -534050828, guid: 97c2d43c82605ac4ab5aaa303d8467f8, type: 3}
+    - {fileID: -325348928, guid: 97c2d43c82605ac4ab5aaa303d8467f8, type: 3}
   m_AnimationClipSettings:
     serializedVersion: 2
     m_AdditiveReferencePoseClip: {fileID: 0}
@@ -81,18 +81,4 @@ AnimationClip:
   m_EulerEditorCurves: []
   m_HasGenericRootTransform: 0
   m_HasMotionFloatCurves: 0
-  m_Events:
-  - time: 0
-    functionName: TryPlaySound
-    data: 
-    objectReferenceParameter: {fileID: 11400000, guid: e789b706ba04b304e846c0b847c18b86, type: 2}
-    floatParameter: 0
-    intParameter: 0
-    messageOptions: 0
-  - time: 0.33333334
-    functionName: HandlePreAttackEnd
-    data: 
-    objectReferenceParameter: {fileID: 0}
-    floatParameter: 0
-    intParameter: 0
-    messageOptions: 0
+  m_Events: []

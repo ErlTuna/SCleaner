@@ -1,11 +1,14 @@
 
+using System;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.AI;
 
 
-public class BugEnemyMain : Unit
+public class BugEnemyMain : Unit, IEnemy
 {
+    // Events
+    Action OnDefeat;
 
     [Header("Unity Components")]
     [SerializeField] NavMeshAgent _agent;
@@ -20,6 +23,7 @@ public class BugEnemyMain : Unit
     [SerializeField] BugHealthManager _healthManager;
     [SerializeField] PlayerDetection _detectionManager;
     [SerializeField] EnemyCollisionHandler _collisionHandler;
+    [SerializeField] CurrencyDropper _itemDropper;
 
     [Header("Configs")]
     [SerializeField] UnitAttackConfigSO _attackConfig;
@@ -42,7 +46,8 @@ public class BugEnemyMain : Unit
     DefeatState _defeatState;
 
     [Header("Misc")]
-    public BoxCollider2D SpawnArea;
+    [SerializeField] BoxCollider2D _spawnArea;
+    public BoxCollider2D SpawnArea {get; set;}
     GameObject _player;
     UnitStateData _playerStateData;
 
@@ -51,12 +56,12 @@ public class BugEnemyMain : Unit
 
     void OnEnable()
     {
-        _healthManager.OnDefeat += HandleDefeat;
+        _healthManager.OnDefeatWithContext += HandleDefeat;
     }
 
     void OnDisable()
     {
-        _healthManager.OnDefeat += HandleDefeat;
+        _healthManager.OnDefeatWithContext -= HandleDefeat;
     }
 
     void Awake()
@@ -99,15 +104,19 @@ public class BugEnemyMain : Unit
         _stateMachine.FixedUpdate();
     }
 
-    public void HandleDefeat(DamageContext context)
+    void HandleDefeat(DamageContext context)
     {
+        Debug.Log("Handle defeat called.");
         _defeatState.SetLastHitContext(context);
         _stateData.IsAlive = false;
-        if (_deathEventChannel != null)
-            _deathEventChannel.RaiseEvent();
+        
+        if (_defeatEventChannel != null)
+            _defeatEventChannel.RaiseEvent();
+        
+        OnDefeat?.Invoke();
     }
 
-        void PrepareRuntimeData()
+    void PrepareRuntimeData()
     {
         _healthData = new UnitHealthData(_healthConfig);
         _stateData = new EnemyStateData(_stateConfig);
@@ -119,13 +128,19 @@ public class BugEnemyMain : Unit
         _healthManager.InitializeStateData(_stateData);
         _detectionManager.InitializeStateData(_stateData);
         _collisionHandler.Initialize(_attackConfig.ContactDamage);
+        _itemDropper.Initialize(_healthManager, _player.transform);
     }
 
     void PrepareStateMachine()
     {
         //Initialize states
         _stateMachine = new StateMachine();
-        _roamState = new(gameObject, _agent, SpawnArea);
+        if (SpawnArea == null && _spawnArea)
+        {
+            _roamState = new(gameObject, _agent, _spawnArea);
+        }
+        else if (SpawnArea)
+            _roamState = new(gameObject, _agent, SpawnArea);
         _chaseState = new(gameObject, _player, _agent);
         _immobileState = new(gameObject, _rb2D, _agent);
         _defeatState = new(gameObject, _bodyRB, _agent, _visuals, _visualConfig);
@@ -153,5 +168,16 @@ public class BugEnemyMain : Unit
     public override UnitStateData GetStateData()
     {
         return _stateData;
+    }
+
+    public void AssignSpawnArea(BoxCollider2D spawnArea)
+    {
+        _spawnArea = spawnArea;
+        SpawnArea = spawnArea;
+    }
+
+    public void AssignOnDefeatCallback(Action onDefeat)
+    {
+        OnDefeat = onDefeat;
     }
 }

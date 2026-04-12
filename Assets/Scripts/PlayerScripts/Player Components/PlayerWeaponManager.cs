@@ -1,22 +1,22 @@
 using UnityEngine;
 
-public class PlayerWeaponManager : MonoBehaviour
+public class PlayerWeaponManager : MonoBehaviour, IPickupHandler
 {
     [SerializeField] WeaponSwitchRequestEventChannelSO _weaponSwitchRequestChannel;
     [SerializeField] GameObject _currentWeaponGO;
     [SerializeField] PlayerWeapon _currentWeaponScript;
-    //[SerializeField] Transform _weaponPosition;
+
+    // Public Getters
+    public GameObject CurrentWeaponGO => _currentWeaponGO;
+    public PlayerWeapon CurrentWeaponScript => _currentWeaponScript;
 
     void OnEnable()
     {
-        //PlayerInventoryEvents.OnWeaponsReadyEvent += ReceiveWeapon;
-        //PlayerInventoryEvents.OnWeaponSwitchEvent += SwitchWeapon;
         _weaponSwitchRequestChannel.OnEventRaised += SwitchWeapon;
     }
 
     void OnDisable(){
-        //PlayerInventoryEvents.OnWeaponsReadyEvent -= ReceiveWeapon;
-        //PlayerInventoryEvents.OnWeaponSwitchEvent -= SwitchWeapon;
+
         _weaponSwitchRequestChannel.OnEventRaised -= SwitchWeapon;
     }
 
@@ -30,14 +30,16 @@ public class PlayerWeaponManager : MonoBehaviour
         
 
         if (PlayerInputManager.Instance.PrimaryAttackInput)
+        {
             _currentWeaponScript.HandlePrimaryAttackInput();
+        }
+            
 
-        else if (PlayerInputManager.Instance.SecondaryAttackInput)
-            _currentWeaponScript.HandleSecondaryAttackInput();
-
+        //else if (PlayerInputManager.Instance.SecondaryAttackInput)
+            //_currentWeaponScript.HandleSecondaryAttackInput();
 
         else
-            _currentWeaponScript.HandlePrimaryAttackInputCancel();
+            _currentWeaponScript.HandlePrimaryAttackInputRelease();
     }
 
     public void ReceiveWeapon(GameObject weapon, PlayerWeapon weaponScript)
@@ -48,7 +50,8 @@ public class PlayerWeaponManager : MonoBehaviour
     }
 
     
-    public void SwitchWeapon(GameObject targetWeapon, PlayerWeapon targetWeaponScript){        
+    public void SwitchWeapon(GameObject targetWeapon, PlayerWeapon targetWeaponScript)
+    {        
         if (_currentWeaponScript)
             _currentWeaponScript.SwitchFrom();
 
@@ -59,7 +62,8 @@ public class PlayerWeaponManager : MonoBehaviour
             _currentWeaponGO.SetActive(true);
     }
 
-    public void HandleReloadInput(){
+    public void HandleReloadInput()
+    {
         _currentWeaponScript.HandleReloadInput();
     }
 }

@@ -7,8 +7,8 @@ using UnityEngine.UI;
 // With an icon and label.
 public class BindingHintItem : MonoBehaviour
 {
-    [SerializeField] HorizontalLayoutGroup _parentHLG;
-    [SerializeField] float _scale = 3f;  
+    //[SerializeField] HorizontalLayoutGroup _parentHLG;
+    //[SerializeField] float _scale = 3f;  
     [SerializeField] Image _icon;
     [SerializeField] TMP_Text _label;
     [SerializeField] LayoutElement _containerLayoutElement;

@@ -1,0 +1,48 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 27136e7dbe8e01549872e0c0e5cfa6db, type: 3}
+  m_Name: BasicRevolverAnimatorParamTable
+  m_EditorClassIdentifier: 
+  _parameterList:
+  - rid: 6995782678069641218
+  - rid: 3032814059299274755
+  - rid: 3032814059299274758
+  - rid: 6995782692692295683
+  - rid: 3032814105578700800
+  references:
+    version: 2
+    RefIds:
+    - rid: 3032814059299274755
+      type: {class: AnimatorParameter, ns: , asm: Assembly-CSharp}
+      data:
+        Name: FireTrigger
+        Type: 2
+    - rid: 3032814059299274758
+      type: {class: AnimatorParameter, ns: , asm: Assembly-CSharp}
+      data:
+        Name: isFiring
+        Type: 1
+    - rid: 3032814105578700800
+      type: {class: AnimatorParameter, ns: , asm: Assembly-CSharp}
+      data:
+        Name: isReloading
+        Type: 1
+    - rid: 6995782678069641218
+      type: {class: AnimatorParameter, ns: , asm: Assembly-CSharp}
+      data:
+        Name: isCharging
+        Type: 1
+    - rid: 6995782692692295683
+      type: {class: AnimatorParameter, ns: , asm: Assembly-CSharp}
+      data:
+        Name: ReloadTrigger
+        Type: 2

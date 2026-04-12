@@ -6,6 +6,7 @@ public static class SETTINGS
     public const float MIN_VOLUME = 0f;
     public const float MAX_VOLUME = 1f;
     private static readonly string s_SFXVolume = "SFXVolume";
+    private static readonly string s_WeaponSFXVolume = "WeaponSFXVolume";
     private static readonly string s_BGMVolume = "BGMVolume";
     private static readonly string s_AutoSwitchWhenNoAmmo = "AutoSwitchWhenNoAmmoLeft";
     private static readonly string s_AutoSwitchToPickedUpWeapon = "AutoSwitchToPickedUpWeapon";
@@ -78,6 +79,35 @@ public static class SETTINGS
         }
         set { PlayerPrefs.SetFloat(s_SFXVolume, value); }
     }
+
+    public static float CurrentWeaponSFXVolume
+    {
+        get
+        {
+            if (PlayerPrefs.HasKey(s_WeaponSFXVolume))
+            {
+                return PlayerPrefs.GetFloat(s_WeaponSFXVolume);
+            }
+            else
+            {
+                if (_defaultSettings != null)
+                {
+                    return _defaultSettings.WeaponSFX_volume;
+                }
+                else
+                {
+                    Debug.Log("Default settings SO is missing!");
+                    return .5f;
+                }
+            }
+        }
+        set
+        {
+            PlayerPrefs.SetFloat(s_WeaponSFXVolume, value);
+        }
+    }
+
+
     public static float CurrentBGMVolume
     {
         get
@@ -105,7 +135,7 @@ public static class SETTINGS
         }
     }
     private static MainMenuDefaultsSO _defaultSettings;
-    public static VolumeSettings CurrentVolumeSettings { get; private set; } = new(CurrentSFXVolume, CurrentBGMVolume);
+    public static VolumeSettings CurrentVolumeSettings { get; private set; } = new(CurrentSFXVolume, CurrentBGMVolume, CurrentWeaponSFXVolume);
     public static VolumeSettings PreviousVolumeSettings { get; private set; } = new();
 
     public static void Initialize(MainMenuDefaultsSO defaultSettingsSO)
@@ -117,7 +147,7 @@ public static class SETTINGS
 
     public static void SaveSettings()
     {
-        CurrentVolumeSettings = new(CurrentSFXVolume, CurrentBGMVolume);
+        CurrentVolumeSettings = new(CurrentSFXVolume, CurrentBGMVolume, CurrentWeaponSFXVolume);
         PreviousVolumeSettings = CurrentVolumeSettings;
         PlayerPrefs.Save();
     }
@@ -128,6 +158,7 @@ public static class SETTINGS
 
         PlayerPrefs.SetFloat(s_SFXVolume, CurrentVolumeSettings.SFXVolume);
         PlayerPrefs.SetFloat(s_BGMVolume, CurrentVolumeSettings.BGMVolume);
+        PlayerPrefs.SetFloat(s_WeaponSFXVolume, CurrentVolumeSettings.WeaponSFXVolume);
 
         PlayerPrefs.Save();
     }

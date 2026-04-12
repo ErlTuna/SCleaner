@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 310b2accbf77b5c40bf08ea436c00da4
+guid: 547c08a2b877f7144bfe8b5faf494736
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -48,7 +48,7 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 48
+  spritePixelsToUnits: 160
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -69,7 +69,7 @@ TextureImporter:
   platformSettings:
   - serializedVersion: 3
     buildTarget: DefaultTexturePlatform
-    maxTextureSize: 256
+    maxTextureSize: 1024
     resizeAlgorithm: 0
     textureFormat: -1
     textureCompression: 0
@@ -97,64 +97,64 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: SMG_Reload_Remade_0
+      name: SMG_Reload_Remade_v2_0
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 64
-        height: 32
+        width: 256
+        height: 128
       alignment: 9
-      pivot: {x: 0.27, y: 0.4}
+      pivot: {x: 0.275, y: 0.35}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 2f217538af47a6344ae813eb54ca438c
-      internalID: 476039425
+      spriteID: ae5a80be62a6f3a488dc6b6cee9013b1
+      internalID: 1652855970
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: SMG_Reload_Remade_1
+      name: SMG_Reload_Remade_v2_1
       rect:
         serializedVersion: 2
-        x: 64
+        x: 256
         y: 0
-        width: 64
-        height: 32
+        width: 256
+        height: 128
       alignment: 9
-      pivot: {x: 0.27, y: 0.4}
+      pivot: {x: 0.275, y: 0.35}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 715e48cb9e8c59f44a18e93a251d80fc
-      internalID: -930618956
+      spriteID: 3159257b9881a0f41926d895bd20fc3a
+      internalID: 1506810704
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: SMG_Reload_Remade_2
+      name: SMG_Reload_Remade_v2_2
       rect:
         serializedVersion: 2
-        x: 128
+        x: 512
         y: 0
-        width: 64
-        height: 32
+        width: 256
+        height: 128
       alignment: 9
-      pivot: {x: 0.27, y: 0.4}
+      pivot: {x: 0.275, y: 0.35}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 609a501665330744eb7ce2a73197f9a4
-      internalID: -1376182819
+      spriteID: 5cb926f35c369b64a96b24aa601df5d9
+      internalID: -1741406704
       vertices: []
       indices: 
       edges: []
@@ -170,9 +170,9 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      SMG_Reload_Remade_0: 476039425
-      SMG_Reload_Remade_1: -930618956
-      SMG_Reload_Remade_2: -1376182819
+      SMG_Reload_Remade_v2_0: 1652855970
+      SMG_Reload_Remade_v2_1: 1506810704
+      SMG_Reload_Remade_v2_2: -1741406704
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

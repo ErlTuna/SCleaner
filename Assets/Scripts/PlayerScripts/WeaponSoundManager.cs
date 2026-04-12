@@ -11,11 +11,13 @@ public class WeaponSoundManager : MonoBehaviour
     void CreateNewEmitter()
     {
         SoundEmitter newEmitter = Instantiate(_soundEmitterPrefab, transform).GetComponent<SoundEmitter>();
-        newEmitter.Initialize();
+        newEmitter.AssignPoolParent(transform);
+        //newEmitter.Initialize();
         emitters.Add(newEmitter);
     }
 
-    public void TryPlaySound(SoundData soundData)
+    // Called by an animation event
+    public void TryPlaySound(SoundDataSO soundData)
     {
         SoundEmitter emitter = null;
 
@@ -50,15 +52,15 @@ public class WeaponSoundManager : MonoBehaviour
         {
             float pitchVariance = soundData.pitchRange;
             float pitch = 1f + Random.Range(-pitchVariance, pitchVariance);
-            emitter.Play(clipToBePlayed, pitch);
+            emitter.Play(clipToBePlayed, pitch, SETTINGS.CurrentWeaponSFXVolume);
         }
 
         else
-            emitter.Play(clipToBePlayed);
+            emitter.Play(clipToBePlayed, pitch:1, SETTINGS.CurrentWeaponSFXVolume);
 
     }
     
-    public AudioClip GetClip(SoundData soundData)
+    public AudioClip GetClip(SoundDataSO soundData)
     {
         if (soundData.clips == null)
         {

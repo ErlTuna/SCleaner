@@ -17,15 +17,19 @@ public class DamageFlash : MonoBehaviour
         SetFlashColor();
     }
 
-    public void TriggerDamageFlash(){
+    public void TriggerDamageFlash()
+    {
         StartCoroutine(DamageFlasher());
     }
 
-    IEnumerator DamageFlasher(){
+    IEnumerator DamageFlasher()
+    {
+        Debug.Log("Damage flasher called.");
         float currentFlashAmount;
         float elapsedTime = 0f;
 
-        while (elapsedTime < _flashTime){
+        while (elapsedTime < _flashTime)
+        {
             elapsedTime += Time.deltaTime;
             currentFlashAmount = Mathf.Lerp(1f, 0f, elapsedTime/_flashTime);
             SetFlashAmount(currentFlashAmount);

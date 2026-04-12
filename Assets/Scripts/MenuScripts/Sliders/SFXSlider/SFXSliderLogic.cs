@@ -11,13 +11,14 @@ public class SFXSliderLogic : BaseAudioSliderLogic
         currentValue = SETTINGS.CurrentSFXVolume;
     }
 
-    public override void UpdateSliderLogic()
+    public override void SyncSlider()
     {
-        Debug.Log("SFX Slider Logic update called");
+        Debug.Log("SFX Slider is synced.");
         slider.value = SETTINGS.CurrentSFXVolume;
         currentValue = slider.value;
     }
 
+    // Subscribes to slider's onValueChanged event.
     public override void AdjustVolume(float value)
     {
         value = Mathf.Round(value * 10f) / 10f;
@@ -29,6 +30,6 @@ public class SFXSliderLogic : BaseAudioSliderLogic
 
         currentValue = value;
 
-        SettingsManager.instance.HandleSFXLevelAltered(currentValue);
+        SettingsManager.Instance.HandleSFXLevelAltered(currentValue);
     }
 }

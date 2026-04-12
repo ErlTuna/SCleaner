@@ -15,22 +15,18 @@ public class InventoryNavigation : MonoBehaviour
         if (movement.y > 0.5f)
         {
             MoveSelection(Vector2.up);
-            Debug.Log("Up input");
         }
         else if (movement.y < -0.5f)
         {
             MoveSelection(Vector2.down);
-            Debug.Log("Down input");
         }
         else if (movement.x < -0.5f)
         {
             MoveSelection(Vector2.left);
-            Debug.Log("Left input");
         }
         else if (movement.x > 0.5f)
         {
             MoveSelection(Vector2.right);
-            Debug.Log("Right input");
         }
     }
 
@@ -39,8 +35,7 @@ public class InventoryNavigation : MonoBehaviour
         GameObject current = EventSystem.current.currentSelectedGameObject;
         if (current == null) return;
 
-        InventoryEntry entry = current.GetComponent<InventoryEntry>();
-        if (entry == null) return;
+        if (current.TryGetComponent<InventoryEntry>(out var entry) == false) return;
 
         InventoryEntry next = null;
 

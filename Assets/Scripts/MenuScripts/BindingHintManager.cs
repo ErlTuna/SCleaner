@@ -19,7 +19,7 @@ public class BindingHintManager : MonoBehaviour
     void Update()
     {
         if (EventSystem.current == null) return;
-        var selected = EventSystem.current.currentSelectedGameObject;
+        GameObject selected = EventSystem.current.currentSelectedGameObject;
         if (selected == null) return;
         if (selected == _lastSelected) return;
 
@@ -28,8 +28,9 @@ public class BindingHintManager : MonoBehaviour
     }
 
     void Refresh()
-    {
-        if (_lastSelected == null|| _lastSelected.TryGetComponent(out BindingHintProvider provider) == false)
+    {   
+        // _lastSelected == null|| 
+        if (_lastSelected.TryGetComponent(out BindingHintProvider provider) == false)
         {
             DeactivateAll();
             return;
@@ -77,7 +78,7 @@ public class BindingHintManager : MonoBehaviour
     {
         if (_pooledItems.Count > 0)
         {
-            var item = _pooledItems[^1];
+            BindingHintItem item = _pooledItems[^1];
             _pooledItems.RemoveAt(_pooledItems.Count - 1);
             return item;
         }
@@ -89,7 +90,7 @@ public class BindingHintManager : MonoBehaviour
 
     void DeactivateAll()
     {
-        foreach (var item in _activeItems.Values)
+        foreach (BindingHintItem item in _activeItems.Values)
         {
             item.gameObject.SetActive(false);
             _pooledItems.Add(item);

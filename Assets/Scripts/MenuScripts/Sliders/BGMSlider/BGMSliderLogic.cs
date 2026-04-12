@@ -13,7 +13,7 @@ public class BGMSliderLogic : BaseAudioSliderLogic
         currentValue = SETTINGS.CurrentBGMVolume;
     }
 
-    public override void UpdateSliderLogic()
+    public override void SyncSlider()
     {
         slider.value = SETTINGS.CurrentBGMVolume;
         currentValue = slider.value;
@@ -30,7 +30,7 @@ public class BGMSliderLogic : BaseAudioSliderLogic
 
         currentValue = value;
 
-        SettingsManager.instance.HandleBGMLevelAltered(currentValue);
+        SettingsManager.Instance.HandleBGMLevelAltered(currentValue);
     }
 
 }

@@ -21,11 +21,11 @@ AnimationClip:
   - serializedVersion: 2
     curve:
     - time: 0
-      value: {fileID: 476039425, guid: 310b2accbf77b5c40bf08ea436c00da4, type: 3}
+      value: {fileID: 1652855970, guid: 547c08a2b877f7144bfe8b5faf494736, type: 3}
     - time: 0.083333336
-      value: {fileID: -930618956, guid: 310b2accbf77b5c40bf08ea436c00da4, type: 3}
+      value: {fileID: 1506810704, guid: 547c08a2b877f7144bfe8b5faf494736, type: 3}
     - time: 0.8333333
-      value: {fileID: -1376182819, guid: 310b2accbf77b5c40bf08ea436c00da4, type: 3}
+      value: {fileID: -1741406704, guid: 547c08a2b877f7144bfe8b5faf494736, type: 3}
     attribute: m_Sprite
     path: Visuals & Firing Point/Visuals
     classID: 212
@@ -48,9 +48,9 @@ AnimationClip:
       isIntCurve: 0
       isSerializeReferenceCurve: 0
     pptrCurveMapping:
-    - {fileID: 476039425, guid: 310b2accbf77b5c40bf08ea436c00da4, type: 3}
-    - {fileID: -930618956, guid: 310b2accbf77b5c40bf08ea436c00da4, type: 3}
-    - {fileID: -1376182819, guid: 310b2accbf77b5c40bf08ea436c00da4, type: 3}
+    - {fileID: 1652855970, guid: 547c08a2b877f7144bfe8b5faf494736, type: 3}
+    - {fileID: 1506810704, guid: 547c08a2b877f7144bfe8b5faf494736, type: 3}
+    - {fileID: -1741406704, guid: 547c08a2b877f7144bfe8b5faf494736, type: 3}
   m_AnimationClipSettings:
     serializedVersion: 2
     m_AdditiveReferencePoseClip: {fileID: 0}
@@ -75,25 +75,4 @@ AnimationClip:
   m_EulerEditorCurves: []
   m_HasGenericRootTransform: 0
   m_HasMotionFloatCurves: 0
-  m_Events:
-  - time: 0.083333336
-    functionName: TryPlaySound
-    data: 
-    objectReferenceParameter: {fileID: 11400000, guid: 965ff4f72215d87409eaff6f0752bbd3, type: 2}
-    floatParameter: 0
-    intParameter: 0
-    messageOptions: 0
-  - time: 0.8333333
-    functionName: TryPlaySound
-    data: 
-    objectReferenceParameter: {fileID: 11400000, guid: d8266f2354cccbb4a9f62af83414381c, type: 2}
-    floatParameter: 0
-    intParameter: 0
-    messageOptions: 0
-  - time: 0.8333333
-    functionName: HandleReloadAnimEnd
-    data: 
-    objectReferenceParameter: {fileID: 0}
-    floatParameter: 0
-    intParameter: 0
-    messageOptions: 0
+  m_Events: []

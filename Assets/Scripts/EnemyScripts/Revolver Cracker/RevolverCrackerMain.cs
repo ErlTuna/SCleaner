@@ -1,8 +1,11 @@
+using System;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class RevolverCrackerMain : Unit
+public class RevolverCrackerMain : Unit, IEnemy
 {
+    Action OnDefeat;
+
     [Header("Unity Components")]
     [SerializeField] NavMeshAgent agent;
     [SerializeField] Rigidbody2D _rb2D;
@@ -20,6 +23,7 @@ public class RevolverCrackerMain : Unit
     [SerializeField] AttackRangeCheck _attackRangeCheck;
     [SerializeField] WeaponHandsManager _weaponHandsManager;
     [SerializeField] EnemyCollisionHandler _collisionHandler;
+    [SerializeField] CurrencyDropper _itemDropper;
 
     [Header("Configs")]
     [SerializeField] UnitAttackConfigSO _attackConfig;
@@ -42,9 +46,11 @@ public class RevolverCrackerMain : Unit
     ImmobileState _immobileState;
     DefeatState _defeatState;
     RevolverCrackerAttackState _attackState;
+    [SerializeField] AttackPatternSO _attackPattern;
 
     [Header("Misc")]
-    public BoxCollider2D SpawnArea;
+    [SerializeField] BoxCollider2D _spawnArea;
+    public BoxCollider2D SpawnArea {get; set;}
     GameObject _player;
     UnitStateData _playerStateData;
 
@@ -56,7 +62,7 @@ public class RevolverCrackerMain : Unit
         BaseEnemyWeapon baseEnemyWeapon = _weaponGO.GetComponent<BaseEnemyWeapon>();
         if(baseEnemyWeapon)
         {
-            baseEnemyWeapon.InitializeWithConfig();
+            //baseEnemyWeapon.InitializeUsingOwnConfig();
             baseEnemyWeapon.PrepAttackPattern();
         }
 
@@ -71,12 +77,12 @@ public class RevolverCrackerMain : Unit
 
     void OnEnable()
     {
-        _healthManager.OnDefeatContext += HandleDefeat;
+        _healthManager.OnDefeatWithContext += HandleDefeat;
     }
 
     void OnDisable()
     {
-        _healthManager.OnDefeatContext += HandleDefeat;
+        _healthManager.OnDefeatWithContext += HandleDefeat;
     }
 
     void Start()
@@ -135,10 +141,10 @@ public class RevolverCrackerMain : Unit
     {
         //Initialize states
         _stateMachine = new StateMachine();
-        _roamState = new(gameObject, agent, SpawnArea, _animator);
+        _roamState = new(gameObject, agent, _spawnArea, _animator);
         _immobileState = new(gameObject, _rb2D, agent);
         _defeatState = new(gameObject, _bodyRB, agent, _bodyVisuals, _visualConfig);
-        _attackState = new(gameObject, this, _weaponHandsManager, _weaponGO, _player, _rb2D, agent, _stateData, _animator);
+        _attackState = new(gameObject, this, _weaponHandsManager, _weaponGO, _player, _rb2D, agent, _stateData, _animator, Instantiate(_attackPattern));
     }
 
     void PrepareStateMachineTransitions()
@@ -176,19 +182,33 @@ public class RevolverCrackerMain : Unit
         //ANY to STATES
         Any(_defeatState, new FuncPredicate(() => _stateData.IsAlive == false));
         Any(_immobileState, new FuncPredicate(() => _stateData.CanMove == false));
-        //Any(roamState, new FuncPredicate(() => !_playerInfo.stateData.isAlive, "player is dead!"));
+        Any(_roamState, new FuncPredicate(() => _playerStateData.IsAlive == false, "player is dead!"));
 
 
     }
 
-    public void HandleDefeat(DamageContext context)
+    void HandleDefeat(DamageContext context)
     {
         _defeatState.SetLastHitContext(context);
         _stateData.IsAlive = false;
+        if (_defeatEventChannel != null)
+            _defeatEventChannel.RaiseEvent();
+
+        OnDefeat?.Invoke();
     }
 
     public override UnitStateData GetStateData()
     {
         return _stateData;
+    }
+
+    public void AssignSpawnArea(BoxCollider2D spawnArea)
+    {
+        _spawnArea = spawnArea;
+    }
+
+    public void AssignOnDefeatCallback(Action onDefeat)
+    {
+        OnDefeat = onDefeat;
     }
 }

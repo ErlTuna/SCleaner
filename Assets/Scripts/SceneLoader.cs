@@ -18,10 +18,15 @@ public class SceneLoader : MonoBehaviour
     [SerializeField] VoidEventChannelSO sceneLoadEventChannel;
     [SerializeField] SceneDatabaseSO _sceneDatabaseSO;
 
+    int currentlyProcessedRequestID = 0;
+
     [Header("Internal")]
     readonly Queue<SceneLoaderRequest> _queue = new();
     bool _isProcessing;
     readonly HashSet<SceneReference> loadedSceneReferences = new();
+
+    [Header("Debug")]
+    [SerializeField] float _fakeLoadingDelay = 0f;
 
     void OnEnable()
     {
@@ -36,13 +41,19 @@ public class SceneLoader : MonoBehaviour
 
     void Awake()
     {    
+
+        persistentSceneRef = _sceneDatabaseSO.PersistentSceneRef;
+        loadingScreenRef = _sceneDatabaseSO.LoadingScreenRef;
+
         // Add persistent scene as loaded (active on startup)
         if (!string.IsNullOrEmpty(persistentSceneRef.SceneName))
         {
             //loadedScenes.Add(persistentSceneRef.SceneName);
             loadedSceneReferences.Add(persistentSceneRef);
-            Debug.Log("Added persistent scene to the list.");
+            //Debug.Log("Added persistent scene to the list.");
         }
+
+
     }
 
     void HandleSceneRequest(SceneLoaderRequest req)
@@ -58,7 +69,13 @@ public class SceneLoader : MonoBehaviour
 
     void EnqueueRequest(SceneLoaderRequest request)
     {
+
+        //if (request.SceneReference != null)
+            //Debug.Log($"Request enqueued for scene {request.SceneReference.SceneName}");
+        
+
         _queue.Enqueue(request);
+        currentlyProcessedRequestID += 1;
 
         // If nothing is running, start draining the queue
         if (_isProcessing == false)
@@ -93,16 +110,20 @@ public class SceneLoader : MonoBehaviour
                 
             yield return ProcessRequest(req);
             req.OnCompleted?.Invoke();
+            currentlyProcessedRequestID -= 1;
         }
 
         if (hasSceneToSetActive) TrySetActiveScene(sceneToSetActive.SceneName);
+
         _isProcessing = false;
 
         if (showingLoadingScreen)
             yield return TryUnloadScene(loadingScreenRef);
+        
+            
 
         //PrintLoadedSceneReferences();
-
+        currentlyProcessedRequestID = 0;
     }
 
 
@@ -148,7 +169,7 @@ public class SceneLoader : MonoBehaviour
         yield return StartCoroutine(TryUnloadScene(sceneRef));
         yield return StartCoroutine(TryLoadScene(sceneRef));
 
-        Debug.Log("Successfuly reloaded scene : " + sceneRef.SceneName);
+        //Debug.Log("Successfuly reloaded scene : " + sceneRef.SceneName);
         //loadedScenes.Add(sceneRef.SceneName);
     }
 
@@ -158,19 +179,20 @@ public class SceneLoader : MonoBehaviour
         while (!op.isDone)
             yield return null;
 
-        Debug.Log("Successfuly loaded scene : " + sceneRef.SceneName);
+        //Debug.Log("Successfuly loaded scene : " + sceneRef.SceneName);
         //loadedScenes.Add(sceneRef.SceneName);
         loadedSceneReferences.Add(sceneRef);
     }
     
     IEnumerator TryUnloadScene(SceneReference sceneRef)
     {
-        Debug.Log("Attempting to unload scene : " + sceneRef.SceneName);
+        //Debug.Log("Attempting to unload scene : " + sceneRef.SceneName);
+        yield return new WaitForSeconds(_fakeLoadingDelay);
         AsyncOperation op = SceneManager.UnloadSceneAsync(sceneRef.SceneName);
         while (!op.isDone)
             yield return null;
 
-        Debug.Log("Successfuly unloaded scene : " + sceneRef.SceneName);
+        //Debug.Log("Successfuly unloaded scene : " + sceneRef.SceneName);
         //loadedScenes.Remove(sceneRef.SceneName);
         loadedSceneReferences.Remove(sceneRef);
     }
@@ -179,7 +201,7 @@ public class SceneLoader : MonoBehaviour
     {
         if (foundScenes.Count == 0)
         {
-            Debug.Log("No scenes to unload.");
+            //Debug.Log("No scenes to unload.");
             yield break;
         }
         yield return UnloadSceneList(foundScenes);
@@ -205,8 +227,8 @@ public class SceneLoader : MonoBehaviour
 
         if (scene.IsValid()) SceneManager.SetActiveScene(scene);
 
-        else
-            Debug.LogWarning($"Cannot set active scene: Scene '{sceneName}' is not loaded.");
+        //else
+            //Debug.LogWarning($"Cannot set active scene: Scene '{sceneName}' is not loaded.");
     }
 
 
@@ -224,13 +246,14 @@ public class SceneLoader : MonoBehaviour
 
         if (string.IsNullOrEmpty(sceneReq.SceneReference.SceneName))
         {
-            Debug.LogWarning($"Invalid scene name in the given request. Given scene name {sceneReq.SceneReference.SceneName}");
+            //Debug.LogWarning($"Invalid scene name in the given request. Given scene name {sceneReq.SceneReference.SceneName} and request type {sceneReq.RequestType}");
             return false;
         }
 
-        if (_sceneDatabaseSO.ContainsScene(sceneReq.SceneReference.SceneName) != true)
+
+        if (_sceneDatabaseSO.ContainsScene(sceneReq.SceneReference) == false)
         {
-            Debug.LogWarning($"Scene does not exist in the database. Check the provided scene name or add it to the database. Given scene name {sceneReq.SceneReference.SceneName}");
+            //Debug.LogWarning($"Scene does not exist in the database. Check the provided scene name or add it to the database. Given scene name {sceneReq.SceneReference.SceneName}");
             return false;
         }
 
@@ -245,19 +268,19 @@ public class SceneLoader : MonoBehaviour
     {
         if (IsLoaded(request.SceneReference) && request.RequestType == SceneLoaderRequestType.LOAD_SINGLE)
         {
-            Debug.LogWarning($"Trying to load an already loaded scene without a RELOAD request. Given scene name {request.SceneReference.SceneName}");
+            //Debug.LogWarning($"Trying to load an already loaded scene without a RELOAD request. Given scene name {request.SceneReference.SceneName}");
             return false;
         }
 
         if (IsLoaded(request.SceneReference) != true && request.RequestType == SceneLoaderRequestType.UNLOAD_SINGLE)
         {
-            Debug.LogWarning($"Trying to unload a scene that is not loaded. Given scene name {request.SceneReference.SceneName}");
+            //Debug.LogWarning($"Trying to unload a scene that is not loaded. Given scene name {request.SceneReference.SceneName}");
             return false;
         }
 
         if (IsLoaded(request.SceneReference) != true && request.RequestType == SceneLoaderRequestType.RELOAD_SINGLE)
         {
-            Debug.LogWarning("Trying to reload a scene that is not loaded");
+            //Debug.LogWarning("Trying to reload a scene that is not loaded");
             return false;
         }
         

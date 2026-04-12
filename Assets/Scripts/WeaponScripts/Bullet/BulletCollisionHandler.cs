@@ -54,18 +54,20 @@ public class BulletCollisionHandler : MonoBehaviour
     {
         if (_owner != null && _owner.ReturnToPoolCallback != null)
         {
-            Debug.Log("Returning to pool: " + gameObject.name);
+            //Debug.Log("Returning to pool: " + gameObject.name);
             _owner.ReturnToPool();
         }
         else
         {
-            Debug.Log("No callback, destroying bullet: " + gameObject.name);
+            //Debug.Log("No callback, destroying bullet: " + gameObject.name);
             Destroy(gameObject);
         }
     }
 
     float CalculateFinalPushForce(Collider2D col)
     {
+        if (col == null) return 0f;
+
         float distance = Vector2.Distance(_bulletData.Owner.transform.position, col.transform.position);
         float safeDistance = Mathf.Max(distance, 0.01f); // in case distance is ever zero
         float finalPushForce = _bulletData.PushForce / safeDistance;

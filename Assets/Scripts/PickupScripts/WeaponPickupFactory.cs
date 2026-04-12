@@ -1,33 +1,50 @@
+using Unity.Mathematics;
 using UnityEngine;
 
 public static class WeaponPickupFactory
 {
-    public static WeaponPickup Create(WeaponRuntimeData runtimeData, Vector3 location)
+    public static void Create(WeaponRuntimeData weaponRuntimeData, Vector3 location)
     {
-        if (runtimeData == null || runtimeData.Config == null || runtimeData.Config.PickupDefinition == null)
+        if (weaponRuntimeData == null)
         {
             Debug.LogError("Weapon runtime data or config or pickup definition is missing. Cannot create pickup.");
-            return null;
+            return;
         }
 
-        WeaponPickupDefinitionSO definition = runtimeData.Config.PickupDefinition;
-        GameObject prefab = definition.PickupPrefab;
+        PlayerWeaponConfigSO playerWeaponConfig = weaponRuntimeData.Config as PlayerWeaponConfigSO;
 
+        if (playerWeaponConfig == null) return;
+        
+        GameObject pickupGO = GameObject.Instantiate(playerWeaponConfig.PickupPrefab);
+
+        if (pickupGO.TryGetComponent(out WeaponPickup pickupScript) == false) return;
+
+    
         Vector3 dropPosition = location + Vector3.down * 0.5f;
 
-        GameObject pickupGO = Object.Instantiate(prefab, dropPosition, Quaternion.identity);
+        pickupScript.InitializeWithExistingWeapon(weaponRuntimeData);
+        pickupGO.transform.SetPositionAndRotation(dropPosition, Quaternion.identity);
 
-        if (!pickupGO.TryGetComponent(out WeaponPickup pickup))
+    }
+
+    public static void Create_v2(WeaponRuntimeData runtimeData, Vector3 location)
+    {
+        if (runtimeData?.Config is not PlayerWeaponConfigSO config) return;
+
+        GameObject pickupGO = GameObject.Instantiate(config.PickupPrefab);
+        if (pickupGO.TryGetComponent<IPayloadProvider>(out var provider))
         {
-            Debug.LogError("Pickup prefab is missing WeaponPickup.");
-            Object.Destroy(pickupGO);
-            return null;
+            if (provider is WeaponPickup weaponPickup)
+                weaponPickup.InitializeWithExistingWeapon(runtimeData);
         }
 
-        pickup.Initialize(definition, runtimeData);
-        return pickup;
+        //pickupGO.transform.SetPositionAndRotation(location + Vector3.down * 0.5f, Quaternion.identity);
+        pickupGO.transform.SetPositionAndRotation(location, Quaternion.identity);
     }
     
+    
 }
+
+
 
 

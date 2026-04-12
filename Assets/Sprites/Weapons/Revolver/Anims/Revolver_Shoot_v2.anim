@@ -21,13 +21,13 @@ AnimationClip:
   - serializedVersion: 2
     curve:
     - time: 0
-      value: {fileID: -789463681, guid: 0362bd4c775fbbb4d8a9214520a7bd7d, type: 3}
+      value: {fileID: -1497983525, guid: 5bcdb65421665f7419938a80906ead41, type: 3}
     - time: 0.033333335
-      value: {fileID: -1918624069, guid: 0362bd4c775fbbb4d8a9214520a7bd7d, type: 3}
+      value: {fileID: -70841460, guid: 5bcdb65421665f7419938a80906ead41, type: 3}
     - time: 0.06666667
-      value: {fileID: -1883582124, guid: 0362bd4c775fbbb4d8a9214520a7bd7d, type: 3}
+      value: {fileID: -710324231, guid: 5bcdb65421665f7419938a80906ead41, type: 3}
     - time: 0.1
-      value: {fileID: 443211598, guid: 0362bd4c775fbbb4d8a9214520a7bd7d, type: 3}
+      value: {fileID: -453636865, guid: 5bcdb65421665f7419938a80906ead41, type: 3}
     attribute: m_Sprite
     path: Visuals & Muzzle/Visuals
     classID: 212
@@ -50,10 +50,10 @@ AnimationClip:
       isIntCurve: 0
       isSerializeReferenceCurve: 0
     pptrCurveMapping:
-    - {fileID: -789463681, guid: 0362bd4c775fbbb4d8a9214520a7bd7d, type: 3}
-    - {fileID: -1918624069, guid: 0362bd4c775fbbb4d8a9214520a7bd7d, type: 3}
-    - {fileID: -1883582124, guid: 0362bd4c775fbbb4d8a9214520a7bd7d, type: 3}
-    - {fileID: 443211598, guid: 0362bd4c775fbbb4d8a9214520a7bd7d, type: 3}
+    - {fileID: -1497983525, guid: 5bcdb65421665f7419938a80906ead41, type: 3}
+    - {fileID: -70841460, guid: 5bcdb65421665f7419938a80906ead41, type: 3}
+    - {fileID: -710324231, guid: 5bcdb65421665f7419938a80906ead41, type: 3}
+    - {fileID: -453636865, guid: 5bcdb65421665f7419938a80906ead41, type: 3}
   m_AnimationClipSettings:
     serializedVersion: 2
     m_AdditiveReferencePoseClip: {fileID: 0}
@@ -78,25 +78,4 @@ AnimationClip:
   m_EulerEditorCurves: []
   m_HasGenericRootTransform: 0
   m_HasMotionFloatCurves: 0
-  m_Events:
-  - time: 0
-    functionName: TryPlaySound
-    data: 
-    objectReferenceParameter: {fileID: 11400000, guid: f58e8a93f82b7674bbf7de59270f8454, type: 2}
-    floatParameter: 0
-    intParameter: 0
-    messageOptions: 0
-  - time: 0
-    functionName: SpawnBullet
-    data: 
-    objectReferenceParameter: {fileID: 0}
-    floatParameter: 0
-    intParameter: 0
-    messageOptions: 0
-  - time: 0.1
-    functionName: HandlePrimaryAttackAnimEnd
-    data: 
-    objectReferenceParameter: {fileID: 0}
-    floatParameter: 0
-    intParameter: 0
-    messageOptions: 0
+  m_Events: []

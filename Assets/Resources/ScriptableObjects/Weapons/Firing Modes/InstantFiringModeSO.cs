@@ -3,26 +3,23 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "InstantFiringMode", menuName = "ScriptableObjects/Weapon/FiringModes/InstantFiringMode")]
 public class InstantFiringModeSO : FiringModeSO
 {
-
-    public override void HandleAttackStart(BaseWeapon weapon)
+    public override void OnTriggerPressed(IWeaponAttackInputHandler weapon)
     {
-        if (weapon.AmmoManager.HasAmmo() == false) return;
-
-        weapon.WeaponRuntimeData.State = WeaponState.PRIMARY_ATTACK;
-        weapon.WeaponAnimator.StartPrimaryAttackAnim();
+        if (weapon is IInstantFiringWeapon instantFiringWeapon)
+            instantFiringWeapon.RequestFire();
     }
 
-    public override void HandleAttackEnd(BaseWeapon weapon)
+    public override void OnTriggerHeld(IWeaponAttackInputHandler weapon)
     {
-        weapon.WeaponAnimator.ResetAnimParams();
+        if (weapon is IInstantFiringWeapon instantFiringWeapon)
+            instantFiringWeapon.LoopFire();
+        
+            
+    }
 
-        if (PlayerInputManager.Instance.PrimaryAttackInput == true && weapon.AmmoManager.HasAmmo())
-        {
-            weapon.WeaponRuntimeData.State = WeaponState.IDLE;
-            HandlePreAttack(weapon);
-        }
-
-        else
-            weapon.WeaponRuntimeData.State = WeaponState.IDLE;
+    public override void OnTriggerReleased(IWeaponAttackInputHandler weapon)
+    {
+        if (weapon is IInstantFiringWeapon instantFiringWeapon)
+            instantFiringWeapon.OnAttackInputReleased();
     }
 }

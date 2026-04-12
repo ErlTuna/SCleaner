@@ -36,4 +36,14 @@ public class WeaponSlot
         Script = null;
     }
 
+    public void SwitchTo()
+    {
+        Weapon.SetActive(true);
+    }
+
+    public void SwitchFrom()
+    {
+        Weapon.SetActive(false);
+    }
+
 }

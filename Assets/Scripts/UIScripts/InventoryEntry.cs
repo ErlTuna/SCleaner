@@ -14,12 +14,6 @@ public class InventoryEntry : MonoBehaviour, ISelectHandler, IDeselectHandler, I
     public InventoryItem InventoryItem => _inventoryItem;
 
 
-    void Awake()
-    {
-        if (_inventoryItem != null)
-            _imageComponent.sprite = _inventoryItem.ItemData.ItemIcon;
-    }
-
     public void Initialize(InventoryItem inventoryItem)
     {
         _inventoryItem = inventoryItem;
@@ -38,6 +32,7 @@ public class InventoryEntry : MonoBehaviour, ISelectHandler, IDeselectHandler, I
     {
         if (_selectionHighlight != null)
         {
+            Debug.Log("On selected called. What is selected?" + _inventoryItem);
             _selectionHighlight.enabled = true;
             InventorySelectedItemDisplay.Instance.OnItemSelected(_inventoryItem);
         }

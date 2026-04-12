@@ -11,14 +11,16 @@ public class VolumeSliderMain : MonoBehaviour, ISelectHandler, IDeselectHandler,
 
     void OnEnable()
     {
-        visuals.UpdateVisuals();
-        logic.UpdateSliderLogic();
         logic.slider.onValueChanged.AddListener(HandleVolumeChange);
+        //MainMenuSettingsSection.OnSettingsOpened += SyncSlider;
+        SettingsMenu.OnSettingsOpened += SyncSlider;
     }
 
     void OnDisable()
     {
         logic.slider.onValueChanged.RemoveListener(HandleVolumeChange);
+        //MainMenuSettingsSection.OnSettingsOpened -= SyncSlider;
+        SettingsMenu.OnSettingsOpened -= SyncSlider;
     }
 
     void Awake()
@@ -26,10 +28,16 @@ public class VolumeSliderMain : MonoBehaviour, ISelectHandler, IDeselectHandler,
         logic.Setup();
     }
 
+    void SyncSlider()
+    {
+        visuals.UpdateVisuals();
+        logic.SyncSlider();
+    }
 
     void HandleVolumeChange(float value)
     {
         if (logic.suppressEvents) return;
+
         logic.AdjustVolume(value);
         visuals.UpdateVisuals();
         PlayAdjustmentSFX();
@@ -37,13 +45,13 @@ public class VolumeSliderMain : MonoBehaviour, ISelectHandler, IDeselectHandler,
 
     void PlayAdjustmentSFX()
     {
-        AudioManager.Instance.PlaySubmitSound();
+        AudioManager.Instance.PlayMenuSubmitSound();
     }
     
     public void OnSelect(BaseEventData eventData)
     {
         MenuAnimationsManager.instance.OptionSelected(visuals.selectionIndicator);
-        AudioManager.Instance.PlaySelectSound();
+        AudioManager.Instance.PlayMenuSelectSound();
     }
 
     public void OnDeselect(BaseEventData eventData)

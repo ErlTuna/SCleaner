@@ -1,11 +1,11 @@
+using System;
 using System.Collections;
 
 public interface IWeaponAnimator
 {
     void StartPrimaryAttackAnim();
-    void HandlePrimaryAttackAnimEnd();
+    void LoopPrimaryAttackAnim();
     void StartReloadAnim();
-    void HandleReloadAnimEnd();
     void ResetAnimParams();
     void SetBool(string name, bool value);
     void SetTrigger(string name);
@@ -13,3 +13,19 @@ public interface IWeaponAnimator
     void SetInt(string name, int value);
     IEnumerator WaitForAnimation(string stateName);
 }
+
+public interface IChargeBasedWeaponAnimator : IWeaponAnimator
+{
+    event Action OnChargeCompleted;
+    event Action OnChargeCanceled;
+    void StartChargeAnimation();
+    void CancelChargeAnimation();
+    
+}
+
+public interface IShellBasedWeaponAnimator : IWeaponAnimator
+{
+    void LoopReload();
+    event Action OnShellInserted;
+}
+

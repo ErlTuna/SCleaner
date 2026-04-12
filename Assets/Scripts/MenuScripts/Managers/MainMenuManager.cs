@@ -149,7 +149,7 @@ public class MainMenuManager : MonoBehaviour
 
     public void OnWarningYes()
     {
-        SettingsManager.instance.HandleSettingsReverted();
+        SettingsManager.Instance.HandleSettingsReverted();
         _warningPopUpGO.SetActive(false);
         _pauseMenuGO.SetActive(true);
         UISelector.instance.SetSelected(_pauseMenuFirstSelected);

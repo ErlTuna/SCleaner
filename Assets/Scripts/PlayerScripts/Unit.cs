@@ -7,7 +7,7 @@ public abstract class Unit : MonoBehaviour, IFactionMember
     public Faction Faction => _faction;
 
     [Header("Event Channels")]
-    [SerializeField] protected VoidEventChannelSO _deathEventChannel;
+    [SerializeField] protected VoidEventChannelSO _defeatEventChannel;
     
     public abstract UnitStateData GetStateData();
 }

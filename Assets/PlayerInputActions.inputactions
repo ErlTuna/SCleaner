@@ -501,7 +501,7 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "CloseMenu",
+                    "name": "Back",
                     "type": "Button",
                     "id": "d9118ae2-24cd-4bc6-96f9-0b496f56d566",
                     "expectedControlType": "",
@@ -956,7 +956,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "CloseMenu",
+                    "action": "Back",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },

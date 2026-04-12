@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a57284c22e5537f43a880bc9c2f9c15f, type: 3}
+  m_Name: BugEnemyLootConfig
+  m_EditorClassIdentifier: 
+  LootTable:
+  - ItemSO: {fileID: 11400000, guid: d97737b7519b42f41976b196d1c48787, type: 2}
+    Weight: 80
+    MinAmount: 1
+    MaxAmount: 5
+  CanRollMultiCurrencyType: 0
+  CurrencyRollCount: 0

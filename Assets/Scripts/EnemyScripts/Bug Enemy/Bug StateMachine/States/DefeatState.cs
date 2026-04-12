@@ -1,6 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEditor.Rendering.LookDev;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -30,7 +27,7 @@ public class DefeatState : BaseState
             _agent.enabled = false;
         }
 
-        if (_visualsGO.TryGetComponent<SpriteRenderer>(out var spriteRenderer))
+        if (_visualsGO.TryGetComponent(out SpriteRenderer spriteRenderer))
         {
             if (_visualConfig != null)
                 spriteRenderer.sprite = _visualConfig.DefeatedBodyAppearance;
@@ -40,7 +37,8 @@ public class DefeatState : BaseState
         
         if (_visualsGO != null)
         {
-            _visualsGO.transform.SetParent(null);
+            //_visualsGO.transform.SetParent(null);
+            _visualsGO.transform.SetParent(_owner.transform.parent);
         }
 
         if (_visualsRB != null)
@@ -48,9 +46,8 @@ public class DefeatState : BaseState
             _visualsRB.simulated = true;
             _visualsRB.isKinematic = false;
             _visualsRB.drag = 2.5f;
+            _visualsRB.angularDrag = .5f;
             _visualsRB.velocity = Vector2.zero;
-            Debug.Log("The visuals rb " + _visualsRB);
-            Debug.Log("Adding force : " + _lastHitContext.HitterMovementVector * _lastHitContext.PushForce);
             _visualsRB.AddForce(_lastHitContext.HitterMovementVector * _lastHitContext.PushForce, ForceMode2D.Impulse);
         }
 

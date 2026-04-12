@@ -1,44 +1,57 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class EnemyRevolver : BaseEnemyWeapon
 {
     
     [SerializeField] Unit _ownerScript;
-    Coroutine _attackPatternCoroutine;
 
-    public override void ExecuteAttackPattern()
+    protected override void Awake()
     {
-        if (AttackPattern == null)
-        {
-            Debug.Log("Attack pattern missing");
-            return;
-        } 
-
-        if (AmmoManager.HasAmmo() && CanFire() && AttackPattern.IsOnCooldown != true && AttackPattern.IsExecuting != true)
-        {
-            _attackPatternCoroutine = StartCoroutine(AttackPattern.Execute(this));
-        }
-            
+        base.Awake();
+        WeaponRuntimeData runtimeData = WeaponRuntimeFactory.Create(weaponConfig);
+        InitializeWithRuntimeData(runtimeData);
     }
 
-    public override void SpawnBullet()
+    void OnEnable()
+    {
+        weaponAnimatorComponent.OnBulletSpawnPointReached += SpawnBullet;
+        weaponAnimatorComponent.OnAttackAnimEnd += OnPrimaryAttackAnimEnd;
+        weaponAnimatorComponent.OnReloadAnimEnd += OnReloadAnimEnd;
+    }
+
+    void OnDisable()
+    {
+        weaponAnimatorComponent.OnBulletSpawnPointReached -= SpawnBullet;
+        weaponAnimatorComponent.OnAttackAnimEnd -= OnPrimaryAttackAnimEnd;
+        weaponAnimatorComponent.OnReloadAnimEnd -= OnReloadAnimEnd;
+    }
+
+    protected override void SpawnBullet()
     {
         GameObject instantiatedBullet = Instantiate(WeaponConfig.BulletPrefab, FiringPoints[0].transform.position, Quaternion.identity);
         instantiatedBullet.GetComponent<Bullet>().Initialize(gameObject, FiringPoints[0].transform.right, WeaponRuntimeData, WeaponConfig);
         AmmoManager.UseAmmo();
     }
 
-    public override void OnAttackAnimEnd()
+    protected override void OnPrimaryAttackAnimEnd()
     {
-        if (AmmoManager.HasAmmo() != true && AmmoManager.CanReload())
-            AmmoManager.HandleReloadStart();
+        if (AmmoManager.HasAmmo() == false && AmmoManager.CanReload())
+        {   
+            ReloadContext reloadContext = CreateReloadContext();
+            AmmoManager.SetReloadContext(reloadContext);
+
+            SetState(WeaponState.RELOADING);
+            WeaponAnimator.StartReloadAnim();
+        }
+
+        else
+            SetState(WeaponState.IDLE);
     }
 
-    public override void OnReloadAnimEnd()
+    protected override void OnReloadAnimEnd()
     {
+        Debug.Log("Reload anim ended for enemy revolver.");
         AmmoManager.UseReloadStrategy();
-        AmmoManager.ShouldContinueReloading();
+        SetState(WeaponState.IDLE); 
     }
 }

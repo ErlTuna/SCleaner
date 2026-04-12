@@ -1,13 +1,17 @@
 using System;
+using UnityEngine;
 
 /// <summary>
 /// Wrapper class for Unity scenes.
 /// </summary>
-[System.Serializable]
+[Serializable]
 public class SceneReference : IEquatable<SceneReference>
 {
-    public string SceneName;
-    public SceneType SceneType;
+    [SerializeField] string _sceneName;
+    [SerializeField] SceneType _sceneType;
+
+    public string SceneName => _sceneName;
+    public SceneType SceneType => _sceneType;
 
     public bool Equals(SceneReference other)
     {
@@ -32,6 +36,7 @@ public enum SceneType
     PAUSE_MENU,
     LOADING_SCREEN,
     GAMEPLAY_LEVEL,
-    UI
+    UI,
+    TEST
 
 }

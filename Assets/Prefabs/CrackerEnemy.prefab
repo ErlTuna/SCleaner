@@ -12,7 +12,6 @@ GameObject:
   - component: {fileID: 2359066280069495797}
   - component: {fileID: 6190076747194198500}
   - component: {fileID: 7561437575387747518}
-  - component: {fileID: 5312070763934905996}
   m_Layer: 10
   m_Name: Hitbox
   m_TagString: EnemyHitbox
@@ -67,7 +66,7 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0.027963609}
+  m_Offset: {x: 0, y: 0}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -78,7 +77,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.99, y: 0.9}
+  m_Size: {x: 0.95, y: 0.9}
   m_EdgeRadius: 0
 --- !u!114 &6190076747194198500
 MonoBehaviour:
@@ -94,8 +93,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _healthData:
     CurrentHealth: 0
-    MaxHealth: 0
-    DamageThreshold: 0
+    CurrentShieldHealth: 0
   _damageFlash: {fileID: 3319275203615323630}
 --- !u!114 &7561437575387747518
 MonoBehaviour:
@@ -110,23 +108,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _owner: {fileID: 1828077376619972425}
-  _contactDamage: 0
---- !u!114 &5312070763934905996
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1192845639007755496}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 261b1daffa0aa06429c049f16ffde121, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  lootTable:
-  - {fileID: 7418406498753305431, guid: 7e3925452e214d440a76442d5109246e, type: 3}
-  - {fileID: 7418406498753305431, guid: 5dd111567a6b74441aafe9aae2127671, type: 3}
-  itemHolder: {fileID: 8480903527150212984}
+  _overrideContactDamage: 0
+  _overrideValue: 0
 --- !u!1 &1527194996657995789
 GameObject:
   m_ObjectHideFlags: 0
@@ -138,7 +121,6 @@ GameObject:
   - component: {fileID: 8480903527150212984}
   - component: {fileID: 2816197154904281099}
   - component: {fileID: 7926535529223704634}
-  - component: {fileID: 5148681322971004364}
   - component: {fileID: 5296537056425378523}
   - component: {fileID: 1828077376619972425}
   m_Layer: 6
@@ -199,7 +181,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: -0.033180326}
+  m_Offset: {x: 0, y: 0}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -210,7 +192,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1, y: 0.9663606}
+  m_Size: {x: 0.9, y: 0.95}
   m_EdgeRadius: 0
 --- !u!50 &7926535529223704634
 Rigidbody2D:
@@ -239,20 +221,6 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
---- !u!114 &5148681322971004364
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1527194996657995789}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f882e547327fa8f4d89b23559b249864, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _owner: {fileID: 1828077376619972425}
-  _contactDamage: 0
 --- !u!195 &5296537056425378523
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -287,7 +255,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 20080317e7102ea469bb89bc9a7e0edc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  faction: 0
+  _faction: 1
+  _defeatEventChannel: {fileID: 11400000, guid: 0d8d67cf4c6de084f8475f891009e8e7, type: 2}
   _agent: {fileID: 5296537056425378523}
   _rb2D: {fileID: 7926535529223704634}
   _bodyRB: {fileID: 1327651529205606153}
@@ -297,6 +266,7 @@ MonoBehaviour:
   _detectionManager: {fileID: 2682223785703577852}
   _attackRangeCheck: {fileID: 2829004985791875170}
   _collisionHandler: {fileID: 7561437575387747518}
+  _itemDropper: {fileID: 6665599726349882130}
   _attackConfig: {fileID: 11400000, guid: 1d5830bb166932040bf96ff95c40d15e, type: 2}
   _healthConfig: {fileID: 11400000, guid: def09bc8452bf5c4fb9cf05923534a2b, type: 2}
   _movementConfig: {fileID: 11400000, guid: 697020d050571b5419be9339988e8eba, type: 2}
@@ -317,7 +287,9 @@ MonoBehaviour:
     IsChargingAnAttack: 0
     IsAttacking: 0
     IsRecovering: 0
-  SpawnArea: {fileID: 0}
+  _preAttackState:
+    _slowDownRate: 0.9
+  _spawnArea: {fileID: 0}
   _afterImageEmitter: {fileID: 8369890434792997494}
 --- !u!1 &2051224707647714541
 GameObject:
@@ -333,6 +305,7 @@ GameObject:
   - component: {fileID: 8369890434792997494}
   - component: {fileID: 4301357706648963719}
   - component: {fileID: 1327651529205606153}
+  - component: {fileID: 6665599726349882130}
   m_Layer: 6
   m_Name: Body
   m_TagString: Untagged
@@ -511,6 +484,22 @@ Rigidbody2D:
   m_SleepingMode: 2
   m_CollisionDetection: 0
   m_Constraints: 0
+--- !u!114 &6665599726349882130
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2051224707647714541}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 261b1daffa0aa06429c049f16ffde121, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  itemHolder: {fileID: 8419632883277980870}
+  _rb2D: {fileID: 1327651529205606153}
+  _lootConfigSO: {fileID: 11400000, guid: ab61ba72430b57448938f5ca46a4d227, type: 2}
+  _angleStep: 0
 --- !u!1 &2562611876699014425
 GameObject:
   m_ObjectHideFlags: 0

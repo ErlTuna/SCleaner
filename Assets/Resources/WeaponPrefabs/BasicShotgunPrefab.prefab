@@ -70,7 +70,7 @@ SpriteRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 439884787496296179}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 0
   m_ReceiveShadows: 0
   m_DynamicOccludee: 1
@@ -238,7 +238,7 @@ SpriteRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1201693327406878185}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 0
   m_ReceiveShadows: 0
   m_DynamicOccludee: 1
@@ -309,7 +309,7 @@ Transform:
   m_GameObject: {fileID: 1360393473673749951}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -2, y: -0.2, z: 0}
+  m_LocalPosition: {x: -2, y: -0.225, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -408,7 +408,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 893a409cf5d919a4c9b1e80fdca80cbe, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 8bd468b8a69a97841a5e7413a89af64e, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -458,7 +458,7 @@ SpriteRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1956940114369363626}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 0
   m_ReceiveShadows: 0
   m_DynamicOccludee: 1
@@ -528,7 +528,7 @@ Transform:
   m_GameObject: {fileID: 3048364620211071866}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 2.003, y: 0.197, z: 0}
+  m_LocalPosition: {x: 2, y: 0.225, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -666,7 +666,7 @@ SpriteRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4029309187786289770}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 0
   m_ReceiveShadows: 0
   m_DynamicOccludee: 1
@@ -809,7 +809,8 @@ GameObject:
   - component: {fileID: 3725376543127102386}
   - component: {fileID: 6468197109179199320}
   - component: {fileID: 968184645804837554}
-  - component: {fileID: 3212172627140521379}
+  - component: {fileID: 5751273421215745962}
+  - component: {fileID: 2338603365680470126}
   m_Layer: 0
   m_Name: BasicShotgunPrefab
   m_TagString: Untagged
@@ -979,7 +980,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 86d898097bd141746b635e3f633d8214, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _spriteRenderer: {fileID: 966543360236632602}
+  spriteRenderer: {fileID: 966543360236632602}
   weaponSoundManager: {fileID: 3725376543127102386}
   FiringPoints:
   - {fileID: 3710938758110494021}
@@ -987,12 +988,10 @@ MonoBehaviour:
   - {fileID: 3544013057962356988}
   - {fileID: 8923209658656982352}
   - {fileID: 4384269416091261861}
-  _animatorComponent: {fileID: 3212172627140521379}
-  stockGripPoint: {fileID: 0}
-  secondGripPoint: {fileID: 0}
-  AmmoManager: {fileID: 968184645804837554}
-  _weaponConfig: {fileID: 11400000, guid: 8a5bb5bc2f2a38a4db6856940f765c5e, type: 2}
-  PrimaryAttackStrategy: {fileID: 11400000, guid: 0e5de3ccb7ff2a64a9634e3de497298c, type: 2}
+  weaponAnimatorComponent: {fileID: 5751273421215745962}
+  ammoManager: {fileID: 968184645804837554}
+  weaponConfig: {fileID: 11400000, guid: e8b32c0faaf2b2345bb38e2148a8b51b, type: 2}
+  PrimaryAttackStrategy: {fileID: 11400000, guid: 22075be31292e1f4dbdd82635ed68f26, type: 2}
   rayCastStartPoint: {fileID: 5669385491526425842}
   rayCastEndPoint: {fileID: 2212139409652299717}
   muzzleTipCheck: {fileID: 3491749269366650507}
@@ -1008,10 +1007,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 94ea39655bf03c74880f9a43878f3cf4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Owner: {fileID: 6468197109179199320}
-  ReloadStrategy: {fileID: 11400000, guid: 2a2f5998f082c7a4b9a1370899af9baf, type: 2}
+  _reloadStrategy: {fileID: 11400000, guid: 2a2f5998f082c7a4b9a1370899af9baf, type: 2}
   _ammoChangeEventChannelSO: {fileID: 11400000, guid: 9488bffa05083e84cb5c58eb6fa7bc37, type: 2}
---- !u!114 &3212172627140521379
+--- !u!114 &5751273421215745962
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1020,12 +1018,116 @@ MonoBehaviour:
   m_GameObject: {fileID: 5890597930396712892}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 68a3f9f85eb27024081467faa477b695, type: 3}
+  m_Script: {fileID: 11500000, guid: 3730c7feafacc8a409cee99031463894, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _owner: {fileID: 6468197109179199320}
-  _paramTable: {fileID: 11400000, guid: f07a149dab15ab6438211d7c3cfada3f, type: 2}
+  _paramTable: {fileID: 11400000, guid: 25aeb3e6312788f42a7c2ed775bb9a5a, type: 2}
   animator: {fileID: -5657172089233996258}
+--- !u!114 &2338603365680470126
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5890597930396712892}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cbe80126baae4cf0ba8194133e415a29, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  animationEvents:
+  - eventName: OnBulletSpawnPointReached
+    OnAnimationEvent:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 5751273421215745962}
+          m_TargetAssemblyTypeName: ShellBasedWeaponAnimator, Assembly-CSharp
+          m_MethodName: AnimationEvent_BulletSpawnPointReached
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+        - m_Target: {fileID: 3725376543127102386}
+          m_TargetAssemblyTypeName: WeaponSoundManager, Assembly-CSharp
+          m_MethodName: TryPlaySound
+          m_Mode: 2
+          m_Arguments:
+            m_ObjectArgument: {fileID: 11400000, guid: 7f34227710a6a984ca505ce8130f0553, type: 2}
+            m_ObjectArgumentAssemblyTypeName: SoundDataSO, Assembly-CSharp
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+  - eventName: OnPrimaryAttackAnimEnd
+    OnAnimationEvent:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 5751273421215745962}
+          m_TargetAssemblyTypeName: ShellBasedWeaponAnimator, Assembly-CSharp
+          m_MethodName: AnimationEvent_PrimaryAttackAnimEnd
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+  - eventName: OnReloadAnimStart
+    OnAnimationEvent:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 3725376543127102386}
+          m_TargetAssemblyTypeName: WeaponSoundManager, Assembly-CSharp
+          m_MethodName: TryPlaySound
+          m_Mode: 2
+          m_Arguments:
+            m_ObjectArgument: {fileID: 11400000, guid: b7f4da986878f8241b8dd8f8ea6763f7, type: 2}
+            m_ObjectArgumentAssemblyTypeName: SoundDataSO, Assembly-CSharp
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+  - eventName: OnShellInserted
+    OnAnimationEvent:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 5751273421215745962}
+          m_TargetAssemblyTypeName: ShellBasedWeaponAnimator, Assembly-CSharp
+          m_MethodName: AnimationEvent_ShellInserted
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+  - eventName: OnReloadAnimEnd
+    OnAnimationEvent:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 3725376543127102386}
+          m_TargetAssemblyTypeName: WeaponSoundManager, Assembly-CSharp
+          m_MethodName: TryPlaySound
+          m_Mode: 2
+          m_Arguments:
+            m_ObjectArgument: {fileID: 11400000, guid: 26369b5de25112e44a475fc570f2e85d, type: 2}
+            m_ObjectArgumentAssemblyTypeName: SoundDataSO, Assembly-CSharp
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
 --- !u!1 &5925283219114583079
 GameObject:
   m_ObjectHideFlags: 0
@@ -1211,7 +1313,7 @@ SpriteRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8694018593756490083}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 0
   m_ReceiveShadows: 0
   m_DynamicOccludee: 1
