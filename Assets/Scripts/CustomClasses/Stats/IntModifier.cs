@@ -2,6 +2,7 @@ using System;
 // For subtraction, add a negative value. For division, multiply with a fraction.
 public enum ModifierOperation { Add, Multiply } 
 
+[Serializable]
 public class IntModifier
 {
     public int Amount;

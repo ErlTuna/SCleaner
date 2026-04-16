@@ -374,14 +374,18 @@ MonoBehaviour:
     IsRecoveringPostAttack: 0
     IsRoaming: 0
     HasDetectedPlayer: 0
+    HasLineOfSight: 0
     IsChargingAnAttack: 0
     IsAttacking: 0
     IsRecovering: 0
   _weaponPrefab: {fileID: 7835682278847929839, guid: 921d816fa6ef49848bb5b5478ef2a78b, type: 3}
   _stateMachine:
     enabled: 1
-  _attackPattern: {fileID: 11400000, guid: ad6b5a795fdf6884ab716f076ad70add, type: 2}
+  _attackPattern: {fileID: 11400000, guid: fb79191c8daf04948aec18bd8c59bf08, type: 2}
   _spawnArea: {fileID: 0}
+  _obstructionMask:
+    serializedVersion: 2
+    m_Bits: 4096
 --- !u!1 &2562611876699014425
 GameObject:
   m_ObjectHideFlags: 0
@@ -523,8 +527,8 @@ Rigidbody2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2562611876699014425}
-  m_BodyType: 0
-  m_Simulated: 0
+  m_BodyType: 1
+  m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
   m_Mass: 1
@@ -640,7 +644,7 @@ CircleCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Radius: 4
+  m_Radius: 5
 --- !u!114 &2829004985791875170
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -840,9 +844,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1dc044dd9fcd7c34ab1e67a5186dcab7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  leftHand: {fileID: 7424111403589174637}
-  rightHand: {fileID: 3333070093507149705}
-  weaponRoot: {fileID: 0}
+  _leftHand: {fileID: 7424111403589174637}
+  _rightHand: {fileID: 3333070093507149705}
+  _weaponRoot: {fileID: 0}
 --- !u!1 &8806157274590480296
 GameObject:
   m_ObjectHideFlags: 0
@@ -910,7 +914,7 @@ CircleCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Radius: 6
+  m_Radius: 8
 --- !u!114 &2682223785703577852
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -962,6 +966,10 @@ PrefabInstance:
       objectReference: {fileID: 21300000, guid: 44d418c10aa08fb488826463e4b38f41, type: 3}
     - target: {fileID: 6338190224540457482, guid: 095be30cf9c5cc44289b164281c44658, type: 3}
       propertyPath: m_WasSpriteAssigned
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6531400358301683653, guid: 095be30cf9c5cc44289b164281c44658, type: 3}
+      propertyPath: m_BodyType
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 9043058032135430958, guid: 095be30cf9c5cc44289b164281c44658, type: 3}

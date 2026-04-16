@@ -45,7 +45,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 83f888e1611aead499bf10166ab95756, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _roomScript: {fileID: 0}
+  _roomScript: {fileID: 4550465738313251230}
 --- !u!61 &4638728272762443445
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -125,6 +125,7 @@ Transform:
   - {fileID: 3153830519163025078}
   - {fileID: 90523955803744259}
   - {fileID: 1334521464047692451}
+  - {fileID: 5266037944896711811}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!61 &3187414001819480589
@@ -184,17 +185,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c87be13e9cc13334dbb667e9f2a4761d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _extraLootLocation: {fileID: 5266037944896711811}
   _lootSpawnLocation: {fileID: 1334521464047692451}
   SpawnArea: {fileID: 3187414001819480589}
   RoomArea: {fileID: 8504465603330911333}
-  SpawnTrigger: {fileID: 4638728272762443445}
+  _spawnTriggers: []
   EnemyPrefabs: []
   EnemyList: []
   InvalidSpawnLayers:
     serializedVersion: 2
     m_Bits: 0
-  EnemyCount: 0
+  _enemyAmountToSpawn: 0
   _aliveEnemyCount: 0
+  IsRoomTriggered: 0
 --- !u!1 &4138753755947555296
 GameObject:
   m_ObjectHideFlags: 0
@@ -218,6 +221,37 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4138753755947555296}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 7669343699281788494}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &7449176530278248299
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5266037944896711811}
+  m_Layer: 0
+  m_Name: ExtraLootSpawnLocation
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5266037944896711811
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7449176530278248299}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}

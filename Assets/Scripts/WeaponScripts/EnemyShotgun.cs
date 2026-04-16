@@ -9,7 +9,7 @@ public class EnemyShotgun : BaseEnemyWeapon
     protected override void Awake()
     {
         base.Awake();
-        WeaponRuntimeData runtimeData = WeaponRuntimeFactory.Create(weaponConfig);
+        WeaponRuntime runtimeData = WeaponRuntimeFactory.Create(weaponConfig);
         InitializeWithRuntimeData(runtimeData);
     }
 

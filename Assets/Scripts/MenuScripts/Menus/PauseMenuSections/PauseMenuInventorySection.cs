@@ -38,7 +38,8 @@ public class PauseMenuInventorySection : MonoBehaviour, IMenuSection
             _canvasGroup.alpha = 0f;
             _canvasGroup.interactable = false;
             _canvasGroup.blocksRaycasts = false;
-            PlayerInputManager.Instance.ToggleMouseInput(false);
+            //PlayerInputManager.Instance.ToggleMouseInput(false);
+            PlayerInputManager.Instance.EnableMouseCursor(true);
             UISelector.instance.SetSelected(null);
             InventorySelectedItemDisplay.Instance.Reset();
             IsVisible = false;

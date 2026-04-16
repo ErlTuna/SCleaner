@@ -15,7 +15,10 @@ public class StatTracker : MonoBehaviour
     {
         GameManager.OnGameStart += ResetKillCounter;
         GameManager.OnGameStart += StartTrackingTime;
+
         GameManager.OnGameOver += StopTrackingTime;
+        GameManager.OnLevelOver += StopTrackingTime;
+        
         _enemyDeathEventChannel.OnEventRaised += IncrementKillCount;
     }
 
@@ -23,7 +26,10 @@ public class StatTracker : MonoBehaviour
     {
         GameManager.OnGameStart -= ResetKillCounter;
         GameManager.OnGameStart -= StartTrackingTime;
+
         GameManager.OnGameOver -= StopTrackingTime;
+        GameManager.OnLevelOver -= StopTrackingTime;
+
         _enemyDeathEventChannel.OnEventRaised -= IncrementKillCount;
     }
 

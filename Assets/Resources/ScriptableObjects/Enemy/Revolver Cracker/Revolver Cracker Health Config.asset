@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1d929175737723e458bf920089f7b29b, type: 3}
   m_Name: Revolver Cracker Health Config
   m_EditorClassIdentifier: 
-  Health: 20
-  MaxHealth: 20
+  Health: 25
+  MaxHealth: 25
   StartingShieldHealth: 0
-  OnHitSFX: {fileID: 8300000, guid: ed1cf418affa282499df8f48dd67147e, type: 3}
+  OnHitSFX: {fileID: 0}

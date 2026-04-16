@@ -26,7 +26,7 @@ public class CrackerPreAttack : BaseState
         _movementData = movementData;
         _stateData = stateData;
         //_originalSpeed = _movementData.CurrentMovementSpeed;
-        _originalSpeed = _movementData.CurrentMovementSped.Value;
+        _originalSpeed = _movementData.CurrentMovementSpeed.Value;
         
     }
 
@@ -72,7 +72,7 @@ public class CrackerPreAttack : BaseState
         _prepareAttack = null;
         _stateData.IsChargingAnAttack = false;
         //_agent.speed = _movementData.CurrentMovementSpeed;
-        _agent.speed = _movementData.CurrentMovementSped.Value;
+        _agent.speed = _movementData.CurrentMovementSpeed.Value;
     }
     void RotateTowardsPlayer(){
 

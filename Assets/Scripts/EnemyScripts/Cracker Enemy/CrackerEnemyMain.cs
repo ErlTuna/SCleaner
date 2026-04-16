@@ -117,6 +117,8 @@ public class CrackerEnemyMain : Unit, IEnemy
         _detectionManager.InitializeStateData(_stateData);
         _attackRangeCheck.InitializeStateData(_stateData);
         _collisionHandler.Initialize(_attackConfig.ContactDamage);
+
+        _itemDropper.Initialize(_healthManager, _player.transform);
     }
 
 
@@ -198,7 +200,7 @@ public class CrackerEnemyMain : Unit, IEnemy
 
     public void AssignOnDefeatCallback(Action onDefeat)
     {
-        Debug.Log("Assigned on defeat callback.");
+        //Debug.Log("Assigned on defeat callback.");
         OnDefeat = onDefeat;
     }
 }

@@ -162,22 +162,27 @@ public class PlayerInputManager : MonoBehaviour
 
     public void ToggleMouseInput(bool enable)
     {
-        
+        //Cursor.visible = false;
         if (enable)
         {
             InputSystem.EnableDevice(Mouse.current);
             Cursor.lockState = CursorLockMode.None;
-            Cursor.visible = true;
+            //Cursor.visible = true;
             Debug.Log("Mouse input enabled.");
         }
         else
         {
             Debug.Log("Mouse input disabled.");
-            InputSystem.DisableDevice(Mouse.current);
-            Cursor.lockState = CursorLockMode.Locked;
+            //InputSystem.DisableDevice(Mouse.current);
+            //Cursor.lockState = CursorLockMode.Locked;
             Cursor.visible = false;
         }
         
+    }
+
+    public void EnableMouseCursor(bool enable)
+    {
+        Cursor.visible = enable;
     }
 
     public void SwitchToGameplayActionMap()
@@ -194,9 +199,13 @@ public class PlayerInputManager : MonoBehaviour
 
     public void OnPlayerDefeat()
     {
-        if (_UIActionMap == null) return;
+        DisableGameplayActionMap();
+    }
+
+    public void DisableGameplayActionMap()
+    {
+        //if (_UIActionMap == null) return;
         if (_gameplayActionMap == null) return;
         _gameplayActionMap.Disable();
     }
-
 }

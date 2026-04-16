@@ -7,7 +7,6 @@ public class IntEventChannelSO : ScriptableObject
 
     public void RaiseEvent(int value)
     {
-        if (OnEventRaised != null)
-            OnEventRaised.Invoke(value);
+        OnEventRaised?.Invoke(value);
     }
 }

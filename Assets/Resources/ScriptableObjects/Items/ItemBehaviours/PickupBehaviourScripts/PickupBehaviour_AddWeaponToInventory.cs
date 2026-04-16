@@ -10,6 +10,7 @@ public class PickupBehaviour_AddWeaponToInventory : PickupBehaviorSO
 
         WeaponPickupPayload weaponPickupPayload = ctx.PickupTransactionData.Payload as WeaponPickupPayload;
         //inventory.AddPickedUpWeapon(weaponPickupPayload);
+        
         inventory.AddPickedUpWeapon(weaponPickupPayload);
     }
 }

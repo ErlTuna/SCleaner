@@ -1,29 +1,19 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
-public class UnitInventoryRuntime
+public class PlayerInventoryRuntime
 {
-    public PlayerWeaponInventoryRuntime WeaponInventory { get; private set; }
-    public PlayerEquipmentInventory EquipmentInventory { get; private set; }
-    public UnitCurrencyInventory CurrencyInventory { get; private set; }
-    public PlayerPassiveItemInventory PassiveItemInventory { get; private set; }
+    public PlayerWeaponInventoryRuntime WeaponInventoryRuntime { get; private set; }
+    //public PlayerEquipmentInventory EquipmentInventory { get; private set; }
+    public PlayerCurrencyInventoryRuntime CurrencyInventoryRuntime { get; private set; }
+    public PlayerPassiveItemInventoryRuntime PassiveItemInventoryRuntime { get; private set; }
 
-    public UnitInventoryRuntime(UnitInventoryData_V2 data, WeaponInventoryDependencies dependencies)
+    public PlayerInventoryRuntime(UnitInventoryData_V2 data, InventoryRuntimeDependencies dependencies)
     {
-        WeaponInventory = new PlayerWeaponInventoryRuntime(data.WeaponInventory, dependencies);
-
-        
+        WeaponInventoryRuntime = new(data.WeaponInventory, dependencies.WeaponInventoryDependencies);
+        CurrencyInventoryRuntime = new(data.CurrencyInventory, dependencies.CurrencyInventoryDependencies);
+        PassiveItemInventoryRuntime = new(data.PassiveItemInventory, dependencies.PassiveItemInventoryDependencies);
     }
 }
 
 /*
-        CurrencyInventory = new UnitCurrencyInventory(
-            data.CurrencyInventory,
-            config.MaxCurrency,
-            config.CurrencyPickedUpEventChannel
-        );
-
         PassiveItemInventory = new PlayerPassiveItemInventory(
             data.PassiveItemInventory,
             config.ItemPickedUpEventChannel,

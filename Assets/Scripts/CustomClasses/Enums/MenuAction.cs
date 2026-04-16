@@ -21,5 +21,9 @@ public enum MenuAction
     WarningConfirmYes,
     WarningConfirmNo,
     ReturnToMainMenu,
-    OpenInventory
+    OpenInventory,
+
+
+    ProceedToNextLevel,
+    OpenHowToPlaySection
 }

@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2f36a1685dbf35244a440319746f59d2, type: 3}
   m_Name: CrackerMovementConfig
   m_EditorClassIdentifier: 
-  movementSpeed: 0
-  maxMovementSpeed: 5
+  StartingMovementSpeed: 5
+  MaxMovementSpeed: 5

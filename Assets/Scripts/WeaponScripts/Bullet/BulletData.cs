@@ -28,7 +28,7 @@ public class BulletData
     }
 
     // this is for bullets that are spawned by weapons
-    public BulletData(GameObject owner, BulletConfigSO config, WeaponRuntimeData weaponData, WeaponConfigSO weaponConfig, Faction faction)
+    public BulletData(GameObject owner, BulletConfigSO config, WeaponRuntime weaponData, WeaponConfigSO weaponConfig, Faction faction)
     {
         Owner = owner;
         Damage = weaponData.Damage;

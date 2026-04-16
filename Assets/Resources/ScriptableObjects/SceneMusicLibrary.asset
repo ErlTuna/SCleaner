@@ -21,3 +21,7 @@ MonoBehaviour:
       _sceneName: FirstLevel
       _sceneType: 5
     _levelBGM: {fileID: 8300000, guid: 923e5785fd26fc347b71edd4ab6e517c, type: 3}
+  - Scene:
+      _sceneName: SecondLevel
+      _sceneType: 5
+    _levelBGM: {fileID: 8300000, guid: 923e5785fd26fc347b71edd4ab6e517c, type: 3}

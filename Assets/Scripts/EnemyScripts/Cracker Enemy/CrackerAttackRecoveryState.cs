@@ -4,6 +4,7 @@ using UnityEngine.AI;
 
 public class CrackerAttackRecoveryState : BaseState
 {
+    private static WaitForSeconds _attackRecoveryDuration = new(.75f);
     GameObject _owner;
     NavMeshAgent _agent;
     Rigidbody2D _rb2D;
@@ -57,7 +58,7 @@ public class CrackerAttackRecoveryState : BaseState
         Debug.Log("entered attack recovery coroutine");
         _stateData.IsRecoveringPostAttack = true;
         _stateData.CanMove = false;
-        yield return new WaitForSeconds(1.5f);
+        yield return _attackRecoveryDuration;
         _stateData.IsRecoveringPostAttack = false;
         _stateData.CanMove = true;
         Debug.Log("exited attack recovery coroutine");

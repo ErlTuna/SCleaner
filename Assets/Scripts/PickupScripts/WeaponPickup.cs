@@ -3,7 +3,7 @@ using UnityEngine;
 // Maybe I should have put the weapon runtime data inside the inventory of the player and pulled it from there...
 public class WeaponPickup : ItemPickup, IPayloadProvider
 {
-    WeaponRuntimeData _weaponRuntimeData; // runtime
+    WeaponRuntime _weaponRuntimeData; // runtime
 
     [SerializeField] PlayerWeaponConfigSO _weaponConfig;
     
@@ -39,11 +39,10 @@ public class WeaponPickup : ItemPickup, IPayloadProvider
         
     }
 
-    public void InitializeWithExistingWeapon(WeaponRuntimeData droppedWeaponData)
+    public void InitializeWithExistingWeapon(WeaponRuntime droppedWeaponData)
     {
         _weaponRuntimeData = droppedWeaponData;
 
-        //PlayerWeaponConfigSO playerWeaponConfig = _weaponRuntimeData.Config as PlayerWeaponConfigSO;
         _weaponConfig =  _weaponRuntimeData.Config as PlayerWeaponConfigSO;
         itemConfig = _weaponConfig.PickupConfig;
 
@@ -56,7 +55,7 @@ public class WeaponPickup : ItemPickup, IPayloadProvider
         if (_weaponRuntimeData != null)
             return new WeaponPickupPayload(_weaponRuntimeData);
 
-        WeaponRuntimeData newData = WeaponRuntimeFactory.Create(_weaponConfig);
+        WeaponRuntime newData = WeaponRuntimeFactory.Create(_weaponConfig);
         return new WeaponPickupPayload(newData);
     }
 

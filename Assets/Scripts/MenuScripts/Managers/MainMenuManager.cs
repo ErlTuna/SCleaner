@@ -1,47 +1,44 @@
-using Microsoft.Unity.VisualStudio.Editor;
-using UnityEngine;
-using UnityEngine.UI;
-using UnityEngine.EventSystems;
-using UnityEngine.InputSystem;
-
-using Image = UnityEngine.UI.Image;
 using System.Collections.Generic;
+using UnityEngine;
 
-// script responsible for managing the main menu "windows"
-// such as the main menu itself, the settings menu and the warning pop-up upon unsaved changes
-// the menu flow is simple enough that this solution works and is enough for what is aimed to be achieved
-// tl;dr handles the menu flow
-public class MainMenuManager : MonoBehaviour
+public class MainMenuManager : MenuContext
 {
-    [SerializeField] GameObject _initialSelection;
-    [SerializeField] Image _initialSelectionIndicator;
+    [Header("Sections")]
+    [SerializeField] MainMenuMainSection _mainSection;
+    [SerializeField] MainMenuHowToPlaySection _howToPlaySection;
+    [SerializeField] SettingsMenu _settingsSection;
+    [SerializeField] WarningPopUp _warningPopUpGO;
+
     [SerializeField] MainMenuDefaultsSO _defaultSettingsSO;
-    [SerializeField] Canvas _canvas;
-    [SerializeField] GameObject _pauseMenuGO;
-    [SerializeField] GameObject _pauseMenuFirstSelected;
-    [SerializeField] GameObject _settingsMenuGO;
-    [SerializeField] GameObject _settingsMenuFirstSelected;
-    [SerializeField] GameObject _warningPopUpGO;
-    [SerializeField] GameObject _warningMenuFirstSelected;
-    [SerializeField] List<GameObject> _menus = new();
-    [SerializeField] PauseMenuSection _currentSection = PauseMenuSection.NONE;
+    [SerializeField] MainMenuSection _currentSection = MainMenuSection.NONE;
     [SerializeField] MenuWindowState _currentWindowState = MenuWindowState.INACTIVE;
 
-    void OnEnable()
-    {
-        UISelector.instance.SetSelected(_initialSelection);
-        MenuAnimationsManager.instance.OptionSelected(_initialSelectionIndicator);
-    }
+    Dictionary<MainMenuSection, IMenuSection> _sections;
+
 
     void Awake()
     {
         _defaultSettingsSO = LoadOrCloneSettings(_defaultSettingsSO);
-
+        _sections = new()
+        {
+            { MainMenuSection.MAIN, _mainSection },
+            { MainMenuSection.SETTINGS, _settingsSection },
+            { MainMenuSection.UNSAVED_WARNING, _warningPopUpGO },
+            { MainMenuSection.HOW_TO_PLAY, _howToPlaySection }
+        };
     }
 
     void Start()
     {
         SETTINGS.Initialize(_defaultSettingsSO);
+        SetWindowState(MenuWindowState.OPENING);
+        SetCurrentContext(this);
+    }
+
+    void Update()
+    {
+        if (PlayerInputManager.Instance.MenuBackInput)
+            Execute(MenuAction.Back);
     }
 
     public void SetWindowState(MenuWindowState newState)
@@ -51,132 +48,41 @@ public class MainMenuManager : MonoBehaviour
         switch (_currentWindowState)
         {            
             case MenuWindowState.OPENING:
-                Debug.Log("Pause Menu window is opening.");
-                ToggleCanvas(true);
-                SetSection(PauseMenuSection.MAIN);
+                Debug.Log("Main Menu window is opening.");
+                SetSection(MainMenuSection.MAIN);
                 SetWindowState(MenuWindowState.ACTIVE);
                 break;
 
             case MenuWindowState.ACTIVE:
-                Debug.Log("Pause menu window is open.");
+                Debug.Log("Main menu window is open.");
                 break;
 
             case MenuWindowState.CLOSING:
-                Debug.Log("Pause Menu window is closing.");
+                Debug.Log("Main Menu window is closing.");
                 SetWindowState(MenuWindowState.INACTIVE);
                 break;
 
             case MenuWindowState.INACTIVE:
-                ToggleCanvas(false);
-                CloseAllMenuItems();
-                SetSection(PauseMenuSection.NONE);
+                SetSection(MainMenuSection.NONE);
                 UISelector.instance.SetSelected(null);
-                Debug.Log("Pause Menu window is closed.");
+                Debug.Log("Main Menu window is closed.");
                 break;
         }
 
         
     }
 
-    public void SetSection(PauseMenuSection newState)
+    public void SetSection(MainMenuSection newSection)
     {
-        _currentSection = newState;
+        if (_currentSection != MainMenuSection.NONE)
+            _sections[_currentSection].Hide();
 
-        switch (_currentSection)
-            {
-                case PauseMenuSection.MAIN:
-                    OnEnterMain();
-                    break;
-                case PauseMenuSection.SETTINGS:
-                    OnEnterSettings();
-                    break;
-                case PauseMenuSection.UNSAVED_WARNING:
-                    OnShowWarning();
-                    break;
-            }
+        _currentSection = newSection;
+
+        if (_currentSection != MainMenuSection.NONE)
+            _sections[_currentSection].Show();
     }
 
-    void TogglePauseMenu()
-    {
-        if (_currentWindowState == MenuWindowState.INACTIVE)
-        {
-            SetWindowState(MenuWindowState.OPENING);
-        }
-            
-        else if (_currentWindowState != MenuWindowState.INACTIVE)
-        {
-            SetWindowState(MenuWindowState.CLOSING);
-        }
-    }
-
-    // ------------------------
-    // TRANSITIONS
-    // ------------------------
-
-    // These are exposed for UnityEvents
-    public void GoToSettings() => SetSection(PauseMenuSection.SETTINGS);
-    public void GoToMain() => SetSection(PauseMenuSection.MAIN);
-    public void ShowWarning() => SetSection(PauseMenuSection.UNSAVED_WARNING);
-
-    void OnEnterMain()
-    {
-        _settingsMenuGO.SetActive(false);
-        _pauseMenuGO.SetActive(true);
-        UISelector.instance.SetSelected(_pauseMenuFirstSelected);
-    }
-
-    void OnEnterSettings()
-    {
-        _pauseMenuGO.SetActive(false);
-        _settingsMenuGO.SetActive(true);
-        UISelector.instance.SetSelected(_settingsMenuFirstSelected);
-    }
-
-    void OnShowWarning()
-    {
-        _settingsMenuGO.SetActive(false);
-        _warningPopUpGO.SetActive(true);
-        UISelector.instance.SetSelected(_warningMenuFirstSelected);
-    }
-
-    // These two methods are exposed for UnityEvents
-    public void OnWarningNo()
-    {
-        _warningPopUpGO.SetActive(false);
-        _settingsMenuGO.SetActive(true);
-        UISelector.instance.SetSelected(_settingsMenuFirstSelected);
-    }
-
-    public void OnWarningYes()
-    {
-        SettingsManager.Instance.HandleSettingsReverted();
-        _warningPopUpGO.SetActive(false);
-        _pauseMenuGO.SetActive(true);
-        UISelector.instance.SetSelected(_pauseMenuFirstSelected);
-    }
-
-    // ----------------------------
-    // HELPERS
-    // ----------------------------
-    void ToggleCanvas(bool enable)
-    {
-        _canvas.enabled = enable;
-    }
-    void EnableAllMenuItems()
-    {
-        foreach (GameObject menu in _menus)
-        {
-            menu.SetActive(true);
-        }
-    }
-
-    void CloseAllMenuItems()
-    {
-        foreach (GameObject menu in _menus)
-        {
-            menu.SetActive(false);
-        }
-    }
 
     MainMenuDefaultsSO LoadOrCloneSettings(MainMenuDefaultsSO settings)
     {
@@ -185,6 +91,82 @@ public class MainMenuManager : MonoBehaviour
         else return Instantiate(settings);
     }
 
+    public override void Execute(MenuAction action)
+    {
+        switch (action)
+        {
+            case MenuAction.StartGame:
+                GameManager.Instance.SetGameState(GameState.LOADING_GAME);
+                break;
+
+            case MenuAction.OpenSettings:
+                SetSection(MainMenuSection.SETTINGS);
+                break;
+
+            case MenuAction.Back:
+                HandleBack();
+                break;
+
+            case MenuAction.ApplySettings:
+                SettingsManager.Instance.HandleSettingsSaved();
+                break;
+
+            case MenuAction.ShowUnsavedWarning:
+                SetSection(MainMenuSection.UNSAVED_WARNING);
+                break;
+
+            case MenuAction.WarningConfirmYes:
+                OnWarningYes();
+                break;
+
+            case MenuAction.WarningConfirmNo:
+                OnWarningNo();
+                break;
+            
+            case MenuAction.OpenHowToPlaySection:
+                SetSection(MainMenuSection.HOW_TO_PLAY);
+                break;
+
+            case MenuAction.QuitGame:
+                GameManager.Instance.SetGameState(GameState.SHUTTING_DOWN);
+                break;
+
+            default :
+                Debug.Log("The action is not supported for this context.");
+                break;
+        }
+    }
+
+    void OnWarningYes()
+    {
+        SettingsManager.Instance.HandleSettingsReverted();
+        SetSection(MainMenuSection.MAIN);
+    }
+
+    void OnWarningNo()
+    {
+        SetSection(MainMenuSection.SETTINGS);
+    }
+
+    void HandleBack()
+    {
+        switch (_currentSection)
+        {
+            case MainMenuSection.SETTINGS:
+                if (SettingsManager.Instance.CheckIfDirty())
+                {
+                    SetSection(MainMenuSection.UNSAVED_WARNING);
+                }
+                else
+                {
+                    SetSection(MainMenuSection.MAIN);
+                }
+                break;
+
+            default:
+                SetSection(MainMenuSection.MAIN);
+                break;
+        }
+    }
 
 }
-

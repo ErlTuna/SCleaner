@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 787768cfb9d135848ab0c91f45a12e0f, type: 3}
   m_Name: ShieldPackInventoryDefinition
   m_EditorClassIdentifier: 
-  _sourceItem: {fileID: 11400000, guid: 2120ff6202a6c544ebf2217f1208f262, type: 2}
+  _sourceItem: {fileID: 11400000, guid: aba75bf9ecfb3c3418ca8abb9e21f2b1, type: 2}
   ItemName: Shield Pack
   ItemDescription: 
   ItemDescriptionShort: 

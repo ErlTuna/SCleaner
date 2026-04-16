@@ -21,9 +21,6 @@ public class WeaponConfigSO : ScriptableObject
 
     [Header("Audio & VFX Info")]
     public Sprite Sprite;
-    public SoundDataSO FiringSoundData;
-    public SoundDataSO DryFiringSoundData;
-    
 
     [Header("Misc")]
     public Vector3 offset = new(0, 0, 0);

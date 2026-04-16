@@ -19,14 +19,14 @@ where TConfig : WeaponConfigSO
 
     // Config and Runtime Data
     [SerializeField] protected TConfig weaponConfig;
-    [SerializeField] protected WeaponRuntimeData weaponRuntimeData;
+    [SerializeField] protected WeaponRuntime weaponRuntimeData;
 
     # endregion
     
     # region Getters
     public AmmoManager AmmoManager => ammoManager;
     public IWeaponAnimator WeaponAnimator => weaponAnimator;
-    public WeaponRuntimeData WeaponRuntimeData
+    public WeaponRuntime WeaponRuntimeData
     {
         get
         {
@@ -89,16 +89,16 @@ where TConfig : WeaponConfigSO
     # region Initialization Methods
 
     // Called when accessing WeaponRuntimeData if it is not initialized yet.
-    WeaponRuntimeData InitializeWithConfig()
+    WeaponRuntime InitializeWithConfig()
     {
-        WeaponRuntimeAmmoData ammoData = new(WeaponConfig.AmmoConfig);
+        WeaponAmmoData ammoData = new(WeaponConfig.AmmoConfig);
         weaponRuntimeData = new(WeaponConfig, ammoData);
         Debug.Log("Initialized weapon with weapons' own config.");
 
         return weaponRuntimeData;
     }
 
-    public void InitializeWithRuntimeData(WeaponRuntimeData runtimeData)
+    public void InitializeWithRuntimeData(WeaponRuntime runtimeData)
     {
         if (weaponRuntimeData != null)
         {

@@ -3,8 +3,8 @@ using System.Collections.Generic;
 
 [Serializable]
 public class PlayerWeaponInventoryData
-{
-    public List<string> WeaponIDs;
+{   
+    public List<WeaponInventoryEntry> Weapons = new();
     public int MaxWeaponAmount;
 
 }

@@ -5,16 +5,19 @@ using Random = UnityEngine.Random;
 
 public class RoomController : MonoBehaviour
 {   
+    [SerializeField] Transform _extraLootLocation;
     [SerializeField] Transform _lootSpawnLocation;
     [SerializeField] BoxCollider2D SpawnArea;
     [SerializeField] BoxCollider2D RoomArea;
-    [SerializeField] BoxCollider2D SpawnTrigger;
+    [SerializeField] GameObject[] _spawnTriggers;
     [SerializeField] List<GameObject> EnemyPrefabs;
     [SerializeField] List<GameObject> EnemyList = new();
     [SerializeField] LayerMask InvalidSpawnLayers;
-    //[SerializeField] int RoomID;
-    [SerializeField] int EnemyCount = 0;
+    [SerializeField] int _enemyAmountToSpawn = 0;
     [SerializeField] int _aliveEnemyCount = 0;
+    public int EnemyCount => _enemyAmountToSpawn;
+    public bool IsActive = true;
+    public bool IsRoomTriggered = false;
 
     List <Vector2> _spawnLocations;
 
@@ -26,9 +29,9 @@ public class RoomController : MonoBehaviour
             return;
         }
 
-        _spawnLocations = new(EnemyCount);
+        _spawnLocations = new(_enemyAmountToSpawn);
 
-        for(int i = 0; i < EnemyCount; ++i)
+        for(int i = 0; i < _enemyAmountToSpawn; ++i)
         {
                 
             int random = Random.Range(0, EnemyPrefabs.Count);
@@ -49,15 +52,15 @@ public class RoomController : MonoBehaviour
             instantiatedEnemy.SetActive(false);
         }
 
-        _aliveEnemyCount = EnemyCount;
+        _aliveEnemyCount = _enemyAmountToSpawn;
         
 
-        print(EnemyList.Count);
+        //print(EnemyList.Count);
     }
 
     public void AwakenEnemiesWithinRoom(GameObject trigger)
     {
-        print(EnemyList.Count);
+        //print(EnemyList.Count);
         if (EnemyList.Count == 0) return;
 
         for(int i = 0; i < EnemyList.Count; ++i)
@@ -75,7 +78,10 @@ public class RoomController : MonoBehaviour
             }
                 
         }
-        Destroy(trigger);
+
+        IsRoomTriggered = true;
+        //Destroy(trigger);
+        DestroySpawnTriggers();
     }
 
     private Vector2 CalculateRandomSpawnLocation(BoxCollider2D spawnArea){
@@ -128,8 +134,8 @@ public class RoomController : MonoBehaviour
 
     void OnEnemyDefeat()
     {
-        Debug.Log("Invoked...");
         --_aliveEnemyCount;
+
         if (_aliveEnemyCount == 0)
             OnRoomCleared();
         
@@ -138,5 +144,14 @@ public class RoomController : MonoBehaviour
     void OnRoomCleared()
     {
         LootManager.Instance.TrySpawnLootChest(_lootSpawnLocation.position);
+        LootManager.Instance.GetRandomPickupItem(_extraLootLocation.position);
+    }
+
+    void DestroySpawnTriggers()
+    {
+        for (int i = _spawnTriggers.Length - 1; 0 <= i; --i)
+        {
+            Destroy(_spawnTriggers[i]);
+        }
     }
 }

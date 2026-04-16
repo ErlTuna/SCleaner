@@ -15,4 +15,4 @@ MonoBehaviour:
   Health: 10
   MaxHealth: 10
   StartingShieldHealth: 0
-  OnHitSFX: {fileID: 8300000, guid: d57572f40b4d87141aabdde4729eb3a0, type: 3}
+  OnHitSFX: {fileID: 0}

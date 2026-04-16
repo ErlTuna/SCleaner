@@ -1,5 +1,7 @@
+using System;
 using System.Collections.Generic;
 
+[Serializable]
 public class IntStat
 {
     public int BaseValue {get; private set;}

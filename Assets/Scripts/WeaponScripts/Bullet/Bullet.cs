@@ -20,7 +20,7 @@ public class Bullet : MonoBehaviour
         }
     }
 
-    public void Initialize(GameObject weapon, Vector2 trajectory, WeaponRuntimeData weaponData, WeaponConfigSO weaponConfig, int sortingOrder = 0)
+    public void Initialize(GameObject weapon, Vector2 trajectory, WeaponRuntime weaponData, WeaponConfigSO weaponConfig, int sortingOrder = 0)
     {
         _bulletConfig = weaponConfig.BulletConfig;
         _bulletData = new(weapon, _bulletConfig, weaponData, weaponConfig, _faction)

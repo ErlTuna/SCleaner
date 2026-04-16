@@ -1,12 +1,10 @@
-using System.Collections;
-using System.Collections.Generic;
-using TMPro;
 using UnityEngine;
 using UnityEngine.AI;
 
 public class RevolverCrackerAttackState : BaseState
 {
     GameObject _owner;
+    Transform _ownerTransform;
     NavMeshAgent _agent;
     Rigidbody2D _rb2D;
     Animator _animator;
@@ -22,6 +20,7 @@ public class RevolverCrackerAttackState : BaseState
     GameObject weapon, GameObject player, Rigidbody2D rb2D, NavMeshAgent agent, EnemyStateData ownerStateData, Animator animator, AttackPatternSO attackPattern)
     {
         _owner = owner;
+        _ownerTransform = owner.transform;
         _agent = agent;
         _rb2D = rb2D;
         _ownerScript = ownerScript;
@@ -71,19 +70,38 @@ public class RevolverCrackerAttackState : BaseState
 
     void DecideMovement()
     {
-        if (_stateData.PlayerWithinAttackRange != true)
+        if (_stateData.PlayerWithinAttackRange == false)
         {
-            _agent.SetDestination(_target.position);
+            //Vector2 target = (Vector2)_target.position + GetBreathingOffset();
+            Vector2 toPlayer = (_target.position - _ownerTransform.position).normalized;
+            Vector2 perp = new(-toPlayer.y, toPlayer.x);
+
+            Vector2 target = (Vector2)_target.position + perp * Random.Range(-1f, 1f);
+            Debug.Log("Target set to :" + target);
+            _agent.SetDestination(target);
             _animator.SetBool("isMoving", true);
         }
 
-
         else
         {
-            _agent.ResetPath();
-            _animator.SetBool("isMoving", false);
+            if (_stateData.HasLineOfSight)
+            {
+                Debug.Log("HAVE LINE OF SIGHT!");
+                _agent.ResetPath();
+                _animator.SetBool("isMoving", false);
+            }
+            else
+            {
+                // In range but no LoS, reposition
+                Debug.Log("NO LINE OF SIGHT! REPOSITIONING!");
+                Vector2 toPlayer = (_target.position - _ownerTransform.position).normalized;
+                Vector2 perp = new(-toPlayer.y, toPlayer.x);
+
+                Vector2 target = (Vector2)_target.position + perp * Random.Range(-1f, 1f);
+                _agent.SetDestination(target);
+                _animator.SetBool("isMoving", true);
+            }
         }
-            
     }
 
     void TryExecuteAttackPattern()

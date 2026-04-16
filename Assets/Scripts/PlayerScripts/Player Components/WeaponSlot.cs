@@ -10,40 +10,16 @@ using UnityEngine;
 [Serializable]
 public class WeaponSlot
 {
-    public GameObject Weapon;
-    public PlayerWeapon Script;
+    public WeaponInstance WeaponInstance {get; private set;}
 
-    /// <summary>
-    /// Initializes a new weapon slot with the specified weapon and script.
-    /// </summary>
-    /// <param name="weapon">The weapon GameObject.</param>
-    /// <param name="script">The associated BaseWeapon script.</param>
-    public WeaponSlot(GameObject weapon, PlayerWeapon script)
+    public WeaponSlot(WeaponInstance instance)
     {
-        Weapon = weapon;
-        Script = script;
-        //Debug.Log($"A weapon slot was created with game object {weapon} and script {script}");
+        WeaponInstance = instance;
     }
-
-    /// <summary>
-    /// Clears the weapon slot by setting its references to null.
-    /// Should be used before the WeaponSlot is removed from wherever.
-    /// </summary>
-
     public void ClearSlot()
     {
-        Weapon = null;
-        Script = null;
+        WeaponInstance = null;
     }
 
-    public void SwitchTo()
-    {
-        Weapon.SetActive(true);
-    }
-
-    public void SwitchFrom()
-    {
-        Weapon.SetActive(false);
-    }
 
 }

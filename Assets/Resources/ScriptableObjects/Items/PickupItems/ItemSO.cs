@@ -1,4 +1,5 @@
 using System;
+using Unity.Collections;
 using UnityEditor;
 using UnityEngine;
 
@@ -22,8 +23,12 @@ public class ItemSO : ScriptableObject
     [Tooltip("If true, the behaviours will sort themselves in ascending order.")]
     [SerializeField] bool autoReorder;
     public PickupBehaviorEntry[] Behaviors;
+
+    [Header("Optional Scale Overrides")]
+    [Range(.1f, 2f)] public float xScaleOverride = 1f;
+    [Range(.1f, 2f)] public float yScaleOverride = 1f;
     
-    string _itemId;
+    [SerializeField] [HideInInspector] string _itemId;
     public string ItemID => _itemId; // unique per pickup instance
 
     public void SortBehaviorsByOrder(bool autoReorder = true)
@@ -66,6 +71,7 @@ public class ItemSO : ScriptableObject
     {
         _itemId = Guid.NewGuid().ToString();
         EditorUtility.SetDirty(this);
+        AssetDatabase.SaveAssets();
     }
     #endif
 
@@ -74,4 +80,18 @@ public class ItemSO : ScriptableObject
     { 
         return null; 
     }
+
+    
+    #if UNITY_EDITOR
+    [ContextMenu("PRINT DEBUG")]
+    void PrintDebug()
+    {
+        Debug.Log($"ItemSO: {name}");
+        Debug.Log($"Instance ID: {GetInstanceID()}");
+        Debug.Log($"ItemID: {_itemId}");
+        Debug.Log($"SourceItem: {InventoryDefinition.SourceItem}");
+        Debug.Log($"ItemSO name: {InventoryDefinition.name}");
+        Debug.Log($"ItemSO path: {UnityEditor.AssetDatabase.GetAssetPath(InventoryDefinition)}");
+    }
+    #endif
 }   

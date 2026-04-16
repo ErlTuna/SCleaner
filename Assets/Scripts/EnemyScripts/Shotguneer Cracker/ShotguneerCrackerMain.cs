@@ -55,16 +55,20 @@ public class ShotguneerCrackerMain : Unit, IEnemy
     public BoxCollider2D SpawnArea {get; set;}
     GameObject _player;
     UnitStateData _playerStateData;
+    float _losTimer = 0.5f;
+    [SerializeField] LayerMask _obstructionMask;
 
     
     void OnEnable()
     {
+        _healthManager.OnHitByPlayer += SetProvoked;
         _healthManager.OnDefeatWithContext += HandleDefeat;
     }
 
     void OnDisable()
     {
-        _healthManager.OnDefeatWithContext += HandleDefeat;
+        _healthManager.OnHitByPlayer -= SetProvoked;
+        _healthManager.OnDefeatWithContext -= HandleDefeat;
     }
 
     void Awake()
@@ -114,6 +118,7 @@ public class ShotguneerCrackerMain : Unit, IEnemy
 
     void Update()
     {
+        UpdatePerception();
         _stateMachine.Update();
     }
 
@@ -135,6 +140,8 @@ public class ShotguneerCrackerMain : Unit, IEnemy
         _detectionManager.InitializeStateData(_stateData);
         _attackRangeCheck.InitializeStateData(_stateData);
         _collisionHandler.Initialize(_attackConfig.ContactDamage);
+
+        _itemDropper.Initialize(_healthManager, _player.transform);
     }
 
     void PrepareStateMachine()
@@ -153,6 +160,7 @@ public class ShotguneerCrackerMain : Unit, IEnemy
         //At(_roamState, _preAttackState, new FuncPredicate(() => _stateData.HasDetectedPlayer));
         //At(roamState, attackState, new FuncPredicate( () => EnemyInfo.playerWithinAttackRange));
         At(_roamState, _attackState, new FuncPredicate(() => _stateData.PlayerWithinAttackRange));
+        At(_roamState, _attackState, new FuncPredicate(() => _stateData.HasBeenAttacked && _stateData.CanMove == true));
 
         //CHASE to STATES
         //At(_chaseState, _roamState, new FuncPredicate( () => _stateData.HasDetectedPlayer == false));
@@ -176,7 +184,7 @@ public class ShotguneerCrackerMain : Unit, IEnemy
         //ATTACK to STATES
         //At(_attackState, _preAttackState, new FuncPredicate(() => _stateData.HasDetectedPlayer && _stateData.PlayerWithinAttackRange != true));
         //At(_attackState, _postAttackRecoveryState, new FuncPredicate( () => _stateData.HasAttacked));
-        //At(attackState, roamState, new FuncPredicate( () => !EnemyInfo.playerWithinAttackRange && !EnemyInfo.hasDetectedPlayer));
+        //At(_attackState, _roamState, new FuncPredicate( () => !_stateData.PlayerWithinAttackRange && !_stateData.HasDetectedPlayer));
         //At(attackState, chaseState, new FuncPredicate( () => !EnemyInfo.playerWithinAttackRange && EnemyInfo.hasDetectedPlayer));        
 
         //ANY to STATES
@@ -189,6 +197,7 @@ public class ShotguneerCrackerMain : Unit, IEnemy
     
     void HandleDefeat(DamageContext context)
     {
+        Debug.Log("Handle defeat called.");
         _defeatState.SetLastHitContext(context);
         _stateData.IsAlive = false;
         if (_defeatEventChannel != null)
@@ -200,6 +209,45 @@ public class ShotguneerCrackerMain : Unit, IEnemy
     public override UnitStateData GetStateData()
     {
         return _stateData;
+    }
+
+    void SetProvoked()
+    {
+        Debug.Log("PROVOKED!");
+        _stateData.HasBeenAttacked = true;
+    }
+
+    bool HasLineOfSight()
+    {
+        Vector2 origin = transform.position;
+        Vector2 dir = (_player.transform.position - transform.position).normalized;
+        float dist = Vector2.Distance(transform.position, _player.transform.position);
+
+        RaycastHit2D hit = Physics2D.Raycast(origin, dir, dist, _obstructionMask);
+
+        return hit.collider == null;
+    }
+
+    void UpdatePerception()
+    {
+        if (_stateData.PlayerWithinAttackRange)
+        {
+            _losTimer -= Time.deltaTime;
+            if (_losTimer <= 0f)
+            {
+                _stateData.HasLineOfSight = HasLineOfSight();
+                if (_stateData.HasLineOfSight == false)
+                    Debug.Log("NO LOS!");
+                else 
+                    Debug.Log("LOS!");
+                _losTimer = 0.5f;
+            }
+        }
+        else
+        {
+            // Out of range, no need for LoS checks
+            _stateData.HasLineOfSight = false;
+        }
     }
 
     public void AssignSpawnArea(BoxCollider2D spawnArea)

@@ -268,7 +268,7 @@ MonoBehaviour:
   _collisionHandler: {fileID: 7561437575387747518}
   _itemDropper: {fileID: 6665599726349882130}
   _attackConfig: {fileID: 11400000, guid: 1d5830bb166932040bf96ff95c40d15e, type: 2}
-  _healthConfig: {fileID: 11400000, guid: def09bc8452bf5c4fb9cf05923534a2b, type: 2}
+  _healthConfig: {fileID: 11400000, guid: 7b69e0e866eee1c40bcb01254d3dae48, type: 2}
   _movementConfig: {fileID: 11400000, guid: 697020d050571b5419be9339988e8eba, type: 2}
   _stateConfig: {fileID: 11400000, guid: d058e58465e020a4cb9a1a3cefa3f70c, type: 2}
   _visualConfig: {fileID: 11400000, guid: aa88f7d8da29e3e4998dd143e26f386a, type: 2}
@@ -284,6 +284,7 @@ MonoBehaviour:
     IsRecoveringPostAttack: 0
     IsRoaming: 0
     HasDetectedPlayer: 0
+    HasLineOfSight: 0
     IsChargingAnAttack: 0
     IsAttacking: 0
     IsRecovering: 0
@@ -498,7 +499,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemHolder: {fileID: 8419632883277980870}
   _rb2D: {fileID: 1327651529205606153}
-  _lootConfigSO: {fileID: 11400000, guid: ab61ba72430b57448938f5ca46a4d227, type: 2}
+  _lootConfigSO: {fileID: 11400000, guid: e77d2f153a7b88a4ba7cca87e420454f, type: 2}
   _angleStep: 0
 --- !u!1 &2562611876699014425
 GameObject:

@@ -54,6 +54,9 @@ public class RevolverCrackerMain : Unit, IEnemy
     GameObject _player;
     UnitStateData _playerStateData;
 
+    float _losTimer = 0.5f;
+    [SerializeField] LayerMask _obstructionMask;
+
     void Awake()
     {
         _player = GameObject.FindGameObjectWithTag("Player");
@@ -82,7 +85,7 @@ public class RevolverCrackerMain : Unit, IEnemy
 
     void OnDisable()
     {
-        _healthManager.OnDefeatWithContext += HandleDefeat;
+        _healthManager.OnDefeatWithContext -= HandleDefeat;
     }
 
     void Start()
@@ -133,6 +136,8 @@ public class RevolverCrackerMain : Unit, IEnemy
         _detectionManager.InitializeStateData(_stateData);
         _attackRangeCheck.InitializeStateData(_stateData);
         _collisionHandler.Initialize(_attackConfig.ContactDamage);
+
+        _itemDropper.Initialize(_healthManager, _player.transform);
     }
 
 
@@ -189,12 +194,47 @@ public class RevolverCrackerMain : Unit, IEnemy
 
     void HandleDefeat(DamageContext context)
     {
+        Debug.Log("Handle defeat called.");
         _defeatState.SetLastHitContext(context);
         _stateData.IsAlive = false;
+        
         if (_defeatEventChannel != null)
             _defeatEventChannel.RaiseEvent();
 
         OnDefeat?.Invoke();
+    }
+
+    void UpdatePerception()
+    {
+        if (_stateData.PlayerWithinAttackRange)
+        {
+            _losTimer -= Time.deltaTime;
+            if (_losTimer <= 0f)
+            {
+                _stateData.HasLineOfSight = HasLineOfSight();
+                if (_stateData.HasLineOfSight == false)
+                    Debug.Log("NO LOS!");
+                else 
+                    Debug.Log("LOS!");
+                _losTimer = 0.5f;
+            }
+        }
+        else
+        {
+            // Out of range, no need for LoS checks
+            _stateData.HasLineOfSight = false;
+        }
+    }
+
+    bool HasLineOfSight()
+    {
+        Vector2 origin = transform.position;
+        Vector2 dir = (_player.transform.position - transform.position).normalized;
+        float dist = Vector2.Distance(transform.position, _player.transform.position);
+
+        RaycastHit2D hit = Physics2D.Raycast(origin, dir, dist, _obstructionMask);
+
+        return hit.collider == null;
     }
 
     public override UnitStateData GetStateData()

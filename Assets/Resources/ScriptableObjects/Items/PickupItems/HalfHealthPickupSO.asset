@@ -23,3 +23,5 @@ MonoBehaviour:
     Order: 0
     IsExhaustible: 0
     BehaviourSpecificConditions: []
+  xScaleOverride: 1
+  yScaleOverride: 1

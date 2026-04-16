@@ -91,7 +91,7 @@ public class WrapLayout : MonoBehaviour, ILayoutController, ILayoutElement
     {
 
         if (isRebuilding == true) return;
-        Debug.Log("Rebuilding layout...");
+        //Debug.Log("Rebuilding layout...");
         isRebuilding = true;
 
         // Calculate maximum available width we can place items in.

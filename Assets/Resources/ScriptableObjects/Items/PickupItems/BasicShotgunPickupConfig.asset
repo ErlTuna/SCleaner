@@ -23,4 +23,6 @@ MonoBehaviour:
     IsExhaustible: 0
     BehaviourSpecificConditions:
     - {fileID: 11400000, guid: 49fe2ce4ad186a243ac143f896dabbe0, type: 2}
+  xScaleOverride: 1
+  yScaleOverride: 1
   WeaponConfig: {fileID: 11400000, guid: e8b32c0faaf2b2345bb38e2148a8b51b, type: 2}

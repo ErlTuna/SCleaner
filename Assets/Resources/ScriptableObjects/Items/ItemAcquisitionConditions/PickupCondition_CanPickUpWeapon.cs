@@ -29,7 +29,6 @@ public class PickupCondition_CanPickUpWeapon : PickupConditionSO
         if (!ctx.TryGet<PlayerInventoryManager>(out var inventory))
             return false;
 
-        //return inventory.CanPickupWeapon(weapon.RuntimeData.Config as PlayerWeaponConfigSO);
         return inventory.CanPickupWeapon(weapon.RuntimeData.Config as PlayerWeaponConfigSO);
     }
 

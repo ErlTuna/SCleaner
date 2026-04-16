@@ -14,8 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   LootTable:
   - ItemSO: {fileID: 11400000, guid: d97737b7519b42f41976b196d1c48787, type: 2}
-    Weight: 80
+    Weight: 60
     MinAmount: 1
-    MaxAmount: 5
+    MaxAmount: 3
   CanRollMultiCurrencyType: 0
-  CurrencyRollCount: 0
+  CurrencyRollCount: 1

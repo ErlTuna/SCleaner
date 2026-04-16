@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: ShieldPickupDefinition
   m_EditorClassIdentifier: 
   PickupType: 2
-  PickUpName: Half Shield Pack
+  PickUpName: Shield Pack
   PickUpDescription: Shield Granted
   DefaultPickupSprite: {fileID: 21300000, guid: bcf81d6e1af1f67489416e9cacf5b7d4, type: 3}
   PickUpSuccessSoundData: {fileID: 11400000, guid: 6e6dbc2eb95310240b3cccefd278660e, type: 2}

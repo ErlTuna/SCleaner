@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -11,9 +12,8 @@ public class PlayerInventoryManager : MonoBehaviour, IWeaponPickupHandler, IPass
     [SerializeField] UnitInventoryData _playerInventoryData;
     [SerializeField] PlayerInventoryConfigSO _playerInventoryConfig;
 
-
-    [SerializeField] UnitInventoryData_V2 _playerInventoryData_V2;
-    PlayerWeaponInventoryRuntime _weaponInventoryRuntime;
+    PlayerInventoryRuntime _inventoryRuntime;
+    
 
     [Header("Transforms")]
     [SerializeField] Transform _weaponParent;
@@ -21,7 +21,7 @@ public class PlayerInventoryManager : MonoBehaviour, IWeaponPickupHandler, IPass
     [SerializeField] Transform _equipmentPosition;
 
     [Header("Slots")]
-    [SerializeReference] List<WeaponSlot> _weaponSlots = new();
+    [SerializeField] List<WeaponSlot> _weaponSlots = new();
     [SerializeField] EquipmentSlot _currentlyUsedEquipmentSlot;
     WeaponSlot _currentlyUsedWeaponSlot;
     int _currentlyUsedWeaponSlotIndex = -1;
@@ -31,23 +31,18 @@ public class PlayerInventoryManager : MonoBehaviour, IWeaponPickupHandler, IPass
 
     bool _isInitialized = false;
 
-    void Start()
+    public void InitializeManager(PlayerInventoryRuntime inventoryRuntime, PlayerInventoryConfigSO playerInventoryConfig)
     {
+        _inventoryRuntime = inventoryRuntime;
+        _playerInventoryConfig = playerInventoryConfig;
         if (_isInitialized == false)
             InitializeWeaponSlots();
-            //PrepareDefaultWeapon();
     }
 
-    public void InitializeManager(UnitInventoryData unitInventoryData, PlayerInventoryConfigSO unitInventoryConfig)
+    IEnumerator Start()
     {
-        _playerInventoryData = unitInventoryData;
-        _playerInventoryConfig = unitInventoryConfig;
-    }
-
-    public void InitializeManager_V2(PlayerWeaponInventoryRuntime weaponInventoryRuntime, PlayerInventoryConfigSO playerInventoryConfig)
-    {
-        _weaponInventoryRuntime = weaponInventoryRuntime;
-        _playerInventoryConfig = playerInventoryConfig;
+        yield return null;
+        SwitchToWeaponSlot(0);
     }
 
     void Update()
@@ -74,15 +69,16 @@ public class PlayerInventoryManager : MonoBehaviour, IWeaponPickupHandler, IPass
         if (_weaponSlots[slotToSwitchTo] != null && slotToSwitchTo != _currentlyUsedWeaponSlotIndex)
         {
             WeaponSlotChange(slotToSwitchTo);
-            Debug.Log("Switched to weapon slot: " + slotToSwitchTo);
             _currentlyUsedWeaponSlotIndex = slotToSwitchTo;
         }
     }
 
     void WeaponSlotChange(int slotToSwitchTo)
     {
-        if (slotToSwitchTo >= _weaponSlots.Count) return;
+        if (slotToSwitchTo >= _weaponSlots.Count)
+         return;
         if (_weaponSlots[slotToSwitchTo] == null) return;
+
 
         _currentlyUsedWeaponSlotIndex = slotToSwitchTo;
         _currentlyUsedWeaponSlot = _weaponSlots[_currentlyUsedWeaponSlotIndex];
@@ -93,18 +89,22 @@ public class PlayerInventoryManager : MonoBehaviour, IWeaponPickupHandler, IPass
             
             UIWeaponSwitchContext weaponUpdateData = new
             (
-                _currentlyUsedWeaponSlot.Script.WeaponConfig.InventoryItemDefinition.ItemIcon,
-                _currentlyUsedWeaponSlot.Script.WeaponRuntimeData.AmmoData.CurrentAmmo,
-                _currentlyUsedWeaponSlot.Script.WeaponRuntimeData.AmmoData.CurrentReserveAmmo,
-                _currentlyUsedWeaponSlot.Script.WeaponConfig.AmmoConfig.HasInfiniteReserveAmmo
+                _currentlyUsedWeaponSlot.WeaponInstance.WeaponScript.WeaponConfig.InventoryItemDefinition.ItemIcon,
+                _currentlyUsedWeaponSlot.WeaponInstance.WeaponScript.WeaponRuntimeData.AmmoData.CurrentAmmo,
+                _currentlyUsedWeaponSlot.WeaponInstance.WeaponScript.WeaponRuntimeData.AmmoData.CurrentReserveAmmo,
+                _currentlyUsedWeaponSlot.WeaponInstance.WeaponScript.WeaponConfig.AmmoConfig.HasInfiniteReserveAmmo
             );
             
 
             _weaponUIUpdateEventChannel.RaiseEvent(weaponUpdateData);
         }
 
+        Debug.Log("RAISING SWITCH EVENT: " + _weaponSwitchRequestEventChannel.GetInstanceID());
+
         if (_weaponSwitchRequestEventChannel != null)
-            _weaponSwitchRequestEventChannel.RaiseEvent(_currentlyUsedWeaponSlot.Weapon, _currentlyUsedWeaponSlot.Script);
+            _weaponSwitchRequestEventChannel.RaiseEvent(_currentlyUsedWeaponSlot.WeaponInstance.WeaponGO, _currentlyUsedWeaponSlot.WeaponInstance.WeaponScript);
+
+        Debug.Log("Switched to weapon slot: " + slotToSwitchTo);
     }
 
     // Configs are unique per weapon. We can use that to check if a weapon exists.
@@ -116,7 +116,7 @@ public class PlayerInventoryManager : MonoBehaviour, IWeaponPickupHandler, IPass
     */
     public bool CanPickupWeapon(PlayerWeaponConfigSO playerWeaponConfig)
     {
-        return _weaponInventoryRuntime.CanPickupWeapon(playerWeaponConfig);
+        return _inventoryRuntime.WeaponInventoryRuntime.CanPickupWeapon(playerWeaponConfig);
     }
 
     /*
@@ -138,33 +138,18 @@ public class PlayerInventoryManager : MonoBehaviour, IWeaponPickupHandler, IPass
 
     public void AddPickedUpWeapon(WeaponPickupPayload payload)
     {   
-        bool wasEmpty = _weaponInventoryRuntime.IsEmpty();
+        bool wasEmpty = _inventoryRuntime.WeaponInventoryRuntime.IsEmpty();
 
         (PlayerWeapon weaponScript, GameObject weaponGO) = WeaponFactory.CreateUsingRuntimeData(payload.RuntimeData);
 
-        _weaponInventoryRuntime.AddWeaponToInventory(weaponGO, weaponScript);
+        WeaponInstance createdWeaponInstance = _inventoryRuntime.WeaponInventoryRuntime.AddWeaponToInventory(weaponGO, weaponScript);
         AttachWeaponToPlayer(weaponGO, weaponScript);
-        _weaponSlots.Add(new WeaponSlot(weaponGO, weaponScript));
+        _weaponSlots.Add(new WeaponSlot(createdWeaponInstance));
 
         if (wasEmpty)
             SwitchToWeaponSlot(0);
     }
 
-    public void AddPickedUpWeapon_v2(WeaponPickupPayload payload)
-    {   
-        bool wasEmpty = _weaponInventoryRuntime.IsEmpty();
-
-        (PlayerWeapon weaponScript, GameObject weaponGO) = WeaponFactory.CreateUsingRuntimeData(payload.RuntimeData);
-
-        //WeaponInstance weaponInstance = _weaponInventoryRuntime.AddWeaponToInventory();
-
-        _weaponInventoryRuntime.AddWeaponToInventory(weaponGO, weaponScript);
-        AttachWeaponToPlayer(weaponGO, weaponScript);
-        _weaponSlots.Add(new WeaponSlot(weaponGO, weaponScript));
-
-        if (wasEmpty)
-            SwitchToWeaponSlot(0);
-    }
 
     void AttachWeaponToPlayer(GameObject weaponGO, PlayerWeapon weaponScript)
     {
@@ -182,12 +167,12 @@ public class PlayerInventoryManager : MonoBehaviour, IWeaponPickupHandler, IPass
             return;
         }
 
-        if (_currentlyUsedWeaponSlot.Script.CanBeDropped() == false) return;
+        if (_currentlyUsedWeaponSlot.WeaponInstance.WeaponScript.CanBeDropped() == false) return;
 
-        _currentlyUsedWeaponSlot.Script.Drop();
+        _currentlyUsedWeaponSlot.WeaponInstance.WeaponScript.Drop();
         //_playerInventoryData.WeaponInventory.RemoveWeaponFromInventory(_currentlyUsedWeaponSlot.Weapon, _currentlyUsedWeaponSlot.Script);
 
-        _weaponInventoryRuntime.RemoveWeaponFromInventory(_currentlyUsedWeaponSlot.Weapon, _currentlyUsedWeaponSlot.Script);
+        _inventoryRuntime.WeaponInventoryRuntime.RemoveWeaponFromInventory(_currentlyUsedWeaponSlot.WeaponInstance.WeaponID);
         _currentlyUsedWeaponSlot.ClearSlot();
         _weaponSlots.RemoveAt(_currentlyUsedWeaponSlotIndex);
 
@@ -223,17 +208,17 @@ public class PlayerInventoryManager : MonoBehaviour, IWeaponPickupHandler, IPass
 
     public bool CanAddPassiveItem(PassiveItemSO passiveItem)
     {
-        return _playerInventoryData.PassiveItemInventory.HasItem(passiveItem) == false;
+        return _inventoryRuntime.PassiveItemInventoryRuntime.HasItem(passiveItem) == false;
     }
 
     public void AddPassiveItem(PassiveItemPickupPayload payload)
     {
-        _playerInventoryData.PassiveItemInventory.AddPassiveItemToInventory(payload.PassiveItemSO);
+        _inventoryRuntime.PassiveItemInventoryRuntime.AddPassiveItemToInventory(payload.PassiveItemSO);
     }
 
     public void AddCurrency(int amont)
     {
-        _playerInventoryData.CurrencyInventory.AddCurrency(amont);
+        _inventoryRuntime.CurrencyInventoryRuntime.AddCurrency(amont);
     }
 
 
@@ -244,9 +229,9 @@ public class PlayerInventoryManager : MonoBehaviour, IWeaponPickupHandler, IPass
 
         (PlayerWeapon weaponScript, GameObject weaponGO) = WeaponFactory.CreateUsingConfig(_playerInventoryConfig.DefaultWeaponConfig);
 
-        _playerInventoryData.WeaponInventory.AddWeaponToInventory(weaponGO, weaponScript);
+        WeaponInstance createdWeaponInstance = _inventoryRuntime.WeaponInventoryRuntime.AddWeaponToInventory(weaponGO, weaponScript);
         AttachWeaponToPlayer(weaponGO, weaponScript);
-        _weaponSlots.Add(new WeaponSlot(weaponGO, weaponScript));
+        _weaponSlots.Add(new WeaponSlot(createdWeaponInstance));
         
 
         SwitchToWeaponSlot(0);
@@ -259,19 +244,15 @@ public class PlayerInventoryManager : MonoBehaviour, IWeaponPickupHandler, IPass
         _weaponSlots.Clear();
 
         (PlayerWeapon weaponScript, GameObject weaponGO) = WeaponFactory.CreateUsingConfig(_playerInventoryConfig.DefaultWeaponConfig);
-        _weaponInventoryRuntime.AddWeaponToInventory(weaponGO, weaponScript);
-        
+        _inventoryRuntime.WeaponInventoryRuntime.AddWeaponToInventory(weaponGO, weaponScript);
 
-
-        _weaponInventoryRuntime.RebuildFromData(_weaponParent);
-
-        foreach (WeaponInstance weapon in _weaponInventoryRuntime.Weapons)
+        foreach (WeaponInstance weapon in _inventoryRuntime.WeaponInventoryRuntime.Weapons)
         {
-            _weaponSlots.Add(new WeaponSlot(weapon.WeaponGO, weapon.WeaponScript));
+            _weaponSlots.Add(new WeaponSlot(weapon));
             AttachWeaponToPlayer(weapon.WeaponGO, weapon.WeaponScript);
         }
 
-        SwitchToWeaponSlot(0);
+        //SwitchToWeaponSlot(0);
         _isInitialized = true;
     }
 

@@ -4,7 +4,7 @@ using UnityEngine;
 public class ItemTracker : MonoBehaviour
 {
     public static ItemTracker Instance { get; private set; }
-    readonly HashSet<string> _consumedItems = new();
+    HashSet<string> _consumedItems;
 
 
     void Awake()
@@ -19,6 +19,18 @@ public class ItemTracker : MonoBehaviour
         Instance = this;
     }
 
+    void OnEnable()
+    {
+        GameManager.OnLevelLoaded += Initialize;
+    }
+
+    void OnDisable()
+    {
+        GameManager.OnLevelLoaded -= Initialize;
+    }
+
+
+
     public bool HasBeenConsumed(string itemID) => _consumedItems.Contains(itemID);
 
     public void MarkAsConsumed(string itemID)
@@ -26,35 +38,13 @@ public class ItemTracker : MonoBehaviour
         if (_consumedItems.Contains(itemID))
             return;
         
-        Debug.Log($"Marked item ${itemID} as consumed.");
+        Debug.Log($"Marked item {itemID} as consumed.");
         _consumedItems.Add(itemID);
     }
 
-
-    /*
-    public GameObject GetRandomItem()
+    void Initialize()
     {
-        if (_uniqueDropPool.Count == 0) return null;
-
-        int randomIndex = Random.Range(0, _uniqueDropPool.Count);
-        ItemDatabaseEntry entry = _uniqueDropPool.ElementAt(randomIndex);
-        GameObject pickupGO = Instantiate(entry.PickupPrefab, transform.position, Quaternion.identity);
-
-        
-
-        pickupGO.SetActive(false);
-
-        // Weapon pick ups all have their own Pickup Prefabs (as they use an extension of ItemPickup MB)
-        // As such, generic ItemPickup needs to have its configuration injected.
-        if (entry.PickupConfig is WeaponPickupSO == false)
-        {
-            pickupGO.GetComponent<ItemPickup>().SetPickupConfig(entry.PickupConfig);
-        }
-        
-        pickupGO.SetActive(true);
-
-
-        return pickupGO;
+        _consumedItems = new();
     }
-    */
+    
 }

@@ -44,7 +44,7 @@ public class PlayerMovementManager : MonoBehaviour, IPickupHandler
         if (_playerStateData.CanMove == false) return;
         if (_rb2D == null) return;
             
-        _rb2D.velocity = _moveDirection * _playerMovementData.CurrentMovementSped.Value;
+        _rb2D.velocity = _moveDirection * _playerMovementData.CurrentMovementSpeed.Value;
     }
 
     public void StopMovement()
@@ -54,9 +54,9 @@ public class PlayerMovementManager : MonoBehaviour, IPickupHandler
 
     public void AddMovementSpeedModifier(FloatModifier mod)
     {
-        Debug.Log("Previous speed : " + _playerMovementData.CurrentMovementSped.Value);
-        _playerMovementData.CurrentMovementSped.AddModifier(mod);
-        Debug.Log("Current speed : " + _playerMovementData.CurrentMovementSped.Value);
+        Debug.Log("Previous speed : " + _playerMovementData.CurrentMovementSpeed.Value);
+        _playerMovementData.CurrentMovementSpeed.AddModifier(mod);
+        Debug.Log("Current speed : " + _playerMovementData.CurrentMovementSpeed.Value);
     }
 
 }

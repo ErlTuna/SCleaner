@@ -30,6 +30,12 @@ public class InventoryUIGroup : MonoBehaviour, IInventoryUIGroup
 
     public void AddItem(InventoryItemDefinitionSO itemData)
     {
+        if (_groupItemsDict.ContainsKey(itemData.ItemID))
+        {
+            Debug.Log("No idea how...");
+            return;
+        }
+
         // Create the entry
         GameObject entryGO = Instantiate(_inventoryEntryPrefab, _itemContainer);
         InventoryEntry entry = entryGO.GetComponent<InventoryEntry>();

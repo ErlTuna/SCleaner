@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f95dea180ebeda749807900f9529aac6, type: 3}
   m_Name: EffectSO_ReviveEffect
   m_EditorClassIdentifier: 
-  healAmount: 2
+  healAmount: 10
   singleUse: 1

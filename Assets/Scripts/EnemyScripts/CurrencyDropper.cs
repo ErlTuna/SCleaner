@@ -1,5 +1,4 @@
 using System.Collections;
-using UnityEditor.Callbacks;
 using UnityEngine;
 
 public class CurrencyDropper : MonoBehaviour
@@ -11,11 +10,6 @@ public class CurrencyDropper : MonoBehaviour
     [SerializeField] LootConfigSO _lootConfigSO;
     [SerializeField] int _angleStep;
     Transform _player;
-
-    void OnDisable()
-    {
-        //_defeatable.OnDefeat -= Drop;
-    }
 
 
     public void Initialize(IDefeatable defeatable, Transform player)
@@ -34,9 +28,6 @@ public class CurrencyDropper : MonoBehaviour
 
         if(entry.ItemSO)
         {
-            //Debug.Log("DROPPING ITEM");
-            //Vector3 location = itemHolder.position;
-            //Instantiate(entry.ItemSO.Prefab, location, Quaternion.identity);
             StartCoroutine(DropItemInDirections(entry.ItemSO.Prefab, count));
         }
     }
