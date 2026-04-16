@@ -1,12 +1,11 @@
 using System;
-using SerializeReferenceEditor;
-using Unity.VisualScripting;
 using UnityEngine;
+
 public class CrackerHealthManager : MonoBehaviour, IDamageable, IDefeatable
 {
-    public Action OnHitReceived;
     public event Action OnDefeat;
-    public event Action<DamageContext> OnDefeatContext;
+    public event Func<bool> OnBeforeDefeat;
+    public event Action<DamageContext> OnDefeatWithContext;
     public IDetachable _hatScript;
     [SerializeField] UnitHealthData _healthData;
     UnitHealthConfigSO _healthConfig;
@@ -72,7 +71,9 @@ public class CrackerHealthManager : MonoBehaviour, IDamageable, IDefeatable
             Debug.Log("Defeated...");
             if (_hatScript != null)
                 _hatScript.Detach(context);
-            OnDefeatContext?.Invoke(context);
+
+            OnDefeat?.Invoke();
+            OnDefeatWithContext?.Invoke(context);
         }
     }
     

@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 601b6c7352432c54ea24ec192a109778
+guid: a98283500aaa8554b97067335f2b1830
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -43,12 +43,12 @@ TextureImporter:
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
-  spriteMode: 1
+  spriteMode: 2
   spriteExtrude: 1
   spriteMeshType: 1
-  alignment: 9
-  spritePivot: {x: 0.1, y: 0.4}
-  spritePixelsToUnits: 64
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 128
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -69,7 +69,7 @@ TextureImporter:
   platformSettings:
   - serializedVersion: 3
     buildTarget: DefaultTexturePlatform
-    maxTextureSize: 128
+    maxTextureSize: 4096
     resizeAlgorithm: 0
     textureFormat: -1
     textureCompression: 0
@@ -95,18 +95,370 @@ TextureImporter:
     forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
-    sprites: []
+    sprites:
+    - serializedVersion: 2
+      name: Revolver_Reload_Remade_v3_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 256
+        height: 192
+      alignment: 9
+      pivot: {x: 0.09, y: 0.4}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 25aba427be2193a43b7773dd0b8db3ee
+      internalID: 9196118
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Revolver_Reload_Remade_v3_1
+      rect:
+        serializedVersion: 2
+        x: 256
+        y: 0
+        width: 256
+        height: 192
+      alignment: 9
+      pivot: {x: 0.25140834, y: 0.28043708}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b11b4aa8e0d85494ca272525865f9a2e
+      internalID: -1989613035
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Revolver_Reload_Remade_v3_2
+      rect:
+        serializedVersion: 2
+        x: 512
+        y: 0
+        width: 256
+        height: 192
+      alignment: 9
+      pivot: {x: 0.17671609, y: 0.18781863}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5175860f2296ff247bfaf8bba4b62962
+      internalID: -749454614
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Revolver_Reload_Remade_v3_3
+      rect:
+        serializedVersion: 2
+        x: 768
+        y: 0
+        width: 256
+        height: 192
+      alignment: 9
+      pivot: {x: 0.19924808, y: 0.10030326}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 295f57c91f811054db179500e5d8eb5b
+      internalID: -127379164
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Revolver_Reload_Remade_v3_4
+      rect:
+        serializedVersion: 2
+        x: 1024
+        y: 0
+        width: 256
+        height: 192
+      alignment: 9
+      pivot: {x: 0.25, y: 0.09}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 52e494262422e514fb0d30fb8227dda5
+      internalID: 1495740848
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Revolver_Reload_Remade_v3_5
+      rect:
+        serializedVersion: 2
+        x: 1280
+        y: 0
+        width: 256
+        height: 192
+      alignment: 9
+      pivot: {x: 0.50236607, y: 0.1277469}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 58cef4e151b61ca4ca3705127fa2d5ca
+      internalID: -169920193
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Revolver_Reload_Remade_v3_6
+      rect:
+        serializedVersion: 2
+        x: 1536
+        y: 0
+        width: 256
+        height: 192
+      alignment: 9
+      pivot: {x: 0.63249683, y: 0.21765548}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fbdb72e5ae204e549bb80f3f3e75e00e
+      internalID: -1845772561
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Revolver_Reload_Remade_v3_7
+      rect:
+        serializedVersion: 2
+        x: 1792
+        y: 0
+        width: 256
+        height: 192
+      alignment: 9
+      pivot: {x: 0.7543464, y: 0.44637027}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 449f5e587f3d67041b5994f6032e4eac
+      internalID: -185325650
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Revolver_Reload_Remade_v3_8
+      rect:
+        serializedVersion: 2
+        x: 2048
+        y: 0
+        width: 256
+        height: 192
+      alignment: 9
+      pivot: {x: 0.75, y: 0.6}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e2675e33d3568e14888b14eb5405c949
+      internalID: 2014554366
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Revolver_Reload_Remade_v3_9
+      rect:
+        serializedVersion: 2
+        x: 2304
+        y: 0
+        width: 256
+        height: 192
+      alignment: 9
+      pivot: {x: 0.5378561, y: 0.82177806}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a39c174a08edb9649a98d1d68cab4197
+      internalID: 1857614927
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Revolver_Reload_Remade_v3_10
+      rect:
+        serializedVersion: 2
+        x: 2560
+        y: 0
+        width: 256
+        height: 192
+      alignment: 9
+      pivot: {x: 0.26458073, y: 0.88644916}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 28c09645f840ceb4b8ebdea26fe46e28
+      internalID: 1596748196
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Revolver_Reload_Remade_v3_11
+      rect:
+        serializedVersion: 2
+        x: 2816
+        y: 0
+        width: 256
+        height: 192
+      alignment: 9
+      pivot: {x: 0.15, y: 0.88}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5b42a4cb689a73c4f904dab2e1d86349
+      internalID: -1652626470
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Revolver_Reload_Remade_v3_12
+      rect:
+        serializedVersion: 2
+        x: 3072
+        y: 0
+        width: 256
+        height: 192
+      alignment: 9
+      pivot: {x: 0.13444996, y: 0.8769851}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: db728b41bda6b834a8486b6edb432c14
+      internalID: -89429331
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Revolver_Reload_Remade_v3_13
+      rect:
+        serializedVersion: 2
+        x: 3328
+        y: 0
+        width: 256
+        height: 192
+      alignment: 9
+      pivot: {x: 0.15692711, y: 0.81862336}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5161bbdd0c44f9745b9b4bc8e72fb938
+      internalID: 1662430838
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Revolver_Reload_Remade_v3_14
+      rect:
+        serializedVersion: 2
+        x: 3584
+        y: 0
+        width: 256
+        height: 192
+      alignment: 9
+      pivot: {x: 0.1332674, y: 0.64511555}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 130a06883c89ac1438e6526cb63f736d
+      internalID: -970000502
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Revolver_Reload_Remade_v3_15
+      rect:
+        serializedVersion: 2
+        x: 3840
+        y: 0
+        width: 256
+        height: 192
+      alignment: 9
+      pivot: {x: 0.12, y: 0.4}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f24376c17fba9a54d80196e8dd0993f9
+      internalID: 1320642216
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     physicsShape: []
     bones: []
     spriteID: 5e97eb03825dee720800000000000000
-    internalID: 1537655665
+    internalID: 0
     vertices: []
     indices: 
     edges: []
     weights: []
     secondaryTextures: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      Revolver_Reload_Remade_v3_0: 9196118
+      Revolver_Reload_Remade_v3_1: -1989613035
+      Revolver_Reload_Remade_v3_10: 1596748196
+      Revolver_Reload_Remade_v3_11: -1652626470
+      Revolver_Reload_Remade_v3_12: -89429331
+      Revolver_Reload_Remade_v3_13: 1662430838
+      Revolver_Reload_Remade_v3_14: -970000502
+      Revolver_Reload_Remade_v3_15: 1320642216
+      Revolver_Reload_Remade_v3_2: -749454614
+      Revolver_Reload_Remade_v3_3: -127379164
+      Revolver_Reload_Remade_v3_4: 1495740848
+      Revolver_Reload_Remade_v3_5: -169920193
+      Revolver_Reload_Remade_v3_6: -1845772561
+      Revolver_Reload_Remade_v3_7: -185325650
+      Revolver_Reload_Remade_v3_8: 2014554366
+      Revolver_Reload_Remade_v3_9: 1857614927
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

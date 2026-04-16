@@ -9,8 +9,9 @@ public interface IDamageable
 
 public interface IDefeatable
 {
+    event Func<bool> OnBeforeDefeat;
     event Action OnDefeat;
-    event Action<DamageContext> OnDefeatContext;
+    event Action<DamageContext> OnDefeatWithContext;
 }
 
 public interface IDetachable

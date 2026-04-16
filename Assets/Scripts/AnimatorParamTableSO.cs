@@ -29,7 +29,9 @@ public class AnimatorParamTableSO : ScriptableObject
     // The name is used to calculate the hash
     public AnimatorParameter GetByName(string name)
     {
+        Debug.Log("Param name is : " + name);
         int hash = Animator.StringToHash(name);
+        //Debug.Log("Hash is : " + hash);
         return GetByHash(hash);
     }
 
@@ -37,7 +39,7 @@ public class AnimatorParamTableSO : ScriptableObject
     // Returns an AnimatorParameter using its hash directly
     public AnimatorParameter GetByHash(int hash)
     {
-        return _parameterDict.TryGetValue(hash, out var param) ? param : null;
+        return _parameterDict.TryGetValue(hash, out AnimatorParameter param) ? param : null;
     }
 
     // Using hash values, resets ALL parameters in the given Animator 

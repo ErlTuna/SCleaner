@@ -1,48 +1,51 @@
-using System.Collections;
-using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
-public abstract class PlayerWeapon : BaseWeapon
+public abstract class PlayerWeapon : BaseWeapon<PlayerWeaponConfigSO>
 {
-    Coroutine _dryFireCoroutine;
+    // Make this a getter later?..
+    Transform _ownerTransform;
     public FiringModeSO PrimaryAttackStrategy;
     [SerializeField] protected Transform rayCastStartPoint;
     [SerializeField] protected Transform rayCastEndPoint;
     [SerializeField] protected Transform muzzleTipCheck;
+
+    # region Abstract Methods
+
     public abstract void HandlePrimaryAttackInput();
-    public virtual void HandlePrimaryAttackInputCancel() { }
-    public virtual void HandleSecondaryAttackInput() { }
     public abstract void HandleReloadInput();
-    public abstract void HandleReloadStart();
-    public virtual void ResetWeapon()
+    public abstract void HandlePrimaryAttackInputRelease();
+
+    # endregion
+
+    # region Virtual Methods
+    //public virtual void HandleSecondaryAttackInput() { }
+    
+    protected virtual void CheckAmmoStatus()
     {
-        WeaponRuntimeData.State = WeaponState.IDLE;
-        WeaponAnimator.ResetAnimParams();
-        _spriteRenderer.sprite = WeaponConfig.Sprite;
-        if (_dryFireCoroutine != null)
-            StopCoroutine(_dryFireCoroutine);
-        gameObject.SetActive(false);
+        //weapon runs out of ammo but has reserve and isn't actively reloading, try starting a reload
+        if (AmmoManager.HasAmmo() == false && AmmoManager.CanReload()  && WeaponRuntimeData.State != WeaponState.RELOADING)
+        {
+            TriggerOutOfAmmoReload();
+        }
     }
 
-    public virtual void TryDryFire()
+    protected virtual void TriggerOutOfAmmoReload()
     {
-        if (WeaponRuntimeData.State == WeaponState.DRY_FIRING) return;
-        if (_dryFireCoroutine == null)
-        {
-            _dryFireCoroutine = StartCoroutine(DryFireCoroutine());
-            return;
-        }
+        ReloadContext reloadContext = CreateReloadContext();
+        AmmoManager.SetReloadContext(reloadContext);
+        SetState(WeaponState.RELOADING);
+        WeaponAnimator.StartReloadAnim();
+    }
 
-        IEnumerator DryFireCoroutine()
-        {
-            Debug.Log("Attempting to dry fire...");
-            WeaponRuntimeData.State = WeaponState.DRY_FIRING;
-            weaponSoundManager.TryPlaySound(WeaponConfig.DryFiringSound);
-            yield return new WaitForSeconds(.3f);
-            WeaponRuntimeData.State = WeaponState.IDLE;
-        }
+    public virtual void ResetWeapon()
+    {
 
-        _dryFireCoroutine = null;
+        WeaponRuntimeData.State = WeaponState.IDLE;
+        WeaponAnimator.ResetAnimParams();
+        spriteRenderer.sprite = WeaponConfig.Sprite;
+        gameObject.SetActive(false);
+
     }
 
     protected virtual Quaternion CalculateBulletSpread()
@@ -58,44 +61,46 @@ public abstract class PlayerWeapon : BaseWeapon
 
         else
             return transform.rotation;
+
     }
 
-    public virtual void SwitchFrom()
-    {
-        ResetWeapon();
-    }
-    public virtual bool CanBeDropped()
-    {
-        return WeaponRuntimeData.State == WeaponState.IDLE;
-    }
-    public virtual void Drop()
-    {
-        ResetWeapon();
-        TransformToPickup();
-        Destroy(gameObject);
-    }
+    # endregion
+
+    # region Auxiliary Methods
 
     void TransformToPickup()
     {
-        gameObject.transform.localPosition = Vector3.zero;
-        gameObject.transform.parent = null;
-        WeaponPickupFactory.Create(WeaponRuntimeData, transform.position);
+        //gameObject.transform.localPosition = Vector3.zero;
+        //gameObject.transform.parent = null;
+        //WeaponPickupFactory.Create_v2(weaponRuntimeData, transform.position);
+        WeaponPickupFactory.Create_v2(weaponRuntimeData, _ownerTransform.position);
+        Destroy(gameObject);
     }
 
-    public virtual bool CanDryFire()
+    public void Drop()
     {
-        return !AmmoManager.HasAmmo() && !AmmoManager.CanReload();
-    }
-    public override void OnAttackAnimEnd()
-    {
-        PrimaryAttackStrategy.HandleAttackEnd(this);
+        ResetWeapon();
+        TransformToPickup();
     }
 
-    public override void OnReloadAnimEnd()
+    public bool CanBeDropped()
     {
-        AmmoManager.UseReloadStrategy();
-        //WeaponEvents.RaiseWeaponReload(WeaponRuntimeData);
-        AmmoManager.ShouldContinueReloading();
+        return WeaponRuntimeData.State == WeaponState.IDLE && WeaponRuntimeData.CanBeDropped;
     }
+
+    public void SwitchFrom()
+    {
+        ResetWeapon();
+    }
+
+    public void AttachOwnerTransform(Transform ownerTransform)
+    {
+        _ownerTransform = ownerTransform;
+    }
+
+    # endregion
+
+
+
 
 }

@@ -7,11 +7,11 @@ public class MainMenuManager_v2 : MenuContext
 {
     [Header("Sections")]
     [SerializeField] MainMenuMainSection _mainSection;
-    [SerializeField] MainMenuSettingsSection _settingsSection;
+    //[SerializeField] MainMenuSettingsSection _settingsSection;
+    [SerializeField] SettingsMenu _settingsSection;
     [SerializeField] WarningPopUp _warningPopUpGO;
 
     [SerializeField] MainMenuDefaultsSO _defaultSettingsSO;
-    [SerializeField] List<GameObject> _menus = new();
     [SerializeField] MainMenuSection _currentSection = MainMenuSection.NONE;
     [SerializeField] MenuWindowState _currentWindowState = MenuWindowState.INACTIVE;
 
@@ -33,11 +33,12 @@ public class MainMenuManager_v2 : MenuContext
     {
         SETTINGS.Initialize(_defaultSettingsSO);
         SetWindowState(MenuWindowState.OPENING);
+        SetCurrentContext(this);
     }
 
     void Update()
     {
-        if (PlayerInputManager.Instance.MenuCloseInput)
+        if (PlayerInputManager.Instance.MenuBackInput)
             Execute(MenuAction.Back);
     }
 
@@ -108,7 +109,7 @@ public class MainMenuManager_v2 : MenuContext
                 break;
 
             case MenuAction.ApplySettings:
-                SettingsManager.instance.HandleSettingsSaved();
+                SettingsManager.Instance.HandleSettingsSaved();
                 break;
 
             case MenuAction.ShowUnsavedWarning:
@@ -131,7 +132,7 @@ public class MainMenuManager_v2 : MenuContext
 
     void OnWarningYes()
     {
-        SettingsManager.instance.HandleSettingsReverted();
+        SettingsManager.Instance.HandleSettingsReverted();
         SetSection(MainMenuSection.MAIN);
     }
 
@@ -145,7 +146,7 @@ public class MainMenuManager_v2 : MenuContext
         switch (_currentSection)
         {
             case MainMenuSection.SETTINGS:
-                if (SettingsManager.instance.CheckIfAltered())
+                if (SettingsManager.Instance.CheckIfDirty())
                 {
                     SetSection(MainMenuSection.UNSAVED_WARNING);
                 }

@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine.UI;
 using UnityEngine;
 
@@ -11,5 +9,5 @@ public class BaseAudioSliderLogic : MonoBehaviour
 
     public virtual void AdjustVolume(float value) { }
     public virtual void Setup() { }
-    public virtual void UpdateSliderLogic(){  }
+    public virtual void SyncSlider(){  }
 }

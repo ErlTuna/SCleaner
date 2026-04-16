@@ -9,14 +9,18 @@ public class UI_EnergyBar : MonoBehaviour
     [SerializeField] Image _energyBar;
     [SerializeField] Image _fill;
 
+    [SerializeField] FloatFloatEventChannel _playerEnergyChangedEventChannel;
+
     void OnEnable()
     {
-        UIEvents.OnEnergyChanged += UpdateEnergyBar;
+        //UIEvents.OnEnergyChanged += UpdateEnergyBar;
+        _playerEnergyChangedEventChannel.OnEventRaised += UpdateEnergyBar;
     }
 
     void OnDisable()
     {
-        UIEvents.OnEnergyChanged -= UpdateEnergyBar;
+        _playerEnergyChangedEventChannel.OnEventRaised -= UpdateEnergyBar;
+        //UIEvents.OnEnergyChanged -= UpdateEnergyBar;
     }
 
     void UpdateEnergyBar(float currentEnergy, float maxEnergy)

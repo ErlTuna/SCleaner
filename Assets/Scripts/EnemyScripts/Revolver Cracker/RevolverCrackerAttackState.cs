@@ -15,9 +15,11 @@ public class RevolverCrackerAttackState : BaseState
     MonoBehaviour _ownerScript;
     GameObject _weapon;
     BaseEnemyWeapon _weaponScript;
+    readonly AttackPatternSO _attackPattern;
     WeaponHandsManager _weaponHandsManager;
+    Coroutine _attackPatternCoroutine;
     public RevolverCrackerAttackState(GameObject owner, MonoBehaviour ownerScript, WeaponHandsManager weaponHandsManager,
-    GameObject weapon, GameObject player, Rigidbody2D rb2D, NavMeshAgent agent, EnemyStateData ownerStateData, Animator animator)
+    GameObject weapon, GameObject player, Rigidbody2D rb2D, NavMeshAgent agent, EnemyStateData ownerStateData, Animator animator, AttackPatternSO attackPattern)
     {
         _owner = owner;
         _agent = agent;
@@ -29,6 +31,7 @@ public class RevolverCrackerAttackState : BaseState
         _weaponScript = _weapon.GetComponent<BaseEnemyWeapon>();
         _weaponHandsManager = weaponHandsManager;
         _animator = animator;
+        _attackPattern = attackPattern;
     }
 
     public override void OnEnter()
@@ -49,11 +52,10 @@ public class RevolverCrackerAttackState : BaseState
     public override void StateUpdate()
     {
         DecideMovement();
-        if (_weaponScript != null && _weaponScript.AttackPattern != null && _weaponScript.AttackPattern.IsExecuting != true)
+        //if (_weaponScript != null && _weaponScript.AttackPattern != null && _weaponScript.AttackPattern.IsExecuting != true)
+        if (_weaponScript && _attackPattern && _attackPattern.IsOnCooldown == false && _attackPattern.IsExecuting == false)
         {
-            _weaponScript.ExecuteAttackPattern();
-
-            _stateData.IsAttacking = true;
+            TryExecuteAttackPattern();
         }
     }
 
@@ -82,6 +84,15 @@ public class RevolverCrackerAttackState : BaseState
             _animator.SetBool("isMoving", false);
         }
             
+    }
+
+    void TryExecuteAttackPattern()
+    {
+        if (_weaponScript.CanFire())
+        {
+            _stateData.IsAttacking = true;
+            _attackPatternCoroutine = _weaponScript.StartCoroutine(_attackPattern.Execute(_weaponScript));
+        }
     }
 
 }

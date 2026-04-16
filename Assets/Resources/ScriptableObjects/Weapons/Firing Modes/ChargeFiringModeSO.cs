@@ -1,61 +1,29 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "ChargeFiringMode", menuName = "ScriptableObjects/Weapon/FiringModes/Charge Firing Mode")]
+[CreateAssetMenu(fileName = "ChargeFiringModeSO", menuName = "ScriptableObjects/Weapon/FiringModes/ChargeFiringModeSO")]
 public class ChargeFiringModeSO : FiringModeSO
 {
-    public override void HandlePreAttack(BaseWeapon weapon)
+    public override void OnTriggerPressed(IWeaponAttackInputHandler weapon)
     {
-        
-        if (weapon.WeaponRuntimeData.State != WeaponState.PRE_PRIMARY_ATTACK)
+        if (weapon is IChargeFiringWeapon chargeFiringWeapon && chargeFiringWeapon.CanCharge())
         {
-            weapon.WeaponRuntimeData.State = WeaponState.PRE_PRIMARY_ATTACK;
-            weapon.WeaponAnimator.SetBool("isTriggerHeld", true);
+            chargeFiringWeapon.BeginCharge();
         }
-
     }
 
-    public override void HandleAttackCanceled(BaseWeapon weapon)
+    public override void OnTriggerHeld(IWeaponAttackInputHandler weapon)
     {
-        weapon.WeaponRuntimeData.State = WeaponState.IDLE;
-        weapon.WeaponAnimator.SetBool("isTriggerHeld", false);
-    }
-
-    public override void HandlePreAttackEnd(BaseWeapon weapon)
-    {
-        Debug.Log("Weapon charged");
-        HandleAttackStart(weapon);
-    }
-
-    public override void HandleAttackStart(BaseWeapon weapon)
-    {
-        weapon.WeaponRuntimeData.State = WeaponState.PRIMARY_ATTACK;
-        weapon.WeaponAnimator.StartPrimaryAttackAnim();
-    }
-
-    public override void HandleAttackEnd(BaseWeapon weapon)
-    {
-        weapon.WeaponAnimator.ResetAnimParams();
-
-        if (PlayerInputManager.Instance.PrimaryAttackInput == true && weapon.AmmoManager.HasAmmo())
+        if (weapon is IChargeFiringWeapon chargeFiringWeapon)
         {
-            weapon.WeaponRuntimeData.State = WeaponState.IDLE;
-            HandlePreAttack(weapon);
+            // Animation stuff in the future, perhaps
         }
-
-        else
-            weapon.WeaponRuntimeData.State = WeaponState.IDLE;
-
-
     }
 
-    public override void HandleDirectFire(BaseWeapon weapon)
+    public override void OnTriggerReleased(IWeaponAttackInputHandler weapon)
     {
-        if (weapon.WeaponRuntimeData.State == WeaponState.IDLE)
+        if (weapon is IChargeFiringWeapon chargeFiringWeapon)
         {
-            HandlePreAttack(weapon);
+            chargeFiringWeapon.CancelCharge();
         }
-
     }
 }

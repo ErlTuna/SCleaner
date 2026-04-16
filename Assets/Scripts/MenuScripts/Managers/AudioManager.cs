@@ -1,31 +1,41 @@
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.Playables;
 
 public class AudioManager : MonoBehaviour
 {
     public static AudioManager Instance;
     public AudioLevel SFXLevel;
+    public AudioLevel WeaponSFXLevel;
     public AudioLevel BGMLevel;
-    [SerializeField] AudioSource _SFXSource;
-    [SerializeField] AudioSource _BGMSource;
-    [SerializeField] AudioClip _BGM;
-    [SerializeField] AudioClip _selectSFX;
-    [SerializeField] AudioClip _submitSFX;
-    [SerializeField] AudioCueEventChannelSO _sfxEventChannel;
+
+    [Header("Managers")]
+    [SerializeField] SFXManager _SFXManager;
+    [SerializeField] BGMManager _BGMManager;
+
+    [Header("Menu SFX Sound Data")]
+    [SerializeField] SoundDataSO _selectSFXSoundData;
+    [SerializeField] SoundDataSO _submitSFXSoundData;
+
+    [Header("Event Channel")]
+    [SerializeField] AudioCueEventChannelSO _SFXEventChannel;
 
     void OnEnable()
     {
-        _sfxEventChannel.OnAudioCueRequested += PlayAudioCue;
-        SettingsEvents.OnSettingsAltered += UpdateAudioSettings;
-        SettingsEvents.OnSettingsReverted += UpdateAudioSettings;
+        _SFXEventChannel.OnAudioCueRequested += PlayAudioCue;
+
+        SettingsManager.OnChangesReverted += UpdateAudioSettings;
+        SettingsManager.OnWeaponSFXLevelAltered += UpdateAudioSettings;
+        SettingsManager.OnSFXLevelAltered += UpdateAudioSettings;
+        SettingsManager.OnBGMLevelAltered += UpdateAudioSettings;
     }
 
     void OnDisable()
     {
-        _sfxEventChannel.OnAudioCueRequested -= PlayAudioCue;
-        SettingsEvents.OnSettingsAltered -= UpdateAudioSettings;
-        SettingsEvents.OnSettingsReverted -= UpdateAudioSettings;
+        _SFXEventChannel.OnAudioCueRequested -= PlayAudioCue;
+
+        SettingsManager.OnChangesReverted -= UpdateAudioSettings;
+        SettingsManager.OnWeaponSFXLevelAltered += UpdateAudioSettings;
+        SettingsManager.OnSFXLevelAltered -= UpdateAudioSettings;
+        SettingsManager.OnBGMLevelAltered -= UpdateAudioSettings;
     }
 
 
@@ -44,33 +54,49 @@ public class AudioManager : MonoBehaviour
     void Start()
     {
         UpdateAudioSettings();
-        if (_BGM != null && _BGMSource != null)
-            PlayBGM();
-        
+        //if (_BGMManager)
+            //_BGMManager.PlayBGM();
     }
 
-    public void PlaySelectSound()
+    public void PlayMenuSelectSound()
     {
-        if (_selectSFX == null)
+        if (_selectSFXSoundData == null)
         {
-            Debug.Log("Select SFX is missing!");
+            //Debug.Log("Select SFX Sound Data is missing!");
             return;
         }
 
-        _SFXSource.PlayOneShot(_selectSFX);
+        //Debug.Log("Select sound played.");
+
+        _SFXManager.Play(_selectSFXSoundData);
     }
 
-    public void PlaySubmitSound()
+    public void PlayMenuSubmitSound()
     {
-        if (_submitSFX == null)
+        if (_submitSFXSoundData == null)
         {
-            Debug.Log("Submit SFX is missing!");
+            //Debug.Log("Submit SFX Sound Data is missing!");
             return;
         }
 
-        _SFXSource.PlayOneShot(_submitSFX);
+        _SFXManager.Play(_submitSFXSoundData);
     }
 
+
+    void PlayAudioCue(SoundDataSO soundData, Vector3 location)
+    {
+        AudioClip clipToBePlayed = GetClip(soundData);
+
+        if (clipToBePlayed == null)
+        {
+            Debug.Log("There isn't a valid clip to play.");
+            return;
+        }
+
+        _SFXManager.Play(soundData, location);
+    }
+
+    /*
     void PlayAudioCue(SoundData soundData, Vector3 location)
     {
         AudioClip clipToBePlayed = GetClip(soundData);
@@ -92,19 +118,38 @@ public class AudioManager : MonoBehaviour
             PlaySFXClip(clipToBePlayed);
 
     }
+    */
 
+    /*
     public void PlaySFXClip(AudioClip clip, float pitch = 1f, float volume = 1f)
     {
         if (clip == null) return;
 
         _SFXSource.clip = clip;
         _SFXSource.pitch = pitch;
-        _SFXSource.volume = volume;
+        _SFXSource.volume = SETTINGS.CurrentSFXVolume;
         _SFXSource.Play();
 
     }
+    */
     
-    public AudioClip GetClip(SoundData soundData)
+    public void UpdateAudioSettings()
+    {
+        
+        //_BGMSource.volume = SETTINGS.CurrentBGMVolume;
+        _BGMManager.SetVolume(SETTINGS.CurrentBGMVolume);
+        //_SFXSource.volume = SETTINGS.CurrentSFXVolume;
+        _SFXManager.SetVolume(SETTINGS.CurrentSFXVolume);
+        
+        //Debug.Log("Current SFX volume : " + _SFXSource.volume);
+
+        BGMLevel = ToAudioLevel(SETTINGS.CurrentBGMVolume);
+        SFXLevel = ToAudioLevel(SETTINGS.CurrentSFXVolume);
+        WeaponSFXLevel = ToAudioLevel(SETTINGS.CurrentWeaponSFXVolume);
+
+    }
+
+    public AudioClip GetClip(SoundDataSO soundData)
     {
         if (soundData.clips == null)
         {
@@ -124,28 +169,13 @@ public class AudioManager : MonoBehaviour
 
         return null;
     }
-    
 
-    public void PlayBGM()
+    AudioLevel ToAudioLevel(float volume)
     {
-        _BGMSource.clip = _BGM;
-        _BGMSource.loop = true;
-        _BGMSource.Play();
+        return (AudioLevel)Mathf.FloorToInt(ConversionFunction(volume) * 10);
     }
 
-    public void UpdateAudioSettings()
-    {
-        
-        _BGMSource.volume = SETTINGS.CurrentBGMVolume;
-        _SFXSource.volume = SETTINGS.CurrentSFXVolume;
-
-        BGMLevel = ToAudioLevel(SETTINGS.CurrentBGMVolume);
-        SFXLevel = ToAudioLevel(SETTINGS.CurrentSFXVolume);
-
-    }
-
-
-    float Test(float value)
+    float ConversionFunction(float value)
     {
         value = Mathf.Round(value * 10f) / 10f;
         if (Mathf.Abs(value) < 0.001f)
@@ -154,11 +184,6 @@ public class AudioManager : MonoBehaviour
         }
 
         return value;
-    }
-
-    AudioLevel ToAudioLevel(float volume)
-    {
-        return (AudioLevel)Mathf.FloorToInt(Test(volume) * 10);
     }
 
 }

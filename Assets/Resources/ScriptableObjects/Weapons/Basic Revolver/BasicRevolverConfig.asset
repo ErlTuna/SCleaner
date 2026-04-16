@@ -9,40 +9,26 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8af658472ac40bb42b3a626dc24f4a0c, type: 3}
+  m_Script: {fileID: 11500000, guid: d4ef8b64e927d6e48a071142012c2cfa, type: 3}
   m_Name: BasicRevolverConfig
   m_EditorClassIdentifier: 
-  InventoryItem: {fileID: 11400000, guid: 6cef30d386c25014684fcb19098b249f, type: 2}
-  PickupDefinition: {fileID: 11400000, guid: 4f2533060589d834d954e19aad5de68f, type: 2}
-  WeaponName: Basic Revolver
+  WeaponName: BasicRevolver
   Type: 1
   Prefab: {fileID: 7835682278847929839, guid: ff5ae5010cc129d459f653de22aa6aed, type: 3}
   BulletPrefab: {fileID: 6657017082548522162, guid: c77308c80b6609f4eb203a2ff835a4b3, type: 3}
   BulletConfig: {fileID: 11400000, guid: a82aa05a3bcd30a4bb278b029a78a0d9, type: 2}
+  AmmoConfig: {fileID: 11400000, guid: d1da80a6b7f6b8f40a681c2f4e970add, type: 2}
   Damage: 10
-  RoundCapacity: 6
-  MaxReserveAmmo: 36
   BulletPerShot: 1
   PushForce: 100
   SpreadAngle: 0
   SpreadResetThreshold: 0.1
   HasInfiniteReserveAmmo: 0
-  Sprite: {fileID: 21300000, guid: f8a2367897bb9364c97be7e87151d884, type: 3}
-  FiringSound: {fileID: 11400000, guid: f58e8a93f82b7674bbf7de59270f8454, type: 2}
-  DryFiringSound: {fileID: 11400000, guid: 4a47d7325cbcaa64d96d8a9fe78951f9, type: 2}
-  DryFireSFX: {fileID: 8300000, guid: 591753c0fc688dc4a8a4928848b5c518, type: 3}
-  FiringSFX: {fileID: 8300000, guid: f4181816d86635544b77fb16a9cf2bda, type: 3}
-  WeaponSwitchSFX: {fileID: 8300000, guid: d2b24e19405954a4c99252993fb90386, type: 3}
+  CanBeDropped: 1
+  Sprite: {fileID: 21300000, guid: afa65fda35d3f25478827ada30e41de7, type: 3}
+  FiringSoundData: {fileID: 0}
+  DryFiringSoundData: {fileID: 0}
   offset: {x: 2, y: 0, z: 0}
-  rayCastStartPoint: {fileID: 0}
-  rayCastEndPoint: {fileID: 0}
-  muzzleTipCheck: {fileID: 0}
-  enemyLayer:
-    serializedVersion: 2
-    m_Bits: 1024
-  environmentLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  mixedLayerMask:
-    serializedVersion: 2
-    m_Bits: 0
+  InventoryItemDefinition: {fileID: 11400000, guid: 6cef30d386c25014684fcb19098b249f, type: 2}
+  PickupConfig: {fileID: 11400000, guid: 81c99cd1d725dad4da4989accfa1f559, type: 2}
+  PickupPrefab: {fileID: 5890597930396712892, guid: 6f09affdc9aaaf742a02f9e31b14b4fb, type: 3}

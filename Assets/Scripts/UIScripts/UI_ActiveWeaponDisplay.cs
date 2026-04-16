@@ -16,9 +16,6 @@ public class UI_ActiveWeaponDisplay : MonoBehaviour
     {
         _weaponChangeEventChannelSO.OnEventRaised += UpdateDisplayOnWeaponSwitch;
         _ammoChangeEventChannelSO.OnEventRaised += UpdateAmmoDisplay;
-        //PlayerInventoryEvents.OnWeaponSwitchUIUpdate += UpdateWeaponDisplayUI;
-        //WeaponEvents.OnWeaponFiredEvent += UpdateAmmoDisplay;
-        //WeaponEvents.OnWeaponReloadEvent += UpdateAmmoDisplay;
 
     }
 
@@ -26,13 +23,10 @@ public class UI_ActiveWeaponDisplay : MonoBehaviour
     {
         _weaponChangeEventChannelSO.OnEventRaised -= UpdateDisplayOnWeaponSwitch;
         _ammoChangeEventChannelSO.OnEventRaised -= UpdateAmmoDisplay;
-        //PlayerInventoryEvents.OnWeaponSwitchUIUpdate -= UpdateWeaponDisplayUI;
-        //WeaponEvents.OnWeaponFiredEvent -= UpdateAmmoDisplay;
-        //WeaponEvents.OnWeaponReloadEvent -= UpdateAmmoDisplay;
 
     }
 
-    void UpdateDisplayOnWeaponSwitch(WeaponUpdateData weaponUpdateData)
+    void UpdateDisplayOnWeaponSwitch(UIWeaponSwitchContext weaponUpdateData)
     {
         if (weaponUpdateData.weaponIcon != null)
         {
@@ -48,7 +42,9 @@ public class UI_ActiveWeaponDisplay : MonoBehaviour
         AmmoData ammoData = new()
         {
             current = weaponUpdateData.currentAmmo,
-            reserve = weaponUpdateData.reserveAmmo
+            reserve = weaponUpdateData.reserveAmmo,
+            hasInfiniteReserve = weaponUpdateData.hasInfiniteReserveAmmo,
+
         };
 
         UpdateAmmoDisplay(ammoData);
@@ -57,7 +53,13 @@ public class UI_ActiveWeaponDisplay : MonoBehaviour
      void UpdateAmmoDisplay(AmmoData ammoData)
     {
         string currentAmmo = ammoData.current.ToString();
-        string currentReserve = ammoData.reserve.ToString();
+        string currentReserve;
+        if (ammoData.hasInfiniteReserve == false)
+            currentReserve = ammoData.reserve.ToString();
+        
+        else
+            currentReserve = "INF";
+
         string text = currentAmmo + "/" + currentReserve;
         _ammoText.SetText(text);
     }

@@ -6,69 +6,70 @@ public class ItemDetector : MonoBehaviour
 {
     [SerializeField] GameObject _owner;
     [SerializeField] CircleCollider2D _detectionArea;
-    HashSet<IPickup> _pickupsInRange = new();
-    IPickup _closestPickup;
+    //readonly HashSet<IPickup> _pickupsInRange = new();
+    //IPickup _closestPickup;
+
+    readonly HashSet<IInteractable> _interactablesInRange = new();
+    IInteractable _closestInteractable;
 
     void Update()
     {
-        UpdateClosestPickup();
+        UpdateClosestInteractable();
         if (PlayerInputManager.Instance.ItemPickupInput)
-            TryCollectingPickup();
+            TryInteracting();
     }
 
     void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.TryGetComponent(out IPickup pickup))
+        if (collision.TryGetComponent(out IInteractable interactable))
         {
-            Debug.Log("Caught an item : " + pickup);
-            _pickupsInRange.Add(pickup);
+            _interactablesInRange.Add(interactable);
             //UpdateClosestPickup();
         }
     }
 
     void OnTriggerExit2D(Collider2D collision)
     {
-        if (collision.TryGetComponent<IPickup>(out var pickup))
+        if (collision.TryGetComponent(out IInteractable interactable))
         {
-            _pickupsInRange.Remove(pickup);
+            _interactablesInRange.Remove(interactable);
             //UpdateClosestPickup();
         }
     }
 
 
-    public void TryCollectingPickup()
+    public void TryInteracting()
     {
-        if (_closestPickup == null) return;
+        if (_closestInteractable == null) return;
 
-        _closestPickup.OnPickupAttempt(_owner);
+        _closestInteractable.OnInteractionAttempt(_owner);
     }
 
-    void UpdateClosestPickup()
+    void UpdateClosestInteractable()
     {
-        if (_pickupsInRange.Count == 0)
+        if (_interactablesInRange.Count == 0)
         {
-            if(_closestPickup != null)
-                _closestPickup?.Highlight(false);
+            if(_closestInteractable != null)
+                _closestInteractable.Highlight(false);
                 
-            _closestPickup = null;
+            _closestInteractable = null;
             return;
         }
-
-
-    
+        
         float closestDistanceSq = float.MaxValue;
     
-        IPickup newClosest = null;
-        foreach (IPickup pickup in _pickupsInRange)
+        IInteractable newClosest = null;
+        foreach (IInteractable interactable in _interactablesInRange)
         {
-            if (pickup == null) continue;
+            if (interactable == null) continue;
+            if (interactable.IsInteractable == false) continue;
 
-            float distanceSq = (pickup.Location - transform.position).sqrMagnitude;
+            float distanceSq = (interactable.Location - transform.position).sqrMagnitude;
 
             if (distanceSq < closestDistanceSq)
             {
                 closestDistanceSq = distanceSq;
-                newClosest = pickup;
+                newClosest = interactable;
             }
         }
 
@@ -76,9 +77,9 @@ public class ItemDetector : MonoBehaviour
         //If the closest pickup has changed, update highlight
         if (newClosest != null)
         {
-            _closestPickup?.Highlight(false);
-            _closestPickup = newClosest;
-            _closestPickup?.Highlight(true);
+            _closestInteractable?.Highlight(false);
+            _closestInteractable = newClosest;
+            _closestInteractable?.Highlight(true);
         }
     
     }

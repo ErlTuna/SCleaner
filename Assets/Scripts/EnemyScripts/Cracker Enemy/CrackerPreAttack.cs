@@ -2,7 +2,7 @@ using System.Collections;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
-
+[System.Serializable]
 public class CrackerPreAttack : BaseState
 {
     GameObject _owner;
@@ -13,6 +13,7 @@ public class CrackerPreAttack : BaseState
     UnitMovementData _movementData;
     Transform _target;
     float _originalSpeed;
+    [SerializeField] float _slowDownRate = 0.5f;
     Coroutine _prepareAttack;
 
     public CrackerPreAttack(GameObject owner, Unit ownerScript, GameObject player, Rigidbody2D rb2D, NavMeshAgent agent, EnemyStateData stateData, UnitMovementData movementData)
@@ -24,13 +25,14 @@ public class CrackerPreAttack : BaseState
         _ownerScript = ownerScript;
         _movementData = movementData;
         _stateData = stateData;
-        _originalSpeed = _movementData.CurrentMovementSpeed;
+        //_originalSpeed = _movementData.CurrentMovementSpeed;
+        _originalSpeed = _movementData.CurrentMovementSped.Value;
         
     }
 
     public override void OnEnter()
     {
-        _agent.speed *= 0.5f;
+        _agent.speed *= _slowDownRate;
         _prepareAttack = _ownerScript.StartCoroutine(PrepareAttack());
     }
 
@@ -40,7 +42,7 @@ public class CrackerPreAttack : BaseState
             CancelCharge();
         }
 
-        _agent.speed = _movementData.CurrentMovementSpeed;
+        _agent.speed = _originalSpeed;
     }
 
     public override void StateUpdate()
@@ -57,7 +59,7 @@ public class CrackerPreAttack : BaseState
     IEnumerator PrepareAttack()
     {
         _stateData.IsChargingAnAttack = true;
-        yield return new WaitForSeconds(.5f);
+        yield return new WaitForSeconds(1f);
         Debug.Log("Charged up!");
         _stateData.IsChargingAnAttack = false;
         _stateData.IsAttacking = true;
@@ -69,7 +71,8 @@ public class CrackerPreAttack : BaseState
         _ownerScript.StopCoroutine(_prepareAttack);
         _prepareAttack = null;
         _stateData.IsChargingAnAttack = false;
-        _agent.speed = _movementData.CurrentMovementSpeed;
+        //_agent.speed = _movementData.CurrentMovementSpeed;
+        _agent.speed = _movementData.CurrentMovementSped.Value;
     }
     void RotateTowardsPlayer(){
 

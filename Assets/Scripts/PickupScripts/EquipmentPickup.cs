@@ -2,12 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EquipmentPickup : MonoBehaviour, IPickup, IWeaponPickup
+public class EquipmentPickup : MonoBehaviour
 {
     public Vector3 Location => transform.position;
     //[SerializeField] Transform _root;
     WeaponRuntimeData _weaponRuntimeData;
-    [SerializeField] WeaponConfigSO _weaponConfig;
+    [SerializeField] PlayerWeaponConfigSO _weaponConfig;
     [SerializeField] BoxCollider2D _boxCollider2D;
     [SerializeField] SpriteRenderer _spriteRenderer;
     [SerializeField] Material normalMaterial;
@@ -54,11 +54,11 @@ public class EquipmentPickup : MonoBehaviour, IPickup, IWeaponPickup
     */
 
 
-    public void OnPickupAttempt(GameObject collector)
+    public void OnInteractionAttempt(GameObject collector)
     {
 
         if (CanBePickedUp(collector))
-            OnCollected(collector);
+            OnInteracted();
 
         else
             Debug.Log("Can't pick up...");
@@ -69,15 +69,16 @@ public class EquipmentPickup : MonoBehaviour, IPickup, IWeaponPickup
     {
         if (collector.TryGetComponent(out PlayerInventoryManager playerInventory))
         {
-            if (playerInventory.CanPickupWeapon(_weaponConfig))
+            //if (playerInventory.CanPickupWeapon(_weaponConfig))
                 return true;
         }
 
         return false;
     }
 
-    public void OnCollected(GameObject collector)
-    {
+    public void OnInteracted()
+    {   
+        /*
         PlayerInventoryManager inventory = collector.GetComponentInParent<PlayerInventoryManager>();
         if (inventory == null)
         {
@@ -95,10 +96,11 @@ public class EquipmentPickup : MonoBehaviour, IPickup, IWeaponPickup
         Highlight(false);
 
         Destroy(gameObject);
+        */
 
     }
 
-    public void Initialize(WeaponConfigSO config)
+    public void Initialize(PlayerWeaponConfigSO config)
     {
         if (config == null)
         {
@@ -114,6 +116,7 @@ public class EquipmentPickup : MonoBehaviour, IPickup, IWeaponPickup
         SetupVisuals();
     }
 
+    /*
     public void InitializeWithRuntimeData(WeaponRuntimeData runtimeData)
     {
         if (runtimeData == null || runtimeData.Config == null)
@@ -129,6 +132,7 @@ public class EquipmentPickup : MonoBehaviour, IPickup, IWeaponPickup
         _isWorldPickup = false;
         SetupVisuals();
     }
+    */
 
     void SetupVisuals()
     {
@@ -151,7 +155,10 @@ public class EquipmentPickup : MonoBehaviour, IPickup, IWeaponPickup
             _spriteRenderer.material = higlighted ? outlineMaterial : normalMaterial;
     }
 
-
+    public bool CanBeCollected(PickupExecutionContext ctx)
+    {
+        throw new System.NotImplementedException();
+    }
 }
 
 

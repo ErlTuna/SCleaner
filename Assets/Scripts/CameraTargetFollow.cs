@@ -13,9 +13,13 @@ public class CameraTargetFollow : MonoBehaviour
     public float deadZoneRadius = 1f;
     public float maxOffsetDistance = 5f;
     public float followSpeed = 10f;
+    Vector3 _currentOffset;
     Transform _overrideTarget = null;
     bool _isFollowingOverride = false;
     [SerializeField] bool _followMouse = true;
+    public float smoothTime = 0.1f;   
+
+    private Vector3 _offsetVelocity = Vector3.zero;
 
     void OnEnable()
     {
@@ -28,95 +32,118 @@ public class CameraTargetFollow : MonoBehaviour
     {
         _transformEventChannelSO.OnEventRaised -= SetPlayerTransform;
         GameManager.OnGameOverCameraMovement -= StartDefeatCameraMove;
-         GameManager.OnLevelLoaded -= OnLevelLoaded;
+        GameManager.OnLevelLoaded -= OnLevelLoaded;
     }
 
-    void Awake()
-    {
-        _mainCam = Camera.main;
-    }
 
     void Start()
     {
         if (_playerTransform != null)
         {
             Debug.Log("camera moved to player");
-            _mainCam.transform.position = _playerTransform.position;
+            
         }
         _followMouse = true;
     }
 
+    
     void LateUpdate()
     {
         if (_playerTransform == null) return;
         if (_isFollowingOverride) return;
 
         FollowPlayerMouseOffset();
-        
-        
-        /*
-        Vector3 mousePos = _mainCam.ScreenToWorldPoint(PlayerInputManager.Instance.PointerInput);
-        mousePos.z = 0f;
-
-        Vector3 offset = mousePos - _playerTransform.position;
-        float distance = offset.magnitude;
-        if (distance < deadZoneRadius)
-        {
-            offset = Vector3.zero;
-        }
-        else
-        {
-            
-            offset -= offset.normalized * deadZoneRadius;
-
-            
-            offset = Vector3.ClampMagnitude(offset, maxOffsetDistance);
-        }
-
-        Vector3 targetPos = _playerTransform.position + offset;
-        targetPos.z = transform.position.z;
-
-        transform.position = Vector3.Lerp(transform.position, targetPos, Time.deltaTime * followSpeed);
-        */
-        //transform.position = targetPos;
     }
+    
+
+    // Optional: pixels per unit for pixel-perfect rounding
+    public float pixelsPerUnit = 32f; 
+
+    /*
+    void LateUpdate()
+    {
+        if (_playerTransform == null || !_followMouse) return;
+
+        // 1. Calculate mouse-based offset
+        Vector3 mouseWorldPos = _mainCam.ScreenToWorldPoint(PlayerInputManager.Instance.PointerInput);
+        mouseWorldPos.z = 0f;
+
+        Vector3 rawOffset = mouseWorldPos - _playerTransform.position;
+        float distance = rawOffset.magnitude;
+
+        Vector3 desiredOffset;
+        if (distance < deadZoneRadius)
+            desiredOffset = Vector3.zero;
+        else
+            desiredOffset = Vector3.ClampMagnitude(rawOffset - rawOffset.normalized * deadZoneRadius, maxOffsetDistance);
+
+        // 2. Smooth the offset
+        _currentOffset = Vector3.SmoothDamp(_currentOffset, desiredOffset, ref _offsetVelocity, smoothTime);
+
+        // 3. Calculate target camera position
+        Vector3 targetPos = _playerTransform.position + _currentOffset;
+
+        // 4. Optional: pixel-perfect rounding
+        //float unitsPerPixel = 1f / pixelsPerUnit;
+        //targetPos.x = Mathf.Round(targetPos.x / unitsPerPixel) * unitsPerPixel;
+        //targetPos.y = Mathf.Round(targetPos.y / unitsPerPixel) * unitsPerPixel;
+        //targetPos.z = transform.position.z;
+
+        // 5. Apply camera position
+        targetPos.z = transform.position.z;
+        transform.position = targetPos;
+    }
+    */
+
 
     void SetPlayerTransform(Transform playerTransform)
     {
         _playerTransform = playerTransform;
-        
+        _mainCam.transform.position = _playerTransform.position;
     }
+
 
     void FollowPlayerMouseOffset()
     {
-        if (_followMouse == false) return;
+        if (!_followMouse) return;
 
-
+        // Getting mouse world position
         Vector3 mousePos = _mainCam.ScreenToWorldPoint(PlayerInputManager.Instance.PointerInput);
         mousePos.z = 0f;
-        Vector3 offset = mousePos - _playerTransform.position;
 
-        float distance = offset.magnitude;
+        // Calculating raw offset from player to mouse
+        Vector3 rawOffset = mousePos - _playerTransform.position;
+        float distance = rawOffset.magnitude;
 
+        // Applying deadzone + clamp
+        Vector3 desiredOffset;
+
+        // No offset if the pointer is within deadzone. (a circle around the player)
         if (distance < deadZoneRadius)
         {
-            offset = Vector3.zero;
+            desiredOffset = Vector3.zero;
         }
         else
         {
-            offset -= offset.normalized * deadZoneRadius;
-            offset = Vector3.ClampMagnitude(offset, maxOffsetDistance);
+            Vector3 adjusted = rawOffset - rawOffset.normalized * deadZoneRadius;
+            desiredOffset = Vector3.ClampMagnitude(adjusted, maxOffsetDistance);
         }
 
-        Vector3 targetPos = _playerTransform.position + offset;
-        targetPos.z = transform.position.z;
+        // moothing only the offset
 
-        transform.position = Vector3.Lerp(
-            transform.position,
-            targetPos,
+        // Simple lerp
+        _currentOffset = Vector3.Lerp(
+            _currentOffset,
+            desiredOffset,
             Time.deltaTime * followSpeed
         );
-    }
+
+        // Apply to player position 
+        Vector3 targetPos = _playerTransform.position + _currentOffset;
+        targetPos.z = transform.position.z;
+
+        transform.position = targetPos;
+    }  
     void FollowOverrideTarget()
     {
         if (_overrideTarget == null)
@@ -179,6 +206,5 @@ public class CameraTargetFollow : MonoBehaviour
         OnCameraMovedToPlayer?.Invoke();
         _isFollowingOverride = false;
     }
-
 
 }

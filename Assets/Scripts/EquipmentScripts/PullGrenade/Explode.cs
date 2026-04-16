@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class Explode : MonoBehaviour
 {   
+    /*
     [SerializeField] AudioSource _audioSource;
     public AudioClip explosionAudio;
     public event Action OnExplosionEndResetEvent;
@@ -56,4 +57,5 @@ public class Explode : MonoBehaviour
     public void ReceiveExplosionAudio(AudioClip clip){
         explosionAudio = clip;
     }
+    */
 }

@@ -272,7 +272,7 @@ MonoBehaviour:
   _bulletConfig: {fileID: 0}
   _bulletData:
     Owner: {fileID: 0}
-    Faction: 0
+    Faction: 1
     Damage: 0
     Size: 0
     ProjectileSpeed: 0
@@ -283,6 +283,7 @@ MonoBehaviour:
   _mover: {fileID: 2113142280848494571}
   _collisionHandler: {fileID: -8943342139539895527}
   _faction: 1
+  _visualsSr: {fileID: 0}
 --- !u!114 &2113142280848494571
 MonoBehaviour:
   m_ObjectHideFlags: 0

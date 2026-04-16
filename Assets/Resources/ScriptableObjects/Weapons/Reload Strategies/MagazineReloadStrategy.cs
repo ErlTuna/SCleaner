@@ -1,42 +1,24 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "ReloadStrategy", menuName = "ScriptableObjects/Weapon/Reload Strategies/Magazine Reload")]
+[CreateAssetMenu(fileName = "MagazineReloadStrategy", menuName = "ScriptableObjects/Weapon/Reload Strategies/Magazine Reload")]
 public class MagazineReloadStrategy : ReloadStrategySO
 {
-
-    public override void ReloadStart(BaseWeapon owner)
+    public override void PerformReload(ReloadContext context)
     {
-        if (owner.AmmoManager.CanReload() != true || owner.WeaponRuntimeData.State != WeaponState.IDLE) return;
-
-        owner.WeaponRuntimeData.State = WeaponState.RELOADING;
-        owner.WeaponAnimator.StartReloadAnim();
-    }
-    public override void PerformReload(BaseWeapon owner)
-    {
-        if (owner.WeaponConfig.HasInfiniteReserveAmmo){
-            owner.WeaponRuntimeData.CurrentAmmo = owner.WeaponConfig.RoundCapacity;
-            Debug.Log("Has infinite ammo");
+        if (context.AmmoConfig.HasInfiniteReserveAmmo)
+        {
+            context.AmmoRuntime.CurrentAmmo = context.AmmoConfig.RoundCapacity;
+            Debug.Log("Weapon has infinite ammo. CurrentAmmo now : " + context.AmmoRuntime.CurrentAmmo);
             return;
         }
 
-        int needed = owner.WeaponConfig.RoundCapacity - owner.WeaponRuntimeData.CurrentAmmo;
-        //owner.WeaponRuntimeData.CurrentAmmo = 0;
-        int taken = Mathf.Min(needed, owner.WeaponRuntimeData.ReserveAmmo);
+        int needed = context.AmmoConfig.RoundCapacity - context.AmmoRuntime.CurrentAmmo;
+        int taken = Mathf.Min(needed, context.AmmoRuntime.CurrentReserveAmmo);
 
-        owner.WeaponRuntimeData.CurrentAmmo += taken;
-        owner.WeaponRuntimeData.ReserveAmmo -= taken;
-
-        //notify UI
-        //WeaponEvents.RaiseWeaponReload(owner.WeaponRuntimeData);
+        context.AmmoRuntime.CurrentAmmo += taken;
+        context.AmmoRuntime.CurrentReserveAmmo -= taken;
 
     }
 
-    public override void ReloadEnd(BaseWeapon owner)
-    {
-        owner.WeaponRuntimeData.State = WeaponState.IDLE;
-    }
-
-    
 }
+

@@ -34,7 +34,10 @@ class DisplacementEffect : AbilityEffect
         _user = context.user;
 
         if (abilityData.SFXClip)
+        {
             AudioSource.PlayClipAtPoint(abilityData.SFXClip, context.user.transform.position);
+        }
+            
 
         runner.StartCoroutine(DisplacementEffectTimer(context.userStateData, Duration));
         userRigidbody.velocity = context.direction.normalized * Strength;

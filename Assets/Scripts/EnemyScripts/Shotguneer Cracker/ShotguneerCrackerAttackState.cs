@@ -11,8 +11,10 @@ public class ShotguneerCrackerAttackState : BaseState
     readonly GameObject _weapon;
     readonly BaseEnemyWeapon _weaponScript;
     readonly WeaponHandsManager _weaponHandsManager;
+    readonly AttackPatternSO _attackPattern;
+    Coroutine _attackPatternCoroutine;
     public ShotguneerCrackerAttackState(GameObject owner, WeaponHandsManager weaponHandsManager,
-    GameObject weapon, GameObject player, NavMeshAgent agent, EnemyStateData ownerStateData, Animator animator)
+    GameObject weapon, GameObject player, NavMeshAgent agent, EnemyStateData ownerStateData, Animator animator, AttackPatternSO attackPattern)
     {
         _owner = owner;
         _agent = agent;
@@ -22,6 +24,7 @@ public class ShotguneerCrackerAttackState : BaseState
         _weaponScript = _weapon.GetComponent<BaseEnemyWeapon>();
         _weaponHandsManager = weaponHandsManager;
         _animator = animator;
+        _attackPattern = attackPattern;
     }
 
     public override void OnEnter()
@@ -42,11 +45,19 @@ public class ShotguneerCrackerAttackState : BaseState
     public override void StateUpdate()
     {
         DecideMovement();
-        if (_weaponScript != null && _weaponScript.AttackPattern != null && _weaponScript.AttackPattern.IsExecuting != true)
+        //if (_weaponScript != null && _weaponScript.AttackPattern != null && _weaponScript.AttackPattern.IsExecuting != true)
+        if (_weaponScript && _attackPattern && _attackPattern.IsOnCooldown == false && _attackPattern.IsExecuting == false)
         {
-            _weaponScript.ExecuteAttackPattern();
+            TryExecuteAttackPattern();
+        }
+    }
 
+    void TryExecuteAttackPattern()
+    {
+        if (_weaponScript.CanFire())
+        {
             _stateData.IsAttacking = true;
+            _attackPatternCoroutine = _weaponScript.StartCoroutine(_attackPattern.Execute(_weaponScript));
         }
     }
 

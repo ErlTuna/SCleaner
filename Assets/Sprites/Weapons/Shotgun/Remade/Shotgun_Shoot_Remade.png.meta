@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 3037778dcdf74e34d95c8c4ba391877a
+guid: b194a0f53c865524ab94785df88f30dd
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -48,7 +48,7 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 100
+  spritePixelsToUnits: 192
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -69,7 +69,7 @@ TextureImporter:
   platformSettings:
   - serializedVersion: 3
     buildTarget: DefaultTexturePlatform
-    maxTextureSize: 2048
+    maxTextureSize: 4096
     resizeAlgorithm: 0
     textureFormat: -1
     textureCompression: 0
@@ -97,13 +97,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Shotgun_Shoot_Remade_0
+      name: Shotgun_Shoot_Remade_v2_0
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 208
-        height: 145
+        width: 416
+        height: 290
       alignment: 9
       pivot: {x: 0.1, y: 0.45}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -111,167 +111,167 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 81660df276e19d44680b24557b778b56
-      internalID: 59724262
+      spriteID: 8f890045e625ccf40a2a77fc2874a7a6
+      internalID: -1008830780
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Shotgun_Shoot_Remade_1
-      rect:
-        serializedVersion: 2
-        x: 208
-        y: 0
-        width: 208
-        height: 145
-      alignment: 9
-      pivot: {x: 0.1, y: 0.45}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: b7570b7fd8b78834d980d379bb582d4a
-      internalID: 702344464
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Shotgun_Shoot_Remade_2
+      name: Shotgun_Shoot_Remade_v2_1
       rect:
         serializedVersion: 2
         x: 416
         y: 0
-        width: 208
-        height: 145
+        width: 416
+        height: 290
       alignment: 9
-      pivot: {x: 0.1, y: 0.45}
+      pivot: {x: 0.2132641, y: 0.078751996}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 0711183e606dc784fbab42787df22392
-      internalID: 69188570
+      spriteID: eed14b8cb7315cb4991d3e846a9f292f
+      internalID: 666471414
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Shotgun_Shoot_Remade_3
-      rect:
-        serializedVersion: 2
-        x: 624
-        y: 0
-        width: 208
-        height: 145
-      alignment: 9
-      pivot: {x: 0.1, y: 0.45}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 0beba622bc0eed048a384a3c134a5d74
-      internalID: 164272986
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Shotgun_Shoot_Remade_4
+      name: Shotgun_Shoot_Remade_v2_2
       rect:
         serializedVersion: 2
         x: 832
         y: 0
-        width: 208
-        height: 145
+        width: 416
+        height: 290
       alignment: 9
-      pivot: {x: 0.1, y: 0.45}
+      pivot: {x: 0.18461007, y: 0.11638598}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 43e23730616634b4ba3d28d240217649
-      internalID: -2044737879
+      spriteID: 44b8fa205ffee314aa9a3388e058ffa2
+      internalID: -1430416907
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Shotgun_Shoot_Remade_5
-      rect:
-        serializedVersion: 2
-        x: 1040
-        y: 0
-        width: 208
-        height: 145
-      alignment: 9
-      pivot: {x: 0.1, y: 0.45}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 09c673d519564f94c9298dbc6f2d948f
-      internalID: -1819641365
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Shotgun_Shoot_Remade_6
+      name: Shotgun_Shoot_Remade_v2_3
       rect:
         serializedVersion: 2
         x: 1248
         y: 0
-        width: 208
-        height: 145
+        width: 416
+        height: 290
       alignment: 9
-      pivot: {x: 0.1, y: 0.45}
+      pivot: {x: 0.15168616, y: 0.15518129}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 0e871413f61ea3d4b981a48e6d06afac
-      internalID: -542706898
+      spriteID: 310906d08bb451e4ab276ef6589f2725
+      internalID: -1659130272
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Shotgun_Shoot_Remade_7
-      rect:
-        serializedVersion: 2
-        x: 1456
-        y: 0
-        width: 208
-        height: 145
-      alignment: 9
-      pivot: {x: 0.1, y: 0.45}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: ac80caa394bcb634882d79dcfa1620c6
-      internalID: 355278836
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Shotgun_Shoot_Remade_8
+      name: Shotgun_Shoot_Remade_v2_4
       rect:
         serializedVersion: 2
         x: 1664
         y: 0
-        width: 208
-        height: 145
+        width: 416
+        height: 290
+      alignment: 9
+      pivot: {x: 0.123465315, y: 0.18891634}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d1186527e0bcff44bb8a0384627f5315
+      internalID: 1723173590
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Shotgun_Shoot_Remade_v2_5
+      rect:
+        serializedVersion: 2
+        x: 2080
+        y: 0
+        width: 416
+        height: 290
+      alignment: 9
+      pivot: {x: 0.11288276, y: 0.24120562}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f1696394bbc2da341a3292439e833f3c
+      internalID: -1923596164
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Shotgun_Shoot_Remade_v2_6
+      rect:
+        serializedVersion: 2
+        x: 2496
+        y: 0
+        width: 416
+        height: 290
+      alignment: 9
+      pivot: {x: 0.1011241, y: 0.29349494}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 99d8e5edf5d658943bdd90285b4eebd2
+      internalID: 747579992
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Shotgun_Shoot_Remade_v2_7
+      rect:
+        serializedVersion: 2
+        x: 2912
+        y: 0
+        width: 416
+        height: 290
+      alignment: 9
+      pivot: {x: 0.09759639, y: 0.34747103}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5232f7da8d2d4b342bb0263ddc79da3c
+      internalID: 1886059046
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Shotgun_Shoot_Remade_v2_8
+      rect:
+        serializedVersion: 2
+        x: 3328
+        y: 0
+        width: 416
+        height: 290
       alignment: 9
       pivot: {x: 0.1, y: 0.45}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -279,8 +279,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 0a3d1b2061e790d46bb1b6409db3b734
-      internalID: 235749553
+      spriteID: 6351258259a856543814ccb7c5d99dc1
+      internalID: -1050471328
       vertices: []
       indices: 
       edges: []
@@ -296,15 +296,15 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      Shotgun_Shoot_Remade_0: 59724262
-      Shotgun_Shoot_Remade_1: 702344464
-      Shotgun_Shoot_Remade_2: 69188570
-      Shotgun_Shoot_Remade_3: 164272986
-      Shotgun_Shoot_Remade_4: -2044737879
-      Shotgun_Shoot_Remade_5: -1819641365
-      Shotgun_Shoot_Remade_6: -542706898
-      Shotgun_Shoot_Remade_7: 355278836
-      Shotgun_Shoot_Remade_8: 235749553
+      Shotgun_Shoot_Remade_v2_0: -1008830780
+      Shotgun_Shoot_Remade_v2_1: 666471414
+      Shotgun_Shoot_Remade_v2_2: -1430416907
+      Shotgun_Shoot_Remade_v2_3: -1659130272
+      Shotgun_Shoot_Remade_v2_4: 1723173590
+      Shotgun_Shoot_Remade_v2_5: -1923596164
+      Shotgun_Shoot_Remade_v2_6: 747579992
+      Shotgun_Shoot_Remade_v2_7: 1886059046
+      Shotgun_Shoot_Remade_v2_8: -1050471328
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

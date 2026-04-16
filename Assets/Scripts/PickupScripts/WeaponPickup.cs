@@ -1,75 +1,70 @@
 using UnityEngine;
 
-public class WeaponPickup : ItemPickup<WeaponPickupDefinitionSO>
+// Maybe I should have put the weapon runtime data inside the inventory of the player and pulled it from there...
+public class WeaponPickup : ItemPickup, IPayloadProvider
 {
-    [SerializeField] WeaponRuntimeData _weaponRuntimeData;
+    WeaponRuntimeData _weaponRuntimeData; // runtime
 
-    void Start()
+    [SerializeField] PlayerWeaponConfigSO _weaponConfig;
+    
+    
+    public override void SetupVisuals()
     {
-        _weaponRuntimeData = null;
-        // If hand-placed, create fresh runtime data
-        if (_weaponRuntimeData == null && pickupDefinition.WeaponConfig != null)
+        if (visualsSR == null) return;
+
+        if (visualsSR.sprite != null && autoUpdateSprite == false)
         {
-            _weaponRuntimeData = new WeaponRuntimeData(pickupDefinition.WeaponConfig);
-        }
-
-        SetupVisuals();
-        UpdateColliderSize();
-    }
-
-    public override void OnPickupAttempt(GameObject collector)
-    {
-        if (CanBePickedUp(collector))
-            OnCollected(collector);
-
-        else
-            Debug.Log("Can't pick up...");
-    }
-
-    public override bool CanBePickedUp(GameObject collector)
-    {
-        if (TryGetInventory(collector, out PlayerInventoryManager inventory))
-        {
-            if (inventory.CanPickupWeapon(pickupDefinition.WeaponConfig))
-                return true;
-        }
-
-        return false;
-    }
-
-    public override void OnCollected(GameObject collector)
-    {
-        var inventory = collector.GetComponentInParent<PlayerInventoryManager>();
-        if (inventory == null) return;
-
-        
-        inventory.TryAddWeapon(_weaponRuntimeData);
-        Destroy(gameObject);
-    }
-
-    public void Initialize(WeaponPickupDefinitionSO definition, WeaponRuntimeData runtimeData)
-    {
-        if (runtimeData == null || runtimeData.Config == null || definition == null)
-        {
-            Debug.LogError("Weapon Runtime Data or Config or Pickup Definition is null. Can't create pickup");
-            Destroy(gameObject);
+            //_outline2D.Init();
             return;
         }
 
-        pickupDefinition = definition;
+        if (itemConfig != null)
+        {
+            if (itemConfig.PickupDefinition != null)
+            {
+                if (itemConfig.PickupDefinition.DefaultPickupSprite != null)
+                {
+                    visualsSR.sprite = itemConfig.PickupDefinition.DefaultPickupSprite;
+                    //_outline2D.Init();
+                }
+            }
+        }       
+    }
+
+
+    public override void Highlight(bool higlighted)
+    {
+        if(visualsSR)
+            visualsSR.sharedMaterial = higlighted ? outlineMaterial : normalMaterial;
+        
+    }
+
+    public void InitializeWithExistingWeapon(WeaponRuntimeData droppedWeaponData)
+    {
+        _weaponRuntimeData = droppedWeaponData;
+
+        //PlayerWeaponConfigSO playerWeaponConfig = _weaponRuntimeData.Config as PlayerWeaponConfigSO;
+        _weaponConfig =  _weaponRuntimeData.Config as PlayerWeaponConfigSO;
+        itemConfig = _weaponConfig.PickupConfig;
+
         SetupVisuals();
     }
 
-    void SetupVisuals()
+
+    public IPickupPayload CreatePayload()
     {
-        if (spriteRenderer != null)
-        {
-            spriteRenderer.material = normalMaterial;
-            spriteRenderer.sprite = pickupDefinition.PickupSprite;
-        }
-            
+        if (_weaponRuntimeData != null)
+            return new WeaponPickupPayload(_weaponRuntimeData);
+
+        WeaponRuntimeData newData = WeaponRuntimeFactory.Create(_weaponConfig);
+        return new WeaponPickupPayload(newData);
+    }
+
+    public override void SetPickupConfig(ItemSO pickupConfig)
+    {
+        this.itemConfig = pickupConfig;
+        WeaponPickupSO weaponPickupSO = pickupConfig as WeaponPickupSO;
+        _weaponConfig = weaponPickupSO.WeaponConfig;
     }
 
 }
-
-

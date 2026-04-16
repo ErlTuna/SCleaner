@@ -12,7 +12,7 @@ public class PlayerAbilityHandler : MonoBehaviour
     [SerializeField] AbilityData currentAbility;
     [SerializeField] AbilityContext context;
     [SerializeField] SpriteRenderer _spriteRenderer;
-    [SerializeField] UnitEnergyData _playerEnergyData;
+    [SerializeField] PlayerEnergyData _playerEnergyData;
     Coroutine useStateCoroutine;
     public int currentAbilityIndex = 0;
     public UnitStateData _playerStateData;
@@ -23,7 +23,7 @@ public class PlayerAbilityHandler : MonoBehaviour
         UIEvents.RaiseAbilityChanged(currentAbility.UI_Icon);
     }
 
-    public void InitializeManager(UnitEnergyData playerEnergyData)
+    public void InitializeManager(PlayerEnergyData playerEnergyData)
     {
         _playerEnergyData = playerEnergyData;
     }
@@ -54,7 +54,6 @@ public class PlayerAbilityHandler : MonoBehaviour
     Coroutine StartAbilityUse()
     {
         OnAbilityUsed?.Invoke(currentAbility);
-        UIEvents.RaiseEnergyUsed();
         return StartCoroutine(currentAbility.AbilityTriggered(AbilityFinished));
     }
 

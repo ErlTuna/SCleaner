@@ -10,7 +10,7 @@ public class MenuElement : MonoBehaviour, ISelectHandler, IDeselectHandler, ISub
     public void OnSelect(BaseEventData eventData)
     {
         MenuAnimationsManager.instance.OptionSelected(selectionIndicator);
-        AudioManager.Instance.PlaySelectSound();
+        AudioManager.Instance.PlayMenuSelectSound();
     }
 
     public void OnDeselect(BaseEventData eventData)
@@ -20,7 +20,7 @@ public class MenuElement : MonoBehaviour, ISelectHandler, IDeselectHandler, ISub
 
     public void OnSubmit(BaseEventData eventData)
     {
-        AudioManager.Instance.PlaySubmitSound();
+        AudioManager.Instance.PlayMenuSubmitSound();
         MenuContext.Current.Execute(action);
     }
 }

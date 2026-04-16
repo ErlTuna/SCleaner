@@ -1,24 +1,35 @@
 using System;
 using System.Linq;
 
+// Name this UnitInventoryRuntime later
 [Serializable]
 public class UnitInventoryData
-{
-    public UnitWeaponInventory WeaponInventory {get; private set;}
-    public UnitEquipmentInventory EquipmentInventory {get; private set;}
+{   
+    // OLD
+    public PlayerWeaponInventory WeaponInventory {get; private set;}
+
+    // REFACTOR
+    public PlayerWeaponInventoryRuntime WeaponInventory_V2 {get; private set;}
+    public PlayerEquipmentInventory EquipmentInventory {get; private set;}
     public UnitCurrencyInventory CurrencyInventory {get; private set;}
-    public UnitInventoryData(UnitInventoryConfigSO config)
-    {
-        // These event channels can be bundled in a struct later
-        WeaponInventory = new(config.WeaponPrefabs.Count(), config.MaxWeaponAmount, config.WeaponAddedEventChannel, config.WeaponDropEventChannel);
+    public PlayerPassiveItemInventory PassiveItemInventory {get; private set;}
+
+    public UnitInventoryData(PlayerInventoryConfigSO config)
+    {   
+        // config.WeaponPrefabs.Count()
+        WeaponInventory = new(1, config.MaxWeaponAmount, config.WeaponAddedEventChannel, config.WeaponDropEventChannel);
+
+        //WeaponInventory = new(1, config.MaxWeaponAmount, config.WeaponAddedEventChannel, config.WeaponDropEventChannel);
         
-        EquipmentInventory = new UnitEquipmentInventory(config.EquipmentPickedUpChannel, config.EquipmentDroppedChannel);
-        CurrencyInventory = new UnitCurrencyInventory
-        {
-            OwnedCurrency = 0,
-            MaxCurrency = config.MaxCurrency
-        };
+        //EquipmentInventory = new UnitEquipmentInventory(config.ItemPickedUpEventChannel, config.ItemDroppedEventChannel);
+        CurrencyInventory = new UnitCurrencyInventory(0, config.MaxCurrency, config.CurrencyPickedUpEventChannel);
+
+        PassiveItemInventory = new(config.ItemPickedUpEventChannel, config.ItemDroppedEventChannel);
     }
 
 
 }
+
+// Manager will create the runtime systems, composition root will inject the data.
+// Make sure to save UnitInventoryData, NOT the runtime data.
+// Need methods to rebuild from data. Rebuild should happen at the correct level

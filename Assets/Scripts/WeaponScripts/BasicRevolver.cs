@@ -1,73 +1,134 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class BasicRevolver : PlayerWeapon
+public class BasicRevolver : PlayerWeapon, IChargeFiringWeapon
 {
-    void Start()
+    IChargeBasedWeaponAnimator _chargeAnimator;
+
+    void OnEnable()
     {
-        //InitializeWithConfig();
+        _chargeAnimator = weaponAnimatorComponent as IChargeBasedWeaponAnimator;
+
+        weaponAnimatorComponent.OnAttackAnimEnd += OnPrimaryAttackAnimEnd;
+        weaponAnimatorComponent.OnBulletSpawnPointReached += SpawnBullet;
+        weaponAnimatorComponent.OnReloadAnimEnd += OnReloadAnimEnd;
+
+        _chargeAnimator.OnChargeCompleted += PerformAttack;
+        _chargeAnimator.OnChargeCanceled += CancelCharge;
+    }
+
+    void OnDisable()
+    {
+        weaponAnimatorComponent.OnAttackAnimEnd -= OnPrimaryAttackAnimEnd;
+        weaponAnimatorComponent.OnBulletSpawnPointReached -= SpawnBullet;
+        weaponAnimatorComponent.OnReloadAnimEnd -= OnReloadAnimEnd;
+
+        _chargeAnimator.OnChargeCompleted -= PerformAttack;
+        _chargeAnimator.OnChargeCanceled -= CancelCharge;
     }
 
     void Update()
     {
-        //weapon runs out of ammo but has reserve and isn't actively reloading, try starting a reload
-        if (AmmoManager.HasAmmo() == false && AmmoManager.CanReload() && WeaponRuntimeData.State != WeaponState.RELOADING)
-        {
-            AmmoManager.HandleReloadStart();
-        }
+        CheckAmmoStatus();
     }
 
+    // --- Input forwarding ---
 
     public override void HandlePrimaryAttackInput()
     {
-        if (CanFire() == false && CanDryFire())
+        if (CanCharge())
         {
-            TryDryFire();
-            return;
+            PrimaryAttackStrategy.OnTriggerPressed(this);
         }
 
-        if (WeaponRuntimeData.State != WeaponState.IDLE) return;
-            HandlePreAttack();
-    
+        // if (WeaponRuntimeData.State == WeaponState.CHARGING_PRIMARY_ATTACK)
+        else 
+        {
+            PrimaryAttackStrategy.OnTriggerHeld(this);
+            weaponRuntimeData.isTriggerHeld = true;
+        }
     }
 
-    public override void HandlePrimaryAttackInputCancel()
+    public override void HandlePrimaryAttackInputRelease()
     {
-        if (WeaponRuntimeData.State == WeaponState.PRE_PRIMARY_ATTACK)
-            PrimaryAttackStrategy.HandleAttackCanceled(this);
-    }
+        if (weaponRuntimeData.isTriggerHeld == false) return;
 
-    public void HandlePreAttack()
-    {
-        if (PrimaryAttackStrategy != null)
-            PrimaryAttackStrategy.HandlePreAttack(this);
-    }
+        weaponRuntimeData.isTriggerHeld = false;
 
-    public void HandlePreAttackEnd()
-    {
-        if (PrimaryAttackStrategy != null)
-            PrimaryAttackStrategy.HandleAttackStart(this);
+        if (WeaponRuntimeData.State == WeaponState.CHARGING_PRIMARY_ATTACK)
+        {
+            PrimaryAttackStrategy.OnTriggerReleased(this);
+        }
+        
     }
 
     public override void HandleReloadInput()
     {
-        AmmoManager.HandleReloadStart();
+        if (AmmoManager.CanReload() && WeaponRuntimeData.State != WeaponState.RELOADING)
+        {
+            var reloadContext = CreateReloadContext();
+            AmmoManager.SetReloadContext(reloadContext);
+
+            SetState(WeaponState.RELOADING);
+            WeaponAnimator.StartReloadAnim();
+        }
     }
 
-    public override void HandleReloadStart()
-    {
-        //if (AmmoManager.CanReload() != true || WeaponRuntimeData.State == WeaponState.FIRING) return;
+    // --- IChargeFiringWeapon Implementation ---
 
-        //WeaponAnimator.StartReloadAnim();
+    public void BeginCharge()
+    {
+        SetState(WeaponState.CHARGING_PRIMARY_ATTACK);
+        _chargeAnimator.StartChargeAnimation();
     }
 
-    public override void SpawnBullet()
+    public void PerformAttack()
     {
-        GameObject instantiatedBullet = Instantiate(WeaponConfig.BulletConfig.Prefab, FiringPoints[0].transform.position, transform.rotation);
-        instantiatedBullet.GetComponent<Bullet>().Initialize(gameObject, FiringPoints[0].transform.right, WeaponRuntimeData, WeaponConfig);
+        SetState(WeaponState.PRIMARY_ATTACK);
+        weaponAnimatorComponent.StartPrimaryAttackAnim();
+    }
+
+    public void CancelCharge()
+    {
+        _chargeAnimator.CancelChargeAnimation();
+        SetState(WeaponState.IDLE);
+    }
+
+    public void OnAttackInputReleased()
+    {
+        if (WeaponRuntimeData.State == WeaponState.CHARGING_PRIMARY_ATTACK)
+        {
+            _chargeAnimator.CancelChargeAnimation();
+        }
+    }
+
+    public bool CanCharge()
+    {
+        return PrimaryAttackStrategy && WeaponRuntimeData.State == WeaponState.IDLE && AmmoManager.HasAmmo();
+    }
+
+    // --- Animation End Handlers ---
+
+    protected override void OnPrimaryAttackAnimEnd()
+    {
+        if (weaponRuntimeData.isTriggerHeld && CanFire())
+            PrimaryAttackStrategy.OnTriggerPressed(this);
+        else
+            SetState(WeaponState.IDLE);
+    }
+
+    protected override void OnReloadAnimEnd()
+    {
+        Debug.Log("reload anim end called");
+        AmmoManager.UseReloadStrategy();
+        SetState(WeaponState.IDLE);
+    }
+
+    protected override void SpawnBullet()
+    {
+        Debug.Log("Bang!!");
+        GameObject bullet = Instantiate(WeaponConfig.BulletConfig.Prefab, FiringPoints[0].position, transform.rotation);
+        bullet.GetComponent<Bullet>().Initialize(gameObject, FiringPoints[0].right, WeaponRuntimeData, WeaponConfig);
         AmmoManager.UseAmmo();
-        //WeaponEvents.RaiseAmmoUsed(WeaponRuntimeData);
-
     }
 }
+

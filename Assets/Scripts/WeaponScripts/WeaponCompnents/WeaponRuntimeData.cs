@@ -1,39 +1,72 @@
-using System;
-using UnityEngine;
+using System.Collections.Generic;
 
-[Serializable]
-public class WeaponRuntimeData : IInventoryAddable
+//[Serializable]
+public class WeaponRuntimeData
 {
+    readonly public List<WeaponSpreadModifier> SpreadModifiers;
+    readonly public List<WeaponClipSizeModifier> ClipModifiers;
+    readonly public List<WeaponDamageModifier> DamageModifiers;
+    private readonly HashSet<IWeaponModifier> _activeModifiers = new();
     readonly public WeaponConfigSO Config;
     public WeaponState State;
-    public int CurrentAmmo;
-    public int ReserveAmmo;
+    WeaponRuntimeAmmoData _weaponAmmoRuntimeData;
+    public WeaponRuntimeAmmoData AmmoData => _weaponAmmoRuntimeData;
+
+    public string WeaponID {get; private set;}
+    public bool isTriggerHeld;
+    public bool CanBeDropped {get; private set;}
+
     public int Damage;
     public float TimeSinceLastFired;
     public float SpreadResetThreshold;
 
 
-    public WeaponRuntimeData(WeaponConfigSO config)
+    public WeaponRuntimeData(WeaponConfigSO config, WeaponRuntimeAmmoData ammoData)
     {
         if (config == null) return;
 
         Config = config;
+        _weaponAmmoRuntimeData = ammoData;
 
-        CurrentAmmo = Config.RoundCapacity;
-        ReserveAmmo = Config.StartingReserveAmmo;
+
         State = WeaponState.IDLE;
         Damage = Config.Damage;
         TimeSinceLastFired = 0;
         SpreadResetThreshold = config.SpreadResetThreshold;
+        
+        CanBeDropped = config.CanBeDropped;
+
+        SpreadModifiers = new();
+        ClipModifiers = new();
+        DamageModifiers = new();
+
+
+        // Sort this out later
+        PlayerWeaponConfigSO playerWeaponConfigSO = config as PlayerWeaponConfigSO;
+
+        WeaponID = playerWeaponConfigSO.InventoryItemGUID;
+
     }
 
-    public bool CanBeAdded(PlayerInventoryManager inventory)
+    /*
+    public void SetAcquisitionSource(ItemAcquisitionSource acquisitionSource)
     {
-        return inventory.CanPickupWeapon(Config);
+        //AcquisitionSource = acquisitionSource;
+    }
+    */
+
+    public void ApplyClipSizeModifier(WeaponClipSizeModifier modifier)
+    {
+        if (_activeModifiers.Contains(modifier)) return;
+
+        _activeModifiers.Add(modifier);
+        //RoundCapacity += modifier.Amount;
     }
 
-    public void AddToInventory(PlayerInventoryManager inventory)
+    public void RemoveClipSizeModifier(WeaponClipSizeModifier modifier)
     {
-        inventory.TryAddWeapon(this);
+        if (_activeModifiers.Remove(modifier) != true) return;
+
+        //RoundCapacity -= modifier.Amount;
     }
 }

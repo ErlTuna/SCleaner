@@ -18,7 +18,8 @@ MonoBehaviour:
   State: 0
   EnergyCost: 1
   Duration: 0.2
-  icon: {fileID: 21300000, guid: b656f54df181b3b42ba04e683cc970a6, type: 3}
+  Icon: {fileID: 0}
+  UI_Icon: {fileID: 21300000, guid: ac7a39aeb3b23c84ca3141e749613c66, type: 3}
   SFXClip: {fileID: 8300000, guid: ed1cf418affa282499df8f48dd67147e, type: 3}
   Effects:
   - rid: 3032814247641350144

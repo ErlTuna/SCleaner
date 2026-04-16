@@ -31,7 +31,7 @@ public class AnimationEventStateBehaviour : StateMachineBehaviour {
     void NotifyReceiver(Animator animator) {
         if (receiver != null) {
             receiver.OnAnimationEventTriggered(eventName);
-            Debug.Log($"Notified {receiver} with the event {eventName}.");
+            //Debug.Log($"Notified {receiver} with the event {eventName}.");
         }
     }
 }

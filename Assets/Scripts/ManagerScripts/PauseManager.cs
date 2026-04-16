@@ -4,6 +4,7 @@ public class PauseManager : MonoBehaviour
 {
     public static PauseManager Instance {get; private set;}
 
+    
     void Awake(){
         
         if (Instance != null && Instance != this){
@@ -16,14 +17,34 @@ public class PauseManager : MonoBehaviour
 
     void Update()
     {
-        if (PlayerInputManager.Instance.MenuOpenInput && GameManager.Instance.CurrentState == GameState.PLAYING)
+        if (PlayerInputManager.Instance.MenuOpenInput &&
+            GameManager.Instance.CurrentState == GameState.PLAYING)
         {
-            GameManager.Instance.SetGameState(GameState.PAUSED);
-        }
-
-        else if (PlayerInputManager.Instance.MenuCloseInput && GameManager.Instance.CurrentState == GameState.PAUSED)
-        {
-            GameManager.Instance.SetGameState(GameState.PLAYING);
+            Pause();
         }
     }
+
+
+    void Pause()
+    {
+        Debug.Log("Game paused");
+        Time.timeScale = 0f;
+        PlayerInputManager.Instance.ToggleMouseInput(false);
+        PlayerInputManager.Instance.SwitchToUIActionMap();
+
+        GameManager.Instance.SetGameState(GameState.PAUSED);
+    }
+
+    public void Resume()
+    {
+        Debug.Log("Game unpaused.");
+        Time.timeScale = 1f;
+        PlayerInputManager.Instance.ToggleMouseInput(true);
+        PlayerInputManager.Instance.SwitchToGameplayActionMap();
+
+        GameManager.Instance.SetGameState(GameState.PLAYING);
+    }
+
+
+    
 }

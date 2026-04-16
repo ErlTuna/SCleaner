@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8c85a01d92f074341a4544e4cdfb60c8, type: 3}
+  m_Name: HalfHealthPickupSO
+  m_EditorClassIdentifier: 
+  PickupDefinition: {fileID: 11400000, guid: 2128e68b1f8be1a4dba106ce12073db9, type: 2}
+  InventoryDefinition: {fileID: 0}
+  PickupPrefab: {fileID: 8594144460780797379, guid: 9a0c09ac57bffab44af0c637d84f423f, type: 3}
+  GeneralConditions:
+  - {fileID: 11400000, guid: 1157c86b25817a7439f35e5b76688025, type: 2}
+  autoReorder: 0
+  Behaviors:
+  - Behavior: {fileID: 11400000, guid: 7cb213249140c1543b2c306d9dfdfa05, type: 2}
+    Order: 0
+    IsExhaustible: 0
+    BehaviourSpecificConditions: []

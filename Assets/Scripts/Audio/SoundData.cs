@@ -2,7 +2,7 @@ using UnityEngine;
 using System;
 
 [CreateAssetMenu(fileName = "Sound Data", menuName = "ScriptableObjects/Audio/Sound Data")]
-public class SoundData : ScriptableObject
+public class SoundDataSO : ScriptableObject
 {
     public AudioClip[] clips;
     public bool loop;

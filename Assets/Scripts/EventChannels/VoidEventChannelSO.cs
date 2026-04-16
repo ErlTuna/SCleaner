@@ -11,7 +11,6 @@ public class VoidEventChannelSO : ScriptableObject
 
     public void RaiseEvent()
     {
-        if (OnEventRaised != null)
-            OnEventRaised.Invoke();
+        OnEventRaised?.Invoke();
     }
 }

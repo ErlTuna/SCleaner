@@ -10,7 +10,6 @@ GameObject:
   m_Component:
   - component: {fileID: 2399945189020309936}
   - component: {fileID: 1477282310379925042}
-  - component: {fileID: 6288805889014121294}
   m_Layer: 0
   m_Name: Visuals & Muzzle
   m_TagString: Untagged
@@ -53,58 +52,6 @@ MonoBehaviour:
   _wrapper: {fileID: 2399945189020309936}
   _gripPointsWrapper: {fileID: 0}
   _secondGripPoint: {fileID: 0}
---- !u!212 &6288805889014121294
-SpriteRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3361279698456889983}
-  m_Enabled: 1
-  m_CastShadows: 0
-  m_ReceiveShadows: 0
-  m_DynamicOccludee: 1
-  m_StaticShadowCaster: 0
-  m_MotionVectors: 1
-  m_LightProbeUsage: 1
-  m_ReflectionProbeUsage: 1
-  m_RayTracingMode: 0
-  m_RayTraceProcedural: 0
-  m_RenderingLayerMask: 1
-  m_RendererPriority: 0
-  m_Materials:
-  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
-  m_StaticBatchInfo:
-    firstSubMesh: 0
-    subMeshCount: 0
-  m_StaticBatchRoot: {fileID: 0}
-  m_ProbeAnchor: {fileID: 0}
-  m_LightProbeVolumeOverride: {fileID: 0}
-  m_ScaleInLightmap: 1
-  m_ReceiveGI: 1
-  m_PreserveUVs: 0
-  m_IgnoreNormalsForChartDetection: 0
-  m_ImportantGI: 0
-  m_StitchLightmapSeams: 1
-  m_SelectedEditorRenderState: 0
-  m_MinimumChartSize: 4
-  m_AutoUVMaxDistance: 0.5
-  m_AutoUVMaxAngle: 89
-  m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: 0
-  m_Sprite: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_FlipX: 0
-  m_FlipY: 0
-  m_DrawMode: 0
-  m_Size: {x: 1, y: 1}
-  m_AdaptiveModeThreshold: 0.5
-  m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 0
-  m_MaskInteraction: 0
-  m_SpriteSortPoint: 0
 --- !u!1 &3557530581464279601
 GameObject:
   m_ObjectHideFlags: 0
@@ -178,12 +125,12 @@ SpriteRenderer:
   m_SortingLayerID: 178966987
   m_SortingLayer: 1
   m_SortingOrder: 3
-  m_Sprite: {fileID: 21300000, guid: f8a2367897bb9364c97be7e87151d884, type: 3}
+  m_Sprite: {fileID: 21300000, guid: afa65fda35d3f25478827ada30e41de7, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 3.5, y: 2.6875}
+  m_Size: {x: 2, y: 1}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -202,8 +149,9 @@ GameObject:
   - component: {fileID: 2617765290647847033}
   - component: {fileID: 4588683061220869779}
   - component: {fileID: 2447036490803299542}
-  - component: {fileID: 2313984585359081142}
   - component: {fileID: 5083089168760562356}
+  - component: {fileID: 2446050446387233053}
+  - component: {fileID: 3422357477713413689}
   m_Layer: 0
   m_Name: EnemyRevolverPrefab
   m_TagString: Untagged
@@ -334,7 +282,7 @@ Animator:
   m_GameObject: {fileID: 7835682278847929839}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: c05253548fc5c574aafad69d1d8e63e1, type: 2}
+  m_Controller: {fileID: 9100000, guid: 04d3a8f06d62f654abf90d4a9b0ca76f, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -371,39 +319,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5fbd6f3485771c7448e0a2961c45d0f3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _spriteRenderer: {fileID: 7573555308125103099}
+  spriteRenderer: {fileID: 7573555308125103099}
   weaponSoundManager: {fileID: 4588683061220869779}
   FiringPoints:
   - {fileID: 5319443852953278838}
-  _animatorComponent: {fileID: 2313984585359081142}
+  weaponAnimatorComponent: {fileID: 2446050446387233053}
+  ammoManager: {fileID: 5083089168760562356}
+  weaponConfig: {fileID: 11400000, guid: 92e83074df262fb47ae11f53465e8b9a, type: 2}
   stockGripPoint: {fileID: 3699681821496835359}
   secondGripPoint: {fileID: 0}
-  AmmoManager: {fileID: 5083089168760562356}
-  WeaponConfig: {fileID: 11400000, guid: 909b0afb4a531404baa3d1bd5f770e9d, type: 2}
-  WeaponRuntimeData:
-    State: 0
-    CurrentAmmo: 0
-    ReserveAmmo: 0
-    Damage: 0
-    TimeSinceLastFired: 0
-    SpreadResetThreshold: 0
-  attackPattern: {fileID: 11400000, guid: cc33d09f61979d24e8c5b0d72a7618b2, type: 2}
   _ownerScript: {fileID: 0}
---- !u!114 &2313984585359081142
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7835682278847929839}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 68a3f9f85eb27024081467faa477b695, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _owner: {fileID: 2447036490803299542}
-  _paramTable: {fileID: 11400000, guid: 657f602cfe10f2646930644441b74e99, type: 2}
-  animator: {fileID: 2617765290647847033}
 --- !u!114 &5083089168760562356
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -416,8 +341,83 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 94ea39655bf03c74880f9a43878f3cf4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Owner: {fileID: 2447036490803299542}
-  ReloadStrategy: {fileID: 11400000, guid: 0be6bec96fcf27145ae17c030d6f25cb, type: 2}
+  _reloadStrategy: {fileID: 11400000, guid: 0be6bec96fcf27145ae17c030d6f25cb, type: 2}
+  _ammoChangeEventChannelSO: {fileID: 0}
+--- !u!114 &2446050446387233053
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7835682278847929839}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0acaa79ccdce56940b04c7dd7841aa49, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _paramTable: {fileID: 11400000, guid: 657f602cfe10f2646930644441b74e99, type: 2}
+  animator: {fileID: 2617765290647847033}
+--- !u!114 &3422357477713413689
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7835682278847929839}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cbe80126baae4cf0ba8194133e415a29, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  animationEvents:
+  - eventName: OnBulletSpawnPointReached
+    OnAnimationEvent:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 2446050446387233053}
+          m_TargetAssemblyTypeName: SimpleWeaponAnimator, Assembly-CSharp
+          m_MethodName: AnimationEvent_BulletSpawnPointReached
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+  - eventName: OnPrimaryAttackAnimEnd
+    OnAnimationEvent:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 2446050446387233053}
+          m_TargetAssemblyTypeName: SimpleWeaponAnimator, Assembly-CSharp
+          m_MethodName: AnimationEvent_PrimaryAttackAnimEnd
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+  - eventName: OnReloadAnimEnd
+    OnAnimationEvent:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 2446050446387233053}
+          m_TargetAssemblyTypeName: SimpleWeaponAnimator, Assembly-CSharp
+          m_MethodName: AnimationEvent_HandleReloadAnimEnd
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
 --- !u!1 &8015487434111354687
 GameObject:
   m_ObjectHideFlags: 0

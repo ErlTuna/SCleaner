@@ -62,7 +62,10 @@ public class StatTracker : MonoBehaviour
     }
     void IncrementTime() => _elapsedTime += Time.deltaTime;
     void ResetKillCounter() => _killCount = 0;
-    void IncrementKillCount() => _killCount += 1;
+    void IncrementKillCount()
+    {
+        _killCount += 1;
+    } 
 
 
 }

@@ -6,14 +6,9 @@ using System;
 public class InventoryItem
 {
     public InventoryItemDefinitionSO ItemData;
-
     public InventoryItem(InventoryItemDefinitionSO itemData)
     {
         ItemData = itemData;
     }
-
-    // insert runtime data here
-    // insert runtime data here
-    // insert runtime data here
 
 }

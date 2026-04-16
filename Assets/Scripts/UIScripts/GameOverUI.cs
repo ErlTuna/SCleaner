@@ -1,9 +1,7 @@
 using TMPro;
 using UnityEngine;
 using DG.Tweening;
-using UnityEngine.Pool;
 using UnityEngine.InputSystem;
-using System.Collections.Generic;
 
 
 public class GameOverUI : MonoBehaviour
@@ -23,7 +21,7 @@ public class GameOverUI : MonoBehaviour
     Tween _killsTween;
     Sequence _sequence;
 
-    [SerializeField] SoundData _popSFX;
+    [SerializeField] SoundDataSO _popSFX;
 
     void Awake()
     {
@@ -136,10 +134,6 @@ public class GameOverUI : MonoBehaviour
             _currentActiveTween.Complete();
     }
 
-
-
-
-
     void OnSequenceComplete()
     {
         UISelector.instance.SetSelected(_defaultSelected);
@@ -151,101 +145,4 @@ public class GameOverUI : MonoBehaviour
         int seconds = totalSeconds % 60;
         _timeTakenText.text = $"{minutes:00}:{seconds:00}";
     }
-
-
-
-    /*
-    void InitializePool()
-    {
-        _emitterPool = new ObjectPool<SoundEmitter>(
-        createFunc: CreatePooledObject,
-        actionOnGet: OnGetFromPool,
-        actionOnRelease: OnReleaseToPool,
-        actionOnDestroy: OnDestroyPooledObject,
-        collectionCheck: false,
-        defaultCapacity: _defaultPoolCapacity,
-        maxSize: _maxPoolSize
-        );
-
-        Debug.Log("Initialized pool :3");
-    }
-
-    SoundEmitter CreatePooledObject()
-    {
-        GameObject go = Instantiate(_soundEmitterPrefab, _soundEmitterParentTransform);
-        SoundEmitter soundEmitter = go.GetComponent<SoundEmitter>();
-        soundEmitter.Initialize();
-        soundEmitter.SetReturnAction(OnReleaseToPool);
-        return soundEmitter;
-    }
-
-    void OnGetFromPool(SoundEmitter soundEmitter)
-    {
-        if (soundEmitter != null)
-            soundEmitter.gameObject.SetActive(true);
-    }
-
-    void OnReturnToPool(SoundEmitter soundEmitter)
-    {
-        _emitterPool.Release(soundEmitter);
-    }
-
-    void OnReleaseToPool(SoundEmitter soundEmitter)
-    {
-        if (soundEmitter != null)
-            soundEmitter.gameObject.SetActive(false);
-    }
-
-    void OnDestroyPooledObject(SoundEmitter soundEmitter)
-    {
-        Destroy(soundEmitter.gameObject);
-    }
-
-    
-    public void TryPlaySFX(SoundData soundData)
-    {
-        AudioClip clipToBePlayed = GetClip(soundData);
-        if (clipToBePlayed == null)
-        {
-            Debug.Log("There isn't a valid clip to play.");
-            return;
-        }
-
-        SoundEmitter soundEmitter = _emitterPool.Get();
-        soundEmitter.SetReturnAction(OnReturnToPool);
-
-        if (soundData.withVaryingPitch)
-        {
-            float pitchVariance = soundData.pitchRange;
-            float pitch = 1f + Random.Range(-pitchVariance, pitchVariance);
-            soundEmitter.Play(clipToBePlayed, pitch);
-        }
-
-        else
-            soundEmitter.Play(clipToBePlayed);
-        
-    }
-
-    public AudioClip GetClip(SoundData soundData)
-    {
-        if (soundData.clips == null)
-        {
-            Debug.Log("Passed sound data has no clips.");
-            return null;
-        }
-
-        if (soundData.playRandomAmongGroup && soundData.clips.Length > 1)
-        {
-            return soundData.clips[Random.Range(0, soundData.clips.Length)];
-        }
-
-        else if (soundData.clips.Length > 0)
-        {
-            return soundData.clips[0];
-        }
-
-        return null;
-    }
-    */
-
 }

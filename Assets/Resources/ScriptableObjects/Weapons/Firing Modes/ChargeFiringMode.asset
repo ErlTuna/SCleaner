@@ -9,7 +9,6 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d093524073a59914da170ababd94df65, type: 3}
+  m_Script: {fileID: 11500000, guid: 7b916891370bedc4a9a05b9d07e73695, type: 3}
   m_Name: ChargeFiringMode
   m_EditorClassIdentifier: 
-  Description: 

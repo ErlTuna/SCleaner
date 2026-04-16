@@ -32,8 +32,7 @@ public class InventorySelectedItemDisplay : MonoBehaviour
 
     public void OnItemSelected(InventoryItem selected)
     {
-        Debug.Log("An item is selected.");
-            if (selected != null && selected != _previousSelected)
+            if (selected != null)
             {
                 _previousSelected = selected;
 
@@ -49,11 +48,16 @@ public class InventorySelectedItemDisplay : MonoBehaviour
                     //_itemIcon.rectTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical,selected.ItemData.ItemIcon.rect.height);
                 } 
 
-                if (_itemType != null) _itemType.text = selected.ItemData.ItemType.ToString();
+                //if (_itemType != null) _itemType.text = selected.ItemData.ItemType.ToString();
+
+                //if (_itemType != null) _itemType.text = EnumFormatter.ToDisplay(selected.ItemData.ItemType);
+
+                //_itemType.text = selected.ItemData.ItemType.ToDisplayString();
+                _itemType.text = selected.ItemData.ItemTypeDisplay;
 
                 if (_itemDescription != null) _itemDescription.text = selected.ItemData.ItemDescription;
 
-                Debug.Log("Showing item info.");
+                //Debug.Log("Showing item info.");
             }
     }
 

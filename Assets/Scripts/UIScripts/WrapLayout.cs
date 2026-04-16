@@ -8,18 +8,19 @@ using UnityEngine.UI;
 // Ex :
 // Group #1 :
 // -Header
-// -Items
-// --children of items
+// -ItemContainer
+// --children of ItemContainer
 
-// The script should be attached to "Items" and not Group #1, which would be the root.
+// The script should be attached to "ItemContainer" within the group and not Group #1, which would be the root.
 
 [ExecuteAlways]
-public class WrapLayout : MonoBehaviour
+public class WrapLayout : MonoBehaviour, ILayoutController, ILayoutElement
 {
     [Header("Layout")]
     [SerializeField] float horizontalSpacing = 8f;
     [SerializeField] float verticalSpacing = 8f;
     [SerializeField] bool resizeHeight = true;
+    [SerializeField] bool isRebuilding = false;
 
     [Header("Padding")]
     [SerializeField] float itemContainerPaddingLeft;
@@ -35,24 +36,64 @@ public class WrapLayout : MonoBehaviour
 
     readonly HashSet<RectTransform> _preparedChildren = new();
 
-    void OnEnable()
+    float _calculatedHeight;
+
+     // ILayoutElemet Properties
+    public float minWidth => -1;
+    public float minHeight => -1;
+
+    public float preferredWidth
     {
-        Rebuild();
+        get
+        {
+            // The parent VLG doesn’t care about width if it stretches, 
+            // but could return the group’s rect width if needed
+            return _groupParentRect != null ? _groupParentRect.rect.width : -1;
+        }
     }
+
+    public float preferredHeight
+    {
+        get
+        {
+            if (resizeHeight)
+                return _calculatedHeight; // height from Rebuild()
+            else
+            {
+                // computed when requested
+                float totalHeight = _headerRect.rect.height
+                                    + _itemContainerRect.rect.height
+                                    + itemContainerPaddingTop
+                                    + itemContainerPaddingBottom
+                                    + headerAndItemPadding;
+                return totalHeight;
+            }
+        }
+    }
+
+    public float flexibleWidth => -1;  
+    public float flexibleHeight => -1; 
+    public int layoutPriority => 1;     
+
 
     #if UNITY_EDITOR
     void Update()
     {
-        if (!Application.isPlaying)
+        if (!Application.isPlaying && isRebuilding == false)
             Rebuild();
     }
     #endif
 
-
-
+    public void SetLayoutHorizontal() => Rebuild();
+    public void SetLayoutVertical()   => Rebuild();
 
     public void Rebuild()
     {
+
+        if (isRebuilding == true) return;
+        Debug.Log("Rebuilding layout...");
+        isRebuilding = true;
+
         // Calculate maximum available width we can place items in.
         float usableWidth = _itemContainerRect.rect.width - itemContainerPaddingLeft - itemContainerPaddingRight;
 
@@ -79,7 +120,7 @@ public class WrapLayout : MonoBehaviour
             if (!child.gameObject.activeSelf)
                 continue;
 
-            // Compare preferred with if the child has a layout.
+            // Compare preferred with if the child has a layout element.
             float childWidth = Mathf.Min(GetPreferredWidth(child), usableWidth);
 
             // Use preferred height or the rect's height.
@@ -128,14 +169,20 @@ public class WrapLayout : MonoBehaviour
         // header height + itemContainer height
 
         float newGroupHeight = _itemContainerRect.rect.height;
+        _calculatedHeight = newGroupHeight;
         if (_headerRect != null) newGroupHeight += _headerRect.rect.height;
         
         _groupParentRect.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, newGroupHeight);
 
 
-    // Navigation neighbor assignment
-    AssignDirectionalNeighbors(entries);
-}
+        // Navigation neighbor assignment
+        AssignDirectionalNeighbors(entries);
+
+        isRebuilding = false;
+
+        LayoutRebuilder.MarkLayoutForRebuild(transform as RectTransform);
+
+    }
 
     void AssignDirectionalNeighbors(List<InventoryEntry> entries)
     {
@@ -304,5 +351,15 @@ public class WrapLayout : MonoBehaviour
     {
         for (int i = 0; i < _itemContainerRect.childCount; i++)
             yield return _itemContainerRect.GetChild(i) as RectTransform;
+    }
+
+    public void CalculateLayoutInputHorizontal()
+    {
+        
+    }
+
+    public void CalculateLayoutInputVertical()
+    {
+        
     }
 }

@@ -24,7 +24,7 @@ public class PlayerInputManager : MonoBehaviour
     InputAction _thirdWeaponInputAction;
     InputAction _fourthWeaponInputAction;
     InputAction _menuOpenAction;
-    InputAction _menuCloseAction;
+    InputAction _menuBackAction;
     InputAction _submitAction;
     InputAction _abilitySwitchAction;
     InputAction _navigationAction;
@@ -67,7 +67,7 @@ public class PlayerInputManager : MonoBehaviour
     public bool EquipmentInput { get; private set; }
     public bool ReloadInput { get; private set; }
     public bool MenuOpenInput { get; private set; }
-    public bool MenuCloseInput { get; private set; }
+    public bool MenuBackInput { get; private set; }
     public bool SubmitPressed { get; private set; }    // single-frame press
     public bool SubmitHeld { get; private set; }     // continuous hold
     public Vector2 NavigationInput {get; private set; }
@@ -116,7 +116,7 @@ public class PlayerInputManager : MonoBehaviour
 
         // Switching to UI map to cache the CloseMenu action
         PlayerInput.SwitchCurrentActionMap("UI");
-        _menuCloseAction = PlayerInput.currentActionMap.FindAction("CloseMenu");
+        _menuBackAction = PlayerInput.currentActionMap.FindAction("Back");
         _submitAction = PlayerInput.currentActionMap.FindAction("Submit");
         _navigationAction = PlayerInput.currentActionMap.FindAction("Navigate");
 
@@ -135,6 +135,7 @@ public class PlayerInputManager : MonoBehaviour
     {
         MovementInput = _movementInputAction.ReadValue<Vector2>();
         PointerInput = _pointerInputAction.ReadValue<Vector2>();
+        //Debug.Log("Pointer input value : " + PointerInput);
         ItemPickupInput = _itemPickupInputAction.WasPressedThisFrame();
         WeaponDropInput = _weaponDropInputAction.WasPressedThisFrame();
         
@@ -148,7 +149,7 @@ public class PlayerInputManager : MonoBehaviour
         ReloadInput = _reloadInputAction.WasPressedThisFrame();
         EquipmentInput = _equipmentInputAction.IsPressed();
         MenuOpenInput = _menuOpenAction.WasPressedThisFrame();
-        MenuCloseInput = _menuCloseAction.WasPressedThisFrame();
+        MenuBackInput = _menuBackAction.WasPressedThisFrame();
         AbilitySwitchInput = _abilitySwitchAction.WasPerformedThisFrame();
         SubmitPressed = _submitAction.WasPressedThisFrame();
         SubmitHeld = _submitAction.ReadValue<float>() > 0;
@@ -156,7 +157,7 @@ public class PlayerInputManager : MonoBehaviour
 
     }
 
-    public static event Action<Vector2> OnUINavigation;
+    //public static event Action<Vector2> OnUINavigation;
 
 
     public void ToggleMouseInput(bool enable)
@@ -167,10 +168,11 @@ public class PlayerInputManager : MonoBehaviour
             InputSystem.EnableDevice(Mouse.current);
             Cursor.lockState = CursorLockMode.None;
             Cursor.visible = true;
-            Debug.Log("Mouse input enabled");
+            Debug.Log("Mouse input enabled.");
         }
         else
         {
+            Debug.Log("Mouse input disabled.");
             InputSystem.DisableDevice(Mouse.current);
             Cursor.lockState = CursorLockMode.Locked;
             Cursor.visible = false;
@@ -180,18 +182,14 @@ public class PlayerInputManager : MonoBehaviour
 
     public void SwitchToGameplayActionMap()
     {
-        //_previousActionMap = _UIActionMap;
-        //_UIActionMap.Disable();
+        //Debug.Log("Switching to gameplay action map.");
         PlayerInput.SwitchCurrentActionMap("Gameplay");
     }
 
     public void SwitchToUIActionMap()
     {
-        //_previousActionMap = _gameplayActionMap;
+        //Debug.Log("Switching to UI action map.");
         PlayerInput.SwitchCurrentActionMap("UI");
-        Debug.Log("Switched to UI action map : " + _UIActionMap.enabled);
-        Debug.Log($"UI map switched. Submit enabled: {_submitAction.enabled}, CloseMenu enabled: {_menuCloseAction.enabled}");
-        //_UIActionMap.Enable();
     }
 
     public void OnPlayerDefeat()
@@ -199,8 +197,6 @@ public class PlayerInputManager : MonoBehaviour
         if (_UIActionMap == null) return;
         if (_gameplayActionMap == null) return;
         _gameplayActionMap.Disable();
-
-        Debug.Log("Gameplay action map is disabled.");
     }
 
 }

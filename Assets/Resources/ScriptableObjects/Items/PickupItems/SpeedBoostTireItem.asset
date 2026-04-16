@@ -1,0 +1,29 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cae4f56476bd2eb45bd4eed9b0900d6b, type: 3}
+  m_Name: SpeedBoostTireItem
+  m_EditorClassIdentifier: 
+  PickupDefinition: {fileID: 11400000, guid: ec5ff91415129684898194cf23319cfc, type: 2}
+  InventoryDefinition: {fileID: 11400000, guid: f732b6443ae458446975d88636e912ea, type: 2}
+  PickupPrefab: {fileID: 8594144460780797379, guid: 9a0c09ac57bffab44af0c637d84f423f, type: 3}
+  GeneralConditions:
+  - {fileID: 11400000, guid: 41dbc8f963f74b14d80808e1702aed72, type: 2}
+  autoReorder: 0
+  Behaviors:
+  - Behavior: {fileID: 11400000, guid: 623346bf46ee80e41bcf334169c77905, type: 2}
+    Order: 0
+    IsExhaustible: 0
+    BehaviourSpecificConditions: []
+  - Behavior: {fileID: 11400000, guid: a87bfdf6f2e928349a831f0616d029f3, type: 2}
+    Order: 0
+    IsExhaustible: 0
+    BehaviourSpecificConditions: []

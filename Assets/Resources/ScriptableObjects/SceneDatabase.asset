@@ -12,22 +12,48 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ab69f1535b9947849ab93a6b7bc3a234, type: 3}
   m_Name: SceneDatabase
   m_EditorClassIdentifier: 
-  scenes:
-  - SceneName: Bootstrap
-    SceneType: 1
-  - SceneName: PersistentScene
-    SceneType: 0
-  - SceneName: Main_Menu_v2
-    SceneType: 2
-  - SceneName: Loading_Screen
-    SceneType: 4
-  - SceneName: GameplayUI
-    SceneType: 5
-  - SceneName: Test
-    SceneType: 5
-  - SceneName: GameOver
-    SceneType: 6
-  - SceneName: PauseMenu_v2
-    SceneType: 6
-  - SceneName: Main_Menu_v3
-    SceneType: 2
+  BootstrapSceneRef:
+    _sceneName: Bootstrap
+    _sceneType: 1
+  PersistentSceneRef:
+    _sceneName: PersistentScene
+    _sceneType: 5
+  LoadingScreenRef:
+    _sceneName: Loading_Screen
+    _sceneType: 4
+  TestSceneRef:
+    _sceneName: TestScene
+    _sceneType: 7
+  MainMenuRef:
+    _sceneName: MainMenu_FINAL
+    _sceneType: 2
+  GameplayUIRef:
+    _sceneName: GameplayUI
+    _sceneType: 6
+  PauseMenuRef:
+    _sceneName: PauseMenu_FINAL
+    _sceneType: 3
+  GameOverUIRef:
+    _sceneName: GameOver
+    _sceneType: 6
+  SceneRefs:
+  - _sceneName: Bootstrap
+    _sceneType: 1
+  - _sceneName: PersistentScene
+    _sceneType: 0
+  - _sceneName: Loading_Screen
+    _sceneType: 4
+  - _sceneName: MainMenu_FINAL
+    _sceneType: 2
+  - _sceneName: TestScene
+    _sceneType: 7
+  - _sceneName: GameplayUI
+    _sceneType: 6
+  - _sceneName: GameOver
+    _sceneType: 6
+  - _sceneName: PauseMenu_FINAL
+    _sceneType: 3
+  - _sceneName: FirstLevel
+    _sceneType: 5
+  - _sceneName: SecondLevel
+    _sceneType: 5

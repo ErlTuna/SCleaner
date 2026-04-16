@@ -1,35 +1,45 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
 
-// singleton responsible for managing settings
+// Singleton responsible for managing settings
 // when a setting change occurs, it passes through this class
 // and raises events to notify listeners (such as AudioManager)
 // also handles save/revert requests for settings and marks changed settings as "dirty"
 // the settings themselves are located in SETTINGS
 public class SettingsManager : MonoBehaviour
 {
-    public static SettingsManager instance;
-    public Dictionary<string, bool> isSettingAltered;
+    
+    public static Action OnSFXLevelAltered;
+    public static Action OnWeaponSFXLevelAltered;
+    public static Action OnBGMLevelAltered;
+    public static Action OnChangesApplied;
+    public static Action OnChangesReverted;
+
+    Dictionary<string, bool> _isSettingDirty;
+
+    public static SettingsManager Instance;
 
     void Awake()
     {
-        if (instance != null && instance != this)
+        if (Instance != null && Instance != this)
         {
             Destroy(this);
             return;
         }
 
-        instance = this;
+        Instance = this;
     }
 
     void Start()
     {
-        isSettingAltered = new Dictionary<string, bool>
+        _isSettingDirty = new Dictionary<string, bool>
         {
             { "BGM", false },
-            { "SFX", false }
+            { "SFX", false },
+            {"WeaponSFX", false}
         };
     }
 
@@ -40,15 +50,15 @@ public class SettingsManager : MonoBehaviour
 
         if (SETTINGS.CurrentBGMVolume == SETTINGS.PreviousVolumeSettings.BGMVolume)
         {
-            isSettingAltered["BGM"] = false;
+            _isSettingDirty["BGM"] = false;
         }
         else
         {
-            isSettingAltered["BGM"] = true;
+            _isSettingDirty["BGM"] = true;
         }
 
-        SettingsEvents.RaiseSettingsAltered();
 
+        OnBGMLevelAltered?.Invoke();
     }
 
     public void HandleSFXLevelAltered(float newVolume)
@@ -57,15 +67,31 @@ public class SettingsManager : MonoBehaviour
 
         if (SETTINGS.CurrentSFXVolume == SETTINGS.PreviousVolumeSettings.SFXVolume)
         {
-            isSettingAltered["SFX"] = false;
+            _isSettingDirty["SFX"] = false;
         }
         else
         {
-            isSettingAltered["SFX"] = true;
+            _isSettingDirty["SFX"] = true;
         }
 
+        OnSFXLevelAltered?.Invoke();
 
-        SettingsEvents.RaiseSettingsAltered();
+    }
+
+    public void HandleWeaponSFXLevelAltered(float newVolume)
+    {
+        SETTINGS.CurrentWeaponSFXVolume = newVolume;
+
+        if (SETTINGS.CurrentWeaponSFXVolume == SETTINGS.PreviousVolumeSettings.WeaponSFXVolume)
+        {
+            _isSettingDirty["WeapoNSFX"] = false;
+        }
+        else
+        {
+            _isSettingDirty["WeapoNSFX"] = true;
+        }
+
+        OnWeaponSFXLevelAltered?.Invoke();
 
     }
 
@@ -73,21 +99,20 @@ public class SettingsManager : MonoBehaviour
     {
         Debug.Log("Saving settings changes");
         SETTINGS.SaveSettings();
-        SettingsEvents.RaiseSettingsApplied();
-        ResetAlteredState();
+        ResetDirtyDictionary();
     }
 
     public void HandleSettingsReverted()
     {
         Debug.Log("Settings changes reverted.");
         SETTINGS.RevertSettings();
-        SettingsEvents.RaiseSettingsReverted();
-        ResetAlteredState();
+        OnChangesReverted?.Invoke();
+        ResetDirtyDictionary();
     }
 
-    public bool CheckIfAltered()
+    public bool CheckIfDirty()
     {
-        foreach (bool altered in isSettingAltered.Values)
+        foreach (bool altered in _isSettingDirty.Values)
         {
             if (altered)
                 return true;
@@ -96,11 +121,11 @@ public class SettingsManager : MonoBehaviour
         return false;
     }
 
-    void ResetAlteredState()
+    void ResetDirtyDictionary()
     {
-        foreach (var key in isSettingAltered.Keys.ToList())
+        foreach (var key in _isSettingDirty.Keys.ToList())
         {
-            isSettingAltered[key] = false;
+            _isSettingDirty[key] = false;
         }
     }
 }

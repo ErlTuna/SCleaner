@@ -12,9 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5e85dc2a279ff6341a7889587a9de534, type: 3}
   m_Name: Revolver_ChamberInSound
   m_EditorClassIdentifier: 
-  clip: {fileID: 8300000, guid: cd003c38649e3894bbd97a7fff41e594, type: 3}
+  clips:
+  - {fileID: 8300000, guid: cd003c38649e3894bbd97a7fff41e594, type: 3}
   loop: 0
   playOnAwake: 0
+  playRandomAmongGroup: 0
   pitch: 0
   withVaryingPitch: 0
   pitchRange: 0

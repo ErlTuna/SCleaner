@@ -4,9 +4,9 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "ScriptableObjects/Event Channels/Weapon Switch UI Update Event Channel")]
 public class WeaponUIUpdateEventChannelSO : ScriptableObject
 {
-    public Action<WeaponUpdateData> OnEventRaised;
+    public Action<UIWeaponSwitchContext> OnEventRaised;
 
-    public void RaiseEvent(WeaponUpdateData weaponUpdateData)
+    public void RaiseEvent(UIWeaponSwitchContext weaponUpdateData)
     {
         if (OnEventRaised != null)
             OnEventRaised.Invoke(weaponUpdateData);

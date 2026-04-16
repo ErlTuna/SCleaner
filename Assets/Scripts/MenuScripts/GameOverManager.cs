@@ -4,7 +4,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
  
-public class SimpleCounterController : MonoBehaviour
+public class GameOverManager : MenuContext
 {
 
     [Header("Event Channels")]
@@ -12,6 +12,7 @@ public class SimpleCounterController : MonoBehaviour
 
     [Header("UI Elements")]
     [SerializeField] Canvas _canvas;
+    [SerializeField] CanvasGroup _canvasGroup; 
     [SerializeField] GameObject _titleDisplay;
     [SerializeField] GameObject _killCountGroup;
     [SerializeField] GameObject _timeTakenGroup;
@@ -38,10 +39,16 @@ public class SimpleCounterController : MonoBehaviour
     [SerializeField] bool _skipPressed = false;
 
     [Header("Misc")]
-    [SerializeField] SoundData _popSFX;
+    [SerializeField] SoundDataSO _popSFX;
     void Awake()
     {
         GameManager.OnGameOverShowGameOverMenu += ShowGameOverMenu;
+        if (_canvasGroup != null)
+        {
+            _canvasGroup.alpha = 0f;
+            _canvasGroup.interactable = false;
+            _canvasGroup.blocksRaycasts = false;
+        }
     }
 
     void OnDisable()
@@ -58,11 +65,15 @@ public class SimpleCounterController : MonoBehaviour
     }
 
     void ShowGameOverMenu()
-    {
-        if (_canvas != null)
+    {   
+        if (_canvasGroup != null)
         {
-            _canvas.enabled = true;
+            _canvasGroup.alpha = 1f;
+            _canvasGroup.interactable = true;
+            _canvasGroup.blocksRaycasts = true;
+            
             _returnToMainMenuButton.interactable = false;
+            SetCurrentContext(this);
             StartCoroutine(GameOverSequence());
         }
     }
@@ -103,34 +114,6 @@ public class SimpleCounterController : MonoBehaviour
     }
 
     
-    /*
-    IEnumerator CountUp(TextMeshProUGUI textField, float targetValue)
-    {
-        float current = 0f;
-
-        while (current < targetValue)
-        {
-            float speed = _speedUp ? _fastSpeed : _normalSpeed;
-
-            // Smooth float increment
-            current = Mathf.Min(current + speed * Time.deltaTime, targetValue);
-
-            // Round ONLY for display
-            int valueToDisplay = Mathf.RoundToInt(current);
-
-            if (_isProcessingFormattedCounter != true)
-                textField.text = valueToDisplay.ToString();
-            else
-                UpdateFormattedTime(valueToDisplay);
-
-            yield return null;
-        }
-
-        if (_isProcessingFormattedCounter != true)
-            textField.text = targetValue.ToString();
-    }
-    */
-
     IEnumerator CountUp(TextMeshProUGUI textField, float targetValue)
     {
         float current = 0f;
@@ -165,10 +148,6 @@ public class SimpleCounterController : MonoBehaviour
             UpdateFormattedTime(valueToDisplay);
     }
 
-
-    
-
-
     // ----------------------------
     // HELPERS
     // ----------------------------
@@ -183,6 +162,21 @@ public class SimpleCounterController : MonoBehaviour
         int minutes = totalSeconds / 60;
         int seconds = totalSeconds % 60;
         _timeTakenCounterText.text = $"{minutes:00}:{seconds:00}";
+    }
+
+    public override void Execute(MenuAction action)
+    {
+        switch (action)
+        {
+            case MenuAction.ReturnToMainMenu:
+            GameManager.Instance.SetGameState(GameState.RETURNING_TO_MAIN_MENU);
+            break;
+
+            case MenuAction.QuitGame:
+            GameManager.Instance.SetGameState(GameState.SHUTTING_DOWN);
+            break;
+        }
+        
     }
 
     // ----------------------------

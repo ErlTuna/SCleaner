@@ -188,12 +188,12 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 893a409cf5d919a4c9b1e80fdca80cbe, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 8bd468b8a69a97841a5e7413a89af64e, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 2.08, y: 1.45}
+  m_Size: {x: 2.1666667, y: 1.5104166}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -342,7 +342,8 @@ GameObject:
   - component: {fileID: 3725376543127102386}
   - component: {fileID: 8019211658217629256}
   - component: {fileID: 968184645804837554}
-  - component: {fileID: 3212172627140521379}
+  - component: {fileID: 3155078338440632860}
+  - component: {fileID: 1067040346619772832}
   m_Layer: 0
   m_Name: EnemyShotgunPrefab
   m_TagString: Untagged
@@ -512,25 +513,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d097acd11e321a34a8e4472c9653f6c6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _spriteRenderer: {fileID: 966543360236632602}
+  spriteRenderer: {fileID: 966543360236632602}
   weaponSoundManager: {fileID: 3725376543127102386}
   FiringPoints:
   - {fileID: 3710938758110494021}
   - {fileID: 3544013057962356988}
   - {fileID: 8923209658656982352}
-  _animatorComponent: {fileID: 3212172627140521379}
+  weaponAnimatorComponent: {fileID: 3155078338440632860}
+  ammoManager: {fileID: 968184645804837554}
+  weaponConfig: {fileID: 11400000, guid: e5d800db78ec6044884e25992738b573, type: 2}
   stockGripPoint: {fileID: 4972446549402951462}
   secondGripPoint: {fileID: 7854436785557224290}
-  AmmoManager: {fileID: 968184645804837554}
-  WeaponConfig: {fileID: 11400000, guid: c467350e6e7b8b0418d811113bb3bea5, type: 2}
-  WeaponRuntimeData:
-    State: 0
-    CurrentAmmo: 0
-    ReserveAmmo: 0
-    Damage: 0
-    TimeSinceLastFired: 0
-    SpreadResetThreshold: 0
-  attackPattern: {fileID: 11400000, guid: 6e71f4011bee90248888332babe8c9db, type: 2}
   _ownerScript: {fileID: 0}
 --- !u!114 &968184645804837554
 MonoBehaviour:
@@ -544,9 +537,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 94ea39655bf03c74880f9a43878f3cf4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Owner: {fileID: 8019211658217629256}
-  ReloadStrategy: {fileID: 11400000, guid: 2a2f5998f082c7a4b9a1370899af9baf, type: 2}
---- !u!114 &3212172627140521379
+  _reloadStrategy: {fileID: 11400000, guid: 0be6bec96fcf27145ae17c030d6f25cb, type: 2}
+  _ammoChangeEventChannelSO: {fileID: 0}
+--- !u!114 &3155078338440632860
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -555,12 +548,72 @@ MonoBehaviour:
   m_GameObject: {fileID: 5890597930396712892}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 68a3f9f85eb27024081467faa477b695, type: 3}
+  m_Script: {fileID: 11500000, guid: 0acaa79ccdce56940b04c7dd7841aa49, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _owner: {fileID: 8019211658217629256}
   _paramTable: {fileID: 11400000, guid: f07a149dab15ab6438211d7c3cfada3f, type: 2}
   animator: {fileID: -5657172089233996258}
+--- !u!114 &1067040346619772832
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5890597930396712892}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cbe80126baae4cf0ba8194133e415a29, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  animationEvents:
+  - eventName: OnBulletSpawnPointReached
+    OnAnimationEvent:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 3155078338440632860}
+          m_TargetAssemblyTypeName: SimpleWeaponAnimator, Assembly-CSharp
+          m_MethodName: AnimationEvent_BulletSpawnPointReached
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+  - eventName: OnPrimaryAttackAnimEnd
+    OnAnimationEvent:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 3155078338440632860}
+          m_TargetAssemblyTypeName: SimpleWeaponAnimator, Assembly-CSharp
+          m_MethodName: AnimationEvent_PrimaryAttackAnimEnd
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+  - eventName: OnReloadAnimEnd
+    OnAnimationEvent:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 3155078338440632860}
+          m_TargetAssemblyTypeName: SimpleWeaponAnimator, Assembly-CSharp
+          m_MethodName: AnimationEvent_HandleReloadAnimEnd
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
 --- !u!1 &7477956919191249453
 GameObject:
   m_ObjectHideFlags: 0
