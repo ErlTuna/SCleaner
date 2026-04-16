@@ -70,3 +70,24 @@ crashlytics-build.properties
 # Temporary auto-generated Android Assets
 /[Aa]ssets/[Ss]treamingAssets/aa.meta
 /[Aa]ssets/[Ss]treamingAssets/aa/*
+
+# -----------------------------
+# DOTween / DOTween Pro
+# -----------------------------
+
+# Ignore debug and metadata files
+Assets/Plugins/Demigiant/DOTween/*.xml
+Assets/Plugins/Demigiant/DOTween/*.mdb
+
+# Ignore optional example scenes
+Assets/Plugins/Demigiant/DoTween Examples/
+
+# Keep editor scripts if you want DOTween Utility Panel to work for all team members
+# (do NOT ignore Editor folder if team needs it)
+# Assets/Plugins/Demigiant/DOTween/Editor/
+# Assets/Plugins/Demigiant/DoTweenPro/Editor/
+
+# Optional: ignore readme files if you don’t want them in repo
+Assets/Plugins/Demigiant/read_me
+Assets/Plugins/Demigiant/DOTween/readme
+Assets/Plugins/Demigiant/DOTweenPro/readme
