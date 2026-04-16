@@ -4,7 +4,7 @@ using UnityEngine;
 
 public interface IWeaponModifier
 {
-    void RequestApply(WeaponRuntimeData weapon);
-    void RequestRemove(WeaponRuntimeData weapon);
+    void RequestApply(WeaponRuntime weapon);
+    void RequestRemove(WeaponRuntime weapon);
 }
 

@@ -9,9 +9,8 @@ public class UnitInventoryData
     public PlayerWeaponInventory WeaponInventory {get; private set;}
 
     // REFACTOR
-    public PlayerWeaponInventoryRuntime WeaponInventory_V2 {get; private set;}
     public PlayerEquipmentInventory EquipmentInventory {get; private set;}
-    public UnitCurrencyInventory CurrencyInventory {get; private set;}
+    public PlayerCurrencyInventoryRuntime CurrencyInventory {get; private set;}
     public PlayerPassiveItemInventory PassiveItemInventory {get; private set;}
 
     public UnitInventoryData(PlayerInventoryConfigSO config)
@@ -22,7 +21,7 @@ public class UnitInventoryData
         //WeaponInventory = new(1, config.MaxWeaponAmount, config.WeaponAddedEventChannel, config.WeaponDropEventChannel);
         
         //EquipmentInventory = new UnitEquipmentInventory(config.ItemPickedUpEventChannel, config.ItemDroppedEventChannel);
-        CurrencyInventory = new UnitCurrencyInventory(0, config.MaxCurrency, config.CurrencyPickedUpEventChannel);
+        //CurrencyInventory = new UnitCurrencyInventory(0, config.MaxCurrency, config.CurrencyPickedUpEventChannel);
 
         PassiveItemInventory = new(config.ItemPickedUpEventChannel, config.ItemDroppedEventChannel);
     }

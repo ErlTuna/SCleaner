@@ -4,7 +4,7 @@ using UnityEngine;
 public static class WeaponFactory
 {
     // Instantiates the weapon game object using the runtime data, returns the game object and associated script.
-    public static (PlayerWeapon weaponScript, GameObject weaponGO) CreateUsingRuntimeData(WeaponRuntimeData runtimeData)
+    public static (PlayerWeapon weaponScript, GameObject weaponGO) CreateUsingRuntimeData(WeaponRuntime runtimeData)
     {
         if (runtimeData == null || runtimeData.Config == null)
             return (null, null); 
@@ -40,7 +40,7 @@ public static class WeaponFactory
             return (null, null);
         }
 
-        WeaponRuntimeData runtimeData = WeaponRuntimeFactory.Create(weaponConfig);
+        WeaponRuntime runtimeData = WeaponRuntimeFactory.Create(weaponConfig);
         weaponScript.InitializeWithRuntimeData(runtimeData);
         
         return (weaponScript, weaponGO);

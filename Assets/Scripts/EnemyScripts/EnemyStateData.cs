@@ -10,6 +10,7 @@ public class EnemyStateData : UnitStateData
     public bool IsRecoveringPostAttack = false;
     public bool IsRoaming = false;
     public bool HasDetectedPlayer = false;
+    public bool HasLineOfSight = false;
     public bool IsChargingAnAttack = false;
     public bool IsAttacking = false;
     public bool IsRecovering = false;

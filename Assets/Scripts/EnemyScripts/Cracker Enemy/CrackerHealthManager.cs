@@ -3,6 +3,7 @@ using UnityEngine;
 
 public class CrackerHealthManager : MonoBehaviour, IDamageable, IDefeatable
 {
+    public event Action OnHitByPlayer;
     public event Action OnDefeat;
     public event Func<bool> OnBeforeDefeat;
     public event Action<DamageContext> OnDefeatWithContext;
@@ -45,7 +46,7 @@ public class CrackerHealthManager : MonoBehaviour, IDamageable, IDefeatable
         if (_healthData.CurrentHealth <= 0)
         {
             _stateData.IsAlive = false;
-            Debug.Log("I'm dead!!");
+            OnDefeat?.Invoke();
         }
     }
 
@@ -65,6 +66,9 @@ public class CrackerHealthManager : MonoBehaviour, IDamageable, IDefeatable
         }
 
         ApplyDamage(context.Damage);
+
+
+        OnHitByPlayer?.Invoke();
 
         if (_healthData.CurrentHealth <= 0)
         {

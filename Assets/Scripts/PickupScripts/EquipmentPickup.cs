@@ -6,7 +6,7 @@ public class EquipmentPickup : MonoBehaviour
 {
     public Vector3 Location => transform.position;
     //[SerializeField] Transform _root;
-    WeaponRuntimeData _weaponRuntimeData;
+    WeaponRuntime _weaponRuntimeData;
     [SerializeField] PlayerWeaponConfigSO _weaponConfig;
     [SerializeField] BoxCollider2D _boxCollider2D;
     [SerializeField] SpriteRenderer _spriteRenderer;

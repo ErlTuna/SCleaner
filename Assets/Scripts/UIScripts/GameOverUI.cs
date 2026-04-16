@@ -5,7 +5,8 @@ using UnityEngine.InputSystem;
 
 
 public class GameOverUI : MonoBehaviour
-{
+{   
+    /*
     // Note to self :
     // Unity can not serialize InputActions. 
     [SerializeField] AudioCueEventChannelSO _sfxEventChannel;
@@ -22,7 +23,6 @@ public class GameOverUI : MonoBehaviour
     Sequence _sequence;
 
     [SerializeField] SoundDataSO _popSFX;
-
     void Awake()
     {
         GameManager.OnGameOverShowGameOverMenu += ShowGameOverMenu;
@@ -145,4 +145,5 @@ public class GameOverUI : MonoBehaviour
         int seconds = totalSeconds % 60;
         _timeTakenText.text = $"{minutes:00}:{seconds:00}";
     }
+    */
 }

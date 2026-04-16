@@ -1,9 +1,9 @@
 public static class WeaponRuntimeFactory
 {
-    public static WeaponRuntimeData Create(WeaponConfigSO config)
+    public static WeaponRuntime Create(WeaponConfigSO config)
     {
-        WeaponRuntimeAmmoData ammo = new(config.AmmoConfig);
-        return new WeaponRuntimeData(config, ammo);
+        WeaponAmmoData ammo = new(config.AmmoConfig);
+        return new WeaponRuntime(config, ammo);
     }
 }
 

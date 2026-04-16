@@ -1,18 +1,18 @@
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
 public class PlayerWeaponInventoryRuntime
 {
-    private readonly PlayerWeaponInventoryData _data;
-    private readonly WeaponDatabaseSO _database;
+    readonly PlayerWeaponInventoryData _data;
+    readonly WeaponDatabaseSO _database;
 
-    private readonly ItemPickedUpEventChannelSO _weaponAddedEventChannel;
-    private readonly ItemDroppedEventChannel _weaponDroppedEventChannel;
+    readonly ItemPickedUpEventChannelSO _weaponAddedEventChannel;
+    readonly ItemDroppedEventChannel _weaponDroppedEventChannel;
 
     readonly List<WeaponInstance> _weaponInstances = new();
     public IReadOnlyList<WeaponInstance> Weapons => _weaponInstances;
+    readonly Dictionary<string, WeaponInstance> _weaponLookup = new();
 
     public int WeaponsHeld => _weaponInstances.Count;
     public int MaxWeaponAmount => _data.MaxWeaponAmount;
@@ -26,73 +26,35 @@ public class PlayerWeaponInventoryRuntime
     }
 
 
-    public void AddWeaponToInventory(GameObject weaponGO, PlayerWeapon weaponScript)
+    public WeaponInstance AddWeaponToInventory(GameObject weaponGO, PlayerWeapon weaponScript)
     {
         string id = weaponScript.WeaponConfig.InventoryItemGUID;
 
-        // 1. Update DATA (persistent state)
-        _data.WeaponIDs.Add(id);
-
-        // 2. Update RUNTIME (scene state)
-        WeaponInstance weaponInstance = new(id, weaponGO, weaponScript);
-
-        _weaponInstances.Add(weaponInstance);
-        //_activeWeapons.Add(weaponScript);
-        //_weaponGOs.Add(weaponGO);
+        WeaponInstance weaponInstance = CreateInstance(id, weaponGO, weaponScript);
+        WeaponInventoryEntry entry = new()
+        {
+            WeaponID = id,
+            CurrentAmmo = weaponScript.WeaponRuntimeData.AmmoData.CurrentAmmo,
+            CurrentReserveAmmo = weaponScript.WeaponRuntimeData.AmmoData.CurrentReserveAmmo
+        };
+        
+        _data.Weapons.Add(entry);
 
         Debug.Log($"Added weapon {id}");
 
-        // 3. Events (UI / feedback)
+
         _weaponAddedEventChannel?.RaiseEvent(
             weaponScript.WeaponConfig.InventoryItemDefinition
         );
+
+        return weaponInstance;
     }
 
-    /*
-    public WeaponInstance AddWeapon(string id)
-    {
-        // 1. Resolve definition
-        WeaponConfigSO config = _database.Get(id);
-        if (config == null)
-            return null;
-    
-        // 2. Create runtime data (identity copied here)
-        WeaponRuntimeData runtimeData = new(
-            id,
-            config
-        );
-    
-        // 3. Ask factory to create scene objects
-        (PlayerWeapon weapon, GameObject go) =
-            WeaponFactory.CreateUsingRuntimeData(runtimeData);
-    
-        // 4. Build instance (runtime truth)
-        WeaponInstance instance = new WeaponInstance(
-            id,
-            go,
-            weapon
-        );
-    
-        // 5. Update state
-        _data.WeaponIDs.Add(id);
-        _weaponInstances.Add(instance);
-    
-        // 6. Notify systems
-        _weaponAddedEventChannel?.RaiseEvent(config.InventoryItemDefinition);
-    
-        return instance;
-    }
-    */
 
-    public void RemoveWeaponFromInventory(GameObject weaponGO, PlayerWeapon weaponScript)
+    public void RemoveWeaponFromInventory(string id)
     {
-        string id = weaponScript.WeaponConfig.InventoryItemGUID;
-        WeaponInstance instance = _weaponInstances.FirstOrDefault(w => w.WeaponID == id);
-
-        _data.WeaponIDs.Remove(id);
-        _weaponInstances.Remove(instance);
-        //_activeWeapons.Remove(weaponScript);
-        //_weaponGOs.Remove(weaponGO);
+        //WeaponInstance instance = _weaponLookup[id];
+        RemoveWeaponById(id);
 
         Debug.Log($"Removed weapon {id}");
 
@@ -127,52 +89,50 @@ public class PlayerWeaponInventoryRuntime
 
     bool HasWeapon(string weaponID)
     {
-        return _data.WeaponIDs.Contains(weaponID);
+        return _weaponLookup.ContainsKey(weaponID);
     }
 
     public bool IsEmpty()
     {
+        Debug.Log("How many weapons am I holding?.." + WeaponsHeld);
         return WeaponsHeld == 0;
     }
 
-    public void RebuildFromData(Transform weaponParent)
-    {
-        //_activeWeapons.Clear();
-        _weaponInstances.Clear();
 
-        foreach (string id in _data.WeaponIDs)
+    // To be used when loading existing data.
+    public void RebuildFromData()
+    {
+        _weaponInstances.Clear();
+        _weaponLookup.Clear();
+
+        foreach (WeaponInventoryEntry entry in _data.Weapons)
         {
-            PlayerWeaponConfigSO config = _database.Get(id);
+            PlayerWeaponConfigSO config = _database.Get(entry.WeaponID);
             if (config == null)
             {
-                Debug.LogWarning($"Weapon ID not found: {id}");
+                Debug.LogWarning($"Weapon ID not found: {entry.WeaponID}");
                 continue;
             }
     
             (PlayerWeapon weaponScript, GameObject weaponGO) = WeaponFactory.CreateUsingConfig(config);
-
-            //GameObject weaponGO = Object.Instantiate(config.Prefab, weaponParent);
-            //PlayerWeapon weaponScript = weaponGO.GetComponent<PlayerWeapon>();
-
-            WeaponInstance weaponInstance = new(id, weaponGO, weaponScript);
-            _weaponInstances.Add(weaponInstance);
+            CreateInstance(entry.WeaponID, weaponGO, weaponScript);
         }
     }
 
-    public void AddIDTest(string id, Transform weaponParent)
+    WeaponInstance CreateInstance(string id, GameObject weaponGO, PlayerWeapon weaponScript)
     {
-        PlayerWeaponConfigSO config = _database.Get(id);
-        if (config == null)
-            {
-                Debug.LogWarning($"Weapon ID not found: {id}");
-                return;
-            }
+        WeaponInstance instance = new(id, weaponGO, weaponScript);
 
-        GameObject weaponGO = Object.Instantiate(config.Prefab, weaponParent);
-        PlayerWeapon weaponScript = weaponGO.GetComponent<PlayerWeapon>();
+        _weaponInstances.Add(instance);
+        _weaponLookup[id] = instance;
 
-        WeaponInstance weaponInstance = new(id, weaponGO, weaponScript);
-        _weaponInstances.Add(weaponInstance);
+        return instance;
+    }
 
+    public void RemoveWeaponById(string id)
+    {
+        _data.Weapons.RemoveAll(w => w.WeaponID == id);
+        _weaponInstances.RemoveAll(i => i.WeaponID == id);
+        _weaponLookup.Remove(id);
     }
 }

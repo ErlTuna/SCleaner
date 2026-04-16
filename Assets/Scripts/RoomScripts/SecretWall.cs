@@ -6,7 +6,6 @@ using UnityEngine;
 public class SecretWall : MonoBehaviour
 {
     [SerializeField] GameObject _secretRoom;
-    [SerializeField] GameObject _secretWall;
     [SerializeField] SpriteRenderer _spriteRenderer;
     [SerializeField] BoxCollider2D _boxCollider2D;
 

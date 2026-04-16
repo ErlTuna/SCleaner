@@ -5,9 +5,9 @@ public interface IPickupPayload { }
 // Wraps runtime data of a weapon for a weapon payload.
 public sealed class WeaponPickupPayload : IPickupPayload
 {
-    public WeaponRuntimeData RuntimeData { get; }
+    public WeaponRuntime RuntimeData { get; }
 
-    public WeaponPickupPayload(WeaponRuntimeData runtimeData)
+    public WeaponPickupPayload(WeaponRuntime runtimeData)
     {
         RuntimeData = runtimeData;
     }

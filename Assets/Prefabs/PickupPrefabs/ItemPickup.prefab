@@ -313,6 +313,6 @@ MonoBehaviour:
   _outline2D: {fileID: 4739688862796718089}
   normalMaterial: {fileID: 2100000, guid: 1c108f2c25d912e4fa3533be4c904af4, type: 2}
   outlineMaterial: {fileID: 2100000, guid: cfe45899948b34e44bc241a26bbbb6fe, type: 2}
-  itemConfig: {fileID: 0}
+  itemConfig: {fileID: 11400000, guid: aba75bf9ecfb3c3418ca8abb9e21f2b1, type: 2}
   autoUpdateCollider: 1
   autoUpdateSprite: 1

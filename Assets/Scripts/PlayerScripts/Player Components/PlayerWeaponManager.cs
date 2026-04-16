@@ -7,10 +7,9 @@ public class PlayerWeaponManager : MonoBehaviour, IPickupHandler
     [SerializeField] PlayerWeapon _currentWeaponScript;
 
     // Public Getters
-    public GameObject CurrentWeaponGO => _currentWeaponGO;
     public PlayerWeapon CurrentWeaponScript => _currentWeaponScript;
 
-    void OnEnable()
+    void Awake()
     {
         _weaponSwitchRequestChannel.OnEventRaised += SwitchWeapon;
     }
@@ -33,28 +32,16 @@ public class PlayerWeaponManager : MonoBehaviour, IPickupHandler
         {
             _currentWeaponScript.HandlePrimaryAttackInput();
         }
-            
-
-        //else if (PlayerInputManager.Instance.SecondaryAttackInput)
-            //_currentWeaponScript.HandleSecondaryAttackInput();
-
         else
             _currentWeaponScript.HandlePrimaryAttackInputRelease();
     }
-
-    public void ReceiveWeapon(GameObject weapon, PlayerWeapon weaponScript)
-    {
-        _currentWeaponGO = weapon;
-        _currentWeaponScript = weaponScript;
-        _currentWeaponGO.SetActive(true);
-    }
-
     
     public void SwitchWeapon(GameObject targetWeapon, PlayerWeapon targetWeaponScript)
     {        
         if (_currentWeaponScript)
             _currentWeaponScript.SwitchFrom();
 
+        Debug.Log("SWITCHING TO WEAPON :" + targetWeaponScript.name);
         _currentWeaponGO = targetWeapon;
         _currentWeaponScript = targetWeaponScript;
 

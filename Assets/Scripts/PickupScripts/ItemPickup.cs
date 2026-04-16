@@ -46,6 +46,7 @@ public class ItemPickup : MonoBehaviour, IHighlightable, IInteractable
     public void OnInteractionAttempt(GameObject interactor)
     {
         if (interactor.TryGetComponent(out PlayerMain player) == false) return;
+        if (itemConfig == null) return;
 
         IPickupPayload payload = itemConfig.CreatePayload();
 
@@ -141,8 +142,8 @@ public class ItemPickup : MonoBehaviour, IHighlightable, IInteractable
         if (visualsSR == null) return;
         if (visualsSR.sprite == null) return;
         if (boxCollider2D == null) return;
-
-
+        
+        transform.localScale = new Vector3(itemConfig.xScaleOverride, itemConfig.yScaleOverride);
         Vector2 spriteSize = visualsSR.sprite.bounds.size;
         boxCollider2D.size = spriteSize;
         boxCollider2D.offset = visualsSR.sprite.bounds.center;

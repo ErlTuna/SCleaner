@@ -8,12 +8,12 @@ public class DefeatState : BaseState
     readonly GameObject _visualsGO;
     DamageContext _lastHitContext;
     readonly EnemyVisualConfigSO _visualConfig;
-    readonly Rigidbody2D _visualsRB;
-    public DefeatState(GameObject owner, Rigidbody2D visualsRB, NavMeshAgent agent, GameObject visuals, EnemyVisualConfigSO visualConfig = null)
+    readonly Rigidbody2D _bodyRB;
+    public DefeatState(GameObject owner, Rigidbody2D bodyRB, NavMeshAgent agent, GameObject visuals, EnemyVisualConfigSO visualConfig = null)
     {
         _owner = owner;
         _agent = agent;
-        _visualsRB = visualsRB;
+        _bodyRB = bodyRB;
         _visualsGO = visuals;
         _visualConfig = visualConfig;
     }
@@ -21,7 +21,7 @@ public class DefeatState : BaseState
     public override void OnEnter()
     {
 
-        if (_agent != null && _agent.enabled)
+        if (_agent && _agent.enabled)
         {
             _agent.isStopped = true;
             _agent.enabled = false;
@@ -35,21 +35,24 @@ public class DefeatState : BaseState
                 Debug.Log("defeat sprite null?");
         }
         
-        if (_visualsGO != null)
+        if (_visualsGO)
         {
-            //_visualsGO.transform.SetParent(null);
             _visualsGO.transform.SetParent(_owner.transform.parent);
         }
 
-        if (_visualsRB != null)
+        if (_bodyRB)
         {
-            _visualsRB.simulated = true;
-            _visualsRB.isKinematic = false;
-            _visualsRB.drag = 2.5f;
-            _visualsRB.angularDrag = .5f;
-            _visualsRB.velocity = Vector2.zero;
-            _visualsRB.AddForce(_lastHitContext.HitterMovementVector * _lastHitContext.PushForce, ForceMode2D.Impulse);
+            Debug.Log("Adding the force...");
+            _bodyRB.simulated = true;
+            _bodyRB.isKinematic = false;
+            _bodyRB.drag = 2.5f;
+            _bodyRB.angularDrag = .5f;
+            _bodyRB.velocity = Vector2.zero;
+            _bodyRB.AddForce(_lastHitContext.HitterMovementVector * _lastHitContext.PushForce, ForceMode2D.Impulse);
         }
+
+        else
+            Debug.Log("Null doe?");
 
         Object.Destroy(_owner);
     }
@@ -61,6 +64,7 @@ public class DefeatState : BaseState
 
     public void SetLastHitContext(DamageContext context)
     {
+        Debug.Log("Last hit context is set.");
         _lastHitContext = context;
     }
 

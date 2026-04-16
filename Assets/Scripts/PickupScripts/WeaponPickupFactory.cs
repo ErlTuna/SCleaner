@@ -3,7 +3,7 @@ using UnityEngine;
 
 public static class WeaponPickupFactory
 {
-    public static void Create(WeaponRuntimeData weaponRuntimeData, Vector3 location)
+    public static void Create(WeaponRuntime weaponRuntimeData, Vector3 location)
     {
         if (weaponRuntimeData == null)
         {
@@ -27,7 +27,7 @@ public static class WeaponPickupFactory
 
     }
 
-    public static void Create_v2(WeaponRuntimeData runtimeData, Vector3 location)
+    public static void Create_v2(WeaponRuntime runtimeData, Vector3 location)
     {
         if (runtimeData?.Config is not PlayerWeaponConfigSO config) return;
 

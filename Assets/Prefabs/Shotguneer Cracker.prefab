@@ -374,6 +374,7 @@ MonoBehaviour:
     IsRecoveringPostAttack: 0
     IsRoaming: 0
     HasDetectedPlayer: 0
+    HasLineOfSight: 0
     IsChargingAnAttack: 0
     IsAttacking: 0
     IsRecovering: 0
@@ -382,6 +383,9 @@ MonoBehaviour:
     enabled: 1
   _attackPattern: {fileID: 11400000, guid: ad6b5a795fdf6884ab716f076ad70add, type: 2}
   _spawnArea: {fileID: 0}
+  _obstructionMask:
+    serializedVersion: 2
+    m_Bits: 512
 --- !u!1 &2562611876699014425
 GameObject:
   m_ObjectHideFlags: 0
@@ -504,7 +508,7 @@ CircleCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Radius: 4
+  m_Radius: 5
 --- !u!114 &2829004985791875170
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -615,8 +619,8 @@ Rigidbody2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5846199068256149008}
-  m_BodyType: 0
-  m_Simulated: 0
+  m_BodyType: 1
+  m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
   m_Mass: 1
@@ -840,9 +844,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1dc044dd9fcd7c34ab1e67a5186dcab7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  leftHand: {fileID: 3333070093507149705}
-  rightHand: {fileID: 7424111403589174637}
-  weaponRoot: {fileID: 0}
+  _leftHand: {fileID: 3333070093507149705}
+  _rightHand: {fileID: 7424111403589174637}
 --- !u!1 &8806157274590480296
 GameObject:
   m_ObjectHideFlags: 0
@@ -910,7 +913,7 @@ CircleCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Radius: 6
+  m_Radius: 8
 --- !u!114 &2682223785703577852
 MonoBehaviour:
   m_ObjectHideFlags: 0

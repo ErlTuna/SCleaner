@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: PlayerInventoryConfig
   m_EditorClassIdentifier: 
   MaxCurrency: 9999
-  MaxWeaponAmount: 2
+  MaxWeaponAmount: 4
   DefaultWeaponConfig: {fileID: 11400000, guid: ebb13ce2f9a01b84ebdccc234a822d90, type: 2}
   EquipmentPrefab: {fileID: 3411235486444114872, guid: 3a7cd3ce19edb604d9e84789ae7bf950, type: 3}
   WeaponAddedEventChannel: {fileID: 11400000, guid: 7ef08a65916c60b4fb18c5a4bfb84e1f, type: 2}

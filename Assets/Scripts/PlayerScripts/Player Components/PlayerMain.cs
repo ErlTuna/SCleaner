@@ -1,7 +1,5 @@
 using System;
 using System.Collections.Generic;
-using SerializeReferenceEditor;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -36,15 +34,13 @@ public class PlayerMain : Unit
     UnitHealthData _healthData;
     UnitMovementData _movementData;
     PlayerEnergyData _energyData;
-    UnitInventoryData _inventoryData;
+
 
     UnitInventoryData_V2 _inventoryData_v2;
     [SerializeField] UnitStateData _stateData;
 
     [Header("Runtime")]
-    PlayerWeaponInventoryRuntime _weaponInventoryRuntime;
-
-
+    PlayerInventoryRuntime _inventoryRuntime;
     public EffectContainer EffectContainer {get; } = new();
     Dictionary<Type, IManagerComponent> _managerLookUp = new();
     Dictionary<Type, IPickupHandler> _pickupHandlerLookup = new();
@@ -141,11 +137,6 @@ public class PlayerMain : Unit
         _healthData = new UnitHealthData(_healthConfig);
         _movementData = new UnitMovementData(_movementConfig);
         _energyData = new PlayerEnergyData(_energyConfig);
-        _inventoryData = new UnitInventoryData(_inventoryConfig);
-
-        
-
-
         _stateData = new UnitStateData(_stateConfig);
     }
 
@@ -157,7 +148,11 @@ public class PlayerMain : Unit
     void PrepareRuntime()
     {
         WeaponInventoryDependencies weaponInventoryDependencies = new(_weaponDatabaseSO, _inventoryConfig.WeaponAddedEventChannel, _inventoryConfig.WeaponDropEventChannel);
-        _weaponInventoryRuntime = new(_inventoryData_v2.WeaponInventory, weaponInventoryDependencies);
+        CurrencyInventoryDependencies currencyInventoryDependencies = new(_inventoryConfig.CurrencyPickedUpEventChannel);
+        PassiveItemInventoryDependencies passiveItemInventoryDependencies = new(_inventoryConfig.ItemPickedUpEventChannel, _inventoryConfig.ItemDroppedEventChannel);
+
+        InventoryRuntimeDependencies inventoryDependencies = new(weaponInventoryDependencies, currencyInventoryDependencies, passiveItemInventoryDependencies);
+        _inventoryRuntime = new(_inventoryData_v2, inventoryDependencies);
     }
     
     void InitializeManagers()
@@ -170,9 +165,8 @@ public class PlayerMain : Unit
         _playerMovementManager.InitializeStateData(_stateData);
 
         _playerEnergyManager.InitializeManager(_energyData, _energyConfig);
-        //_playerInventoryManager.InitializeManager(_inventoryData, _inventoryConfig);
-
-        _playerInventoryManager.InitializeManager_V2(_weaponInventoryRuntime, _inventoryConfig);
+        _playerInventoryManager.InitializeManager(_inventoryRuntime, _inventoryConfig);
+        
 
         _playerAbilityHandler.InitializeManager(_energyData);
         _playerAbilityHandler.InitializeStateData(_stateData);

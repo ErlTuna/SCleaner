@@ -12,8 +12,8 @@ public class BindingHintManager : MonoBehaviour
     [SerializeField] Transform _container;
     [SerializeField] GameObject _itemPrefab;
     GameObject _lastSelected;
-    Dictionary<BindingId, BindingHintItem> _activeItems = new();
-    List<BindingHintItem> _pooledItems = new();
+    readonly Dictionary<BindingId, BindingHintItem> _activeItems = new();
+    readonly List<BindingHintItem> _pooledItems = new();
 
 
     void Update()
@@ -29,7 +29,6 @@ public class BindingHintManager : MonoBehaviour
 
     void Refresh()
     {   
-        // _lastSelected == null|| 
         if (_lastSelected.TryGetComponent(out BindingHintProvider provider) == false)
         {
             DeactivateAll();

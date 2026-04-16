@@ -72,7 +72,7 @@ public class UI_HealthbarController : MonoBehaviour
 
         _currentHPContainerIndex = fullHealthContainers - 1;
 
-        Debug.Log("Current HP Container Index after init : " + _currentHPContainerIndex);
+        //Debug.Log("Current HP Container Index after init : " + _currentHPContainerIndex);
 
         if (halfHealthContainers > 0)
         {
@@ -96,7 +96,7 @@ public class UI_HealthbarController : MonoBehaviour
             _shieldHPContainers.Add(containerScript);
         }
 
-        Debug.Log("Created shield containers : " + shieldcontainerCount);
+        //Debug.Log("Created shield containers : " + shieldcontainerCount);
 
         for (int i = 0; i < fullShieldContainers; ++i)
         {
@@ -141,20 +141,21 @@ public class UI_HealthbarController : MonoBehaviour
         if (healthChangedArgs.Delta > 0)
         {
             int amountToFill = healthChangedArgs.Delta;
+            Debug.Log("Amount to fill : " + amountToFill);
 
             while (amountToFill > 0)
             {
                 if (CurrentHealthContainer.ContainerState == HealthbarContainerState.DEPLETED)
                 {
                     CurrentHealthContainer.UpdateContainer(HealthbarContainerState.HALF_FULL);
-                    --amountToFill;
+                    //--amountToFill;
                 }
 
 
                 else if (CurrentHealthContainer.ContainerState == HealthbarContainerState.HALF_FULL)
                 {
                     CurrentHealthContainer.UpdateContainer(HealthbarContainerState.FULL);
-                    --amountToFill;
+                    //--amountToFill;
                 }
 
                 //(CurrentHealthContainer.ContainerState == HealthbarContainerState.FULL)
@@ -164,9 +165,11 @@ public class UI_HealthbarController : MonoBehaviour
                     {
                         ++_currentHPContainerIndex;
                         CurrentHealthContainer.UpdateContainer(HealthbarContainerState.HALF_FULL);
-                        amountToFill -= _containerSize;
+                        //--amountToFill;
                     }
                 }
+
+                --amountToFill;
             }
             
         }

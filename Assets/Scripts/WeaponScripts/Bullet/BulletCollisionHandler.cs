@@ -30,8 +30,9 @@ public class BulletCollisionHandler : MonoBehaviour
         if (col.TryGetComponent(out IDamageable damageable))
         {
             // weird?..
-            if (col != null)
+            if (col)
             {
+                //Debug.Log("What did I collide with?" + col.gameObject.transform.parent.name);
                 float finalPushForce = CalculateFinalPushForce(col);
                 DamageContext context = new(gameObject, _rb2D.velocity.normalized, transform.position, _bulletData.Damage, finalPushForce);
                 damageable.TakeDamage(context);
@@ -67,6 +68,7 @@ public class BulletCollisionHandler : MonoBehaviour
     float CalculateFinalPushForce(Collider2D col)
     {
         if (col == null) return 0f;
+        if (_bulletData.Owner == null) return 0f;
 
         float distance = Vector2.Distance(_bulletData.Owner.transform.position, col.transform.position);
         float safeDistance = Mathf.Max(distance, 0.01f); // in case distance is ever zero

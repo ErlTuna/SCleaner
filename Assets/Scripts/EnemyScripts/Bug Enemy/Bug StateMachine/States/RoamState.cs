@@ -4,12 +4,12 @@ using UnityEngine.AI;
 
 public class RoamState : BaseState
 {
-    GameObject _owner;
-    NavMeshAgent _agent;
-    BoxCollider2D spawnArea;
-    BoundPositions areaBounds;
+    readonly GameObject _owner;
+    readonly NavMeshAgent _agent;
+    readonly BoxCollider2D spawnArea;
+    readonly BoundPositions areaBounds;
     Vector2 pointDirection;
-    Animator _animator;
+    readonly Animator _animator;
     public RoamState(GameObject owner, NavMeshAgent agent, BoxCollider2D spawnArea, Animator animator = null)
     {
         _owner = owner;
@@ -123,18 +123,4 @@ public class RoamState : BaseState
 
 }
 
-    public class BoundPositions{
-        public Vector2 center;
-        public readonly float left;
-        public readonly float right;
-        public readonly float top;
-        public readonly float bottom;
 
-        public BoundPositions(BoxCollider2D area){
-            center = area.bounds.center;
-            left = center.x - area.bounds.extents.x;
-            right = center.x + area.bounds.extents.x;
-            top = center.y + area.bounds.extents.y;
-            bottom = center.y - area.bounds.extents.y;
-        }
-    }

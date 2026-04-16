@@ -5,22 +5,26 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-    [SerializeField] int _currentGameplayLevelIndex;
-    [SerializeField] SceneReference _currentGameplaySceneRef;
-    public SceneReference CurrentGameplaySceneRef => _currentGameplaySceneRef;
-    [SerializeField] SceneDatabaseSO _sceneDatabase;
-    [SerializeField] SceneRequestEventChannelSO _sceneRequestEventChannel;
-    [SerializeField] GameStateEventChannel _gameStateChangedEventChannel;
     public static Action OnGameStart;
     public static Action OnLevelLoaded;
     public static Action<SceneReference> OnLevelLoadedMusicRequest;
+    public static Action OnLevelOver;
     public static Action OnGameOver;
+    public static Action OnGameCompleted;
     public static Action OnGameOverCameraMovement;
     public static Action OnGameOverShowGameOverMenu;
+
+    [SerializeField] int _currentGameplayLevelIndex;
+    [SerializeField] SceneReference _currentGameplaySceneRef;
+    
+    [SerializeField] SceneDatabaseSO _sceneDatabase;
+    [SerializeField] SceneRequestEventChannelSO _sceneRequestEventChannel;
+    [SerializeField] GameStateEventChannel _gameStateChangedEventChannel;
+
     GameState _previousState;
     [SerializeField] GameState _currentState;
     public GameState CurrentState => _currentState;
-
+    public SceneReference CurrentGameplaySceneRef => _currentGameplaySceneRef;
     public static GameManager Instance {get; private set;}
 
     void Awake()
@@ -44,7 +48,7 @@ public class GameManager : MonoBehaviour
         {
             case GameState.IN_MAIN_MENU:
                 OnLevelLoadedMusicRequest?.Invoke(_sceneDatabase.MainMenuRef);
-                PlayerInputManager.Instance.ToggleMouseInput(false);
+                //PlayerInputManager.Instance.ToggleMouseInput(false);
                 PlayerInputManager.Instance.SwitchToUIActionMap();
                 break;
 
@@ -53,7 +57,7 @@ public class GameManager : MonoBehaviour
                 break;
                 
             case GameState.LOADING_NEXT_GAMEPLAY_LEVEL:
-                StartCoroutine(ProceedToNextLevel());
+                StartCoroutine(StartLoadingNextLevel());
                 break;            
 
             case GameState.PLAYING when _previousState == GameState.PAUSED:
@@ -65,7 +69,11 @@ public class GameManager : MonoBehaviour
                 break;
 
             case GameState.PLAYER_DEFEAT:
-                HandleGameOver();
+                StartCoroutine(PlayerDefeatSequence());
+                break;
+
+            case GameState.LEVEL_COMPLETED:
+                OnLevelFinished();
                 break;
 
             case GameState.RETURNING_TO_MAIN_MENU :
@@ -133,6 +141,7 @@ public class GameManager : MonoBehaviour
 
         yield return new WaitUntil(() => pendingRequests <= 0);
         PlayerInputManager.Instance.ToggleMouseInput(true);
+        PlayerInputManager.Instance.EnableMouseCursor(false);
         SetGameState(GameState.PLAYING);
         PlayerInputManager.Instance.SwitchToGameplayActionMap();
 
@@ -141,42 +150,70 @@ public class GameManager : MonoBehaviour
         OnLevelLoadedMusicRequest?.Invoke(_currentGameplaySceneRef);
     }
 
-    IEnumerator ProceedToNextLevel()
+    IEnumerator StartLoadingNextLevel()
     {
         yield return null;
         int pendingRequests = 0;
         _currentGameplayLevelIndex += 1;
 
-        SceneReference nextGameplaySceneRef = _sceneDatabase.GetLevel(_currentGameplayLevelIndex);
 
-        if (nextGameplaySceneRef == null)
-        {
-            Debug.Log("There is no gameplay level to load.");
-            yield break;
-        }
+        SceneReference nextGameplaySceneRef = _sceneDatabase.GetLevel(_currentGameplayLevelIndex);
+        SceneReference gameplayUISceneRef = _sceneDatabase.GameplayUIRef;
+        SceneReference pauseMenuSceneRef = _sceneDatabase.PauseMenuRef;
+        SceneReference gameOverUISceneRef = _sceneDatabase.GameOverUIRef;
 
         // Unload current gameplay scene
         SceneLoaderRequest unloadCurrentGameplayScene = SceneLoaderRequest.BuildSingleUnloadRequest(_currentGameplaySceneRef).OnComplete(() => --pendingRequests);
-        
-        // Get the next gameplay scene
+
+        // Unload menus and UI
+        SceneLoaderRequest unloadGameplayUI = SceneLoaderRequest.BuildSingleUnloadRequest(gameplayUISceneRef).OnComplete(() => --pendingRequests);
+        SceneLoaderRequest unloadPauseMenu = SceneLoaderRequest.BuildSingleUnloadRequest(pauseMenuSceneRef).OnComplete(() => --pendingRequests);
+        SceneLoaderRequest unloadGameOverUI = SceneLoaderRequest.BuildSingleUnloadRequest(gameOverUISceneRef).OnComplete(() => --pendingRequests);
+
+        // Reload the menu and UI
+        SceneLoaderRequest gameplayUIReq = SceneLoaderRequest.BuildSingleLoadRequest(gameplayUISceneRef).
+                                                     SetActive(false).
+                                                     WithLoadingScreen(true).
+                                                     OnComplete(() => --pendingRequests);
+
+        SceneLoaderRequest pauseMenuLoadReq = SceneLoaderRequest.BuildSingleLoadRequest(pauseMenuSceneRef).
+                                                     SetActive(false).
+                                                     WithLoadingScreen(false).
+                                                     OnComplete(() => --pendingRequests);
+
+        SceneLoaderRequest gameOverUILoadReq = SceneLoaderRequest.BuildSingleLoadRequest(gameOverUISceneRef).
+                                                     SetActive(false).
+                                                     WithLoadingScreen(false).
+                                                     OnComplete(() => --pendingRequests);  
 
 
-        SceneLoaderRequest gameplayLevelLoadReq = SceneLoaderRequest.BuildSingleLoadRequest(_currentGameplaySceneRef).
+        // Load the next gameplay scene
+        SceneLoaderRequest gameplayLevelLoadReq = SceneLoaderRequest.BuildSingleLoadRequest(nextGameplaySceneRef).
                                                      SetActive(true).
                                                      WithLoadingScreen(true).
                                                      OnComplete(() => --pendingRequests);
 
 
-        List<SceneLoaderRequest> requests = new() {unloadCurrentGameplayScene, gameplayLevelLoadReq};
+        List<SceneLoaderRequest> requests = new() {unloadCurrentGameplayScene, unloadGameplayUI, unloadPauseMenu, unloadGameOverUI, gameplayUIReq, pauseMenuLoadReq, gameOverUILoadReq, gameplayLevelLoadReq};
 
         foreach (var req in requests)
             _sceneRequestEventChannel.RaiseEvent(req);
 
         yield return new WaitUntil(() => pendingRequests <= 0);
 
+        PlayerInputManager.Instance.ToggleMouseInput(true);
+        PlayerInputManager.Instance.EnableMouseCursor(false);
+        PlayerInputManager.Instance.SwitchToGameplayActionMap();
+
         OnLevelLoaded?.Invoke();
         OnGameStart?.Invoke();
         OnLevelLoadedMusicRequest?.Invoke(_currentGameplaySceneRef);
+
+        _currentGameplaySceneRef = nextGameplaySceneRef;
+
+        LootManager.Instance.EnableLootDrops(false);
+
+        SetGameState(GameState.PLAYING);
     }
 
     IEnumerator ReturnToMainMenu()
@@ -193,7 +230,7 @@ public class GameManager : MonoBehaviour
 
 
         
-        List<SceneLoaderRequest> requests = new() {pauseMenuUnloadReq, unloadAllUIReq, currentGameplaySceneUnloadReq, mainMenuLoadReq};
+        List<SceneLoaderRequest> requests = new() {mainMenuLoadReq, pauseMenuUnloadReq, unloadAllUIReq, currentGameplaySceneUnloadReq};
         
         foreach (var req in requests) _sceneRequestEventChannel.RaiseEvent(req);
 
@@ -206,7 +243,6 @@ public class GameManager : MonoBehaviour
 
     void HandleGameOver()
     {
-        Debug.Log("Game over...");
         StartCoroutine(PlayerDefeatSequence());
     }
 
@@ -242,6 +278,24 @@ public class GameManager : MonoBehaviour
 
         PlayerInputManager.Instance.SwitchToUIActionMap();
         OnGameOverShowGameOverMenu?.Invoke();
+    }
+
+    void OnLevelFinished()
+    {
+        PlayerInputManager.Instance.DisableGameplayActionMap();
+        PlayerInputManager.Instance.EnableMouseCursor(true);
+        PlayerInputManager.Instance.SwitchToUIActionMap();
+        SceneReference nextGameplaySceneRef = _sceneDatabase.GetLevel(_currentGameplayLevelIndex + 1);
+
+        if (nextGameplaySceneRef == null)
+        {
+            //Debug.Log("There is no gameplay level to load.");
+            OnGameCompleted?.Invoke();
+            return;
+        }
+
+
+        OnLevelOver?.Invoke();
     }
 
 }

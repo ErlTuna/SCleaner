@@ -5,9 +5,9 @@ public class AmmoManager : MonoBehaviour
     ReloadContext _currentReloadContext;
     [SerializeField] ReloadStrategySO _reloadStrategy;
     [SerializeField] AmmoChangeEventChannelSO _ammoChangeEventChannelSO;
-    WeaponRuntimeAmmoData _ammoData;
+    WeaponAmmoData _ammoData;
 
-    public void Initialize(WeaponRuntimeAmmoData ammoData)
+    public void Initialize(WeaponAmmoData ammoData)
     {
         _ammoData = ammoData;
         Debug.Log("AmmoManager initialized with AMMODATA...");

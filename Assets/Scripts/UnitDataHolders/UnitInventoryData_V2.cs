@@ -5,8 +5,8 @@ using System.Collections.Generic;
 public class UnitInventoryData_V2
 {
     public PlayerWeaponInventoryData WeaponInventory;
-    //public UnitCurrencyInventoryData CurrencyInventory;
-    //public PlayerPassiveItemInventoryData PassiveItemInventory;
+    public PlayerCurrencyInventoryData CurrencyInventory;
+    public PlayerPassiveItemInventoryData PassiveItemInventory;
 
     public UnitInventoryData_V2() { }
 
@@ -17,21 +17,22 @@ public class UnitInventoryData_V2
             WeaponInventory = new PlayerWeaponInventoryData
             {
                 MaxWeaponAmount = config.MaxWeaponAmount,
-                WeaponIDs = new List<string>()
-            }
+                Weapons = new List<WeaponInventoryEntry>()
+            },
+
+            CurrencyInventory = new PlayerCurrencyInventoryData
+            {
+                Current = 0,
+                Max = config.MaxCurrency
+            },
+            
+            PassiveItemInventory = new PlayerPassiveItemInventoryData()
         };
     }
 }
 
 /*
-,
-        
-        CurrencyInventory = new UnitCurrencyInventoryData
-        {
-            Current = 0,
-            Max = config.MaxCurrency
-        },
 
-        PassiveItemInventory = new PlayerPassiveItemInventoryData(),
+    PassiveItemInventory = new PlayerPassiveItemInventoryData(),
 
 */

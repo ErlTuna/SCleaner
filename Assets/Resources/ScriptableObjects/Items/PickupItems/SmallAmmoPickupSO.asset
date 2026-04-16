@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   PickupDefinition: {fileID: 11400000, guid: e8bf0edffee33e542a33f83e37fdda3a, type: 2}
   InventoryDefinition: {fileID: 0}
-  Prefab: {fileID: 8594144460780797379, guid: 9a0c09ac57bffab44af0c637d84f423f, type: 3}
+  PickupPrefab: {fileID: 8594144460780797379, guid: 9a0c09ac57bffab44af0c637d84f423f, type: 3}
   GeneralConditions:
   - {fileID: 11400000, guid: 641a9c701869127498f6f2731702833a, type: 2}
   autoReorder: 0
@@ -23,3 +23,6 @@ MonoBehaviour:
     Order: 0
     IsExhaustible: 0
     BehaviourSpecificConditions: []
+  xScaleOverride: 0.75
+  yScaleOverride: 0.75
+  _itemId: 843f4e0f-a932-42de-ae5c-932d1d5e3f53

@@ -11,7 +11,7 @@ public class UnitHealthData
     public UnitHealthData(UnitHealthConfigSO healthConfig)
     {
         MaxHealth = new IntStat(healthConfig.MaxHealth);
-        CurrentHealth = MaxHealth.Value;
+        CurrentHealth = healthConfig.Health;
         CurrentShieldHealth = healthConfig.StartingShieldHealth;
     }
 }

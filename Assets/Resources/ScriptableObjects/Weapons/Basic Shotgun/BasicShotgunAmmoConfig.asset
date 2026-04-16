@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 37cac95700a42cb4dbbf2fd5fcf43ae3, type: 3}
   m_Name: BasicShotgunAmmoConfig
   m_EditorClassIdentifier: 
-  _roundCapacity: 6
-  _maxReserveAmmo: 54
+  _roundCapacity: 3
+  _maxReserveAmmo: 18
   _hasInfiniteReserveAmmo: 0

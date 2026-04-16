@@ -21,8 +21,6 @@ public class PlayerHealthManager : MonoBehaviour, IDamageable, IDefeatable, IHea
     public event Func<bool> OnBeforeDefeat;
     public event Action OnDefeat;
     public event Action<DamageContext> OnDefeatWithContext;
-
-
     UnitStateData _stateData;
 
     public void InitializeManager(UnitHealthData healthData, UnitHealthConfigSO unitHealthConfig)
@@ -71,21 +69,7 @@ public class PlayerHealthManager : MonoBehaviour, IDamageable, IDefeatable, IHea
             };
         }
         
-        if (healthChangedArgs.Delta < 0)
-            _playerHealthChangedEventChannel.RaiseEvent(healthChangedArgs);
-
-        //Update State Data
-        OnPlayerHitStateUpdate?.Invoke(_stateData);
-
-        //For sprite blinking
-        OnPlayerHitSpriteUpdate?.Invoke();
-
-        // UI Update and Audio Cue
-        if (_playerHitEventChannel != null) _playerHitEventChannel.RaiseEvent(_healthData.CurrentHealth, _healthData.MaxHealth.Value);
-        if (_healthConfig.OnHitSFX != null) AudioSource.PlayClipAtPoint(_healthConfig.OnHitSFX, gameObject.transform.position);
-
-
-
+        
 
         if (_healthData.CurrentHealth <= 0)
         {
@@ -96,16 +80,38 @@ public class PlayerHealthManager : MonoBehaviour, IDamageable, IDefeatable, IHea
                     Func<bool> interceptor = (Func<bool>)subscriber;
                     if (interceptor())
                     {
+                        //Update State Data
+                        OnPlayerHitStateUpdate?.Invoke(_stateData);
+
+                        //For sprite blinking
+                        OnPlayerHitSpriteUpdate?.Invoke();
+
+                        if (_healthConfig.OnHitSFX != null) 
+                            AudioSource.PlayClipAtPoint(_healthConfig.OnHitSFX, gameObject.transform.position);
+
                         return;
                     }  
                 }
-                    
             }
 
-
             _stateData.IsAlive = false;
+            if (healthChangedArgs.Delta < 0) _playerHealthChangedEventChannel.RaiseEvent(healthChangedArgs);
+
+            AudioSource.PlayClipAtPoint(_healthConfig.OnHitSFX, gameObject.transform.position);
             GameManager.Instance.SetGameState(GameState.PLAYER_DEFEAT);
+            return;
         }
+
+        //Update State Data
+        OnPlayerHitStateUpdate?.Invoke(_stateData);
+
+        //For sprite blinking
+        OnPlayerHitSpriteUpdate?.Invoke();
+
+        // UI Update and Audio Cue
+        //if (_playerHitEventChannel != null) _playerHitEventChannel.RaiseEvent(_healthData.CurrentHealth, _healthData.MaxHealth.Value);
+        if (healthChangedArgs.Delta < 0) _playerHealthChangedEventChannel.RaiseEvent(healthChangedArgs);
+        if (_healthConfig.OnHitSFX != null) AudioSource.PlayClipAtPoint(_healthConfig.OnHitSFX, gameObject.transform.position);
     }
     
 
@@ -138,10 +144,42 @@ public class PlayerHealthManager : MonoBehaviour, IDamageable, IDefeatable, IHea
                 Previous = previousHealth
             };
         }
+
         
-        // For notifying UI
-        if (healthChangedArgs.Delta < 0)
-            _playerHealthChangedEventChannel.RaiseEvent(healthChangedArgs);
+        
+        if (_healthData.CurrentHealth <= 0)
+        {
+            if (OnBeforeDefeat != null)
+            {
+                foreach (Delegate subscriber in OnBeforeDefeat.GetInvocationList().Cast<Func<bool>>())
+                {
+                    Func<bool> interceptor = (Func<bool>)subscriber;
+                    if (interceptor())
+                    {
+                        
+                        //Update State Data
+                        OnPlayerHitStateUpdate?.Invoke(_stateData);
+
+                        //For sprite blinking
+                        OnPlayerHitSpriteUpdate?.Invoke();
+
+                        if (_healthConfig.OnHitSFX != null) 
+                            AudioSource.PlayClipAtPoint(_healthConfig.OnHitSFX, gameObject.transform.position);
+                        return;
+                    }  
+                }
+            }
+
+
+            _stateData.IsAlive = false;
+            if (healthChangedArgs.Delta < 0) _playerHealthChangedEventChannel.RaiseEvent(healthChangedArgs);
+
+            AudioSource.PlayClipAtPoint(_healthConfig.OnHitSFX, gameObject.transform.position);
+            GameManager.Instance.SetGameState(GameState.PLAYER_DEFEAT);
+            return;
+        }
+
+        
 
         //Update State Data
         OnPlayerHitStateUpdate?.Invoke(_stateData);
@@ -150,14 +188,9 @@ public class PlayerHealthManager : MonoBehaviour, IDamageable, IDefeatable, IHea
         OnPlayerHitSpriteUpdate?.Invoke();
 
         // UI Update and Audio Cue
-       _playerHitEventChannel.RaiseEvent(_healthData.CurrentHealth, _healthData.MaxHealth.Value);
-        AudioSource.PlayClipAtPoint(_healthConfig.OnHitSFX, gameObject.transform.position);
-
-        if (_healthData.CurrentHealth <= 0)
-        {
-            _stateData.IsAlive = false;
-            GameManager.Instance.SetGameState(GameState.PLAYER_DEFEAT);
-        }
+        //if (_playerHitEventChannel != null) _playerHitEventChannel.RaiseEvent(_healthData.CurrentHealth, _healthData.MaxHealth.Value);
+        if (healthChangedArgs.Delta < 0) _playerHealthChangedEventChannel.RaiseEvent(healthChangedArgs);
+        if (_healthConfig.OnHitSFX != null) AudioSource.PlayClipAtPoint(_healthConfig.OnHitSFX, gameObject.transform.position);
     }
 
     public void Heal(int amount)
@@ -167,9 +200,6 @@ public class PlayerHealthManager : MonoBehaviour, IDamageable, IDefeatable, IHea
         
         
         int previousHealth = _healthData.CurrentHealth;
-
-
-
         _healthData.CurrentHealth = Mathf.Min(_healthData.CurrentHealth + amount, _healthData.MaxHealth.Value);
 
         StatChangedArgs healthChangedArgs = new()
@@ -196,6 +226,8 @@ public class PlayerHealthManager : MonoBehaviour, IDamageable, IDefeatable, IHea
     {
         int previousMaxHealth = _healthData.MaxHealth.Value;
         _healthData.MaxHealth.AddModifier(mod);
+
+        Debug.Log("Max health increased by : " + mod.Amount);
 
         StatChangedArgs maxHealthChangeArgs = new()
         {
@@ -241,6 +273,7 @@ public class PlayerHealthManager : MonoBehaviour, IDamageable, IDefeatable, IHea
 
         _playerShieldHealthChangedEventChannel.RaiseEvent(shieldChangeArgs);
     }
+    
 
 }
 

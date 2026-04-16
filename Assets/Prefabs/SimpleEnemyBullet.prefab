@@ -316,4 +316,4 @@ MonoBehaviour:
   _dissolveVFX: {fileID: 6753469986449514989, guid: 8ca46b7df4a34254292988745ff4ed93, type: 3}
   _blockingLayers:
     serializedVersion: 2
-    m_Bits: 4104
+    m_Bits: 4616

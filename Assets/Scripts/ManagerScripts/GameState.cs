@@ -9,7 +9,7 @@ public enum GameState
     PAUSED,
     RETURNING_TO_MAIN_MENU,
     PLAYER_DEFEAT,
-    PLAYER_VICTORY,
+    LEVEL_COMPLETED,
     SHUTTING_DOWN
     
 }

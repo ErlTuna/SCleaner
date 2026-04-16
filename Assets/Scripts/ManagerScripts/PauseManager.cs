@@ -29,7 +29,8 @@ public class PauseManager : MonoBehaviour
     {
         Debug.Log("Game paused");
         Time.timeScale = 0f;
-        PlayerInputManager.Instance.ToggleMouseInput(false);
+        //PlayerInputManager.Instance.ToggleMouseInput(false);
+        PlayerInputManager.Instance.EnableMouseCursor(true);
         PlayerInputManager.Instance.SwitchToUIActionMap();
 
         GameManager.Instance.SetGameState(GameState.PAUSED);
@@ -40,6 +41,7 @@ public class PauseManager : MonoBehaviour
         Debug.Log("Game unpaused.");
         Time.timeScale = 1f;
         PlayerInputManager.Instance.ToggleMouseInput(true);
+        PlayerInputManager.Instance.EnableMouseCursor(false);
         PlayerInputManager.Instance.SwitchToGameplayActionMap();
 
         GameManager.Instance.SetGameState(GameState.PLAYING);

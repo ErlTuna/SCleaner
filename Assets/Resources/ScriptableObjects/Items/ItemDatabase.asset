@@ -16,3 +16,21 @@ MonoBehaviour:
   - PickupPrefab: {fileID: 8594144460780797379, guid: 9a0c09ac57bffab44af0c637d84f423f, type: 3}
     PickupConfig: {fileID: 11400000, guid: e857124bf21839e47811e9b9e907d946, type: 2}
     LootBehaviour: 0
+  - PickupPrefab: {fileID: 8594144460780797379, guid: 9a0c09ac57bffab44af0c637d84f423f, type: 3}
+    PickupConfig: {fileID: 11400000, guid: 2617b44f2a722a2488d0075f98dbed95, type: 2}
+    LootBehaviour: 0
+  - PickupPrefab: {fileID: 5890597930396712892, guid: 6f09affdc9aaaf742a02f9e31b14b4fb, type: 3}
+    PickupConfig: {fileID: 11400000, guid: 22aa17e6e95803049a6733e71527498b, type: 2}
+    LootBehaviour: 0
+  - PickupPrefab: {fileID: 5890597930396712892, guid: 6f09affdc9aaaf742a02f9e31b14b4fb, type: 3}
+    PickupConfig: {fileID: 11400000, guid: 0c713b35a1574f84d8cd450b8deef8c4, type: 2}
+    LootBehaviour: 0
+  - PickupPrefab: {fileID: 8594144460780797379, guid: 9a0c09ac57bffab44af0c637d84f423f, type: 3}
+    PickupConfig: {fileID: 11400000, guid: aba75bf9ecfb3c3418ca8abb9e21f2b1, type: 2}
+    LootBehaviour: 1
+  - PickupPrefab: {fileID: 8594144460780797379, guid: 9a0c09ac57bffab44af0c637d84f423f, type: 3}
+    PickupConfig: {fileID: 11400000, guid: ccc243cfceb5a0c44ac6ba9729a122f6, type: 2}
+    LootBehaviour: 1
+  - PickupPrefab: {fileID: 8594144460780797379, guid: 9a0c09ac57bffab44af0c637d84f423f, type: 3}
+    PickupConfig: {fileID: 11400000, guid: 6635bd3e1f4e7a84488d916dd54a8b90, type: 2}
+    LootBehaviour: 1

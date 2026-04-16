@@ -9,7 +9,7 @@ public class WeaponDatabaseSO : ScriptableObject
 
     Dictionary<string, PlayerWeaponConfigSO> _lookup;
 
-    private bool _isInitialized;
+    private bool _isInitialized = false;
 
     void Initialize()
     {

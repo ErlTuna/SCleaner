@@ -16,5 +16,5 @@ MonoBehaviour:
   DetachedLayer:
     serializedVersion: 2
     m_Bits: 524288
-  MaxHealth: 50
+  MaxHealth: 20
   KnockDownBehaviour: {fileID: 11400000, guid: 6e9b8b563633c1243b86f56b1ec81e83, type: 2}

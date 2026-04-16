@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: BasicRevolverPickupDefinition
   m_EditorClassIdentifier: 
   PickupType: 3
-  PickUpName: Basic Revolver
-  PickUpDescription: Bang bang
+  PickUpName: Super Revolver
+  PickUpDescription: Bang Bang
   DefaultPickupSprite: {fileID: 21300000, guid: afa65fda35d3f25478827ada30e41de7, type: 3}
   PickUpSuccessSoundData: {fileID: 11400000, guid: 90908844938fdc248b12bc15cdab9bd5, type: 2}
   PickUpFailureSoundData: {fileID: 0}

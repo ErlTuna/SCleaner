@@ -20,6 +20,6 @@ MonoBehaviour:
   - ItemSO: {fileID: 11400000, guid: 1b6b165316f3eae48a7034d5c7c6e789, type: 2}
     Weight: 40
     MinAmount: 1
-    MaxAmount: 5
+    MaxAmount: 2
   CanRollMultiCurrencyType: 0
   CurrencyRollCount: 0
